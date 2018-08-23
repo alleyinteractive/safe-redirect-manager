@@ -1,0 +1,42 @@
+$bp-values: (
+  xxl: 1440,
+  xl: 1280,
+  l: 1024,
+  m: 768,
+  s: 512,
+);
+
+/**
+ * Generate map of breakpoint values
+ */
+@function _create-breakpoints() {
+	$merged: ();
+
+	@each $name, $value in $bp-values {
+		$merged: map_merge($merged, (
+			'#{$name}-min': 'min-width: #{rem($value)}',
+			'#{$name}-max': 'max-width: #{rem($value - 1)}',
+		));
+	}
+
+	@return $merged;
+}
+
+/**
+ * If you want, include custom media queries in the first parameter of map_merge below
+ * (example 'admin-bar' media query provided)
+ */
+$media-queries: map_merge((
+	admin-bar: 'min-width: 600px',
+), _create-breakpoints());
+
+/**
+ * Retrive prepared media query
+ *
+ * @param {string} $query Key to acess in breakpoints object. If you're lookin for one of the generated breakpoints,
+ *                        pass in a string constructed using a key from $bp-values
+ *                        and either 'min' (for `min-width`) or 'max' (for `max-width`), separated by a hyphen.
+ */
+@function media($query) {
+	@return map-get($media-queries, $query);
+}

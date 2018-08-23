@@ -1,0 +1,22 @@
+.sass-cache
+.DS_Store
+.thumbsdb
+.svn
+npm-debug.log
+node_modules
+bower_components
+.htaccess
+.idea
+
+# Ignore for rooting at /wp-content/
+/uploads
+/upgrade
+/debug.log
+/vendor
+/db.php
+/local-db.sql
+
+plugins/*
+!plugins/gutenberg
+!plugins/jetpack
+!plugins/meta-inspector

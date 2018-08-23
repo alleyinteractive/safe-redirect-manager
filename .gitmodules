@@ -1,0 +1,37 @@
+[submodule "mu-plugins/ad-layers"]
+	path = mu-plugins/ad-layers
+	url = https://github.com/alleyinteractive/ad-layers.git
+[submodule "mu-plugins/fm-zones"]
+	path = mu-plugins/fm-zones
+	url = https://github.com/alleyinteractive/fm-zones
+[submodule "mu-plugins/wordpress-fieldmanager"]
+	path = mu-plugins/wordpress-fieldmanager
+	url = https://github.com/alleyinteractive/wordpress-fieldmanager
+[submodule "mu-plugins/wp-irving"]
+	path = mu-plugins/wp-irving
+	url = https://github.com/alleyinteractive/wp-irving
+[submodule "mu-plugins/wp-seo"]
+	path = mu-plugins/wp-seo
+	url = https://github.com/alleyinteractive/wp-seo
+[submodule "mu-plugins/amp-wp"]
+	path = mu-plugins/amp-wp
+	url = https://github.com/Automattic/amp-wp
+	branch = master
+[submodule "mu-plugins/co-authors-plus"]
+	path = mu-plugins/co-authors-plus
+	url = https://github.com/Automattic/Co-Authors-Plus
+[submodule "mu-plugins/edit-flow"]
+	path = mu-plugins/edit-flow
+	url = https://github.com/Automattic/Edit-Flow
+[submodule "mu-plugins/msm-sitemap"]
+	path = mu-plugins/msm-sitemap
+	url = https://github.com/Automattic/msm-sitemap
+[submodule "mu-plugins/wpcom-thumbnail-editor"]
+	path = mu-plugins/wpcom-thumbnail-editor
+	url = https://github.com/Automattic/wpcom-thumbnail-editor
+[submodule "mu-plugins/wp-redis"]
+	path = mu-plugins/wp-redis
+	url = https://github.com/pantheon-systems/wp-redis
+[submodule "mu-plugins/safe-redirect-manager"]
+	path = mu-plugins/safe-redirect-manager
+	url = https://github.com/tlovett1/safe-redirect-manager
