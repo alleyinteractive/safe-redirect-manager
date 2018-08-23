@@ -1,6 +1,6 @@
 [submodule "mu-plugins/ad-layers"]
 	path = mu-plugins/ad-layers
-	url = https://github.com/alleyinteractive/ad-layers.git
+	url = https://github.com/alleyinteractive/ad-layers
 [submodule "mu-plugins/fm-zones"]
 	path = mu-plugins/fm-zones
 	url = https://github.com/alleyinteractive/fm-zones
