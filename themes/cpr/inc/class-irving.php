@@ -50,12 +50,12 @@ class Irving {
 				$data = ( new Template\Search() )->get_irving_components( $data, $wp_query );
 				break;
 
-			// Homepage.
+			// Homepages.
 			case '' === $path:
 			case '/' === $path:
-			case '/news' === $path:
-			case '/classical' === $path:
-			case '/openair' === $path:
+			case '/news/' === $path:
+			case '/classical/' === $path:
+			case '/openair/' === $path:
 				$data = ( new Template\Homepage() )->get_irving_components( $data, $wp_query );
 				break;
 
@@ -72,14 +72,12 @@ class Irving {
 				break;
 
 			// Single.
-			case 'stories' === $path_parts[0]:
+			case $wp_query->is_single():
 				$data = ( new Template\Single() )->get_irving_components( $data, $wp_query );
 				break;
 
 			// Page.
 			case $wp_query->is_page():
-			case 'page-india' === $wp_query->get( 'post_type' ):
-			case 'page-greece' === $wp_query->get( 'post_type' ):
 				$data = ( new Template\Page() )->get_irving_components( $data, $wp_query );
 				break;
 
@@ -87,14 +85,6 @@ class Irving {
 			default:
 				$data = ( new Template\Error() )->get_irving_components( $data, $wp_query );
 		}
-
-		/**
-		 * Disable admin bar until it's completed.
-		 *
-		 * Always include the admin bar.
-		 * $admin_bar_component = ( new \WP_Irving\Component\Admin_Bar() )->parse_query( $wp_query )->to_array();
-		 * array_unshift( $data['page'], $admin_bar_component );
-		 */
 
 		return (array) $data;
 	}
