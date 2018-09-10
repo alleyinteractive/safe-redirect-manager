@@ -26,6 +26,18 @@ if ( WP_Utils::wp_cli() ) {
 	require_once CPR_PATH . '/inc/cli.php';
 }
 
+// WP Irving.
+// @todo consolidate file locations.
+if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
+
+	// Irving Templates.
+	require_once CPR_PATH . '/inc/templates/class-homepage.php';
+	require_once CPR_PATH . '/inc/templates/class-search.php';
+
+	// Classes.
+	require_once CPR_PATH . '/inc/class-irving.php';
+}
+
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';
 
@@ -44,20 +56,15 @@ require_once CPR_PATH . '/inc/authors.php';
 // Cache.
 require_once CPR_PATH . '/inc/cache.php';
 
-// Include comments.
-require_once CPR_PATH . '/inc/comments.php';
-
-// Customizer additions.
-require_once CPR_PATH . '/inc/customizer.php';
-
 // This site's RSS, Atom, JSON, etc. feeds.
 require_once CPR_PATH . '/inc/feeds.php';
+
+// Setup landing pages.
+require_once CPR_PATH . '/inc/landing-pages.php';
 
 // Media includes.
 require_once CPR_PATH . '/inc/media.php';
 
-// Navigation & Menus.
-require_once CPR_PATH . '/inc/nav.php';
 
 // Query modifications and manipulations.
 require_once CPR_PATH . '/inc/query.php';
@@ -68,11 +75,8 @@ require_once CPR_PATH . '/inc/rewrites.php';
 // Search.
 require_once CPR_PATH . '/inc/search.php';
 
-// Shortcodes.
-require_once CPR_PATH . '/inc/shortcodes.php';
-
-// Include sidebars and widgets.
-require_once CPR_PATH . '/inc/sidebars.php';
+// SEO.
+require_once CPR_PATH . '/inc/seo.php';
 
 // Helpers.
 require_once CPR_PATH . '/inc/template-tags.php';
@@ -83,17 +87,17 @@ require_once CPR_PATH . '/inc/theme.php';
 // Users.
 require_once CPR_PATH . '/inc/users.php';
 
-// Zoninator zones/customizations.
-require_once CPR_PATH . '/inc/zones.php';
-
 // Loader for partials.
 require_once CPR_PATH . '/inc/partials/partials.php';
 
-// Template loader.
-require_once CPR_PATH . '/inc/class-wrapping.php';
+// Landing pages.
+require_once CPR_PATH . '/inc/class-landing-pages.php';
 
 // Content types and taxonomies should be included below. In order to scaffold
 // them, leave the Begin and End comments in place.
 /* Begin Data Structures */
+
+// Fieldmanager Fields.
+require_once CPR_PATH . '/inc/fields.php';
 
 /* End Data Structures */

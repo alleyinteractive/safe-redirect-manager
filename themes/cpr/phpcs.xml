@@ -6,8 +6,9 @@
 	Pass some flags to PHPCS:
 	 p flag: Show progress of the run.
 	 s flag: Show sniff codes in all reports.
+	 n flag: Do not print warnings.
 	-->
-	<arg value="ps" />
+	<arg value="psn" />
 
 	<!-- Strip the filepaths down to the relevant bit. -->
 	<arg name="basepath" value="./" />
@@ -103,6 +104,51 @@
 				<element key="wp_cache_add" value="wp_cache_set"/>
 			</property> -->
 		</properties>
+	</rule>
+
+	<rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie.ContentAfterBrace">
+		<type>warning</type>
+		<exclude-pattern>inc/fields.php</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="PEAR.Functions.FunctionCallSignature.MultipleArguments">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="PEAR.Functions.FunctionCallSignature.CloseBracketLine">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="PEAR.Functions.FunctionCallSignature.MultipleArguments">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound">
+		<type>warning</type>
+	</rule>
+
+	<rule ref="Generic.Formatting.MultipleStatementAlignment.NotSameWarning">
+		<type>warning</type>
 	</rule>
 
 </ruleset>

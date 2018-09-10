@@ -7,6 +7,8 @@
 
 namespace Cpr;
 
+// @codingStandardsIgnoreFile WordPress.VIP.RestrictedFunctions.cookies_setcookie WordPress.VIP.RestrictedVariables.cache_constraints___COOKIE
+
 /**
  * Add custom query var for webpack hot-reloading.
  *

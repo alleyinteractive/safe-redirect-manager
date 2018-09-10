@@ -45,7 +45,8 @@ function theme_setup() {
 
 	// Set up theme's use of wp_nav_menu().
 	register_nav_menus( array(
-		'menu-1' => __( 'Primary', 'cpr' ),
+		'header' => __( 'Header', 'cpr' ),
+		'footer' => __( 'Footer', 'cpr' ),
 	) );
 
 	// Enable support for HTML5 components.
