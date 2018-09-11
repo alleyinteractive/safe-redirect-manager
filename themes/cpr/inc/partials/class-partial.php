@@ -172,7 +172,7 @@ class Partial {
 
 		// Locate the parent template that was loaded.
 		$templates = array();
-		$name = (string) $this->parent[1];
+		$name      = (string) $this->parent[1];
 		if ( '' !== $name ) {
 			$templates[] = "{$this->parent[0]}-{$name}.php";
 		}

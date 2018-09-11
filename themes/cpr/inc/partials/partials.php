@@ -21,7 +21,6 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  */
 
-
 // Load required classes.
 require_once __DIR__ . '/class-partial.php';
 require_once __DIR__ . '/class-partials.php';
@@ -68,7 +67,7 @@ if ( ! function_exists( 'ai_get_cached_template_part' ) ) :
 	 */
 	function ai_get_cached_template_part( $slug, $name = null, $variables = array() ) {
 		list( $name, $variables ) = _ai_fix_template_part_args( $name, $variables );
-		$cache = array();
+		$cache                    = array();
 		if ( ! empty( $variables['_cache_key'] ) ) {
 			$cache['key'] = $variables['_cache_key'];
 		}
@@ -164,7 +163,7 @@ if ( ! function_exists( '_ai_fix_template_part_args' ) ) {
 	function _ai_fix_template_part_args( $name, $variables ) {
 		if ( is_array( $name ) ) {
 			$variables = $name;
-			$name = null;
+			$name      = null;
 		}
 
 		return array( $name, $variables );
