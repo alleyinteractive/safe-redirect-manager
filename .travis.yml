@@ -16,7 +16,6 @@ branches:
 cache:
   directories:
     - $HOME/.composer/cache
-    - ./vendor
 
 # Git clone depth.
 git:
@@ -46,6 +45,7 @@ before_script:
   - phpenv config-rm xdebug.ini || echo "Xdebug not available"
 
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - export WP_CORE_DIR=/tmp/wordpress/
 
   # Couple the PHPUnit version to the PHP version.
   - |
@@ -54,10 +54,6 @@ before_script:
       echo "Using PHPUnit 6.1"
       composer global require "phpunit/phpunit=6.1.*"
       ;;
-    5.6)
-      echo "Using PHPUnit 4.8"
-      composer global require "phpunit/phpunit=4.8.*"
-      ;;
     *)
       echo "No PHPUnit version handling for PHP version $TRAVIS_PHP_VERSION"
       exit 1
@@ -65,14 +61,18 @@ before_script:
     esac
 
   - og_dir="$(pwd)"
-  - theme_slug="$(basename $(pwd))"
+
+  # Make sure Travis can clone submodules even they use SSH.
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
 
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
       # Set up the WordPress installation.
-      export WP_CORE_DIR=/tmp/wordpress/
+      export WP_TESTS_DIR=/tmp/wordpress-tests-lib
       bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-      echo "define( 'JETPACK_DEV_DEBUG', true );" >> $WP_CORE_DIR/wp-tests-config.php
+      echo "define( 'JETPACK_DEV_DEBUG', true );" >> ${WP_TESTS_DIR}/wp-tests-config.php
+      php ${WP_TESTS_DIR}/includes/install.php ${WP_TESTS_DIR}/wp-tests-config.php
 
       # Maybe install memcached.
       if [[ "$WP_TRAVIS_OBJECT_CACHE" == "1" ]]; then
@@ -80,12 +80,14 @@ before_script:
         echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
       fi
 
-      # Set up the theme. This assumes that this repo name matches the theme name.
-      mkdir -p "${WP_CORE_DIR}wp-content/themes/$theme_slug"
-      cp -R . "${WP_CORE_DIR}wp-content/themes/$theme_slug/"
+      # Set up the wp-content directory.
+      cd $og_dir
+      rm -rf "${WP_CORE_DIR}wp-content"
+      mkdir -p "${WP_CORE_DIR}wp-content"
+      cp -R . "${WP_CORE_DIR}wp-content/"
 
-      # Hop into theme's directory.
-      cd ${WP_CORE_DIR}wp-content/themes/$theme_slug/
+      # Hop into the repo root.
+      cd ${WP_CORE_DIR}wp-content/
 
       # For debugging.
       which phpunit
@@ -110,7 +112,8 @@ script:
   # Only need to run this once per PHP version.
   - |
     if [[ "$PHP_LINT" == "1" ]] ; then
-      find . -type "f" -iname "*.php" -not -path "./vendor/*" | xargs -L "1" php -l
+      cd ${WP_CORE_DIR}wp-content/themes/cpr/
+      find . -type "f" -iname "*.php" | xargs -L "1" php -l
     fi
 
   # WordPress Coding Standards.
@@ -121,12 +124,14 @@ script:
   # @link http://pear.php.net/package/PHP_CodeSniffer/
   - |
     if [[ "$WP_PHPCS" == "1" ]] ; then
-      phpcs -n
+      cd ${WP_CORE_DIR}wp-content/themes/cpr/
+      phpcs -vn
     fi
 
   # Run the theme's unit tests, both in single and multisite.
   - |
     if [[ ! -z "$WP_VERSION" ]] ; then
+      cd ${WP_CORE_DIR}wp-content/themes/cpr/
       phpunit
       WP_MULTISITE=1 phpunit
     fi
