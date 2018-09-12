@@ -16,7 +16,6 @@ branches:
 cache:
   directories:
     - $HOME/.composer/cache
-    - ./vendor
 
 # Git clone depth.
 git:
@@ -50,20 +49,21 @@ before_script:
   # Couple the PHPUnit version to the PHP version.
   - |
     case "$TRAVIS_PHP_VERSION" in
-    7.2|7.0|nightly)
-      echo "Using PHPUnit 6.1"
-      composer global require "phpunit/phpunit=6.1.*"
-      ;;
-    5.6)
-      echo "Using PHPUnit 4.8"
-      composer global require "phpunit/phpunit=4.8.*"
-      ;;
-    *)
-      echo "No PHPUnit version handling for PHP version $TRAVIS_PHP_VERSION"
-      exit 1
-      ;;
+      7.2|7.0|nightly)
+        echo "Using PHPUnit 6.1"
+        composer global require "phpunit/phpunit=6.1.*"
+        ;;
+      5.6)
+        echo "Using PHPUnit 4.8"
+        composer global require "phpunit/phpunit=4.8.*"
+        ;;
+      *)
+        echo "No PHPUnit version handling for PHP version $TRAVIS_PHP_VERSION"
+        exit 1
+        ;;
     esac
 
+  - cd themes/cpr
   - og_dir="$(pwd)"
   - theme_slug="$(basename $(pwd))"
 
@@ -79,6 +79,9 @@ before_script:
         curl https://raw.githubusercontent.com/tollmanz/wordpress-pecl-memcached-object-cache/584392b56dc4adbe52bd2c7b86f875e23a3e5f75/object-cache.php > $WP_CORE_DIR/wp-content/object-cache.php
         echo "extension = memcached.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
       fi
+
+      # Copy over the mu-plugins directory.
+      cp -R ../../mu-plugins "${WP_CORE_DIR}wp-content"
 
       # Set up the theme. This assumes that this repo name matches the theme name.
       mkdir -p "${WP_CORE_DIR}wp-content/themes/$theme_slug"
@@ -110,7 +113,7 @@ script:
   # Only need to run this once per PHP version.
   - |
     if [[ "$PHP_LINT" == "1" ]] ; then
-      find . -type "f" -iname "*.php" -not -path "./vendor/*" | xargs -L "1" php -l
+      find . -type "f" -iname "*.php" | xargs -L "1" php -l
     fi
 
   # WordPress Coding Standards.
