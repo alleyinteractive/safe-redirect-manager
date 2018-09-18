@@ -20,6 +20,9 @@ class Irving {
 		add_action( 'wp_irving_components_route', [ $this, 'setup_page_data' ], 10, 5 );
 		add_action( 'wp_irving_components_route', [ $this, 'default_components' ], 10, 3 );
 		add_action( 'wp_irving_components_route', [ $this, 'set_embed_scripts' ], 11, 3 );
+
+		// Redirect template calls.
+		add_action( 'template_redirect', [ $this, 'redirect_template_calls' ] );
 	}
 
 	/**
@@ -158,6 +161,31 @@ class Irving {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Redirect all template calls to the head of the site.
+	 */
+	public function redirect_template_calls() {
+		if ( ! isset( $_SERVER['REQUEST_URI'] ) ) {
+			return;
+		}
+		$request_uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+
+		// Don't redirect feed, sitemap, admin, or logged-in requests.
+		if (
+			is_feed()
+			|| is_admin()
+			|| is_user_logged_in()
+			|| ( false !== strpos( $request_uri, '.xml' ) )
+			|| ! defined( 'WP_HOME' )
+		) {
+			return;
+		}
+
+		$irving_url = WP_HOME . $request_uri;
+		wp_redirect( $irving_url );
+		exit();
 	}
 }
 
