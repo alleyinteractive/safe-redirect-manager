@@ -18,6 +18,8 @@ add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Landing_Pages', 'instance' 
  */
 function landing_page_options( $options ) {
 	return [
+
+		/*
 		'homepage'  => [
 			'label' => __( 'Homepage', 'cpr' ),
 			'slugs' => [
@@ -26,6 +28,7 @@ function landing_page_options( $options ) {
 				'/',
 			],
 		],
+		*/
 		'news'      => [
 			'label' => __( 'News', 'cpr' ),
 			'slugs' => [
