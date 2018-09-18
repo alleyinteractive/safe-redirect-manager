@@ -75,6 +75,11 @@ class Irving {
 				$data = ( new Template\Term() )->get_irving_components( $data, $wp_query );
 				break;
 
+			// Podcast episode.
+			case 'episode' === $path_parts[0]:
+				$data = ( new Template\Episode() )->get_irving_components( $data, $wp_query );
+				break;
+
 			// Single.
 			case $wp_query->is_single():
 				$data = ( new Template\Single() )->get_irving_components( $data, $wp_query );
