@@ -1,0 +1,24 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "podcast-post" ],
+			"title": { "__": "Section" },
+			"context": "side"
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"children": {
+		"section_term_id": {
+			"type": "select",
+			"first_empty": true,
+			"datasource": {
+				"type": "term",
+				"taxonomy": "section",
+				"taxonomy_save_to_terms": true,
+				"only_save_to_taxonomy": false
+			}
+		}
+	}
+}

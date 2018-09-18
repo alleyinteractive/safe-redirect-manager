@@ -1,3 +1,8 @@
 {
-  "version": "0.4.3"
+  "version": "0.4.4",
+  "cpt:episode": "03a0aff68c7e317ffb086d3818cf1aac",
+  "tax:podcast": "3404ea67e9c2cd238865bd33160b1537",
+  "tax:section": "7912cc1a3aae499a4fec6c4cc1303800",
+  "cpt:podcast-post": "8c30f719589d667c263b3d3730642982",
+  "fm:post-podcast-post-section": "df2cb01914c529e204266a5f45b7d249"
 }

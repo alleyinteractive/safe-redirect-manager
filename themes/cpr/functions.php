@@ -100,4 +100,22 @@ require_once CPR_PATH . '/inc/class-landing-pages.php';
 // Fieldmanager Fields.
 require_once CPR_PATH . '/inc/fields.php';
 
+// Post Type Base Class.
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type.php';
+
+// Taxonomy Base Class.
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy.php';
+
+// Episodes Post Type (cpt:episode).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-episode.php';
+
+// Podcasts Taxonomy (tax:podcast).
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-podcast.php';
+
+// Sections Taxonomy (tax:section).
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-section.php';
+
+// Podcast Posts Post Type (cpt:podcast-post).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-podcast-post.php';
+
 /* End Data Structures */

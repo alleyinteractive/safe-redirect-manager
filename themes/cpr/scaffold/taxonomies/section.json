@@ -1,0 +1,9 @@
+{
+	"object_types": [
+		"episode",
+		"podcast-post"
+	],
+	"hierarchical": false,
+	"public": true,
+	"meta_box_cb": false
+}
