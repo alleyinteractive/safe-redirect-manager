@@ -29,9 +29,9 @@ class Search {
 	/**
 	 * Return Irving components for Search templates.
 	 *
-	 * @param  array     $data Response data.
+	 * @param  array     $data     Response data.
 	 * @param  \WP_Query $wp_query Path query.
-	 * @return array Update response data.
+	 * @return array               Updated response data.
 	 */
 	public function get_irving_components( array $data, \WP_Query $wp_query ) : array {
 

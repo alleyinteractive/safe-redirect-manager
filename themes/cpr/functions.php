@@ -35,9 +35,14 @@ if ( WP_Utils::wp_cli() ) {
 // @todo consolidate file locations.
 if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 
+	// Components.
+	require_once CPR_PATH . '/inc/components/class-body.php';
+
 	// Irving Templates.
+	require_once CPR_PATH . '/inc/templates/class-error.php';
 	require_once CPR_PATH . '/inc/templates/class-homepage.php';
 	require_once CPR_PATH . '/inc/templates/class-search.php';
+	require_once CPR_PATH . '/inc/templates/class-term.php';
 
 	// Classes.
 	require_once CPR_PATH . '/inc/class-irving.php';

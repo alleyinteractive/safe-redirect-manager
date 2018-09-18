@@ -8,7 +8,7 @@
 namespace Cpr;
 
 /**
- * Entry point for Thrive Global's Irving implementation.
+ * Entry point for CPR's Irving implementation.
  */
 class Irving {
 
@@ -16,6 +16,7 @@ class Irving {
 	 * Hook into WP-Irving.
 	 */
 	public function __construct() {
+		// Handle routing.
 		add_action( 'wp_irving_components_route', [ $this, 'setup_page_data' ], 10, 5 );
 		add_action( 'wp_irving_components_route', [ $this, 'default_components' ], 10, 3 );
 		add_action( 'wp_irving_components_route', [ $this, 'set_embed_scripts' ], 11, 3 );
