@@ -38,6 +38,7 @@ class Episode {
 		$this->wp_query = $wp_query;
 
 		// Get and validate the post object.
+		// @todo This returns null right now - fix in WP Irving or here.
 		$this->post = $wp_query->get_queried_object();
 		if ( ! $this->post instanceof \WP_Post || 'publish' !== $this->post->post_status ) {
 			return ( new \Cpr\Template\Error() )->get_irving_components( $data, $wp_query );
