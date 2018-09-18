@@ -10,6 +10,11 @@ namespace Cpr;
 define( 'CPR_PATH', dirname( __FILE__ ) );
 define( 'CPR_URL', get_template_directory_uri() );
 
+/**
+* Classes
+*/
+require_once CPR_PATH . '/inc/classes/class-term-post-link.php';
+
 // WordPress utilities.
 require_once CPR_PATH . '/inc/class-wp-utils.php';
 
@@ -58,6 +63,9 @@ require_once CPR_PATH . '/inc/cache.php';
 
 // This site's RSS, Atom, JSON, etc. feeds.
 require_once CPR_PATH . '/inc/feeds.php';
+
+// Helpers.
+require_once CPR_PATH . '/inc/helpers/terms.php';
 
 // Setup landing pages.
 require_once CPR_PATH . '/inc/landing-pages.php';
