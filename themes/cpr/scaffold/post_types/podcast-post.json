@@ -1,0 +1,16 @@
+{
+	"public": true,
+	"show_ui": true,
+	"show_in_nav_menus": false,
+	"show_in_menu": false,
+	"labels": {
+		"add_new": { "__": "Add New Podcast" },
+		"edit_item": { "__": "Edit Podcast" }
+	},
+	"supports": [
+		"title",
+		"thumbnail",
+		"editor",
+		"revisions"
+	]
+}

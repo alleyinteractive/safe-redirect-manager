@@ -10,6 +10,11 @@ namespace Cpr;
 define( 'CPR_PATH', dirname( __FILE__ ) );
 define( 'CPR_URL', get_template_directory_uri() );
 
+/**
+* Classes
+*/
+require_once CPR_PATH . '/inc/classes/class-term-post-link.php';
+
 // WordPress utilities.
 require_once CPR_PATH . '/inc/class-wp-utils.php';
 
@@ -30,9 +35,15 @@ if ( WP_Utils::wp_cli() ) {
 // @todo consolidate file locations.
 if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 
+	// Components.
+	require_once CPR_PATH . '/inc/components/class-body.php';
+
 	// Irving Templates.
+	require_once CPR_PATH . '/inc/templates/class-episode.php';
+	require_once CPR_PATH . '/inc/templates/class-error.php';
 	require_once CPR_PATH . '/inc/templates/class-homepage.php';
 	require_once CPR_PATH . '/inc/templates/class-search.php';
+	require_once CPR_PATH . '/inc/templates/class-term.php';
 
 	// Classes.
 	require_once CPR_PATH . '/inc/class-irving.php';
@@ -58,6 +69,9 @@ require_once CPR_PATH . '/inc/cache.php';
 
 // This site's RSS, Atom, JSON, etc. feeds.
 require_once CPR_PATH . '/inc/feeds.php';
+
+// Helpers.
+require_once CPR_PATH . '/inc/helpers/terms.php';
 
 // Setup landing pages.
 require_once CPR_PATH . '/inc/landing-pages.php';
@@ -99,5 +113,23 @@ require_once CPR_PATH . '/inc/class-landing-pages.php';
 
 // Fieldmanager Fields.
 require_once CPR_PATH . '/inc/fields.php';
+
+// Post Type Base Class.
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type.php';
+
+// Taxonomy Base Class.
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy.php';
+
+// Episodes Post Type (cpt:episode).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-episode.php';
+
+// Podcasts Taxonomy (tax:podcast).
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-podcast.php';
+
+// Sections Taxonomy (tax:section).
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-section.php';
+
+// Podcast Posts Post Type (cpt:podcast-post).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-podcast-post.php';
 
 /* End Data Structures */

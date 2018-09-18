@@ -8,7 +8,7 @@
 namespace Cpr;
 
 /**
- * Entry point for Thrive Global's Irving implementation.
+ * Entry point for CPR's Irving implementation.
  */
 class Irving {
 
@@ -16,9 +16,13 @@ class Irving {
 	 * Hook into WP-Irving.
 	 */
 	public function __construct() {
+		// Handle routing.
 		add_action( 'wp_irving_components_route', [ $this, 'setup_page_data' ], 10, 5 );
 		add_action( 'wp_irving_components_route', [ $this, 'default_components' ], 10, 3 );
 		add_action( 'wp_irving_components_route', [ $this, 'set_embed_scripts' ], 11, 3 );
+
+		// Redirect template calls.
+		add_action( 'template_redirect', [ $this, 'redirect_template_calls' ] );
 	}
 
 	/**
@@ -69,6 +73,11 @@ class Irving {
 			case $wp_query->is_tag():
 			case $wp_query->is_category():
 				$data = ( new Template\Term() )->get_irving_components( $data, $wp_query );
+				break;
+
+			// Podcast episode.
+			case 'episode' === $path_parts[0]:
+				$data = ( new Template\Episode() )->get_irving_components( $data, $wp_query );
 				break;
 
 			// Single.
@@ -157,6 +166,31 @@ class Irving {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Redirect all template calls to the head of the site.
+	 */
+	public function redirect_template_calls() {
+		if ( ! isset( $_SERVER['REQUEST_URI'] ) ) {
+			return;
+		}
+		$request_uri = sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) );
+
+		// Don't redirect feed, sitemap, admin, or logged-in requests.
+		if (
+			is_feed()
+			|| is_admin()
+			|| is_user_logged_in()
+			|| ( false !== strpos( $request_uri, '.xml' ) )
+			|| ! defined( 'WP_HOME' )
+		) {
+			return;
+		}
+
+		$irving_url = WP_HOME . $request_uri;
+		wp_redirect( $irving_url );
+		exit();
 	}
 }
 
