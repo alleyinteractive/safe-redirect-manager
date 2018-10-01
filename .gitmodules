@@ -35,3 +35,6 @@
 [submodule "mu-plugins/safe-redirect-manager"]
 	path = mu-plugins/safe-redirect-manager
 	url = https://github.com/tlovett1/safe-redirect-manager
+[submodule "mu-plugins/alleypack"]
+	path = mu-plugins/alleypack
+	url = git@github.com:alleyinteractive/alleypack.git
