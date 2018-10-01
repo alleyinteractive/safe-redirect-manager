@@ -11,9 +11,9 @@ define( 'CPR_PATH', dirname( __FILE__ ) );
 define( 'CPR_URL', get_template_directory_uri() );
 
 /**
-* Classes
-*/
-require_once CPR_PATH . '/inc/classes/class-term-post-link.php';
+ * Aleypack modules.
+ */
+\Alleypack\load_module( 'term-post-link', '1.0' );
 
 // WordPress utilities.
 require_once CPR_PATH . '/inc/class-wp-utils.php';

@@ -10,6 +10,14 @@ namespace Cpr;
 // Enable landing pages.
 add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Landing_Pages', 'instance' ] );
 
+// Use `page` post type as the landing page.
+add_filter(
+	'landing_page_post_type',
+	function( $post_type ) {
+		return 'page';
+	}
+);
+
 /**
  * Setup landing page options.
  *
@@ -18,17 +26,12 @@ add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Landing_Pages', 'instance' 
  */
 function landing_page_options( $options ) {
 	return [
-
-		/*
 		'homepage'  => [
 			'label' => __( 'Homepage', 'cpr' ),
 			'slugs' => [
-				// @todo figure out how to get these routes working properly.
-				'',
 				'/',
 			],
 		],
-		*/
 		'news'      => [
 			'label' => __( 'News', 'cpr' ),
 			'slugs' => [
@@ -58,7 +61,7 @@ add_filter( 'landing_page_options', __NAMESPACE__ . '\landing_page_options' );
  * @return array
  */
 function landing_page_fields( $fields ) {
-	$fields[] = new \Fieldmanager_Group(
+	$fields['classical'] = new \Fieldmanager_Group(
 		[
 			'label'      => __( 'Classical', 'cpr' ),
 			'display_if' => [

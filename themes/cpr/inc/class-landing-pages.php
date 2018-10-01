@@ -1,6 +1,6 @@
 <?php
 /**
- * Easily create an manage landing pages
+ * Easily create and manage landing pages.
  *
  * @package Cpr
  */
@@ -61,6 +61,9 @@ class Landing_Pages {
 	public function setup() {
 		$this->setup_options();
 
+		// Modify the post type.
+		$this->post_type = apply_filters( 'landing_page_post_type', $this->post_type );
+
 		// Register post type.
 		add_action( 'init', [ $this, 'register_post_type' ] );
 
@@ -68,12 +71,13 @@ class Landing_Pages {
 		add_filter( 'pre_get_posts', [ $this, 'pre_get_posts' ] );
 		add_filter( 'query_vars', [ $this, 'query_vars' ] );
 
-		// Disable Gutenberg for landing pages.
-		add_filter( 'gutenberg_can_edit_post_type', [ $this, 'disable_gutenberg' ], 10, 2 );
+		// Ensure that the permalink is always correct.
+		add_filter( 'post_link', [ $this, 'modify_permalink' ], 10, 2 );
+		add_filter( 'page_link', [ $this, 'modify_permalink' ], 10, 2 );
+		add_filter( 'post_type_link', [ $this, 'modify_permalink' ], 10, 2 );
 
 		// Landing page FM support.
-		add_action( 'fm_post_landing-page', [ $this, 'landing_page_meta' ] );
-
+		add_action( 'fm_post_' . $this->post_type, [ $this, 'landing_page_meta' ] );
 	}
 
 	/**
@@ -82,10 +86,10 @@ class Landing_Pages {
 	public function setup_options() {
 
 		// Setup landing page options.
-		$options = apply_filters( 'landing_page_options', $this->options );
+		$this->options = apply_filters( 'landing_page_options', $this->options );
 
 		// Loop through options and validate.
-		foreach ( $options as $key => $option ) {
+		foreach ( $this->options as $key => $option ) {
 
 			// Validate and force types.
 			$option['label'] = (string) ( $option['label'] ?? '' );
@@ -94,27 +98,39 @@ class Landing_Pages {
 			// Add rewrite rules for each type.
 			foreach ( $option['slugs'] as $slug ) {
 
-				// Change slug format to rewrite rule (except for root queries).
-				if ( '' !== $slug && '/' !== $slug ) {
-					$slug = "($slug)/?$";
-				}
+				switch ( $slug ) {
+					case '':
+					case '/':
+						// Homepage specific routing.
+						add_rewrite_rule(
+							'/?$',
+							add_query_arg(
+								[
+									'dispatch'          => 'landing-page',
+									'landing-page-type' => 'homepage',
+								],
+								'index.php'
+							),
+							'bottom'
+						);
+						break;
 
-				// Add rewrite for a top-level rule for this landing page type.
-				add_rewrite_rule(
-					$slug,
-					add_query_arg(
-						[
-							'dispatch'          => 'landing-page',
-							'landing-page-type' => '$matches[1]',
-						],
-						'index.php'
-					),
-					'top'
-				);
+					default:
+						add_rewrite_rule(
+							"($slug)/?$",
+							add_query_arg(
+								[
+									'dispatch'          => 'landing-page',
+									'landing-page-type' => '$matches[1]',
+								],
+								'index.php'
+							),
+							'top'
+						);
+						break;
+				}
 			}
 		}
-
-		$this->options = $options;
 	}
 
 	/**
@@ -149,9 +165,15 @@ class Landing_Pages {
 	}
 
 	/**
-	 * Register the `landing-page` post type.
+	 * Register a new post type for landing pages.
 	 */
 	public function register_post_type() {
+
+		// Ensure this is a new post type.
+		if ( post_type_exists( $this->post_type ) ) {
+			return;
+		}
+
 		$args = [
 			'label'        => __( 'Landing Pages', 'cpr' ),
 			'public'       => true,
@@ -176,16 +198,16 @@ class Landing_Pages {
 	 * @param  \WP_Query $wp_query WP_Query object.
 	 */
 	public function pre_get_posts( $wp_query ) {
-		if (
-			'landing-page' === $wp_query->get( 'dispatch' )
-			&& ! $wp_query->is_admin()
-		) {
-			$wp_query->set( 'meta_key', 'landing_page_type' );
-			$wp_query->set( 'meta_value', $wp_query->get( 'landing-page-type' ) );
-			$wp_query->set( 'post_status', 'publish' );
-			$wp_query->set( 'post_type', 'landing-page' );
-			$wp_query->set( 'posts_per_page', 1 );
+		if ( $wp_query->is_admin() || 'landing-page' !== $wp_query->get( 'dispatch' ) ) {
+			return;
 		}
+
+		// Use a landing page.
+		$wp_query->set( 'meta_key', 'landing_page_type' );
+		$wp_query->set( 'meta_value', $wp_query->get( 'landing-page-type' ) );
+		$wp_query->set( 'post_status', 'publish' );
+		$wp_query->set( 'post_type', $this->post_type );
+		$wp_query->set( 'posts_per_page', 1 );
 	}
 	/**
 	 * Add custom query vars.
@@ -200,17 +222,69 @@ class Landing_Pages {
 	}
 
 	/**
-	 * Disable Gutenberg for this post type.
+	 * Modify the permalink for the latest published landing page of any type.
 	 *
-	 * @param  boolean $enabled   Is Gutenberg enabled.
-	 * @param  string  $post_type Post type.
-	 * @return string Post type.
+	 * @param  string       $url  Post permalink.
+	 * @param  int|\WP_Post $post Post object or ID.
+	 * @return string
 	 */
-	public function disable_gutenberg( $enabled, $post_type ) {
-		if ( $this->post_type === $post_type ) {
-			$enabled = false;
+	public function modify_permalink( $url, $post ) : string {
+
+		// Ensure we're modifying the correct post type.
+		if ( get_post_type( $post ) !== $this->post_type ) {
+			return $url;
 		}
-		return $enabled;
+
+		// If we only have the ID, use it to get the post object.
+		if ( ! $post instanceof \WP_Post ) {
+			$post = get_post( absint( $post ) );
+
+			// Validate and return if needed.
+			if ( ! $post instanceof \WP_Post ) {
+				return $url;
+			}
+		}
+
+		// Get the landing page type.
+		$landing_page_type = get_post_meta( $post->ID, 'landing_page_type', true );
+		if ( empty( $landing_page_type ) ) {
+			return $url;
+		}
+
+		// Ensure this post is the latest published of the type.
+		if ( $post->ID !== $this->get_latest_landing_page_id_by_type( $landing_page_type ) ) {
+			return $url;
+		}
+
+		// Get the first slug for this landing page type.
+		$slug = $this->options[ $landing_page_type ]['slugs'][0] ?? '';
+		if ( empty( $slug ) ) {
+			return $url;
+		}
+
+		// Return a proper slug.
+		return trailingslashit( home_url( $slug ) );
+	}
+
+	/**
+	 * Get the ID for the latest landing page of a type.
+	 *
+	 * @param  string $type Landing page type.
+	 * @return int Post ID.
+	 */
+	public function get_latest_landing_page_id_by_type( string $type ) : int {
+		$query = new \WP_Query(
+			[
+				'fields'         => 'ids',
+				'meta_key'       => 'landing_page_type',
+				'meta_value'     => $type,
+				'post_status'    => 'publish',
+				'post_type'      => $this->post_type,
+				'posts_per_page' => 1,
+			]
+		);
+
+		return $query->posts[0] ?? 0;
 	}
 
 	/**

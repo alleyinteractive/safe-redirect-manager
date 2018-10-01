@@ -8,6 +8,7 @@
 
 $plugins = [
 	'/ad-layers/ad-layers.php',
+	'/alleypack/alleypack.php',
 	'/amp-wp/amp.php',
 	'/co-authors-plus/co-authors-plus.php',
 	'/edit-flow/edit_flow.php',

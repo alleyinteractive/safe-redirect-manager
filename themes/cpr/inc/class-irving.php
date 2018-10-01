@@ -54,12 +54,11 @@ class Irving {
 				$data = ( new Template\Search() )->get_irving_components( $data, $wp_query );
 				break;
 
-			// Homepages.
-			case '' === $path:
-			case '/' === $path:
-			case '/news/' === $path:
-			case '/classical/' === $path:
-			case '/openair/' === $path:
+			// Landing Pages.
+			case (
+				'landing-page' === $wp_query->get( 'dispatch' )
+				&& ! empty( $wp_query->get( 'landing-page-type' ) )
+			):
 				$data = ( new Template\Homepage() )->get_irving_components( $data, $wp_query );
 				break;
 
