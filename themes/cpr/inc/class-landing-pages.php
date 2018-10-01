@@ -239,7 +239,7 @@ class Landing_Pages {
 		if ( ! $post instanceof \WP_Post ) {
 			$post = get_post( absint( $post ) );
 
-			// Validate and die if needed.
+			// Validate and return if needed.
 			if ( ! $post instanceof \WP_Post ) {
 				return $url;
 			}
