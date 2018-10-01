@@ -1,40 +1,40 @@
 [submodule "mu-plugins/ad-layers"]
 	path = mu-plugins/ad-layers
-	url = https://github.com/alleyinteractive/ad-layers
+	url = git@github.com:alleyinteractive/ad-layers.git
 [submodule "mu-plugins/fm-zones"]
 	path = mu-plugins/fm-zones
-	url = https://github.com/alleyinteractive/fm-zones
+	url = git@github.com:alleyinteractive/fm-zones.git
 [submodule "mu-plugins/wordpress-fieldmanager"]
 	path = mu-plugins/wordpress-fieldmanager
-	url = https://github.com/alleyinteractive/wordpress-fieldmanager
+	url = git@github.com:alleyinteractive/wordpress-fieldmanager.git
 [submodule "mu-plugins/wp-irving"]
 	path = mu-plugins/wp-irving
-	url = https://github.com/alleyinteractive/wp-irving
+	url = git@github.com:alleyinteractive/wp-irving.git
 [submodule "mu-plugins/wp-seo"]
 	path = mu-plugins/wp-seo
-	url = https://github.com/alleyinteractive/wp-seo
+	url = git@github.com:alleyinteractive/wp-seo.git
 [submodule "mu-plugins/amp-wp"]
 	path = mu-plugins/amp-wp
-	url = https://github.com/Automattic/amp-wp
+	url = git@github.com:Automattic/amp-wp.git
 	branch = master
 [submodule "mu-plugins/co-authors-plus"]
 	path = mu-plugins/co-authors-plus
-	url = https://github.com/Automattic/Co-Authors-Plus
+	url = git@github.com:Automattic/Co-Authors-Plus.git
 [submodule "mu-plugins/edit-flow"]
 	path = mu-plugins/edit-flow
-	url = https://github.com/Automattic/Edit-Flow
+	url = git@github.com:Automattic/Edit-Flow.git
 [submodule "mu-plugins/msm-sitemap"]
 	path = mu-plugins/msm-sitemap
-	url = https://github.com/Automattic/msm-sitemap
+	url = git@github.com:Automattic/msm-sitemap.git
 [submodule "mu-plugins/wpcom-thumbnail-editor"]
 	path = mu-plugins/wpcom-thumbnail-editor
-	url = https://github.com/Automattic/wpcom-thumbnail-editor
+	url = git@github.com:Automattic/wpcom-thumbnail-editor.git
 [submodule "mu-plugins/wp-redis"]
 	path = mu-plugins/wp-redis
-	url = https://github.com/pantheon-systems/wp-redis
+	url = git@github.com:pantheon-systems/wp-redis.git
 [submodule "mu-plugins/safe-redirect-manager"]
 	path = mu-plugins/safe-redirect-manager
-	url = https://github.com/tlovett1/safe-redirect-manager
+	url = git@github.com:tlovett1/safe-redirect-manager.git
 [submodule "mu-plugins/alleypack"]
 	path = mu-plugins/alleypack
 	url = git@github.com:alleyinteractive/alleypack.git
