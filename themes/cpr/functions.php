@@ -39,6 +39,7 @@ if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 	require_once CPR_PATH . '/inc/components/class-body.php';
 
 	// Irving Templates.
+	require_once CPR_PATH . '/inc/templates/class-single.php';
 	require_once CPR_PATH . '/inc/templates/class-episode.php';
 	require_once CPR_PATH . '/inc/templates/class-error.php';
 	require_once CPR_PATH . '/inc/templates/class-homepage.php';
