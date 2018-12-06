@@ -1,0 +1,17 @@
+{
+	"name": "disqus_settings",
+	"contexts": [
+		{
+			"type": "submenu",
+			"page_title": { "__": "Disqus" },
+			"menu_title": { "__": "Disqus" },
+			"parent_slug": "options-general.php",
+			"capability": "manage_options"
+		}
+	],
+	"children": {
+		"forum_shortname": {
+			"label": { "__": "Disqus Forum Shortname" }
+		},
+	}
+}

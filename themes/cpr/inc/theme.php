@@ -66,6 +66,11 @@ function theme_setup() {
 		'flex-width'  => true,
 		'flex-height' => true,
 	) );
+
+	// Disable comments by default
+	update_option( 'default_comment_status', false );
+	update_option( 'default_ping_status', false );
+	update_option( 'default_pingback_flag', false );
 }
 add_action( 'after_setup_theme', __NAMESPACE__ . '\theme_setup' );
 
