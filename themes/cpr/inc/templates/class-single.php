@@ -1,8 +1,8 @@
 <?php
 /**
- * Thrive Global Single.
+ * Single Template.
  *
- * @package CPR
+ * @package Cpr
  */
 
 namespace Cpr\Template;
@@ -11,8 +11,9 @@ namespace Cpr\Template;
  * Single routing and components for WP Irving.
  */
 class Single {
+
 	/**
-	 * Post object for this single.
+	 * Post object for this episode.
 	 *
 	 * @var null|\WP_Post
 	 */
@@ -28,35 +29,37 @@ class Single {
 	/**
 	 * Return Irving components for Single templates.
 	 *
-	 * @param  array     $data     Response data.
+	 * @param  array     $data Response data.
 	 * @param  \WP_Query $wp_query Path query.
 	 * @return array Update response data.
 	 */
 	public function get_irving_components( array $data, \WP_Query $wp_query ) : array {
+
 		$this->wp_query = $wp_query;
 
 		// Get and validate the post object.
+		// @todo This returns null right now - fix in WP Irving or here.
 		$this->post = $wp_query->get_queried_object();
 		if ( ! $this->post instanceof \WP_Post || 'publish' !== $this->post->post_status ) {
 			return ( new \Cpr\Template\Error() )->get_irving_components( $data, $wp_query );
 		}
 
-		// Modify the head.
-		add_action( 'wp_irving_head', [ $this, 'modify_head' ] );
-
+		$data['page'][] = $this->get_head();
 		$data['page'][] = $this->get_body();
 
 		return $data;
 	}
 
 	/**
-	 * Add article-specific head modifications=.
+	 * Customize the head component.
 	 *
-	 * @param \WP_Irving\Component\Head $head Head object.
+	 * @return \WP_Irving\Component\Head
 	 */
-	public function modify_head( $head ) {
-		// Add AMP link.
-		$head->add_link( 'amphtml', get_permalink( $this->post->ID ) . 'amp/' );
+	public function get_head() {
+		$component = ( new \WP_Irving\Component\Head() )
+			->set_from_query( $this->wp_query );
+
+		return $component;
 	}
 
 	/**
@@ -65,22 +68,9 @@ class Single {
 	 * @return \Cpr\Component\Body
 	 */
 	public function get_body() {
-
 		// Initialize new Body component.
 		$body = ( new \Cpr\Component\Body() )
 			->set_config( 'classes', [ 'single' ] );
-
-		// Add post content.
-		$body->set_children(
-			[
-				( new \WP_Irving\Component\Content() )
-					->set_post( $this->post )
-					->set_config( 'published_date', $this->get_publish_date( 'F j, Y', $this->post ) )
-					->set_children( \WP_Irving\Component\Term::get_term_components( (array) $tags ), true )
-					->set_name( 'article-body' ),
-			],
-			true
-		);
 
 		// Add Comments and Related Posts grid.
 		if ( comments_open( $this->post->ID ) ) {

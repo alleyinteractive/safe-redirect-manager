@@ -12,6 +12,6 @@
 	"children": {
 		"forum_shortname": {
 			"label": { "__": "Disqus Forum Shortname" }
-		},
+		}
 	}
 }
