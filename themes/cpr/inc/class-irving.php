@@ -23,6 +23,14 @@ class Irving {
 
 		// Redirect template calls.
 		add_action( 'template_redirect', [ $this, 'redirect_template_calls' ] );
+
+		// Filter for Disqus forum shortname.
+		add_filter(
+			'wp_irving_disqus_forum_shortname',
+			function() {
+				return get_option( 'disqus_settings' )['forum_shortname'] ?? '';
+			}
+		);
 	}
 
 	/**

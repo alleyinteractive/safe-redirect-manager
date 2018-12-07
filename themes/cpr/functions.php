@@ -45,6 +45,7 @@ if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 	require_once CPR_PATH . '/inc/templates/class-homepage.php';
 	require_once CPR_PATH . '/inc/templates/class-search.php';
 	require_once CPR_PATH . '/inc/templates/class-term.php';
+	require_once CPR_PATH . '/inc/templates/class-term.php';
 
 	// Classes.
 	require_once CPR_PATH . '/inc/class-irving.php';

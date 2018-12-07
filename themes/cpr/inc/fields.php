@@ -37,6 +37,7 @@ function cpr_fm_post_podcast_post_section() {
 add_action( 'fm_post_podcast-post', 'cpr_fm_post_podcast_post_section' );
 /* end fm:post-podcast-post-section */
 
+<<<<<<< HEAD
 /* begin fm:submenu-analytics-settings */
 /**
  * `analytics_settings` Fieldmanager fields.
@@ -47,13 +48,33 @@ function cpr_fm_submenu_analytics_settings() {
 			'name' => 'analytics_settings',
 			'children' => [
 				'`\WP_Irving\Components\Parsely::$option_field`' => new Fieldmanager_TextField( __( 'Parse.ly Site (e.g. cpr.org)', 'cpr' ) ),
+=======
+/* begin fm:submenu-disqus-settings */
+/**
+ * `disqus_settings` Fieldmanager fields.
+ */
+function cpr_fm_submenu_disqus_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'disqus_settings',
+			'children' => [
+				'forum_shortname' => new Fieldmanager_TextField( __( 'Disqus Forum Shortname', 'cpr' ) ),
+>>>>>>> production
 			],
 		]
 	);
 	$fm->activate_submenu_page();
 }
+<<<<<<< HEAD
 add_action( 'fm_submenu_analytics_settings', 'cpr_fm_submenu_analytics_settings' );
 if ( function_exists( 'fm_register_submenu_page' ) ) {
 	fm_register_submenu_page( 'analytics_settings', 'options-general.php', __( 'Analytics', 'cpr' ), __( 'Analytics', 'cpr' ), 'manage_options' );
 }
 /* end fm:submenu-analytics-settings */
+=======
+add_action( 'fm_submenu_disqus_settings', 'cpr_fm_submenu_disqus_settings' );
+if ( function_exists( 'fm_register_submenu_page' ) ) {
+	fm_register_submenu_page( 'disqus_settings', 'options-general.php', __( 'Disqus', 'cpr' ), __( 'Disqus', 'cpr' ), 'manage_options' );
+}
+/* end fm:submenu-disqus-settings */
+>>>>>>> production
