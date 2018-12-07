@@ -46,7 +46,7 @@ function cpr_fm_submenu_analytics_settings() {
 		[
 			'name' => 'analytics_settings',
 			'children' => [
-				'`\WP_Irving\Components\Parsely::$option_field`' => new Fieldmanager_TextField( __( 'Parse.ly Site (e.g. cpr.org)', 'cpr' ) ),
+				'parsely_site' => new Fieldmanager_TextField( __( 'Parse.ly Site (e.g. cpr.org)', 'cpr' ) ),
 			],
 		]
 	);

@@ -10,7 +10,7 @@
 		}
 	],
 	"children": {
-		"`\\WP_Irving\\Components\\Parsely::$option_field`": {
+		"parsely_site": {
 			"label": { "__": "Parse.ly Site (e.g. cpr.org)" }
 		}
 	}
