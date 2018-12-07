@@ -114,8 +114,7 @@ class Irving {
 		}
 
 		// Set up Parsely
-		$parsely = new \WP_Irving\Component\Parsely();
-		$parsely->setup_head();
+		$parsely = ( new \WP_Irving\Component\Parsely() )->setup_head();
 
 		$data['defaults'] = [
 			( new \WP_Irving\Component\Head() )
