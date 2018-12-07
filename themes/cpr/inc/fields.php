@@ -72,10 +72,9 @@ if ( function_exists( 'fm_register_submenu_page' ) ) {
 	fm_register_submenu_page( 'analytics_settings', 'options-general.php', __( 'Analytics', 'cpr' ), __( 'Analytics', 'cpr' ), 'manage_options' );
 }
 /* end fm:submenu-analytics-settings */
-=======
+
 add_action( 'fm_submenu_disqus_settings', 'cpr_fm_submenu_disqus_settings' );
 if ( function_exists( 'fm_register_submenu_page' ) ) {
 	fm_register_submenu_page( 'disqus_settings', 'options-general.php', __( 'Disqus', 'cpr' ), __( 'Disqus', 'cpr' ), 'manage_options' );
 }
 /* end fm:submenu-disqus-settings */
->>>>>>> production
