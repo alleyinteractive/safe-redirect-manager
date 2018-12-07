@@ -36,3 +36,24 @@ function cpr_fm_post_podcast_post_section() {
 }
 add_action( 'fm_post_podcast-post', 'cpr_fm_post_podcast_post_section' );
 /* end fm:post-podcast-post-section */
+
+/* begin fm:submenu-disqus-settings */
+/**
+ * `disqus_settings` Fieldmanager fields.
+ */
+function cpr_fm_submenu_disqus_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'disqus_settings',
+			'children' => [
+				'forum_shortname' => new Fieldmanager_TextField( __( 'Disqus Forum Shortname', 'cpr' ) ),
+			],
+		]
+	);
+	$fm->activate_submenu_page();
+}
+add_action( 'fm_submenu_disqus_settings', 'cpr_fm_submenu_disqus_settings' );
+if ( function_exists( 'fm_register_submenu_page' ) ) {
+	fm_register_submenu_page( 'disqus_settings', 'options-general.php', __( 'Disqus', 'cpr' ), __( 'Disqus', 'cpr' ), 'manage_options' );
+}
+/* end fm:submenu-disqus-settings */
