@@ -1,0 +1,17 @@
+{
+	"name": "analytics_settings",
+	"contexts": [
+		{
+			"type": "submenu",
+			"page_title": { "__": "Analytics" },
+			"menu_title": { "__": "Analytics" },
+			"parent_slug": "options-general.php",
+			"capability": "manage_options"
+		}
+	],
+	"children": {
+		"parsely_site": {
+			"label": { "__": "Parse.ly Site (e.g. cpr.org)" }
+		}
+	}
+}

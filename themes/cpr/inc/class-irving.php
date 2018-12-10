@@ -121,8 +121,12 @@ class Irving {
 			return $data;
 		}
 
+		// Set up Parsely.
+		$parsely = ( new \WP_Irving\Component\Parsely() )->setup_head();
+
 		$data['defaults'] = [
-			new \WP_Irving\Component\Head(),
+			( new \WP_Irving\Component\Head() )
+				->set_from_query( $wp_query ),
 			( new \WP_Irving\Component\Header() )
 				->set_config( 'siteUrl', home_url() )
 				->set_children(
@@ -141,6 +145,7 @@ class Irving {
 							->set_config( 'location', 'footer' ),
 					]
 				),
+			$parsely,
 		];
 
 		return $data;
