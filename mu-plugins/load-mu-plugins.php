@@ -11,7 +11,7 @@ $plugins = [
 	'/alleypack/alleypack.php',
 	'/amp-wp/amp.php',
 	'/co-authors-plus/co-authors-plus.php',
-	'/edit-flow/edit_flow.php',
+	// '/edit-flow/edit_flow.php',
 	'/fm-zones/fm-zones.php',
 	'/msm-sitemap/msm-sitemap.php',
 	'/safe-redirect-manager/safe-redirect-manager.php',
