@@ -2,7 +2,7 @@
 /**
  * Taxonomy for Sections
  *
- * @package Cpr
+ * @package CPR
  */
 
 /**

@@ -2,7 +2,7 @@
 /**
  * Error Template.
  *
- * @package cPR
+ * @package CPR
  */
 
 namespace cPR\Template;

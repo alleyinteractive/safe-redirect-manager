@@ -2,7 +2,7 @@
 /**
  * Custom post type for Podcast Posts
  *
- * @package Cpr
+ * @package CPR
  */
 
 /**

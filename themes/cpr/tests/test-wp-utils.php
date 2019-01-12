@@ -1,5 +1,5 @@
 <?php
-namespace Cpr;
+namespace CPR;
 
 class TestWPUtils extends \WP_UnitTestCase {
 	function test_is_wp_post() {

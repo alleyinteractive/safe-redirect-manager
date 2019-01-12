@@ -2,7 +2,7 @@
 /**
  * Custom roles and capabilities
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;

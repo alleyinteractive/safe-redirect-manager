@@ -2,10 +2,10 @@
 /**
  * Manage static assets.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 // @codingStandardsIgnoreFile WordPress.VIP.RestrictedFunctions.cookies_setcookie WordPress.VIP.RestrictedVariables.cache_constraints___COOKIE
 

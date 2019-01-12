@@ -2,10 +2,10 @@
 /**
  * Add any admin manipulations here
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Remove the "Custom Fields" meta box.

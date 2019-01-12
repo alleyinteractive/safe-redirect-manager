@@ -2,7 +2,7 @@
 /**
  * An advanced template loader to DRY up template code.
  *
- * @package Cpr
+ * @package CPR
  * @copyright 2014-2017 Alley Interactive
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
  *

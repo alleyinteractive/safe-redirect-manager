@@ -2,7 +2,7 @@
 /**
  * Search modifications
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;

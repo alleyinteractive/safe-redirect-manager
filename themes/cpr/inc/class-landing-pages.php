@@ -2,10 +2,10 @@
 /**
  * Easily create and manage landing pages.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Class defining landing pages.

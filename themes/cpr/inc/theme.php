@@ -2,10 +2,10 @@
 /**
  * Theme setup.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.

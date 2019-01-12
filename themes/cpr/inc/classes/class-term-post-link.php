@@ -2,10 +2,10 @@
 /**
  * Class that links a new custom post type and term together.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Term Post Link

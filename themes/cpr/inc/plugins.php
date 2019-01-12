@@ -2,7 +2,7 @@
 /**
  * Load and customize plugins
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;

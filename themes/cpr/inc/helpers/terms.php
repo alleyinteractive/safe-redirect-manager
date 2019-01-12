@@ -2,10 +2,10 @@
 /**
  * Term helpers.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 // Link podcast taxonomy to its post editorial interface.
 \Alleypack\create_term_post_link( 'podcast', 'podcast-post' );
