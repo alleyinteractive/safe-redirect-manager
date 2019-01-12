@@ -37,7 +37,8 @@ if ( WP_Utils::wp_cli() ) {
 if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 
 	// Components.
-	// require_once CPR_PATH . '/components/class-body.php';
+	require_once CPR_PATH . '/components/global/footer/class-footer.php';
+	require_once CPR_PATH . '/components/global/slim-navigation/class-slim-navigation.php';
 
 	// Irving Templates.
 	require_once CPR_PATH . '/templates/class-single.php';
