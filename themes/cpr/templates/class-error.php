@@ -2,15 +2,15 @@
 /**
  * Error Template.
  *
- * @package Cpr
+ * @package cPR
  */
 
-namespace Cpr\Template;
+namespace cPR\Template;
 
 /**
- * Error routing and components for WP Irving.
+ * Error page template.
  */
-class Error {
+class Error extends \Alleypack\WP_Component\Template {
 
 	/**
 	 * Return Irving components for 404 templates.

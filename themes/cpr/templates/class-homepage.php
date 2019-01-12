@@ -2,15 +2,17 @@
 /**
  * Homepage Template.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr\Template;
+namespace CPR\Template;
 
 /**
- * Homepage routing and components for WP Irving.
+ * Homepage template.
  */
-class Homepage {
+class Homepage extends \Alleypack\WP_Component\Template {
+
+	use \Alleypack\WP_Component\WP_Post;
 
 	/**
 	 * WP Query for this request.

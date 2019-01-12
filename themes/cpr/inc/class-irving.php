@@ -2,10 +2,10 @@
 /**
  * Irving implementation.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Entry point for CPR's Irving implementation.
@@ -22,7 +22,7 @@ class Irving {
 		add_action( 'wp_irving_components_route', [ $this, 'set_embed_scripts' ], 11, 3 );
 
 		// Redirect template calls.
-		add_action( 'template_redirect', [ $this, 'redirect_template_calls' ] );
+		// add_action( 'template_redirect', [ $this, 'redirect_template_calls' ] );
 
 		// Filter for Disqus forum shortname.
 		add_filter(
@@ -56,51 +56,53 @@ class Irving {
 
 		switch ( true ) {
 			// Search results.
-			// Takes precedence over Homepage to facilitate root search results
-			// page ie. /?s=asdf.
-			case $wp_query->is_search():
-				$data = ( new Template\Search() )->get_irving_components( $data, $wp_query );
-				break;
+			// case $wp_query->is_search():
+			// 	$data = ( new Template\Search() )->get_irving_components( $data, $wp_query );
+			// 	break;
 
 			// Landing Pages.
 			case (
 				'landing-page' === $wp_query->get( 'dispatch' )
 				&& ! empty( $wp_query->get( 'landing-page-type' ) )
 			):
-				$data = ( new Template\Homepage() )->get_irving_components( $data, $wp_query );
+				$template = new Template\Homepage();
+				$template->set_post( $wp_query->post );
 				break;
 
-			// Author archive.
-			case $wp_query->is_author():
-				$data = ( new Template\Author() )->get_irving_components( $data, $wp_query );
-				break;
+			// // Author archive.
+			// case $wp_query->is_author():
+			// 	$data = ( new Template\Author() )->get_irving_components( $data, $wp_query );
+			// 	break;
 
-			// Terms.
-			case $wp_query->is_tax():
-			case $wp_query->is_tag():
-			case $wp_query->is_category():
-				$data = ( new Template\Term() )->get_irving_components( $data, $wp_query );
-				break;
+			// // Terms.
+			// case $wp_query->is_tax():
+			// case $wp_query->is_tag():
+			// case $wp_query->is_category():
+			// 	$data = ( new Template\Term() )->get_irving_components( $data, $wp_query );
+			// 	break;
 
-			// Podcast episode.
-			case 'episode' === $path_parts[0]:
-				$data = ( new Template\Episode() )->get_irving_components( $data, $wp_query );
-				break;
+			// // Podcast episode.
+			// case 'episode' === $path_parts[0]:
+			// 	$data = ( new Template\Episode() )->get_irving_components( $data, $wp_query );
+			// 	break;
 
-			// Single.
-			case $wp_query->is_single():
-				$data = ( new Template\Single() )->get_irving_components( $data, $wp_query );
-				break;
+			// // Single.
+			// case $wp_query->is_single():
+			// 	$data = ( new Template\Single() )->get_irving_components( $data, $wp_query );
+			// 	break;
 
-			// Page.
-			case $wp_query->is_page():
-				$data = ( new Template\Page() )->get_irving_components( $data, $wp_query );
-				break;
+			// // Page.
+			// case $wp_query->is_page():
+			// 	$data = ( new Template\Page() )->get_irving_components( $data, $wp_query );
+			// 	break;
 
-			// Error.
-			default:
-				$data = ( new Template\Error() )->get_irving_components( $data, $wp_query );
+			// // Error.
+			// default:
+			// 	$data = ( new Template\Error() )->get_irving_components( $data, $wp_query );
 		}
+
+		// Get post.
+		$data = $template->get_irving_components( $data, $wp_query );
 
 		return (array) $data;
 	}
