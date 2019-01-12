@@ -2,10 +2,10 @@
 /**
  * Class file for WP_Utils.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * WordPress-specific helpers.

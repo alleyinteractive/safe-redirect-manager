@@ -2,10 +2,10 @@
 /**
  * Helper functions
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Get the base template part for the current request.

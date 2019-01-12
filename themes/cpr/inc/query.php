@@ -4,7 +4,7 @@
  * Modifications tied to a larger features should reside with the rest of the
  * code for that feature.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;

@@ -2,7 +2,7 @@
 /**
  * Post type base class file
  *
- * @package Cpr
+ * @package CPR
  */
 
 /**

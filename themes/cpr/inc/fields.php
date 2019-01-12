@@ -2,7 +2,7 @@
 /**
  * Fieldmanager fields
  *
- * @package Cpr
+ * @package CPR
  */
 
 

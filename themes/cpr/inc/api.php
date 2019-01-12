@@ -2,7 +2,7 @@
 /**
  * Third-party api integrations, third-party data feeds, etc.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;

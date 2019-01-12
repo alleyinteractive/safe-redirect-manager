@@ -4,10 +4,10 @@
  *
  * @copyright 2014-2017 Alley Interactive
  * @license http://www.gnu.org/licenses/gpl-2.0.html GPLv2
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Template partial.

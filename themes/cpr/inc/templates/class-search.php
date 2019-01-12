@@ -2,7 +2,7 @@
 /**
  * Search Template.
  *
- * @package Cpr
+ * @package CPR
  */
 
 namespace Cpr\Template;

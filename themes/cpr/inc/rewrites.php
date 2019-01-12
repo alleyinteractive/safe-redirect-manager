@@ -2,10 +2,10 @@
 /**
  * Custom rewrite modifications
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Custom rewrites for podcasts.

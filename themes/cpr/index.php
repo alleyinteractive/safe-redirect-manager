@@ -2,7 +2,7 @@
 /**
  * The main template file.
  *
- * @package Cpr
+ * @package CPR
  */
 ?>
 

@@ -2,10 +2,10 @@
 /**
  * SEO modifications
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Modify post types that WP SEO applies to.

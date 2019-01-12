@@ -2,7 +2,7 @@
 /**
  * Class file for the Body component.
  *
- * @package Cpr
+ * @package CPR
  */
 
 namespace Cpr\Component;

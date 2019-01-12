@@ -2,10 +2,10 @@
 /**
  * Irving implementation.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
 
 /**
  * Entry point for CPR's Irving implementation.

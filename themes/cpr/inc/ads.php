@@ -2,7 +2,7 @@
 /**
  * Ad integration
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;

@@ -4,7 +4,7 @@
  *
  * See api.php for external feeds.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;

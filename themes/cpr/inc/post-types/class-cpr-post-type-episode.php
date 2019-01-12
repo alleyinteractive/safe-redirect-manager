@@ -2,7 +2,7 @@
 /**
  * Custom post type for Episodes
  *
- * @package Cpr
+ * @package CPR
  */
 
 /**

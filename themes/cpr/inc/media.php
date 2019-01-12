@@ -3,7 +3,7 @@
  * This file holds configuration settings and functions for media, including
  * image sizes and custom field handling.
  *
- * @package Cpr
+ * @package CPR
  */
 
-namespace Cpr;
+namespace CPR;
