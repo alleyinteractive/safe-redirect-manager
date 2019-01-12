@@ -1,6 +1,6 @@
 <?php
 /**
- * Irving implementation.
+ * Routing.
  *
  * @package CPR
  */
@@ -8,9 +8,9 @@
 namespace CPR;
 
 /**
- * Entry point for CPR's Irving implementation.
+ * Routing.
  */
-class Irving {
+class Routing {
 
 	/**
 	 * Hook into WP-Irving.
@@ -41,15 +41,16 @@ class Irving {
 		// Build defaults.
 		if ( 'site' === $context ) {
 			$data['defaults'] = [
-				new Slim_Navigation(),
+				new Component\Slim_Navigation(),
 				new \Alleypack\WP_Component\Body(),
-				new Footer(),
+				new Component\Footer(),
 			];
 		}
 
 		switch ( true ) {
-			$wp_query->is_home():
-				$data['page'] = ( new Component\Homepage( $data, $wp_query ) )->get_components();
+			case $wp_query->is_page():
+				$template = new Template\Homepage();
+				$template->set_post( $wp_query->post );
 				break;
 		}
 
@@ -60,6 +61,6 @@ class Irving {
 add_action(
 	'init',
 	function() {
-		new Irving();
+		new Routing();
 	}
 );

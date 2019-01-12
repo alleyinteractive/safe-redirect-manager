@@ -37,6 +37,7 @@ if ( WP_Utils::wp_cli() ) {
 if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 
 	// Components.
+	require_once CPR_PATH . '/components/global/donate-button/class-donate-button.php';
 	require_once CPR_PATH . '/components/global/footer/class-footer.php';
 	require_once CPR_PATH . '/components/global/slim-navigation/class-slim-navigation.php';
 
@@ -50,7 +51,7 @@ if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 	require_once CPR_PATH . '/templates/class-term.php';
 
 	// Classes.
-	require_once CPR_PATH . '/inc/class-irving.php';
+	require_once CPR_PATH . '/inc/class-routing.php';
 }
 
 // Ad integrations.

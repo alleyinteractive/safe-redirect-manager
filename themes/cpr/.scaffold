@@ -1,10 +1,11 @@
 {
   "version": "0.4.5",
-  "cpt:episode": "03a0aff68c7e317ffb086d3818cf1aac",
+  "cpt:episode": "d91c28167fa2480b8c05afda688fcb48",
   "tax:podcast": "3404ea67e9c2cd238865bd33160b1537",
   "tax:section": "7912cc1a3aae499a4fec6c4cc1303800",
-  "cpt:podcast-post": "8c30f719589d667c263b3d3730642982",
+  "cpt:podcast-post": "8ce10d26a47129ac7b0a48bb0f63d124",
   "fm:post-podcast-post-section": "df2cb01914c529e204266a5f45b7d249",
-  "fm:submenu-analytics-settings": "5812fd4339d82d8d1f6084c541f7b816",
-  "fm:submenu-disqus-settings": "1b9b96bbfc11141e948d5c0b121ee82a"
+  "fm:submenu-analytics-settings": "ffec2924ec7307dcff2810d8f26f0902",
+  "fm:submenu-disqus-settings": "1b9b96bbfc11141e948d5c0b121ee82a",
+  "fm:submenu-settings": "50007f8ecee696b5bcf8eca83821400d"
 }

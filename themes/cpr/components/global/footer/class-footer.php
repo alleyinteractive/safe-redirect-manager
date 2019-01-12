@@ -2,20 +2,20 @@
 /**
  * Footer component.
  *
- * @package WP_Component
+ * @package CPR
  */
 
-namespace Alleypack\WP_Component;
+namespace CPR\Component;
 
 /**
  * Footer.
  */
-class Footer extends Component {
+class Footer extends \Alleypack\WP_Component\Component {
 
 	/**
 	 * Unique component slug.
 	 *
 	 * @var string
 	 */
-	public $slug = 'footer';
+	public $name = 'footer';
 }

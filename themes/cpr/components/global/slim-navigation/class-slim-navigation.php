@@ -2,20 +2,31 @@
 /**
  * Slim Navigation component.
  *
- * @package WP_Component
+ * @package CPR
  */
 
-namespace Alleypack\WP_Component;
+namespace CPR\Component;
 
 /**
  * Slim Navigation.
  */
-class Slim_Navigation extends Component {
+class Slim_Navigation extends \Alleypack\WP_Component\Component {
 
 	/**
 	 * Unique component slug.
 	 *
 	 * @var string
 	 */
-	public $slug = 'slim-navigation';
+	public $name = 'slim-navigation';
+
+	/**
+	 * Define default children.
+	 *
+	 * @return array Default children.
+	 */
+	public function default_children() {
+		return [
+			new Donate_Button(),
+		];
+	}
 }
