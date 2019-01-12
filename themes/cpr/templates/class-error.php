@@ -1,27 +1,30 @@
 <?php
 /**
- * Error Template.
+ * Error Template Component.
  *
  * @package CPR
  */
 
-namespace cPR\Template;
+namespace CPR\Template;
 
 /**
  * Error page template.
  */
-class Error extends \Alleypack\WP_Component\Template {
+class Error extends \Alleypack\WP_Component\Component {
 
 	/**
-	 * Return Irving components for 404 templates.
+	 * Unique component slug.
 	 *
-	 * @param  array     $data     Response data.
-	 * @param  \WP_Query $wp_query Path query.
-	 * @return array               Updated response data.
+	 * @var string
 	 */
-	public function get_irving_components( array $data, \WP_Query $wp_query ) : array {
+	public $name = 'error';
 
-		// Apply 404 status.
+	/**
+	 * Create template children.
+	 *
+	 * @return array
+	 */
+	public function default_children() {
 		add_filter(
 			'wp_irving_components_route_status',
 			function( $status ) {
@@ -29,13 +32,8 @@ class Error extends \Alleypack\WP_Component\Template {
 			}
 		);
 
-		$data['page'][] = ( new \Cpr\Component\Body() )
-			->set_children(
-				[
-					new \WP_Irving\Component\Component( 'error' ),
-				]
-			);
-
-		return $data;
+		return [
+			new \Alleypack\WP_Component\Body(),
+		];
 	}
 }

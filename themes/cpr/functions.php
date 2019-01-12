@@ -42,16 +42,14 @@ if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 	require_once CPR_PATH . '/components/global/slim-navigation/class-slim-navigation.php';
 
 	// Irving Templates.
-	require_once CPR_PATH . '/templates/class-single.php';
+	require_once CPR_PATH . '/templates/class-article.php';
 	require_once CPR_PATH . '/templates/class-episode.php';
 	require_once CPR_PATH . '/templates/class-error.php';
-	require_once CPR_PATH . '/templates/class-homepage.php';
+	require_once CPR_PATH . '/templates/class-landing-page.php';
+	require_once CPR_PATH . '/templates/class-page.php';
 	require_once CPR_PATH . '/templates/class-search.php';
 	require_once CPR_PATH . '/templates/class-term.php';
 	require_once CPR_PATH . '/templates/class-term.php';
-
-	// Classes.
-	require_once CPR_PATH . '/inc/class-routing.php';
 }
 
 // Ad integrations.
@@ -84,12 +82,14 @@ require_once CPR_PATH . '/inc/landing-pages.php';
 // Media includes.
 require_once CPR_PATH . '/inc/media.php';
 
-
 // Query modifications and manipulations.
 require_once CPR_PATH . '/inc/query.php';
 
 // Rewrites.
 require_once CPR_PATH . '/inc/rewrites.php';
+
+// Routing.
+require_once CPR_PATH . '/inc/routing.php';
 
 // Search.
 require_once CPR_PATH . '/inc/search.php';
