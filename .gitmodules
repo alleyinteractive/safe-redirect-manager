@@ -34,3 +34,6 @@
 [submodule "mu-plugins/alleypack"]
 	path = mu-plugins/alleypack
 	url = git@github.com:alleyinteractive/alleypack.git
+[submodule "mu-plugins/wp-components"]
+	path = mu-plugins/wp-components
+	url = git@github.com:alleyinteractive/wp-components.git
