@@ -1,0 +1,32 @@
+<?php
+/**
+ * Slim Navigation Menu component.
+ *
+ * @package CPR
+ */
+
+namespace CPR\Component\Slim_Navigation;
+
+/**
+ * Slim Navigation Menu.
+ */
+class Menu extends \WP_Component\Component {
+
+	/**
+	 * Unique component slug.
+	 *
+	 * @var string
+	 */
+	public $name = 'slim-navigation-menu';
+
+	public function default_children() {
+
+		$children = [];
+
+		$children[] = ( new Menu_Item() )
+			->set_config( 'label', __( 'News', 'cpr' ) )
+			->set_config( 'link', home_url( '/news/' ) );
+
+		return $children;
+	}
+}

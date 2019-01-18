@@ -32,13 +32,42 @@ if ( WP_Utils::wp_cli() ) {
 }
 
 // WP Irving.
-// @todo consolidate file locations.
 if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 
-	// Components.
-	require_once CPR_PATH . '/components/global/donate-button/class-donate-button.php';
-	require_once CPR_PATH . '/components/global/footer/class-footer.php';
-	require_once CPR_PATH . '/components/global/slim-navigation/class-slim-navigation.php';
+	/**
+	 * Autoload components.
+	 *
+	 * @param string $class Class name.
+	 */
+	spl_autoload_register(
+		function( $class ) {
+			$class = ltrim( $class, '\\' );
+			if ( false !== strpos( $class, 'CPR\\Component\\' ) ) {
+
+				/**
+				 * Trip the namespace, replace underscores with dashes, and lowercase.
+				 *
+				 * `\CPR\Component\Slim_Navigation\Menu`
+				 * becomes
+				 * `slim-navigation\class-menu.php`
+				 */
+				$class = strtolower(
+					str_replace(
+						[ 'CPR\\Component\\', '_' ],
+						[ '', '-' ],
+						$class
+					)
+				);
+
+				$dirs  = explode( '\\', $class );
+				$class = array_pop( $dirs );
+				$path  = get_template_directory(). rtrim( '/components/' . implode( '/', $dirs ), '/' ) . '/class-' . $class . '.php';
+				if ( file_exists( $path ) ) {
+					require_once( $path );
+				}
+			}
+		}
+	);
 
 	// Irving Templates.
 	require_once CPR_PATH . '/templates/class-article.php';

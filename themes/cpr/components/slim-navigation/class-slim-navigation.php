@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component;
+namespace CPR\Component\Slim_Navigation;
 
 /**
  * Slim Navigation.
@@ -26,7 +26,11 @@ class Slim_Navigation extends \WP_Component\Component {
 	 */
 	public function default_children() {
 		return [
-			new Donate_Button(),
+			new Menu(),
+			new Listen_Live(),
+			new \CPR\Component\Social_Links(),
+			new Search(),
+			new \CPR\Component\Donate_Button(),
 		];
 	}
 }
