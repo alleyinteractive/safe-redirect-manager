@@ -10,9 +10,9 @@ namespace CPR\Template;
 /**
  * Article template.
  */
-class Article extends WP_Component\Component {
+class Article extends \WP_Component\Component {
 
-	use \Alleypack\WP_Component\WP_Post;
+	use \WP_Component\WP_Post;
 
 	/**
 	 * Unique component slug.
@@ -24,6 +24,6 @@ class Article extends WP_Component\Component {
 	/**
 	 * Hook into post being set.
 	 */
-	public function post_has_set() : array {
+	public function post_has_set() {
 	}
 }

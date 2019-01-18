@@ -10,7 +10,7 @@ namespace CPR\Template;
 /**
  * Error page template.
  */
-class Error extends WP_Component\Component {
+class Error extends \WP_Component\Component {
 
 	/**
 	 * Unique component slug.
@@ -33,7 +33,7 @@ class Error extends WP_Component\Component {
 		);
 
 		return [
-			new \Alleypack\WP_Component\Body(),
+			new \WP_Component\Body(),
 		];
 	}
 }

@@ -30,7 +30,7 @@ function build_components_endpoint(
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
 			new Component\Slim_Navigation(),
-			new \Alleypack\WP_Component\Body(),
+			new \WP_Component\Body(),
 			new Component\Footer(),
 		];
 	}

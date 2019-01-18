@@ -10,9 +10,9 @@ namespace CPR\Template;
 /**
  * Landing Page template.
  */
-class Landing_Page extends WP_Component\Component {
+class Landing_Page extends \WP_Component\Component {
 
-	use \Alleypack\WP_Component\WP_Post;
+	use \WP_Component\WP_Post;
 
 	/**
 	 * Unique component slug.
@@ -25,7 +25,7 @@ class Landing_Page extends WP_Component\Component {
 	 * Hook into post being set.
 	 */
 	public function post_has_set() {
-		$body = new \Alleypack\WP_Component\Body();
+		$body = new \WP_Component\Body();
 
 		// Set the children based on landing page type.
 		$type = get_post_meta( $this->post->ID, 'landing_page_type', true );

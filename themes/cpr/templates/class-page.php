@@ -10,9 +10,9 @@ namespace CPR\Template;
 /**
  * Page template.
  */
-class Page extends WP_Component\Component {
+class Page extends \WP_Component\Component {
 
-	use \Alleypack\WP_Component\WP_Post;
+	use \WP_Component\WP_Post;
 
 	/**
 	 * Unique component slug.

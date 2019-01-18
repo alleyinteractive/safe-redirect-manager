@@ -10,7 +10,7 @@ namespace CPR\Component;
 /**
  * Donate Button.
  */
-class Donate_Button extends WP_Component\Component {
+class Donate_Button extends \WP_Component\Component {
 
 	/**
 	 * Unique component slug.
