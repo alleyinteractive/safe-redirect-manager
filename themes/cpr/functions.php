@@ -14,6 +14,7 @@ define( 'CPR_URL', get_template_directory_uri() );
  * Aleypack modules.
  */
 \Alleypack\load_module( 'term-post-link', '1.0' );
+\Alleypack\load_module( 'wp-components', '1.0' );
 
 // WordPress utilities.
 require_once CPR_PATH . '/inc/class-wp-utils.php';
@@ -36,19 +37,19 @@ if ( WP_Utils::wp_cli() ) {
 if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 
 	// Components.
-	require_once CPR_PATH . '/inc/components/class-body.php';
+	require_once CPR_PATH . '/components/global/donate-button/class-donate-button.php';
+	require_once CPR_PATH . '/components/global/footer/class-footer.php';
+	require_once CPR_PATH . '/components/global/slim-navigation/class-slim-navigation.php';
 
 	// Irving Templates.
-	require_once CPR_PATH . '/inc/templates/class-single.php';
-	require_once CPR_PATH . '/inc/templates/class-episode.php';
-	require_once CPR_PATH . '/inc/templates/class-error.php';
-	require_once CPR_PATH . '/inc/templates/class-homepage.php';
-	require_once CPR_PATH . '/inc/templates/class-search.php';
-	require_once CPR_PATH . '/inc/templates/class-term.php';
-	require_once CPR_PATH . '/inc/templates/class-term.php';
-
-	// Classes.
-	require_once CPR_PATH . '/inc/class-irving.php';
+	require_once CPR_PATH . '/templates/class-article.php';
+	require_once CPR_PATH . '/templates/class-episode.php';
+	require_once CPR_PATH . '/templates/class-error.php';
+	require_once CPR_PATH . '/templates/class-landing-page.php';
+	require_once CPR_PATH . '/templates/class-page.php';
+	require_once CPR_PATH . '/templates/class-search.php';
+	require_once CPR_PATH . '/templates/class-term.php';
+	require_once CPR_PATH . '/templates/class-term.php';
 }
 
 // Ad integrations.
@@ -81,12 +82,14 @@ require_once CPR_PATH . '/inc/landing-pages.php';
 // Media includes.
 require_once CPR_PATH . '/inc/media.php';
 
-
 // Query modifications and manipulations.
 require_once CPR_PATH . '/inc/query.php';
 
 // Rewrites.
 require_once CPR_PATH . '/inc/rewrites.php';
+
+// Routing.
+require_once CPR_PATH . '/inc/routing.php';
 
 // Search.
 require_once CPR_PATH . '/inc/search.php';

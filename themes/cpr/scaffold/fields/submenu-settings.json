@@ -1,0 +1,39 @@
+{
+	"name": "cpr-settings",
+	"contexts": [
+		{
+			"type": "submenu",
+			"page_title": { "__": "CPR Settings" },
+			"menu_title": { "__": "CPR Settings" },
+			"parent_slug": "options-general.php",
+			"capability": "manage_options"
+		}
+	],
+	"tabbed": "vertical",
+	"children": {
+		"analytics": {
+			"label": { "__": "Analytics" },
+			"children": {
+				"parsely_site": {
+					"label": { "__": "Parse.ly Site (e.g. cpr.org)" }
+				}
+			}
+		},
+		"giving": {
+			"label": { "__": "Giving" },
+			"children": {
+				"donate": {
+					"children": "`( new \\CPR\\Component\\Donate_Button() )->get_fm_fields()`"
+				}
+			}
+		},
+		"engagement": {
+			"label": { "__": "Engagement" },
+			"children": {
+				"forum_shortname": {
+					"label": { "__": "Disqus Forum Shortname" }
+				}
+			}
+		}
+	}
+}

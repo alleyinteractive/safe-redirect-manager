@@ -2,7 +2,7 @@
 /**
  * Taxonomy for Podcasts
  *
- * @package CPR
+ * @package Cpr
  */
 
 /**

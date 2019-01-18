@@ -5,7 +5,6 @@
  * @package CPR
  */
 
-
 /* begin fm:post-podcast-post-section */
 /**
  * `post-podcast-post-section` Fieldmanager fields.
@@ -37,6 +36,55 @@ function cpr_fm_post_podcast_post_section() {
 add_action( 'fm_post_podcast-post', 'cpr_fm_post_podcast_post_section' );
 /* end fm:post-podcast-post-section */
 
+/* begin fm:submenu-settings */
+/**
+ * `cpr-settings` Fieldmanager fields.
+ */
+function cpr_fm_submenu_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'cpr-settings',
+			'tabbed' => 'vertical',
+			'children' => [
+				'analytics' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Analytics', 'cpr' ),
+						'children' => [
+							'parsely_site' => new Fieldmanager_TextField( __( 'Parse.ly Site (e.g. cpr.org)', 'cpr' ) ),
+						],
+					]
+				),
+				'giving' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Giving', 'cpr' ),
+						'children' => [
+							'donate' => new Fieldmanager_Group(
+								[
+									'children' => ( new \CPR\Component\Donate_Button() )->get_fm_fields(),
+								]
+							),
+						],
+					]
+				),
+				'engagement' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Engagement', 'cpr' ),
+						'children' => [
+							'forum_shortname' => new Fieldmanager_TextField( __( 'Disqus Forum Shortname', 'cpr' ) ),
+						],
+					]
+				),
+			],
+		]
+	);
+	$fm->activate_submenu_page();
+}
+add_action( 'fm_submenu_cpr-settings', 'cpr_fm_submenu_settings' );
+if ( function_exists( 'fm_register_submenu_page' ) ) {
+	fm_register_submenu_page( 'cpr-settings', 'options-general.php', __( 'CPR Settings', 'cpr' ), __( 'CPR Settings', 'cpr' ), 'manage_options' );
+}
+/* end fm:submenu-settings */
+
 /* begin fm:submenu-analytics-settings */
 /**
  * `analytics_settings` Fieldmanager fields.
@@ -52,6 +100,12 @@ function cpr_fm_submenu_analytics_settings() {
 	);
 	$fm->activate_submenu_page();
 }
+add_action( 'fm_submenu_analytics_settings', 'cpr_fm_submenu_analytics_settings' );
+if ( function_exists( 'fm_register_submenu_page' ) ) {
+	fm_register_submenu_page( 'analytics_settings', 'options-general.php', __( 'Analytics', 'cpr' ), __( 'Analytics', 'cpr' ), 'manage_options' );
+}
+/* end fm:submenu-analytics-settings */
+
 /* begin fm:submenu-disqus-settings */
 /**
  * `disqus_settings` Fieldmanager fields.
@@ -67,12 +121,6 @@ function cpr_fm_submenu_disqus_settings() {
 	);
 	$fm->activate_submenu_page();
 }
-add_action( 'fm_submenu_analytics_settings', 'cpr_fm_submenu_analytics_settings' );
-if ( function_exists( 'fm_register_submenu_page' ) ) {
-	fm_register_submenu_page( 'analytics_settings', 'options-general.php', __( 'Analytics', 'cpr' ), __( 'Analytics', 'cpr' ), 'manage_options' );
-}
-/* end fm:submenu-analytics-settings */
-
 add_action( 'fm_submenu_disqus_settings', 'cpr_fm_submenu_disqus_settings' );
 if ( function_exists( 'fm_register_submenu_page' ) ) {
 	fm_register_submenu_page( 'disqus_settings', 'options-general.php', __( 'Disqus', 'cpr' ), __( 'Disqus', 'cpr' ), 'manage_options' );
