@@ -10,7 +10,7 @@ namespace CPR\Template;
 /**
  * Error page template.
  */
-class Error extends \Alleypack\WP_Component\Component {
+class Error extends WP_Component\Component {
 
 	/**
 	 * Unique component slug.

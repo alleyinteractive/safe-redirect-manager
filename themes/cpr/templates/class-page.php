@@ -10,7 +10,7 @@ namespace CPR\Template;
 /**
  * Page template.
  */
-class Page extends \Alleypack\WP_Component\Component {
+class Page extends WP_Component\Component {
 
 	use \Alleypack\WP_Component\WP_Post;
 

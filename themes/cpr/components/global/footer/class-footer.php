@@ -10,7 +10,7 @@ namespace CPR\Component;
 /**
  * Footer.
  */
-class Footer extends \Alleypack\WP_Component\Component {
+class Footer extends WP_Component\Component {
 
 	/**
 	 * Unique component slug.

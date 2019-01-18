@@ -10,7 +10,7 @@ namespace CPR\Template;
 /**
  * Landing Page template.
  */
-class Landing_Page extends \Alleypack\WP_Component\Component {
+class Landing_Page extends WP_Component\Component {
 
 	use \Alleypack\WP_Component\WP_Post;
 
