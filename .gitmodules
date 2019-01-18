@@ -13,10 +13,6 @@
 [submodule "mu-plugins/wp-seo"]
 	path = mu-plugins/wp-seo
 	url = git@github.com:alleyinteractive/wp-seo.git
-[submodule "mu-plugins/amp-wp"]
-	path = mu-plugins/amp-wp
-	url = git@github.com:Automattic/amp-wp.git
-	branch = master
 [submodule "mu-plugins/co-authors-plus"]
 	path = mu-plugins/co-authors-plus
 	url = git@github.com:Automattic/Co-Authors-Plus.git
