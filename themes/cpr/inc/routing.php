@@ -29,9 +29,10 @@ function build_components_endpoint(
 	// Build defaults.
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
-			new Component\Slim_Navigation(),
+			new Component\Slim_Navigation\Slim_Navigation(),
+			new Component\Header\Header(),
 			new \WP_Component\Body(),
-			new Component\Footer(),
+			new Component\Footer\Footer(),
 		];
 	}
 

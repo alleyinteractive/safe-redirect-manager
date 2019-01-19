@@ -1,6 +1,6 @@
 <?php
 /**
- * Footer component.
+ * Logo component.
  *
  * @package CPR
  */
@@ -8,14 +8,14 @@
 namespace CPR\Component;
 
 /**
- * Footer.
+ * Logo.
  */
-class Footer extends \WP_Component\Component {
+class Logo extends \WP_Component\Component {
 
 	/**
 	 * Unique component slug.
 	 *
 	 * @var string
 	 */
-	public $name = 'footer';
+	public $name = 'logo';
 }
