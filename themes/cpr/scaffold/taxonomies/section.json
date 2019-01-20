@@ -1,9 +1,11 @@
 {
 	"object_types": [
+		"post",
 		"podcast-episode",
 		"podcast-post"
 	],
 	"hierarchical": false,
 	"public": true,
-	"meta_box_cb": false
+	"meta_box_cb": false,
+	"show_in_rest": false
 }

@@ -12,6 +12,7 @@ add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Landing_Pages', 'instance' 
 
 // Add Homepage fields.
 add_filter( 'landing_page_fm_children', [ '\\CPR\\Component\\Templates\\Homepage', 'landing_page_fields' ] );
+add_filter( 'landing_page_fm_children', [ '\\CPR\\Component\\Templates\\News', 'landing_page_fields' ] );
 
 /**
  * Setup landing page options.

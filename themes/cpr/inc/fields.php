@@ -31,8 +31,9 @@ function cpr_fm_post_podcast_post_section() {
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Section', 'cpr' ), [ 'podcast-post' ], 'side' );
+	$fm->add_meta_box( __( 'Section', 'cpr' ), [ 'post', 'podcast-post' ], 'side' );
 }
+add_action( 'fm_post_post', 'cpr_fm_post_podcast_post_section' );
 add_action( 'fm_post_podcast-post', 'cpr_fm_post_podcast_post_section' );
 /* end fm:post-podcast-post-section */
 
