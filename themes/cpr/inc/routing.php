@@ -54,12 +54,15 @@ function build_components_endpoint(
 				case 'homepage':
 					$template = ( new Component\Templates\Homepage() )->set_post( $wp_query->post );
 					break;
+
 				case 'news':
 					$template = ( new Component\Templates\News() )->set_post( $wp_query->post );
 					break;
+
 				case 'classical':
 					$template = ( new Component\Templates\Classical() )->set_post( $wp_query->post );
 					break;
+
 				case 'openair':
 					$template = ( new Component\Templates\Openair() )->set_post( $wp_query->post );
 					break;
@@ -67,24 +70,32 @@ function build_components_endpoint(
 			break;
 
 
-		// Author archive.
+		/**
+		 * Author archive.
+		 */
 		case $wp_query->is_author():
 			$template = ( new Component\Templates\Author_Archive() )->set_query( $wp_query );
 			break;
 
-		// Terms.
+		/**
+		 * Term archives.
+		 */
 		case $wp_query->is_tax():
 		case $wp_query->is_tag():
 		case $wp_query->is_category():
 			$template = ( new Component\Templates\Term_Archive() )->set_post( $wp_query->post );
 			break;
 
-		// Article.
+		/**
+		 * Article.
+		 */
 		case $wp_query->is_single():
 			$template = ( new Component\Templates\Article() )->set_post( $wp_query->post );
 			break;
 
-		// Pages.
+		/**
+		 * Page.
+		 */
 		case $wp_query->is_page():
 			$template = ( new Component\Templates\Page() )->set_post( $wp_query->post );
 			break;
