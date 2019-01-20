@@ -29,9 +29,10 @@ class Content_Item extends \WP_Component\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'eyebrow_label' => '',
-			'eyebrow_link'  => '',
-			'title'         => '',
+			'eyebrow_label'    => '',
+			'eyebrow_link'     => '',
+			'eyebrow_location' => 'bottom',
+			'title'            => '',
 		];
 	}
 

@@ -24,6 +24,11 @@ trait WP_Post {
 	 */
 	public function set_eyebrow() {
 		switch ( $this->post->post_type ?? '' ) {
+			case 'post':
+				$this->set_config( 'eyebrow_label', __( 'Placeholder Eyebrow', 'cpr' ) );
+				$this->set_config( 'eyebrow_link', home_url( '/placeholder-eyebrow/' ) );
+				break;
+
 			case 'podcast-episode':
 				$podcast_terms = wp_get_post_terms( $this->get_post_id(), 'podcast' );
 				if ( $podcast_terms[0] instanceof \WP_Term ) {

@@ -13,6 +13,7 @@ namespace CPR\Component\Modules;
 class Latest_Podcast_Episodes extends \WP_Component\Component {
 
 	use \Alleypack\FM_Module;
+	use \CPR\Backfill;
 
 	/**
 	 * Unique component slug.
@@ -75,25 +76,18 @@ class Latest_Podcast_Episodes extends \WP_Component\Component {
 	public function parse_from_fm_data( array $fm_data ) : Latest_Podcast_Episodes {
 		$this->set_config( 'heading', (string) ( $fm_data['heading'] ?? $this->get_default_heading() ) );
 
-		$episode_ids = $fm_data['episode_ids'] ?? [];
-
-		if ( 4 !== count( $episode_ids ) ) {
-			$backfill_query = new \Alleypack\Unique_WP_Query(
-				[
-					'post_type'      => 'podcast-episode',
-					'post__not_in'   => $episode_ids,
-					'posts_per_page' => ( 4 - count( $episode_ids ) ),
-					'fields'         => 'ids',
-				]
-			);
-
-			if ( ! empty( $backfill_query->posts ) ) {
-				$episode_ids = array_merge( $episode_ids, $backfill_query->posts );
-			}
-		}
+		$episode_ids = $this->backfill_content_item_ids(
+			(array) ( $fm_data['episode_ids'] ?? [] ),
+			4,
+			[
+				'post_type' => 'podcast-episode',
+			]
+		);
 
 		foreach ( $episode_ids as $episode_id ) {
-			$this->children[] = ( new \CPR\Component\Content_Item() )->set_post( $episode_id );
+			$this->children[] = ( new \CPR\Component\Content_Item() )
+				->set_post( $episode_id )
+				->set_config( 'eyebrow_location', 'top' );
 		}
 
 		return $this;

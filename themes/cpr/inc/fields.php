@@ -71,6 +71,12 @@ function cpr_fm_submenu_settings() {
 						'label' => __( 'Engagement', 'cpr' ),
 						'children' => [
 							'forum_shortname' => new Fieldmanager_TextField( __( 'Disqus Forum Shortname', 'cpr' ) ),
+							'newsletter' => new Fieldmanager_Group(
+								[
+									'label' => __( 'Newsletter Settings', 'cpr' ),
+									'children' => ( new \CPR\Component\Modules\Newsletter() )->get_fm_fields(),
+								]
+							),
 						],
 					]
 				),
@@ -85,44 +91,4 @@ if ( function_exists( 'fm_register_submenu_page' ) ) {
 }
 /* end fm:submenu-settings */
 
-/* begin fm:submenu-analytics-settings */
-/**
- * `analytics_settings` Fieldmanager fields.
- */
-function cpr_fm_submenu_analytics_settings() {
-	$fm = new Fieldmanager_Group(
-		[
-			'name' => 'analytics_settings',
-			'children' => [
-				'parsely_site' => new Fieldmanager_TextField( __( 'Parse.ly Site (e.g. cpr.org)', 'cpr' ) ),
-			],
-		]
-	);
-	$fm->activate_submenu_page();
-}
-add_action( 'fm_submenu_analytics_settings', 'cpr_fm_submenu_analytics_settings' );
-if ( function_exists( 'fm_register_submenu_page' ) ) {
-	fm_register_submenu_page( 'analytics_settings', 'options-general.php', __( 'Analytics', 'cpr' ), __( 'Analytics', 'cpr' ), 'manage_options' );
-}
-/* end fm:submenu-analytics-settings */
 
-/* begin fm:submenu-disqus-settings */
-/**
- * `disqus_settings` Fieldmanager fields.
- */
-function cpr_fm_submenu_disqus_settings() {
-	$fm = new Fieldmanager_Group(
-		[
-			'name' => 'disqus_settings',
-			'children' => [
-				'forum_shortname' => new Fieldmanager_TextField( __( 'Disqus Forum Shortname', 'cpr' ) ),
-			],
-		]
-	);
-	$fm->activate_submenu_page();
-}
-add_action( 'fm_submenu_disqus_settings', 'cpr_fm_submenu_disqus_settings' );
-if ( function_exists( 'fm_register_submenu_page' ) ) {
-	fm_register_submenu_page( 'disqus_settings', 'options-general.php', __( 'Disqus', 'cpr' ), __( 'Disqus', 'cpr' ), 'manage_options' );
-}
-/* end fm:submenu-disqus-settings */

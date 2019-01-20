@@ -83,6 +83,7 @@ if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 }
 
 // Traits.
+require_once CPR_PATH . '/inc/traits/trait-backfill.php';
 require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
 
 // Ad integrations.

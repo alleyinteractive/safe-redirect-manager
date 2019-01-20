@@ -32,6 +32,10 @@
 			"children": {
 				"forum_shortname": {
 					"label": { "__": "Disqus Forum Shortname" }
+				},
+				"newsletter": {
+					"label": { "__": "Newsletter Settings" },
+					"children": "`( new \\CPR\\Component\\Modules\\Newsletter() )->get_fm_fields()`"
 				}
 			}
 		}

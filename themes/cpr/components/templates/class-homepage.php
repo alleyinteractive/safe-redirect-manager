@@ -40,7 +40,74 @@ class Homepage extends \WP_Component\Component {
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'homepage', true );
 		return [
-			( new \CPR\Component\Modules\Latest_Podcast_Episodes() )->parse_from_fm_data( $data['latest_podcast_episodes'] ?? [] ),
+			/**
+			 * Featured content with a left and right sidebar.
+			 */
+			( new \CPR\Component\Modules\Content_Feature() )
+				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+				->append_children(
+					[
+						/**
+						 * Content river for "Top Headlines"
+						 */
+						( new \CPR\Component\Sidebar() )
+							->set_config( 'position', 'left' )
+							->append_child(
+								( new \CPR\Component\Modules\Content_River() )
+									// Modify the source data so the component
+									// can parse more easily.
+									->parse_from_fm_data(
+										[
+											'content_item_ids' => $data['featured_content']['top_headlines_content_item_ids'] ?? [],
+										],
+										4
+									)
+									->set_config( 'heading', __( 'Top Headlines' ) )
+							),
+
+						( new \CPR\Component\Sidebar() )
+							->set_config( 'position', 'right' ),
+							// ->append_child( new \CPR\Component\Ad() )
+					]
+				),
+
+			( new \CPR\Component\Modules\Content_Grid() )
+				->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
+				->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
+				->set_config( 'call_to_action_link', home_url( '/all/' ) ),
+
+			/**
+			 * Latest podcast episodes.
+			 */
+			( new \CPR\Component\Modules\Latest_Podcast_Episodes() )
+				->parse_from_fm_data( $data['latest_podcast_episodes'] ?? [] ),
+
+			/**
+			 * Newsletter CTA.
+			 */
+			new \CPR\Component\Modules\Newsletter(),
+
+			/**
+			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.
+			 */
+			( new \CPR\Component\Modules\Content_Grid() )
+				->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
+				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
+				->append_child(
+					( new \CPR\Component\Sidebar() )
+						->set_config( 'position', 'right' )
+						// ->append_children(
+						// 	[
+						// 		new \CPR\Component\Colorado_Wonders(),
+						// 		new \CPR\Component\Ad(),
+						// 	]
+						// )
+				),
+
+			/**
+			 * Banner Ad.
+			 */
+			// new \CPR\Component\Ad(),
 		];
 	}
 
@@ -60,6 +127,49 @@ class Homepage extends \WP_Component\Component {
 					'value' => 'homepage',
 				],
 				'children' => [
+					'featured_content' => new \Fieldmanager_Group(
+						[
+							'label'    => __( 'Featured Content', 'cpr' ),
+							'children' => [
+								'content_item_ids' => new \Fieldmanager_Zone_Field(
+									[
+										'add_more_label' => __( 'Add Content', 'cpr' ),
+										'label' => __( 'Featured Story', 'cpr' ),
+										'post_limit'     => 1,
+										'query_args'     => [
+											'post_type' => [ 'post', 'podcast-episode' ],
+										],
+									]
+								),
+								'top_headlines_content_item_ids' => new \Fieldmanager_Zone_Field(
+									[
+										'label' => __( 'Top Headlines', 'cpr' ),
+										'add_more_label' => __( 'Add Content', 'cpr' ),
+										'post_limit'     => 4,
+										'query_args'     => [
+											'post_type' => [ 'post', 'podcast-episode' ],
+										],
+									]
+								),
+							],
+						]
+					),
+					'highlighted_content' => new \Fieldmanager_Group(
+						[
+							'label'    => __( 'Highlighted Content', 'cpr' ),
+							'children' => [
+								'content_item_ids' => new \Fieldmanager_Zone_Field(
+									[
+										'add_more_label' => __( 'Add Content', 'cpr' ),
+										'post_limit'     => 4,
+										'query_args'     => [
+											'post_type' => [ 'post', 'podcast-episode' ],
+										],
+									]
+								),
+							]
+						]
+					),
 					'latest_podcast_episodes' => new \Fieldmanager_Group(
 						[
 							'label'    => __( 'Latest Podcast Episodes', 'cpr' ),
