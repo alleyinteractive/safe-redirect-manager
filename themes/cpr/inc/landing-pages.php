@@ -10,13 +10,8 @@ namespace CPR;
 // Enable landing pages.
 add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Landing_Pages', 'instance' ] );
 
-// Use `page` post type as the landing page.
-add_filter(
-	'landing_page_post_type',
-	function( $post_type ) {
-		return 'page';
-	}
-);
+// Add Homepage fields.
+add_filter( 'landing_page_fm_children', [ '\\CPR\\Component\\Templates\\Homepage', 'landing_page_fields' ] );
 
 /**
  * Setup landing page options.

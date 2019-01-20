@@ -1,6 +1,6 @@
 {
 	"object_types": [
-		"episode"
+		"podcast-episode"
 	],
 	"show_admin_column": true,
 	"show_in_rest": true

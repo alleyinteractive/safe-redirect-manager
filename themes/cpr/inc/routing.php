@@ -36,24 +36,22 @@ function build_components_endpoint(
 		];
 	}
 
-	$template = new Template\Error();
-
 	// Build page.
 	switch ( true ) {
 
 		// Landing page.
-		case 'landing-page' === $wp_query->get( 'dispatch' ):
-			$template = ( new Template\Landing_Page() )->set_post( $wp_query->post );
+		case 'landing-page' === $wp_query->get( 'dispatch' ) && 'homepage' === $wp_query->get( 'landing-page-type' ):
+			$template = ( new Component\Templates\Homepage() )->set_post( $wp_query->post );
 			break;
 
 		// Article.
 		case $wp_query->is_single():
-			$template = ( new Template\Article() )->set_post( $wp_query->post );
+			// $template = ( new Template\Article() )->set_post( $wp_query->post );
 			break;
 
 		// Pages.
 		case $wp_query->is_page():
-			$template = ( new Template\Page() )->set_post( $wp_query->post );
+			// $template = ( new Template\Page() )->set_post( $wp_query->post );
 			break;
 	}
 
