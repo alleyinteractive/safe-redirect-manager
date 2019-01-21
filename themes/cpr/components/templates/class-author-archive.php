@@ -32,7 +32,7 @@ class Author_Archive extends \WP_Component\Component {
 		// Set the author.
 		$this->set_author( $this->get_queried_object() );
 
-		// Beging building the body.
+		// Begin building the body.
 		$body = new \WP_Component\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
