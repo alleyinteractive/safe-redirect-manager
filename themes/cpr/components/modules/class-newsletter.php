@@ -31,7 +31,7 @@ class Newsletter extends \WP_Component\Component {
 	}
 
 	/**
-	 * Get the default tagine.
+	 * Get the default tagline.
 	 *
 	 * @return string
 	 */
