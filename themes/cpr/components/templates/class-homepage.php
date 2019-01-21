@@ -67,7 +67,7 @@ class Homepage extends \WP_Component\Component {
 										],
 										4
 									)
-									->set_config( 'heading', __( 'Top Headlines' ) )
+									->set_config( 'heading', __( 'Top Headlines', 'cpr' ) )
 							),
 
 						/**
