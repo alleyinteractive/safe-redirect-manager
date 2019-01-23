@@ -19,7 +19,7 @@ class Openair extends \WP_Component\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'author-archive-template';
+	public $name = 'openair-template';
 
 	/**
 	 * Hook into post being set.

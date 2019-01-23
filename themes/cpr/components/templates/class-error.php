@@ -1,6 +1,6 @@
 <?php
 /**
- * Author Archive Template Component.
+ * Error Template Component.
  *
  * @package CPR
  */
@@ -8,23 +8,23 @@
 namespace CPR\Component\Templates;
 
 /**
- * Author Archive template.
+ * Error template.
  */
-class Author_Archive extends \WP_Component\Component {
+class Error extends \WP_Component\Component {
 
-	use \WP_Component\WP_Post;
+	use \WP_Component\WP_Query;
 
 	/**
 	 * Unique component slug.
 	 *
 	 * @var string
 	 */
-	public $name = 'author-archive-template';
+	public $name = 'error-template';
 
 	/**
-	 * Hook into post being set.
+	 * Hook into query being set.
 	 */
-	public function post_has_set() {
+	public function query_has_set() {
 		$body = new \WP_Component\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );

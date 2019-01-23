@@ -55,6 +55,7 @@ class Author_Archive extends \WP_Component\Component {
 				->set_config(
 					'heading',
 					sprintf(
+						// translators: %1$s: Author display name.
 						__( 'Author: %1$s', 'cpr' ),
 						$this->get_author_display_name()
 					)

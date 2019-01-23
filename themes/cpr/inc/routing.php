@@ -105,7 +105,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_404():
 		default:
-			$template = ( new Component\Templates\Error() )->set_post( $wp_query->post );
+			$template = ( new Component\Templates\Error() )->set_query( $wp_query );
 			break;
 	}
 
