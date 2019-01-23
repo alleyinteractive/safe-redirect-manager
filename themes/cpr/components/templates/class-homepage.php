@@ -154,7 +154,7 @@ class Homepage extends \WP_Component\Component {
 	 * @param  array $fields FM fields.
 	 * @return array
 	 */
-	public static function landing_page_fields( $fields ) {
+	public static function landing_page_fields( array $fields ) : array {
 		$fields['homepage'] = new \Fieldmanager_Group(
 			[
 				'label'      => __( 'Homepage', 'cpr' ),
