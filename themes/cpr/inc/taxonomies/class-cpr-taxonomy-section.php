@@ -29,7 +29,7 @@ class Cpr_Taxonomy_Section extends Cpr_Taxonomy {
 	 * Build the taxonomy object.
 	 */
 	public function __construct() {
-		$this->object_types = [ 'episode', 'podcast-post' ];
+		$this->object_types = [ 'post', 'podcast-episode', 'podcast-post' ];
 
 		parent::__construct();
 	}
@@ -66,6 +66,7 @@ class Cpr_Taxonomy_Section extends Cpr_Taxonomy {
 					'name_admin_bar'        => __( 'Sections', 'cpr' ),
 				],
 				'meta_box_cb' => false,
+				'show_in_rest' => false,
 			]
 		);
 	}

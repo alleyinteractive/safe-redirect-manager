@@ -14,6 +14,8 @@ define( 'CPR_URL', get_template_directory_uri() );
  * Aleypack modules.
  */
 \Alleypack\load_module( 'term-post-link', '1.0' );
+\Alleypack\load_module( 'fm-modules', '1.0' );
+\Alleypack\load_module( 'unique-wp-query', '1.0' );
 
 // WordPress utilities.
 require_once CPR_PATH . '/inc/class-wp-utils.php';
@@ -45,7 +47,7 @@ if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 			if ( false !== strpos( $class, 'CPR\\Component\\' ) ) {
 
 				/**
-				 * Trip the namespace, replace underscores with dashes, and lowercase.
+				 * Strip the namespace, replace underscores with dashes, and lowercase.
 				 *
 				 * `\CPR\Component\Slim_Navigation\Menu`
 				 * becomes
@@ -61,24 +63,18 @@ if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
 
 				$dirs  = explode( '\\', $class );
 				$class = array_pop( $dirs );
-				$path  = get_template_directory(). rtrim( '/components/' . implode( '/', $dirs ), '/' ) . '/class-' . $class . '.php';
+				$path  = get_template_directory() . rtrim( '/components/' . implode( '/', $dirs ), '/' ) . "/class-{$class}.php";
 				if ( file_exists( $path ) ) {
-					require_once( $path );
+					require_once $path;
 				}
 			}
 		}
 	);
-
-	// Irving Templates.
-	require_once CPR_PATH . '/templates/class-article.php';
-	require_once CPR_PATH . '/templates/class-episode.php';
-	require_once CPR_PATH . '/templates/class-error.php';
-	require_once CPR_PATH . '/templates/class-landing-page.php';
-	require_once CPR_PATH . '/templates/class-page.php';
-	require_once CPR_PATH . '/templates/class-search.php';
-	require_once CPR_PATH . '/templates/class-term.php';
-	require_once CPR_PATH . '/templates/class-term.php';
 }
+
+// Traits.
+require_once CPR_PATH . '/inc/traits/trait-backfill.php';
+require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
 
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';
@@ -153,9 +149,6 @@ require_once CPR_PATH . '/inc/post-types/class-cpr-post-type.php';
 // Taxonomy Base Class.
 require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy.php';
 
-// Episodes Post Type (cpt:episode).
-require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-episode.php';
-
 // Podcasts Taxonomy (tax:podcast).
 require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-podcast.php';
 
@@ -164,5 +157,8 @@ require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-section.php';
 
 // Podcast Posts Post Type (cpt:podcast-post).
 require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-podcast-post.php';
+
+// Podcast Episodes Post Type (cpt:podcast-episode).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-podcast-episode.php';
 
 /* End Data Structures */

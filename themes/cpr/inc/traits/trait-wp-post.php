@@ -1,0 +1,49 @@
+<?php
+/**
+ * WP_Post trait.
+ *
+ * @package CPR
+ */
+
+namespace CPR;
+
+/**
+ * WP_Post trait.
+ */
+trait WP_Post {
+
+	/**
+	 * Set the title.
+	 */
+	public function set_title() {
+		$this->set_config( 'title', (string) get_the_title( $this->post ) );
+	}
+
+	/**
+	 * Set the eyebrow.
+	 */
+	public function set_eyebrow() {
+		switch ( $this->post->post_type ?? '' ) {
+			case 'post':
+				$this->set_config( 'eyebrow_label', __( 'Placeholder Eyebrow', 'cpr' ) );
+				$this->set_config( 'eyebrow_link', home_url( '/placeholder-eyebrow/' ) );
+				break;
+
+			case 'podcast-episode':
+				$podcast_terms = wp_get_post_terms( $this->get_post_id(), 'podcast' );
+				if ( $podcast_terms[0] instanceof \WP_Term ) {
+					$this->set_config( 'eyebrow_label', $podcast_terms[0]->name );
+					$this->set_config( 'eyebrow_link', get_term_link( $podcast_terms[0], $podcast_terms[0]->taxonomy ) );
+				}
+				break;
+		}
+	}
+
+	/**
+	 * Create byline components and add to children.
+	 */
+	public function set_byline() {
+		$bylines = \WP_Component\Byline::get_post_bylines( $this->get_post_id() );
+		$this->append_children( $bylines );
+	}
+}
