@@ -9,6 +9,7 @@
 $plugins = [
 	'/ad-layers/ad-layers.php',
 	'/alleypack/alleypack.php',
+	'/amp/amp.php',
 	'/co-authors-plus/co-authors-plus.php',
 	'/fm-zones/fm-zones.php',
 	'/msm-sitemap/msm-sitemap.php',
