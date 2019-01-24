@@ -10,7 +10,7 @@ namespace CPR\Component;
 /**
  * Social Links.
  */
-class Social_Links extends \WP_Component\Component {
+class Social_Links extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.

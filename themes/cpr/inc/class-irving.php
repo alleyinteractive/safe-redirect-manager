@@ -42,7 +42,7 @@ class Irving {
 		if ( 'site' === $context ) {
 			$data['defaults'] = [
 				new Slim_Navigation(),
-				new \Alleypack\WP_Component\Body(),
+				new \Alleypack\WP_Components\Body(),
 				new Footer(),
 			];
 		}

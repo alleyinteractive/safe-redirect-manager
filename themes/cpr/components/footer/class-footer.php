@@ -10,7 +10,7 @@ namespace CPR\Component\Footer;
 /**
  * Footer.
  */
-class Footer extends \WP_Component\Component {
+class Footer extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.

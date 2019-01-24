@@ -10,7 +10,7 @@ namespace CPR\Component;
 /**
  * Advertisement.
  */
-class Ad extends \WP_Component\Component {
+class Ad extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.

@@ -10,9 +10,9 @@ namespace CPR\Component\Templates;
 /**
  * Search template.
  */
-class Search extends \WP_Component\Component {
+class Search extends \WP_Components\Component {
 
-	use \WP_Component\WP_Query;
+	use \WP_Components\WP_Query;
 
 	/**
 	 * Unique component slug.
@@ -25,7 +25,7 @@ class Search extends \WP_Component\Component {
 	 * Hook into query being set.
 	 */
 	public function query_has_set() {
-		$body = new \WP_Component\Body();
+		$body = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;

@@ -31,7 +31,7 @@ function build_components_endpoint(
 		$data['defaults'] = [
 			new Component\Slim_Navigation\Slim_Navigation(),
 			new Component\Header\Header(),
-			new \WP_Component\Body(),
+			new \WP_Components\Body(),
 			new Component\Footer\Footer(),
 		];
 	}

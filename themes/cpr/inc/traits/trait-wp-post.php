@@ -43,7 +43,7 @@ trait WP_Post {
 	 * Create byline components and add to children.
 	 */
 	public function set_byline() {
-		$bylines = \WP_Component\Byline::get_post_bylines( $this->get_post_id() );
+		$bylines = \WP_Components\Byline::get_post_bylines( $this->get_post_id() );
 		$this->append_children( $bylines );
 	}
 }

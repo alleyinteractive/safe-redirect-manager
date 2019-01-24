@@ -10,7 +10,7 @@ namespace CPR\Component;
 /**
  * Logo.
  */
-class Logo extends \WP_Component\Component {
+class Logo extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.
