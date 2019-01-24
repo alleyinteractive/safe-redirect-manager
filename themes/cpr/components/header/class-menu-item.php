@@ -10,7 +10,7 @@ namespace CPR\Component\Header;
 /**
  * Header Menu Item.
  */
-class Menu_Item extends \WP_Component\Component {
+class Menu_Item extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.

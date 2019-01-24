@@ -10,7 +10,7 @@ namespace CPR\Component\Slim_Navigation;
 /**
  * Slim Navigation Search.
  */
-class Search extends \WP_Component\Component {
+class Search extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.

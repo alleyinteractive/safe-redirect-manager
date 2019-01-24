@@ -10,7 +10,7 @@ namespace CPR\Component\Modules;
 /**
  * Content List.
  */
-class Content_List extends \WP_Component\Component {
+class Content_List extends \WP_Components\Component {
 
 	use \Alleypack\FM_Module;
 	use \CPR\Backfill;

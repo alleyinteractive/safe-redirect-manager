@@ -10,9 +10,9 @@ namespace CPR\Component;
 /**
  * Content Item.
  */
-class Content_Item extends \WP_Component\Component {
+class Content_Item extends \WP_Components\Component {
 
-	use \WP_Component\WP_Post;
+	use \WP_Components\WP_Post;
 	use \CPR\WP_Post;
 
 	/**

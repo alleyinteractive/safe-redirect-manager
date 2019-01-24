@@ -10,7 +10,7 @@ namespace CPR\Component;
 /**
  * Sidebar.
  */
-class Sidebar extends \WP_Component\Component {
+class Sidebar extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.

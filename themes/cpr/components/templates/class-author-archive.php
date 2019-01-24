@@ -10,12 +10,12 @@ namespace CPR\Component\Templates;
 /**
  * Author Archive template.
  */
-class Author_Archive extends \WP_Component\Component {
+class Author_Archive extends \WP_Components\Component {
 
-	use \WP_Component\Author;
-	use \WP_Component\Guest_Author;
-	use \WP_Component\WP_Query;
-	use \WP_Component\WP_User;
+	use \WP_Components\Author;
+	use \WP_Components\Guest_Author;
+	use \WP_Components\WP_Query;
+	use \WP_Components\WP_User;
 
 	/**
 	 * Unique component slug.
@@ -33,7 +33,7 @@ class Author_Archive extends \WP_Component\Component {
 		$this->set_author( $this->get_queried_object() );
 
 		// Begin building the body.
-		$body = new \WP_Component\Body();
+		$body = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;

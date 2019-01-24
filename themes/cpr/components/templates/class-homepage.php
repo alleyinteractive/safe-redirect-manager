@@ -10,9 +10,9 @@ namespace CPR\Component\Templates;
 /**
  * Homepage template.
  */
-class Homepage extends \WP_Component\Component {
+class Homepage extends \WP_Components\Component {
 
-	use \WP_Component\WP_Post;
+	use \WP_Components\WP_Post;
 	use \Alleypack\FM_Module;
 
 	/**
@@ -26,7 +26,7 @@ class Homepage extends \WP_Component\Component {
 	 * Hook into post being set.
 	 */
 	public function post_has_set() {
-		$body = new \WP_Component\Body();
+		$body = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;

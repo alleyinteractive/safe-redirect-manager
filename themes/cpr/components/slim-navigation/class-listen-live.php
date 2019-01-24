@@ -10,7 +10,7 @@ namespace CPR\Component\Slim_Navigation;
 /**
  * Listen Live.
  */
-class Listen_Live extends \WP_Component\Component {
+class Listen_Live extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.

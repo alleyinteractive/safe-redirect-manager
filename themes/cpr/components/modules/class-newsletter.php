@@ -10,7 +10,7 @@ namespace CPR\Component\Modules;
 /**
  * Newsletter.
  */
-class Newsletter extends \WP_Component\Component {
+class Newsletter extends \WP_Components\Component {
 
 	use \Alleypack\FM_Module;
 

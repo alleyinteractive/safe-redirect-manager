@@ -10,7 +10,7 @@ namespace CPR\Component\Header;
 /**
  * Header.
  */
-class Header extends \WP_Component\Component {
+class Header extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.
