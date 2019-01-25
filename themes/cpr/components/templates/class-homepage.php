@@ -131,7 +131,7 @@ class Homepage extends \WP_Components\Component {
 								/**
 								 * Colorado Wonders question form.
 								 */
-								// new \CPR\Component\Colorado_Wonders(), // phpcs:ignore
+								// new \CPR\Component\Colorado_Wonders(),.
 
 								/**
 								 * Advertisement.
