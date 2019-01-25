@@ -75,7 +75,7 @@ class Donate_Button extends \WP_Components\Component {
 								'default_value' => $this->get_default_url(),
 							]
 						),
-					]
+					],
 				]
 			),
 		];

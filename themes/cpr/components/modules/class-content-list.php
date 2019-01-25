@@ -116,10 +116,10 @@ class Content_List extends \WP_Components\Component {
 	/**
 	 * Setup the content items based on Jetpack Related Posts results.
 	 *
-	 * @param integer   $post_id       Post ID.
-	 * @param integer   $backfill_to   How many content items should this component
-	 *                                 have.
-	 * @param array     $backfill_args WP_Query arguments for the backfill.
+	 * @param integer $post_id       Post ID.
+	 * @param integer $backfill_to   How many content items should this component
+	 *                               have.
+	 * @param array   $backfill_args WP_Query arguments for the backfill.
 	 * @return Content_List
 	 */
 	public function parse_from_jetpack_related( $post_id, $backfill_to = 0, $backfill_args = [] ) : Content_List {

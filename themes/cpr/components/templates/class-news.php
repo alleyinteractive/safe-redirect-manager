@@ -170,7 +170,7 @@ class News extends \WP_Components\Component {
 								/**
 								 * Colorado Wonders question form.
 								 */
-								// new \CPR\Component\Colorado_Wonders(),
+								// new \CPR\Component\Colorado_Wonders(), // phpcs:ignore Squiz.Commenting.InlineComment.InvalidEndChar
 
 								/**
 								 * Advertisement.
@@ -178,7 +178,7 @@ class News extends \WP_Components\Component {
 								new \CPR\Component\Ad(),
 							]
 						)
-				)
+				),
 		];
 	}
 
@@ -228,7 +228,7 @@ class News extends \WP_Components\Component {
 										],
 									]
 								),
-							]
+							],
 						]
 					),
 				],
