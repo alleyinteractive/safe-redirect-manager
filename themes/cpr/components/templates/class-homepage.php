@@ -131,7 +131,7 @@ class Homepage extends \WP_Components\Component {
 								/**
 								 * Colorado Wonders question form.
 								 */
-								// new \CPR\Component\Colorado_Wonders(),
+								// new \CPR\Component\Colorado_Wonders(),.
 
 								/**
 								 * Advertisement.
@@ -204,7 +204,7 @@ class Homepage extends \WP_Components\Component {
 										],
 									]
 								),
-							]
+							],
 						]
 					),
 					'latest_podcast_episodes' => new \Fieldmanager_Group(

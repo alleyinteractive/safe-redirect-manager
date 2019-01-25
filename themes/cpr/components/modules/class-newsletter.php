@@ -83,40 +83,4 @@ class Newsletter extends \WP_Components\Component {
 			),
 		];
 	}
-
-	/**
-	 * Parse the stored FM data to be used by this component.
-	 *
-	 * @param  array $fm_data Stored Fieldmanager data.
-	 * @return Call_To_Action
-	 */
-	public function parse_from_fm_data( array $fm_data, $backfill_to = 0, $backfill_args = [] ) : Content_Grid {
-		$this->set_config( 'heading', (string) ( $fm_data['heading'] ?? '' ) );
-		$this->set_config( 'heading_link', (string) ( $fm_data['heading_link'] ?? '' ) );
-		$this->set_config( 'call_to_action_label', (string) ( $fm_data['call_to_action_label'] ?? '' ) );
-		$this->set_config( 'call_to_action_link', (string) ( $fm_data['call_to_action_link'] ?? '' ) );
-
-		$content_item_ids = (array) ( $fm_data['content_item_ids'] ?? [] );
-
-		// Determine if we need to backfill.
-		if ( 0 !== $backfill_to && $backfill_to !== count( $content_item_ids ) ) {
-
-			// Modify backfill args.
-			$backfill_args['post__not_in']   = $content_item_ids;
-			$backfill_args['posts_per_page'] = $backfill_to - count( $content_item_ids );
-			$backfill_args['fields']         = 'ids';
-
-			$backfill_query = new \Alleypack\Unique_WP_Query( $backfill_args );
-
-			if ( ! empty( $backfill_query->posts ) ) {
-				$content_item_ids = array_merge( $content_item_ids, $backfill_query->posts );
-			}
-		}
-
-		foreach ( $content_item_ids as $content_item_id ) {
-			$this->children[] = ( new \CPR\Component\Content_Item() )->set_post( $content_item_id );
-		}
-
-		return $this;
-	}
 }

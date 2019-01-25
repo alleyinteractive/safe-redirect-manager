@@ -48,7 +48,7 @@ class Irving {
 		}
 
 		switch ( true ) {
-			$wp_query->is_home():
+			case $wp_query->is_home():
 				$data['page'] = ( new Component\Homepage( $data, $wp_query ) )->get_components();
 				break;
 		}

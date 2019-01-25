@@ -19,6 +19,11 @@ class Menu extends \WP_Components\Component {
 	 */
 	public $name = 'slim-navigation-menu';
 
+	/**
+	 * Define default children.
+	 *
+	 * @return array Default children.
+	 */
 	public function default_children() {
 
 		$children = [];

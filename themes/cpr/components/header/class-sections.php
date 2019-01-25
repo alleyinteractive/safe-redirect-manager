@@ -39,7 +39,7 @@ class Sections extends \WP_Components\Component {
 					'label' => __( 'OpenAir', 'cpr' ),
 					'link'  => home_url( '/openair/' ),
 				],
-			]
+			],
 		];
 	}
 }
