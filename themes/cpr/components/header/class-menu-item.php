@@ -28,14 +28,16 @@ class Menu_Item extends \WP_Components\Component {
 	 */
 	public function default_config() {
 		return [
-			'id'          => '',
-			'label'       => '',
-			'url'         => '',
+			'id'    => '',
+			'label' => '',
+			'url'   => '',
 		];
 	}
 
 	/**
-	 * Callback function for classes to override.
+	 * Callback function once menu item has been set.
+	 *
+	 * @return void
 	 */
 	public function menu_item_has_set() {
 		$this->set_config_from_menu_item();

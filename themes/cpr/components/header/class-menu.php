@@ -33,6 +33,11 @@ class Menu extends \WP_Components\Component {
 		];
 	}
 
+	/**
+	 * Callback function once menu object has been set.
+	 *
+	 * @return void
+	 */
 	public function menu_has_set() {
 		$this->parse_wp_menu();
 	}
