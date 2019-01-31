@@ -19,7 +19,7 @@ class Social_Links extends \WP_Components\Component {
 	 */
 	public $name = 'social-links';
 
-/**
+	/**
 	 * Define default children.
 	 *
 	 * @return array Default children.
@@ -30,23 +30,23 @@ class Social_Links extends \WP_Components\Component {
 				->merge_config(
 					[
 						'type' => 'facebook',
-						'url' => '#'
+						'url'  => '#',
 					]
 				),
 			( new Social_Links_Item() )
-			->merge_config(
-				[
-					'type' => 'twitter',
-					'url' => '#'
-				]
-			),
+				->merge_config(
+					[
+						'type' => 'twitter',
+						'url'  => '#',
+					]
+				),
 			( new Social_Links_Item() )
 				->merge_config(
 					[
 						'type' => 'instagram',
-						'url' => '#'
+						'url'  => '#',
 					]
-			)
+				),
 		];
 	}
 }

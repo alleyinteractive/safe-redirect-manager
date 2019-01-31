@@ -17,24 +17,19 @@ class Social_Links_Item extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-  public $name = 'social-links-item';
+	public $name = 'social-links-item';
 
-  /**
+  	/**
 	 * Define a default config.
 	 *
 	 * @return array Default config.
 	 */
 	public function default_config() {
 
-    return [
-      'type' => '',
-      'url' => '',
-      'display_icon' => true
-    ];
+		return [
+			'type'         => '',
+			'url'          => '',
+			'display_icon' => true,
+		];
 	}
-
-
-
 }
-
-
