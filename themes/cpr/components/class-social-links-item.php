@@ -29,7 +29,7 @@ class Social_Links_Item extends \WP_Components\Component {
     return [
       'type' => '',
       'url' => '',
-      'display-icon' => true
+      'display_icon' => true
     ];
 	}
 
