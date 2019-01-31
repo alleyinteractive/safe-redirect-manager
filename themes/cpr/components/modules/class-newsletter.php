@@ -103,15 +103,11 @@ class Newsletter extends \WP_Components\Component {
 
 		// Send back validation if email is somehow empty.
 		if ( empty( $email ) ) {
-			$response = new \WP_REST_Response(
+			return \WP_Irving\REST_API\Form_Endpoint::response_invalid(
 				[
-					'validation' => [
-						'email' => __( 'Please enter an email address.', 'cpr' ),
-					],
-				]
+					'email' => __( 'Please enter an email address.', 'cpr' ),
+				],
 			);
-			$response->set_status( 400 );
-			return $response;
 		}
 
 		// Get necessary API connection fields from settings.
