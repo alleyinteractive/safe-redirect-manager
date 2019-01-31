@@ -17,6 +17,9 @@ class Irving {
 	 */
 	public function __construct() {
 		add_action( 'wp_irving_components_route', [ $this, 'build_components_endpoint' ], 10, 5 );
+
+		// Handle forms.
+		add_filter( 'wp_irving_form_endpoints', [ $this, 'form_endpoints' ], 10, 1 );
 	}
 
 	/**
@@ -54,6 +57,25 @@ class Irving {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Setup form endpoints and callbacks
+	 *
+	 * @param  array $form_endpoints Form endpoint slugs and callback functions.
+	 * @return array Form endpoints with Thrive forms merged in.
+	 */
+	public function form_endpoints( $form_endpoints ) {
+		array_push(
+			print_r('butts');
+			$form_endpoints,
+			[
+				'slug' => 'newsletter',
+				'callback' => [ __NAMESPACE__ . '\Component\Modules\Newsletter', 'get_route_response' ],
+			],
+		);
+
+		return $form_endpoints;
 	}
 }
 
