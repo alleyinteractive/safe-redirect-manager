@@ -28,7 +28,7 @@ class Header extends \WP_Components\Component {
 		return [
 			new \CPR\Component\Logo(),
 			new Sections(),
-			new Menu(),
+			( new Menu() )->set_menu( 'header' ),
 		];
 	}
 }
