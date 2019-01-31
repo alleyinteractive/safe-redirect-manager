@@ -154,7 +154,7 @@ class Newsletter extends \WP_Components\Component {
 			] );
 		}
 
-		// make the call, tyty WP HTTP API
+		// Send off to /add endpoint.
 		$emma_response = wp_remote_post( $request_url_base . $account_id . '/members/add',
 			[
 				'headers' => $headers,
@@ -162,6 +162,7 @@ class Newsletter extends \WP_Components\Component {
 			]
 		);
 
+		// If it fails, send back a validation message.
 		if ( is_wp_error( $emma_response ) ) {
 			return \WP_Irving\REST_API\Form_Endpoint::response_invalid(
 				[
