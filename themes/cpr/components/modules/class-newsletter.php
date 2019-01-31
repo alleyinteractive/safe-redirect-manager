@@ -99,6 +99,7 @@ class Newsletter extends \WP_Components\Component {
 
 		// Get params.
 		$email = $request->get_param( 'email' ) ?? '';
+		$group = $request->get_param( 'group' ) ?? '';
 
 		// Send back validation if email is somehow empty.
 		if ( empty( $email ) ) {
@@ -133,15 +134,25 @@ class Newsletter extends \WP_Components\Component {
 		);
 
 		// POST body.
-		// Lists: 4507989, 5116245.
-		$body = wp_json_encode( [
-			'fields'    => [
-				'spinsideremail' => 'Yes',
-				'lookoutemail'   => 'Yes'
-			],
-			'group_ids' => [ '5183829' ],
-			'email'     => $email,
-		] );
+		$body = [];
+
+		if ( 'lookout' === $group ) {
+			$body = wp_json_encode( [
+				'fields'    => [
+					'lookoutemail'   => 'Yes'
+				],
+				'group_ids' => [ '4507989' ],
+				'email'     => $email,
+			] );
+		} else if ( 'spinsider' === $group ) {
+			$body = wp_json_encode( [
+				'fields'    => [
+					'spinsideremail'   => 'Yes'
+				],
+				'group_ids' => [ '5116245' ],
+				'email'     => $email,
+			] );
+		}
 
 		// make the call, tyty WP HTTP API
 		$emma_response = wp_remote_post( $request_url_base . $account_id . '/members/add',
