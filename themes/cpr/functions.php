@@ -115,6 +115,9 @@ require_once CPR_PATH . '/inc/rewrites.php';
 // Routing.
 require_once CPR_PATH . '/inc/routing.php';
 
+// Form Endpoints.
+require_once CPR_PATH . '/inc/forms.php';
+
 // Search.
 require_once CPR_PATH . '/inc/search.php';
 

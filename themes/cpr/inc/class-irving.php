@@ -17,6 +17,9 @@ class Irving {
 	 */
 	public function __construct() {
 		add_action( 'wp_irving_components_route', [ $this, 'build_components_endpoint' ], 10, 5 );
+
+		// Handle forms.
+		add_filter( 'wp_irving_form_endpoints', [ $this, 'form_endpoints' ], 10, 1 );
 	}
 
 	/**
