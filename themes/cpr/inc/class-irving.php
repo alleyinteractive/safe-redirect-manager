@@ -58,25 +58,6 @@ class Irving {
 
 		return $data;
 	}
-
-	/**
-	 * Setup form endpoints and callbacks
-	 *
-	 * @param  array $form_endpoints Form endpoint slugs and callback functions.
-	 * @return array Form endpoints with Thrive forms merged in.
-	 */
-	public function form_endpoints( $form_endpoints ) {
-		array_push(
-			print_r('butts');
-			$form_endpoints,
-			[
-				'slug' => 'newsletter',
-				'callback' => [ __NAMESPACE__ . '\Component\Modules\Newsletter', 'get_route_response' ],
-			],
-		);
-
-		return $form_endpoints;
-	}
 }
 
 add_action(
