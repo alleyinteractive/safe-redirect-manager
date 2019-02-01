@@ -122,7 +122,7 @@ class Newsletter extends \WP_Components\Component {
 		}
 
 		// All API calls must include an HTTP Basic authentication header containing the public & private API keys for your account.
-		// build HTTP Basic Auth headers
+		// build HTTP Basic Auth headers.
 		$headers = array(
 			'Content-Type: application/json; charset=utf-8',
 			'Accept:application/json, text/javascript, */*; q=0.01',
