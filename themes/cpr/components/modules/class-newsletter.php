@@ -106,7 +106,7 @@ class Newsletter extends \WP_Components\Component {
 			return \WP_Irving\REST_API\Form_Endpoint::response_invalid(
 				[
 					'email' => __( 'Please enter an email address.', 'cpr' ),
-				],
+				]
 			);
 		}
 
@@ -116,7 +116,7 @@ class Newsletter extends \WP_Components\Component {
 		$public_key = $settings['engagement']['newsletter']['public_key'] ?? '';
 		$private_key = $settings['engagement']['newsletter']['private_key'] ?? '';
 
-		// Send back 500 error if any of these fields are missing
+		// Send back 500 error if any of these fields are missing.
 		if ( empty( $account_id ) || empty( $public_key ) || empty( $private_key ) ) {
 			return \WP_Irving\REST_API\Form_Endpoint::response_error();
 		}
@@ -135,7 +135,7 @@ class Newsletter extends \WP_Components\Component {
 		if ( 'lookout' === $group ) {
 			$body = wp_json_encode( [
 				'fields'    => [
-					'lookoutemail'   => 'Yes'
+					'lookoutemail'   => 'Yes',
 				],
 				'group_ids' => [ '4507989' ],
 				'email'     => $email,
@@ -143,7 +143,7 @@ class Newsletter extends \WP_Components\Component {
 		} else if ( 'spinsider' === $group ) {
 			$body = wp_json_encode( [
 				'fields'    => [
-					'spinsideremail'   => 'Yes'
+					'spinsideremail'   => 'Yes',
 				],
 				'group_ids' => [ '5116245' ],
 				'email'     => $email,
@@ -162,7 +162,7 @@ class Newsletter extends \WP_Components\Component {
 		if ( is_wp_error( $emma_response ) ) {
 			return \WP_Irving\REST_API\Form_Endpoint::response_invalid(
 				[
-					'email' => __( 'There was an error adding you to our mailing list. Please check that the email address you entered is correct.', 'thrive-global' ),
+					'email' => __( 'There was an error adding you to our mailing list. Please check that the email address you entered is correct.', 'cpr' ),
 				]
 			);
 		}
