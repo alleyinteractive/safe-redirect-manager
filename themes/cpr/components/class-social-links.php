@@ -18,4 +18,36 @@ class Social_Links extends \WP_Components\Component {
 	 * @var string
 	 */
 	public $name = 'social-links';
+
+	/**
+	 * Define default children.
+	 *
+	 * @return array Default children.
+	 * @TOD0 add in field manager fields for this
+	 */
+	public function default_children() {
+		return [
+			( new Social_Links_Item() )
+				->merge_config(
+					[
+						'type' => 'facebook',
+						'url'  => '#',
+					]
+				),
+			( new Social_Links_Item() )
+				->merge_config(
+					[
+						'type' => 'twitter',
+						'url'  => '#',
+					]
+				),
+			( new Social_Links_Item() )
+				->merge_config(
+					[
+						'type' => 'instagram',
+						'url'  => '#',
+					]
+				),
+		];
+	}
 }
