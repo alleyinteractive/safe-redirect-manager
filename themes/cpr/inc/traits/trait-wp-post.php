@@ -46,4 +46,20 @@ trait WP_Post {
 		$bylines = \WP_Components\Byline::get_post_bylines( $this->get_post_id() );
 		$this->append_children( $bylines );
 	}
+
+	/**
+	 * Create Image component and add to children.
+	 *
+	 * @param string $size Image size to use for child image component.
+	 * @todo add fallback image.
+	 */
+	public function set_featured_image( $size = 'full' ) {
+		$this->append_children(
+			[
+				( new \WP_Components\Image() )
+					->set_post_id( $this->post->ID )
+					->set_config_for_size( $size ),
+			]
+		);
+	}
 }

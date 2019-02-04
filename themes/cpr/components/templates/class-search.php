@@ -42,6 +42,7 @@ class Search extends \WP_Components\Component {
 			 * Search results.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
+				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
 				->parse_from_wp_query( $this->query )
 				->set_config( 'heading', __( 'Search Results for', 'cpr' ) ),

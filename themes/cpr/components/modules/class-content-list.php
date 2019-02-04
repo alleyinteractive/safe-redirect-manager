@@ -35,6 +35,7 @@ class Content_List extends \WP_Components\Component {
 			'eyebrow_link'         => '',
 			'heading'              => '',
 			'heading_link'         => '',
+			'image_size'           => '',
 			'theme'                => '',
 		];
 	}
@@ -80,7 +81,10 @@ class Content_List extends \WP_Components\Component {
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
-			$this->children[] = ( new \CPR\Component\Content_Item() )->set_post( $content_item_id );
+			$this->children[] = ( new \CPR\Component\Content_Item() )
+				->set_config( 'theme', $this->get_config( 'theme' ) )
+				->set_config( 'image_size', $this->get_config( 'image_size' ) )
+				->set_post( $content_item_id );
 		}
 
 		return $this;
@@ -108,7 +112,10 @@ class Content_List extends \WP_Components\Component {
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
-			$this->children[] = ( new \CPR\Component\Content_Item() )->set_post( $content_item_id );
+			$this->children[] = ( new \CPR\Component\Content_Item() )
+				->set_config( 'theme', $this->get_config( 'theme' ) )
+				->set_config( 'image_size', $this->get_config( 'image_size' ) )
+				->set_post( $content_item_id );
 		}
 		return $this;
 	}
@@ -154,7 +161,10 @@ class Content_List extends \WP_Components\Component {
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
-			$this->children[] = ( new \CPR\Component\Content_Item() )->set_post( $content_item_id );
+			$this->children[] = ( new \CPR\Component\Content_Item() )
+				->set_config( 'theme', $this->get_config( 'theme' ) )
+				->set_config( 'image_size', $this->get_config( 'image_size' ) )
+				->set_post( $content_item_id );
 		}
 
 		return $this;

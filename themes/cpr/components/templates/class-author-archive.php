@@ -51,6 +51,7 @@ class Author_Archive extends \WP_Components\Component {
 			 */
 			( new \CPR\Component\Modules\Content_List() )
 				->set_config( 'theme', 'grid' )
+				->set_config( 'image_size', 'grid_item' )
 				->parse_from_wp_query( $this->query )
 				->set_config(
 					'heading',

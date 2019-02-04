@@ -55,6 +55,7 @@ class Article extends \WP_Components\Component {
 			 */
 			( new \CPR\Component\Modules\Content_List() )
 				->set_config( 'theme', 'grid' )
+				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'heading', __( 'Related Content', 'cpr' ) )
 				->parse_from_jetpack_related( $this->get_post_id(), 3, [] ),
 		];
