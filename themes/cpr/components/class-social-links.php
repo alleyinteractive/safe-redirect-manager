@@ -50,7 +50,6 @@ class Social_Links extends \WP_Components\Component {
 	 * Define default children.
 	 *
 	 * @return array Default children.
-	 *
 	 */
 	public function default_children() {
 
@@ -90,19 +89,19 @@ class Social_Links extends \WP_Components\Component {
 		return [
 			'facebook' => new \Fieldmanager_Link(
 				[
-					'label' 		=> __( 'Facebook', 'cpr' ),
+					'label'         => __( 'Facebook', 'cpr' ),
 					'default_value' => $this->get_default_facebook(),
 				]
 			),
 			'twitter' => new \Fieldmanager_Link(
 				[
-					'label' 		=> __( 'Twitter', 'cpr' ),
+					'label'         => __( 'Twitter', 'cpr' ),
 					'default_value' => $this->get_default_twitter(),
 				]
 			),
 			'instagram' => new \Fieldmanager_Link(
 				[
-					'label' 		=> __( 'Instagram', 'cpr' ),
+					'label'         => __( 'Instagram', 'cpr' ),
 					'default_value' => $this->get_default_instagram(),
 				]
 			),
