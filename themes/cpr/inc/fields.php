@@ -81,6 +81,19 @@ function cpr_fm_submenu_settings() {
 						],
 					]
 				),
+				'social' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Social', 'cpr' ),
+						'children' => [
+							'social' => new Fieldmanager_Group(
+								[
+									'label' => __( 'Social Settings', 'cpr' ),
+									'children' => ( new \CPR\Component\Social_Links() )->get_fm_fields(),
+								]
+							),
+						],
+					]
+				),
 			],
 		]
 	);
