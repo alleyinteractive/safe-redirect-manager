@@ -50,7 +50,7 @@ class Social_Links extends \WP_Components\Component {
 	 * Define default children.
 	 *
 	 * @return array Default children.
-	 * @TOD0 add in field manager fields for this
+	 *
 	 */
 	public function default_children() {
 
