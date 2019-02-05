@@ -31,7 +31,7 @@ trait WP_Post {
 
 			case 'podcast-episode':
 				$podcast_terms = wp_get_post_terms( $this->get_post_id(), 'podcast' );
-				if ( $podcast_terms[0] instanceof \WP_Term ) {
+				if ( ! empty( $podcast_terms) && $podcast_terms[0] instanceof \WP_Term ) {
 					$this->set_config( 'eyebrow_label', $podcast_terms[0]->name );
 					$this->set_config( 'eyebrow_link', get_term_link( $podcast_terms[0], $podcast_terms[0]->taxonomy ) );
 				}

@@ -33,7 +33,9 @@ class Content_List extends \WP_Components\Component {
 			'call_to_action_link'  => '',
 			'eyebrow_label'        => '',
 			'eyebrow_link'         => '',
+			'eyebrow_size'         => 'small',
 			'heading'              => '',
+			'heading_border'       => false,
 			'heading_link'         => '',
 			'image_size'           => '',
 			'theme'                => '',
@@ -55,6 +57,21 @@ class Content_List extends \WP_Components\Component {
 			'heading'              => new \Fieldmanager_Textfield( __( 'Heading', 'cpr' ) ),
 			'heading_link'         => new \Fieldmanager_Link( __( 'Heading Link', 'cpr' ) ),
 		];
+	}
+
+	/**
+	 * Create a content item.
+	 *
+	 * @param number $content_item_id Post ID for content item.
+	 * @return \CPR\Component\Content_Item
+	 */
+	public function create_content_item( $content_item_id ) {
+		return ( new \CPR\Component\Content_Item() )
+			->set_config( 'theme', $this->get_config( 'theme' ) )
+			->set_config( 'image_size', $this->get_config( 'image_size' ) )
+			->set_config( 'heading_border', $this->get_config( 'heading_border' ) )
+			->set_config( 'eyebrow_size', $this->get_config( 'eyebrow_size' ) )
+			->set_post( $content_item_id );
 	}
 
 	/**
@@ -81,10 +98,7 @@ class Content_List extends \WP_Components\Component {
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
-			$this->children[] = ( new \CPR\Component\Content_Item() )
-				->set_config( 'theme', $this->get_config( 'theme' ) )
-				->set_config( 'image_size', $this->get_config( 'image_size' ) )
-				->set_post( $content_item_id );
+			$this->children[] = $this->create_content_item( $content_item_id );
 		}
 
 		return $this;
@@ -112,10 +126,7 @@ class Content_List extends \WP_Components\Component {
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
-			$this->children[] = ( new \CPR\Component\Content_Item() )
-				->set_config( 'theme', $this->get_config( 'theme' ) )
-				->set_config( 'image_size', $this->get_config( 'image_size' ) )
-				->set_post( $content_item_id );
+			$this->children[] = $this->create_content_item( $content_item_id );
 		}
 		return $this;
 	}
@@ -161,10 +172,7 @@ class Content_List extends \WP_Components\Component {
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
-			$this->children[] = ( new \CPR\Component\Content_Item() )
-				->set_config( 'theme', $this->get_config( 'theme' ) )
-				->set_config( 'image_size', $this->get_config( 'image_size' ) )
-				->set_post( $content_item_id );
+			$this->children[] = $this->create_content_item( $content_item_id );
 		}
 
 		return $this;

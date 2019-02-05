@@ -84,9 +84,9 @@ class Homepage extends \WP_Components\Component {
 			 * Highlighted Content.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
 				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
+				->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
 				->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
 				->set_config( 'call_to_action_link', home_url( '/all/' ) ),
 
@@ -95,7 +95,8 @@ class Homepage extends \WP_Components\Component {
 			 */
 			( new \CPR\Component\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'theme', 'grid-eyebrows-above' )
+				->set_config( 'theme', 'grid' )
+				->set_config( 'eyebrow_size', 'large' )
 				->parse_from_fm_data(
 					$data['latest_podcast_episodes'] ?? [],
 					4,
@@ -119,10 +120,11 @@ class Homepage extends \WP_Components\Component {
 			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
+				->set_config( 'image_size', 'grid_item' )
+				->set_config( 'theme', 'grid' )
 				->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
 				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
-				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'theme', 'grid-eyebrows-above' )
+				->set_config( 'heading_border', true )
 				->append_child(
 
 					/**
