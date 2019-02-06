@@ -47,7 +47,7 @@ class Content_Item extends \WP_Components\Component {
 		$this->set_title();
 		$this->set_eyebrow();
 		$this->set_byline();
-		$this->set_featured_image( $this->get_config( 'image_size') );
+		$this->set_featured_image( $this->get_config( 'image_size' ) );
 		$this->merge_config(
 			[
 				'permalink' => get_permalink( $this->post->ID ),
