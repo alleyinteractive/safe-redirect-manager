@@ -31,7 +31,7 @@ trait WP_Post {
 
 			case 'podcast-episode':
 				$podcast_terms = wp_get_post_terms( $this->get_post_id(), 'podcast' );
-				if ( $podcast_terms[0] instanceof \WP_Term ) {
+				if ( ! empty( $podcast_terms ) && $podcast_terms[0] instanceof \WP_Term ) {
 					$this->set_config( 'eyebrow_label', $podcast_terms[0]->name );
 					$this->set_config( 'eyebrow_link', get_term_link( $podcast_terms[0], $podcast_terms[0]->taxonomy ) );
 				}
@@ -45,5 +45,21 @@ trait WP_Post {
 	public function set_byline() {
 		$bylines = \WP_Components\Byline::get_post_bylines( $this->get_post_id() );
 		$this->append_children( $bylines );
+	}
+
+	/**
+	 * Create Image component and add to children.
+	 *
+	 * @param string $size Image size to use for child image component.
+	 * @todo add fallback image.
+	 */
+	public function set_featured_image( $size = 'full' ) {
+		$this->append_children(
+			[
+				( new \WP_Components\Image() )
+					->set_post_id( $this->post->ID )
+					->set_config_for_size( $size ),
+			]
+		);
 	}
 }

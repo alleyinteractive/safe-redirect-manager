@@ -27,6 +27,7 @@ class Sidebar extends \WP_Components\Component {
 	public function default_config() {
 		return [
 			'position' => 'left',
+			'has_ad'   => false,
 		];
 	}
 }

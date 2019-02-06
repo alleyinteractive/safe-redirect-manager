@@ -32,7 +32,11 @@ class Content_Item extends \WP_Components\Component {
 			'eyebrow_label'    => '',
 			'eyebrow_link'     => '',
 			'eyebrow_location' => 'bottom',
+			'image_size'       => 'grid-item',
+			'permalink'        => '',
+			'theme'            => 'grid',
 			'title'            => '',
+			'type'             => '',
 		];
 	}
 
@@ -43,5 +47,12 @@ class Content_Item extends \WP_Components\Component {
 		$this->set_title();
 		$this->set_eyebrow();
 		$this->set_byline();
+		$this->set_featured_image( $this->get_config( 'image_size' ) );
+		$this->merge_config(
+			[
+				'permalink' => get_permalink( $this->post->ID ),
+				'type'      => $this->post->post_type ?? 'post',
+			]
+		);
 	}
 }

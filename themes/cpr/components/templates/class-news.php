@@ -60,6 +60,7 @@ class News extends \WP_Components\Component {
 			 * Featured content with a left and right sidebar.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
+				->set_config( 'image_size', 'feature_item' )
 				->set_config( 'theme', 'feature' )
 				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
 				->append_children(
@@ -82,6 +83,7 @@ class News extends \WP_Components\Component {
 					4,
 					$this->get_backfill_args()
 				)
+				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
 				->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
 				->set_config( 'call_to_action_link', home_url( '/all/' ) ),
