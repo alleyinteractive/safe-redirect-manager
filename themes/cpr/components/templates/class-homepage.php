@@ -76,7 +76,8 @@ class Homepage extends \WP_Components\Component {
 						 */
 						( new \CPR\Component\Sidebar() )
 							->set_config( 'position', 'right' )
-							->append_child( new \CPR\Component\Ad() ),
+							->set_config( 'has_ad', true )
+							->append_child( ( new \CPR\Component\Ad() )->set_config( 'height', 600 ) ),
 					]
 				),
 
@@ -132,6 +133,7 @@ class Homepage extends \WP_Components\Component {
 					 */
 					( new \CPR\Component\Sidebar() )
 						->set_config( 'position', 'right' )
+						->set_config( 'has_ad', true )
 						->append_children(
 							[
 								/**
