@@ -44,6 +44,7 @@ class Homepage extends \WP_Components\Component {
 			 * Featured content with a left and right sidebar.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
+				->set_config( 'image_size', 'feature_item' )
 				->set_config( 'theme', 'feature' )
 				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
 				->append_children(
@@ -58,7 +59,7 @@ class Homepage extends \WP_Components\Component {
 								 * River content list for "Top Headlines"
 								 */
 								( new \CPR\Component\Modules\Content_List() )
-									->set_config( 'layout', 'river' )
+									->set_config( 'theme', 'river' )
 									// Modify the source data so the component
 									// can parse more easily.
 									->parse_from_fm_data(
@@ -67,7 +68,7 @@ class Homepage extends \WP_Components\Component {
 										],
 										4
 									)
-									->set_config( 'heading', __( 'Top Headlines', 'cpr' ) )
+									->set_config( 'eyebrow_label', __( 'Top Headlines', 'cpr' ) )
 							),
 
 						/**
@@ -75,7 +76,8 @@ class Homepage extends \WP_Components\Component {
 						 */
 						( new \CPR\Component\Sidebar() )
 							->set_config( 'position', 'right' )
-							->append_child( new \CPR\Component\Ad() ),
+							->set_config( 'has_ad', true )
+							->append_child( ( new \CPR\Component\Ad() )->set_config( 'height', 600 ) ),
 					]
 				),
 
@@ -83,8 +85,9 @@ class Homepage extends \WP_Components\Component {
 			 * Highlighted Content.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
+				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
+				->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
 				->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
 				->set_config( 'call_to_action_link', home_url( '/all/' ) ),
 
@@ -92,7 +95,9 @@ class Homepage extends \WP_Components\Component {
 			 * Latest podcast episodes.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				->set_config( 'theme', 'grid-eyebrows-above' )
+				->set_config( 'image_size', 'grid_item' )
+				->set_config( 'theme', 'grid' )
+				->set_config( 'eyebrow_size', 'large' )
 				->parse_from_fm_data(
 					$data['latest_podcast_episodes'] ?? [],
 					4,
@@ -116,9 +121,11 @@ class Homepage extends \WP_Components\Component {
 			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
+				->set_config( 'image_size', 'grid_item' )
+				->set_config( 'theme', 'grid' )
 				->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
 				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
-				->set_config( 'theme', 'grid-eyebrows-above' )
+				->set_config( 'heading_border', true )
 				->append_child(
 
 					/**
@@ -126,6 +133,7 @@ class Homepage extends \WP_Components\Component {
 					 */
 					( new \CPR\Component\Sidebar() )
 						->set_config( 'position', 'right' )
+						->set_config( 'has_ad', true )
 						->append_children(
 							[
 								/**
