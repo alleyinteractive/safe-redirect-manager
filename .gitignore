@@ -17,6 +17,7 @@ bower_components
 /local-db.sql
 
 plugins/*
+!plugins/fakerpress
 !plugins/gutenberg
 !plugins/jetpack
 !plugins/meta-inspector
