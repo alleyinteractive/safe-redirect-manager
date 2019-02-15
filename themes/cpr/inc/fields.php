@@ -5,37 +5,6 @@
  * @package CPR
  */
 
-/* begin fm:post-podcast-post-section */
-/**
- * `post-podcast-post-section` Fieldmanager fields.
- */
-function cpr_fm_post_podcast_post_section() {
-	$fm = new Fieldmanager_Group(
-		[
-			'name' => 'post-podcast-post-section',
-			'serialize_data' => false,
-			'add_to_prefix' => false,
-			'children' => [
-				'section_term_id' => new Fieldmanager_Select(
-					[
-						'first_empty' => true,
-						'datasource' => new Fieldmanager_Datasource_Term(
-							[
-								'taxonomy' => 'section',
-								'taxonomy_save_to_terms' => true,
-								'only_save_to_taxonomy' => false,
-							]
-						),
-					]
-				),
-			],
-		]
-	);
-	$fm->add_meta_box( __( 'Section', 'cpr' ), [ 'post', 'podcast-post' ], 'side' );
-}
-add_action( 'fm_post_post', 'cpr_fm_post_podcast_post_section' );
-add_action( 'fm_post_podcast-post', 'cpr_fm_post_podcast_post_section' );
-/* end fm:post-podcast-post-section */
 
 /* begin fm:submenu-settings */
 /**
@@ -59,9 +28,14 @@ function cpr_fm_submenu_settings() {
 					[
 						'label' => __( 'Giving', 'cpr' ),
 						'children' => [
-							'donate' => new Fieldmanager_Group(
+							'cta' => new Fieldmanager_Group(
 								[
-									'children' => ( new \CPR\Component\Donate_Button() )->get_fm_fields(),
+									'children' => ( new \CPR\Component\Donate\Donate_CTA() )->get_fm_fields(),
+								]
+							),
+							'button' => new Fieldmanager_Group(
+								[
+									'children' => ( new \CPR\Component\Donate\Donate_Button() )->get_fm_fields(),
 								]
 							),
 						],
@@ -107,14 +81,15 @@ if ( function_exists( 'fm_register_submenu_page' ) ) {
 
 
 
-/* begin fm:post-post-settings */
+
+/* begin fm:post-article-post-types-settings */
 /**
- * `post-post-settings` Fieldmanager fields.
+ * `post-article-post-types-settings` Fieldmanager fields.
  */
-function cpr_fm_post_post_settings() {
+function cpr_fm_post_article_post_types_settings() {
 	$fm = new Fieldmanager_Group(
 		[
-			'name' => 'post-post-settings',
+			'name' => 'post-article-post-types-settings',
 			'serialize_data' => false,
 			'add_to_prefix' => false,
 			'tabbed' => 'vertical',
@@ -125,10 +100,23 @@ function cpr_fm_post_post_settings() {
 						'serialize_data' => false,
 						'add_to_prefix' => false,
 						'children' => [
+							'section_id' => new Fieldmanager_Select(
+								[
+									'label' => __( 'Section', 'cpr' ),
+									'description' => __( 'Select a section.', 'cpr' ),
+									'datasource' => new Fieldmanager_Datasource_Term(
+										[
+											'taxonomy' => 'section',
+											'taxonomy_save_to_terms' => true,
+											'only_save_to_taxonomy' => true,
+										]
+									),
+								]
+							),
 							'primary_category_id' => new Fieldmanager_Select(
 								[
 									'label' => __( 'Primary Category', 'cpr' ),
-									'description' => __( 'Begin typing to select a primary category.', 'cpr' ),
+									'description' => __( 'Select a primary category to be used as the eyebrow site-wide.', 'cpr' ),
 									'datasource' => new Fieldmanager_Datasource_Term(
 										[
 											'taxonomy' => 'category',
@@ -136,6 +124,14 @@ function cpr_fm_post_post_settings() {
 											'only_save_to_taxonomy' => false,
 										]
 									),
+								]
+							),
+							'keep_reading_ids' => new Fieldmanager_Zone_Field(
+								[
+									'label' => __( 'Keep Reading', 'cpr' ),
+									'query_args' => [
+										'post_type' => \CPR\get_content_post_types(),
+									],
 								]
 							),
 						],
@@ -241,7 +237,8 @@ function cpr_fm_post_post_settings() {
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Article Settings', 'cpr' ), [ 'post' ] );
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'post', 'podcast-post' ] );
 }
-add_action( 'fm_post_post', 'cpr_fm_post_post_settings' );
-/* end fm:post-post-settings */
+add_action( 'fm_post_post', 'cpr_fm_post_article_post_types_settings' );
+add_action( 'fm_post_podcast-post', 'cpr_fm_post_article_post_types_settings' );
+/* end fm:post-article-post-types-settings */

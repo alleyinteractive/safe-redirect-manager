@@ -29,28 +29,37 @@ class Header extends \WP_Components\Component {
 	 */
 	public function default_config() {
 		return [
-			'image_size' => 'featured-media',
+			'audio_length'  => '',
+			'audio_url'     => '',
+			'eyebrow_label' => '',
+			'eyebrow_link'  => '',
+			'image_size'    => 'featured-media',
+			'publish_date'  => '',
+			'title'         => '',
 		];
 	}
 
-	public function default_children() {
-		return [
-			new \CPR\Component\Ad(),
-		];
-	}
-
+	/**
+	 * Fires after the post object has been set on this class.
+	 */
 	public function post_has_set() {
+
+		// Default settings.
 		$this->set_title();
-		$this->set_eyebrow();
-		$this->set_byline();
-		$this->set_publish_date();
-		$this->set_audio();
-		$this->set_featured_image( $this->get_config( 'image_size' ) );
-		$this->merge_config(
-			[
-				'permalink' => get_permalink( $this->post->ID ),
-				'type'      => $this->post->post_type ?? 'post',
-			]
-		);
+
+		// Set configs and children based on post type.
+		switch ( $this->post->post_type ?? '' ) {
+			case 'post':
+				$this->set_eyebrow();
+				$this->set_byline();
+				$this->set_publish_date();
+				$this->set_audio();
+				$this->set_featured_image( $this->get_config( 'image_size' ) );
+				$this->prepend_child( new \CPR\Component\Ad() );
+				break;
+
+			case 'page':
+				break;
+		}
 	}
 }

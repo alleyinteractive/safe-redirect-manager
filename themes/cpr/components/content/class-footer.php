@@ -21,4 +21,18 @@ class Footer extends \WP_Components\Component {
 	 * @var string
 	 */
 	public $name = 'content-footer';
+
+	/**
+	 * Fires after the post object has been set on this class.
+	 */
+	public function post_has_set() {
+		$this->append_children(
+			[
+				( new Keep_Reading() )->set_post( $this->post ),
+				( new Related_Tags() )->set_post( $this->post ),
+				new \CPR\Component\Donate\Donate_CTA(),
+				// new Comments(),
+			]
+		);
+	}
 }
