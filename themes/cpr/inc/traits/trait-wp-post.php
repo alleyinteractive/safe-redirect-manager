@@ -20,6 +20,13 @@ trait WP_Post {
 	}
 
 	/**
+	 * Set publish date.
+	 */
+	public function set_publish_date() {
+		$this->set_config( 'publish_date', get_the_date( 'F j, Y', $this->get_post_id() ) );
+	}
+
+	/**
 	 * Set the eyebrow.
 	 */
 	public function set_eyebrow() {
@@ -61,5 +68,16 @@ trait WP_Post {
 					->set_config_for_size( $size ),
 			]
 		);
+	}
+
+	/**
+	 * Set audio.
+	 *
+	 * @todo Do real things.
+	 */
+	public function set_audio() {
+		// @todo pull the actual article audio.
+		$this->set_config( 'audio_url', 'http://google.com/test.mp3' );
+		$this->set_config( 'audio_length', 415 );
 	}
 }
