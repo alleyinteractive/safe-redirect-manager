@@ -166,6 +166,8 @@ class News extends \WP_Components\Component {
 				->set_config( 'show_excerpt', true )
 				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
 				->set_config( 'heading_border', true )
+				->set_config( 'call_to_action_label', __( 'More Stories', 'cpr' ) )
+				->set_config( 'call_to_action_link', home_url( '/section/news/' ) )
 				->parse_from_ids(
 					[],
 					8,

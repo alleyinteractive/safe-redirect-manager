@@ -83,7 +83,7 @@ function build_components_endpoint(
 		case $wp_query->is_tax():
 		case $wp_query->is_tag():
 		case $wp_query->is_category():
-			$template = ( new Component\Templates\Term_Archive() )->set_post( $wp_query->post );
+			$template = ( new Component\Templates\Term_Archive() )->set_query( $wp_query );
 			break;
 
 		/**
