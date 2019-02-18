@@ -58,7 +58,7 @@ class Content_List extends \WP_Components\Component {
 			'eyebrow_label'        => new \Fieldmanager_Textfield( __( 'Eyebrow Label', 'cpr' ) ),
 			'eyebrow_link'         => new \Fieldmanager_Link( __( 'Eyebrow Link', 'cpr' ) ),
 			'heading'              => new \Fieldmanager_Textfield( __( 'Heading', 'cpr' ) ),
-			'heading_link'         => new \Fieldmanager_Link( __( 'Heading Link', 'cpr' ) ),  
+			'heading_link'         => new \Fieldmanager_Link( __( 'Heading Link', 'cpr' ) ),
 		];
 	}
 
@@ -69,6 +69,10 @@ class Content_List extends \WP_Components\Component {
 	 * @return \CPR\Component\Content_Item
 	 */
 	public function create_content_item( $content_item_id ) {
+
+		// Track content item ID as already used.
+		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $content_item_id );
+
 		return ( new \CPR\Component\Content_Item() )
 			->set_config( 'theme', $this->get_config( 'theme' ) )
 			->set_config( 'image_size', $this->get_config( 'image_size' ) )
