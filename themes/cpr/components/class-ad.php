@@ -18,4 +18,18 @@ class Ad extends \WP_Components\Component {
 	 * @var string
 	 */
 	public $name = 'advertisement';
+
+	/**
+	 * Define a default config.
+	 *
+	 * @return array Default config.
+	 */
+	public function default_config() {
+		return [
+			'background_color'   => '',
+			'background_padding' => false,
+			'height'             => 250,
+			'width'              => 300,
+		];
+	}
 }

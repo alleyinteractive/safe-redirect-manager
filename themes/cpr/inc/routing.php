@@ -30,7 +30,7 @@ function build_components_endpoint(
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
 			new Component\Slim_Navigation\Slim_Navigation(),
-			new Component\Header\Header(),
+			( new Component\Header\Header() )->set_query( $wp_query ),
 			new \WP_Components\Body(),
 			new Component\Footer\Footer(),
 		];

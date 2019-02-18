@@ -7,5 +7,6 @@
 	"hierarchical": false,
 	"public": true,
 	"meta_box_cb": false,
+	"show_admin_column": true,
 	"show_in_rest": false
 }

@@ -37,7 +37,10 @@ class Content_List extends \WP_Components\Component {
 			'heading'              => '',
 			'heading_border'       => false,
 			'heading_link'         => '',
+			'heading_cta_label'    => '',
+			'heading_cta_link'     => '',
 			'image_size'           => '',
+			'show_excerpt'         => false,
 			'theme'                => '',
 		];
 	}
@@ -55,7 +58,7 @@ class Content_List extends \WP_Components\Component {
 			'eyebrow_label'        => new \Fieldmanager_Textfield( __( 'Eyebrow Label', 'cpr' ) ),
 			'eyebrow_link'         => new \Fieldmanager_Link( __( 'Eyebrow Link', 'cpr' ) ),
 			'heading'              => new \Fieldmanager_Textfield( __( 'Heading', 'cpr' ) ),
-			'heading_link'         => new \Fieldmanager_Link( __( 'Heading Link', 'cpr' ) ),
+			'heading_link'         => new \Fieldmanager_Link( __( 'Heading Link', 'cpr' ) ),  
 		];
 	}
 
@@ -71,6 +74,7 @@ class Content_List extends \WP_Components\Component {
 			->set_config( 'image_size', $this->get_config( 'image_size' ) )
 			->set_config( 'heading_border', $this->get_config( 'heading_border' ) )
 			->set_config( 'eyebrow_size', $this->get_config( 'eyebrow_size' ) )
+			->set_config( 'show_excerpt', $this->get_config( 'show_excerpt' ) )
 			->set_post( $content_item_id );
 	}
 
@@ -128,6 +132,7 @@ class Content_List extends \WP_Components\Component {
 		foreach ( $content_item_ids as $content_item_id ) {
 			$this->children[] = $this->create_content_item( $content_item_id );
 		}
+
 		return $this;
 	}
 
@@ -173,6 +178,35 @@ class Content_List extends \WP_Components\Component {
 
 		foreach ( $content_item_ids as $content_item_id ) {
 			$this->children[] = $this->create_content_item( $content_item_id );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * Parse an array of IDs to be used by this component.
+	 *
+	 * @param array   $ids           Post IDs.
+	 * @param integer $backfill_to   How many content items should this component
+	 *                               have.
+	 * @param array   $backfill_args WP_Query arguments for the backfill.
+	 * @return Content_List
+	 */
+	public function parse_from_ids( array $ids, $backfill_to = 0, $backfill_args = [] ) : Content_List {
+
+		// Backfill as needed.
+		$ids = $this->backfill_content_item_ids(
+			$ids,
+			$backfill_to,
+			$backfill_args
+		);
+
+		foreach ( $ids as $id ) {
+			$this->children[] = $this->create_content_item( $id );
+		}
+
+		if (8 === $backfill_to) {
+			xdebug_break();
 		}
 
 		return $this;

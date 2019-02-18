@@ -16,7 +16,30 @@ trait WP_Post {
 	 * Set the title.
 	 */
 	public function set_title() {
-		$this->set_config( 'title', (string) get_the_title( $this->post ) );
+		$this->set_config( 'title', html_entity_decode( (string) get_the_title( $this->post ) ) );
+	}
+
+	/**
+	 * Set the excerpt.
+	 */
+	public function set_excerpt() {
+		// Modify global state.
+		global $post;
+
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+		$backup_post = $post;
+
+		// Setup post data for this item.
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+		$post = get_post( $this->post->ID );
+		setup_postdata( $post );
+
+		$this->set_config( 'excerpt', (string) get_the_excerpt() );
+
+		// Undo global modification.
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+		$post = $backup_post;
+		setup_postdata( $post );
 	}
 
 	/**

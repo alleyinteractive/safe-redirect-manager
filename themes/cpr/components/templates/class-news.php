@@ -36,13 +36,22 @@ class News extends \WP_Components\Component {
 	 *
 	 * @return array
 	 */
-	public function get_backfill_args() {
+	public static function get_backfill_args() {
 		return [
+			'post_type' => [ 'post', 'podcast-episode' ],
 			'tax_query' => [
+				'relation' => 'OR',
+				// News posts.
 				[
 					'taxonomy' => 'section',
 					'field'    => 'slug',
 					'terms'    => 'news',
+				],
+				// News podcast episodes.
+				[
+					'taxonomy' => 'podcast',
+					'field'    => 'term_id',
+					'terms'    => \CPR\get_podcast_term_ids_by_section( 'news' ),
 				],
 			],
 		];
@@ -55,13 +64,15 @@ class News extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'news', true );
+
 		return [
 			/**
-			 * Featured content with a left and right sidebar.
+			 * Featured content with a right sidebar.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
 				->set_config( 'image_size', 'feature_item' )
 				->set_config( 'theme', 'feature' )
+				->set_config( 'show_excerpt', true )
 				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
 				->append_children(
 					[
@@ -70,7 +81,8 @@ class News extends \WP_Components\Component {
 						 */
 						( new \CPR\Component\Sidebar() )
 							->set_config( 'position', 'right' )
-							->append_child( new \CPR\Component\Ad() ),
+							->set_config( 'has_ad', true )
+							->append_child( ( new \CPR\Component\Ad() )->set_config( 'height', 600 ) ),
 					]
 				),
 
@@ -78,15 +90,13 @@ class News extends \WP_Components\Component {
 			 * Highlighted Content.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
+				->set_config( 'image_size', 'grid_item' )
+				->set_config( 'theme', 'grid' )
 				->parse_from_fm_data(
 					$data['highlighted_content'] ?? [],
 					4,
-					$this->get_backfill_args()
-				)
-				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'theme', 'grid' )
-				->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
-				->set_config( 'call_to_action_link', home_url( '/all/' ) ),
+					self::get_backfill_args()
+				),
 
 			/**
 			 * Newsletter CTA.
@@ -97,13 +107,23 @@ class News extends \WP_Components\Component {
 			 * "Featured Topic"
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				->parse_from_fm_data(
-					[],
-					1,
-					$this->get_backfill_args()
-				)
-				->set_config( 'heading', __( 'Election 2018', 'cpr' ) )
-				->set_config( 'heading_link', home_url( '/election-2018/' ) )
+				 ->append_child(
+
+				 	/**
+				 	 * Featured Content item.
+				 	 */
+				 	( new \CPR\Component\Content_Item() )
+				 		->set_config( 'theme', 'feature' )
+				 		->set_config( 'image_size', 'feature_item' )
+				 		->set_config( 'eyebrow_size', 'small' )
+				 		->set_config( 'show_excerpt', true )
+				 		->set_post( $data['featured_topic']['content_item_ids'][0] ?? 0 )
+				 )
+				->set_config( 'heading', get_term( $data['featured_topic']['topic_id'] ?? 0, 'category' )->name ?? '' )
+				->set_config( 'heading_link', get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ) )
+				->set_config( 'heading_border', true )
+				->set_config( 'heading_cta_label', __( 'More Stories', 'cpr' ) )
+				->set_config( 'heading_cta_link', get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ) )
 				->set_config( 'eyebrow_label', __( 'Featured Topic', 'cpr' ) )
 				->append_child(
 
@@ -119,10 +139,10 @@ class News extends \WP_Components\Component {
 							 */
 							( new \CPR\Component\Modules\Content_List() )
 								->set_config( 'layout', 'river' )
-								->parse_from_fm_data(
-									[],
-									1,
-									$this->get_backfill_args()
+								->parse_from_ids(
+									array_slice( $data['featured_topic']['content_item_ids'] ?? [], 1 ),
+									3,
+									self::get_backfill_args()
 								)
 						)
 				),
@@ -130,18 +150,26 @@ class News extends \WP_Components\Component {
 			/**
 			 * Banner Ad.
 			 */
-			new \CPR\Component\Ad(),
+			( new \CPR\Component\Ad() )
+				->set_config( 'background_color', '#f8f9fa' )
+				->set_config( 'background_padding', true )
+				->set_config( 'width', 468 )
+				->set_config( 'height', 60 ),
 
 			/**
 			 * "More Stories" river.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
 				->set_config( 'layout', 'river' )
+				// @TODO 2/15 LEFT OFF HERE!
+				->set_config( 'image_size', 'grid_item' ) // @todo river_item? Also, why aren't they showing?
+				->set_config( 'show_excerpt', true )
 				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
-				->parse_from_fm_data(
+				->set_config( 'heading_border', true )
+				->parse_from_ids(
 					[],
-					10,
-					$this->get_backfill_args()
+					8,
+					self::get_backfill_args()
 				)
 				->append_child(
 					/**
@@ -155,6 +183,7 @@ class News extends \WP_Components\Component {
 					 */
 					( new \CPR\Component\Sidebar() )
 						->set_config( 'position', 'right' )
+						->set_config( 'has_ad', true )
 						->append_children(
 							[
 								/**
@@ -163,7 +192,7 @@ class News extends \WP_Components\Component {
 								( new \CPR\Component\Modules\Content_List() )
 									->set_config( 'layout', 'river' )
 									->set_config( 'heading', __( 'Across Colorado', 'cpr' ) )
-									->parse_from_fm_data(
+									->parse_from_ids(
 										[],
 										4,
 										[] // TODO: Determine what kind of content this actually is.
@@ -207,11 +236,9 @@ class News extends \WP_Components\Component {
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
 										'add_more_label' => __( 'Add Content', 'cpr' ),
-										'label' => __( 'Featured Story', 'cpr' ),
+										'label'          => __( 'Featured Story', 'cpr' ),
 										'post_limit'     => 1,
-										'query_args'     => [
-											'post_type' => [ 'post', 'podcast-episode' ],
-										],
+										'query_args'     => self::get_backfill_args(),
 									]
 								),
 							],
@@ -225,7 +252,36 @@ class News extends \WP_Components\Component {
 									[
 										'add_more_label' => __( 'Add Content', 'cpr' ),
 										'post_limit'     => 4,
+										'query_args'     => self::get_backfill_args(),
+									]
+								),
+							],
+						]
+					),
+					'featured_topic' => new \Fieldmanager_Group(
+						[
+							'label'    => __( 'Featured Topic', 'cpr' ),
+							'children' => [
+								'topic_id' => new \Fieldmanager_Select(
+									[
+										'label'       => __( 'Topic', 'cpr' ),
+										'description' => __( 'Begin typing to select a topic.', 'cpr' ),
+										'datasource'  => new \Fieldmanager_Datasource_Term(
+											[
+												'taxonomy'               => 'category',
+												'taxonomy_save_to_terms' => false,
+												'only_save_to_taxonomy'  => false,
+											]
+										),
+									]
+								),
+								'content_item_ids' => new \Fieldmanager_Zone_Field(
+									[
+										'post_limit'     => 4,
 										'query_args'     => [
+											// @todo "should be able to select anything"
+											// - anything in news (eg use self::get_backfill_args())?
+											// or ANY post or podcast episode?
 											'post_type' => [ 'post', 'podcast-episode' ],
 										],
 									]
