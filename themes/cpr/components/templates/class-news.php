@@ -107,24 +107,21 @@ class News extends \WP_Components\Component {
 			 * "Featured Topic"
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				 ->append_child(
-
-				 	/**
-				 	 * Featured Content item.
-				 	 */
-				 	( new \CPR\Component\Content_Item() )
-				 		->set_config( 'theme', 'feature' )
-				 		->set_config( 'image_size', 'feature_item' )
-				 		->set_config( 'eyebrow_size', 'small' )
-				 		->set_config( 'show_excerpt', true )
-				 		->set_post( $data['featured_topic']['content_item_ids'][0] ?? 0 )
-				 )
+				->set_config( 'theme', 'feature' )
+				->set_config( 'image_size', 'feature_item' )
+				->set_config( 'eyebrow_size', 'small' )
+				->set_config( 'show_excerpt', true )
 				->set_config( 'heading', get_term( $data['featured_topic']['topic_id'] ?? 0, 'category' )->name ?? '' )
 				->set_config( 'heading_link', get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ) )
 				->set_config( 'heading_border', true )
 				->set_config( 'heading_cta_label', __( 'More Stories', 'cpr' ) )
 				->set_config( 'heading_cta_link', get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ) )
 				->set_config( 'eyebrow_label', __( 'Featured Topic', 'cpr' ) )
+				->parse_from_ids(
+					array_slice( $data['featured_topic']['content_item_ids'] ?? [], 0, 1 ),
+					1,
+					self::get_backfill_args_with_cat( $data['featured_topic']['topic_id'] ?? 0 )
+				)
 				->append_child(
 
 					/**
