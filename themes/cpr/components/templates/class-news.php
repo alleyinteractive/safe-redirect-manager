@@ -58,6 +58,44 @@ class News extends \WP_Components\Component {
 	}
 
 	/**
+	 * Get the backfill arguments for the Featured Topic content list, which is
+	 * content that's both within the News section and within a particular category.
+	 *
+	 * @param  int $term_id
+	 * @return array
+	 */
+	public static function get_backfill_args_with_cat( int $term_id ) {
+		return [
+			'post_type' => [ 'post', 'podcast-episode' ],
+			'tax_query' => [
+				'relation' => 'AND',
+				[
+					[
+						'taxonomy' => 'category',
+						'field'    => 'term_id',
+						'terms'    => [ $term_id ],
+					],
+				],
+				[
+					'relation' => 'OR',
+					// News posts.
+					[
+						'taxonomy' => 'section',
+						'field'    => 'slug',
+						'terms'    => 'news',
+					],
+					// News podcast episodes.
+					[
+						'taxonomy' => 'podcast',
+						'field'    => 'term_id',
+						'terms'    => \CPR\get_podcast_term_ids_by_section( 'news' ),
+					],
+				],
+			],
+		];
+	}
+
+	/**
 	 * Get an array of all components.
 	 *
 	 * @return array
@@ -139,7 +177,7 @@ class News extends \WP_Components\Component {
 								->parse_from_ids(
 									array_slice( $data['featured_topic']['content_item_ids'] ?? [], 1 ),
 									3,
-									self::get_backfill_args()
+									self::get_backfill_args_with_cat( $data['featured_topic']['topic_id'] ?? 0 )
 								)
 						)
 				),
