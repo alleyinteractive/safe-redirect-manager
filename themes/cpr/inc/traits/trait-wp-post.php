@@ -34,7 +34,7 @@ trait WP_Post {
 		$post = get_post( $this->post->ID );
 		setup_postdata( $post );
 
-		$this->set_config( 'excerpt', (string) get_the_excerpt() );
+		$this->set_config( 'excerpt', html_entity_decode( (string) get_the_excerpt() ) );
 
 		// Undo global modification.
 		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
