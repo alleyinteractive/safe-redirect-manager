@@ -172,12 +172,6 @@ class News extends \WP_Components\Component {
 				)
 				->append_child(
 					/**
-					 * Pagination.
-					 *
-					 * @todo Implement.
-					 */
-
-					/**
 					 * Right Sidebar.
 					 */
 					( new \CPR\Component\Sidebar() )
