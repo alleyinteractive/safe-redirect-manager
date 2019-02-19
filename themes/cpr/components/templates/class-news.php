@@ -158,8 +158,7 @@ class News extends \WP_Components\Component {
 			 */
 			( new \CPR\Component\Modules\Content_List() )
 				->set_config( 'layout', 'river' )
-				// @TODO 2/15 LEFT OFF HERE!
-				->set_config( 'image_size', 'grid_item' ) // @todo river_item? Also, why aren't they showing?
+				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'show_excerpt', true )
 				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
 				->set_config( 'heading_border', true )
@@ -271,12 +270,7 @@ class News extends \WP_Components\Component {
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
 										'post_limit'     => 4,
-										'query_args'     => [
-											// @todo "should be able to select anything"
-											// - anything in news (eg use self::get_backfill_args())?
-											// or ANY post or podcast episode?
-											'post_type' => [ 'post', 'podcast-episode' ],
-										],
+										'query_args'     => self::get_backfill_args(),
 									]
 								),
 							],
