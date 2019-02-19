@@ -36,8 +36,10 @@ class Header extends \WP_Components\Component {
 
 	/**
 	 * Hook into query being set.
+	 *
+	 * @return self
 	 */
-	public function query_has_set() {
+	public function query_has_set() : self {
 
 		// Override with alternate children on certain pages.
 		switch ( true ) {

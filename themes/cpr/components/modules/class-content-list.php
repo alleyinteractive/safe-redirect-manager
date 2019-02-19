@@ -209,10 +209,6 @@ class Content_List extends \WP_Components\Component {
 			$this->children[] = $this->create_content_item( $id );
 		}
 
-		if (8 === $backfill_to) {
-			xdebug_break();
-		}
-
 		return $this;
 	}
 }

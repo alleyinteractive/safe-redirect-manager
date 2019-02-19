@@ -26,7 +26,7 @@ class Term_Archive extends \WP_Components\Component {
 	 * Hook into query being set.
 	 */
 	public function query_has_set() {
-		// Also set the term
+		// Also set the term.
 		$this->set_term( $this->get_queried_object() );
 	}
 
@@ -52,8 +52,7 @@ class Term_Archive extends \WP_Components\Component {
 			 */
 			( new \CPR\Component\Modules\Content_List() )
 				->set_config( 'layout', 'river' )
-				// @TODO 2/15 LEFT OFF HERE!
-				->set_config( 'image_size', 'grid_item' ) // @todo river_item? Also, why aren't they showing?
+				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'show_excerpt', true )
 				->set_config( 'heading', $this->term->name )
 				->set_config( 'heading_border', true )
