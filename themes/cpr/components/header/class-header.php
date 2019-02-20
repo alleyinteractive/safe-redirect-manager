@@ -12,6 +12,8 @@ namespace CPR\Component\Header;
  */
 class Header extends \WP_Components\Component {
 
+	use \WP_Components\WP_Query;
+
 	/**
 	 * Unique component slug.
 	 *
@@ -30,5 +32,36 @@ class Header extends \WP_Components\Component {
 			new Sections(),
 			( new Menu() )->set_menu( 'header' ),
 		];
+	}
+
+	/**
+	 * Hook into query being set.
+	 *
+	 * @return self
+	 */
+	public function query_has_set() : self {
+
+		// Override with alternate children on certain pages.
+		switch ( true ) {
+			case 'landing-page' === $this->query->get( 'dispatch' ):
+				$type = $this->query->get( 'landing-page-type' );
+				if ( 'homepage' !== $type ) {
+					$this->children = [
+						( new \CPR\Component\Logo() )->set_config( 'type', $type ),
+						( new Menu() )->set_menu( $type ),
+					];
+					return $this;
+				}
+				break;
+			case $this->query->is_tax( 'section' ):
+				$term = $this->query->get_queried_object();
+				$this->children = [
+					( new \CPR\Component\Logo() )->set_config( 'type', $term->slug ?? '' ),
+					( new Menu() )->set_menu( $term->slug ?? '' ),
+				];
+				return $this;
+		}
+
+		return $this;
 	}
 }

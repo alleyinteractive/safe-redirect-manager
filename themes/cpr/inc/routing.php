@@ -30,7 +30,7 @@ function build_components_endpoint(
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
 			new Component\Slim_Navigation\Slim_Navigation(),
-			new Component\Header\Header(),
+			( new Component\Header\Header() )->set_query( $wp_query ),
 			new \WP_Components\Body(),
 			new Component\Footer\Footer(),
 		];
@@ -83,7 +83,7 @@ function build_components_endpoint(
 		case $wp_query->is_tax():
 		case $wp_query->is_tag():
 		case $wp_query->is_category():
-			$template = ( new Component\Templates\Term_Archive() )->set_post( $wp_query->post );
+			$template = ( new Component\Templates\Term_Archive() )->set_query( $wp_query );
 			break;
 
 		/**
