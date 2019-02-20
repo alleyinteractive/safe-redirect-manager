@@ -18,4 +18,15 @@ class Logo extends \WP_Components\Component {
 	 * @var string
 	 */
 	public $name = 'logo';
+
+	/**
+	 * Define a default config.
+	 *
+	 * @return array Default config.
+	 */
+	public function default_config() {
+		return [
+			'type' => 'main',
+		];
+	}
 }

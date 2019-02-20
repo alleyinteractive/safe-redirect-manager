@@ -56,8 +56,7 @@ class Cpr_Post_Type_Podcast_Post extends Cpr_Post_Type {
 					'item_updated'             => __( 'Podcast Post updated.', 'cpr' ),
 					'menu_name'                => __( 'Podcast Posts', 'cpr' ),
 				],
-				'public' => true,
-				'show_in_nav_menus' => false,
+				'show_ui' => true,
 				'show_in_menu' => false,
 				'supports' => [ 'title', 'thumbnail', 'editor', 'revisions' ],
 			]

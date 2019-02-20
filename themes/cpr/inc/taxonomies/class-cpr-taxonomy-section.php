@@ -66,6 +66,7 @@ class Cpr_Taxonomy_Section extends Cpr_Taxonomy {
 					'name_admin_bar'        => __( 'Sections', 'cpr' ),
 				],
 				'meta_box_cb' => false,
+				'show_admin_column' => true,
 				'show_in_rest' => false,
 			]
 		);

@@ -29,11 +29,13 @@ class Content_Item extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
+			'excerpt'          => '',
 			'eyebrow_label'    => '',
 			'eyebrow_link'     => '',
 			'eyebrow_location' => 'bottom',
 			'image_size'       => 'grid-item',
 			'permalink'        => '',
+			'show_excerpt'     => false,
 			'theme'            => 'grid',
 			'title'            => '',
 			'type'             => '',
@@ -45,6 +47,7 @@ class Content_Item extends \WP_Components\Component {
 	 */
 	public function post_has_set() {
 		$this->set_title();
+		$this->set_excerpt();
 		$this->set_eyebrow();
 		$this->set_byline();
 		$this->set_featured_image( $this->get_config( 'image_size' ) );
