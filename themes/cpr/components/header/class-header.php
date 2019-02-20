@@ -52,6 +52,13 @@ class Header extends \WP_Components\Component {
 					];
 					return $this;
 				}
+			case $this->query->is_tax( 'section' ):
+				$term = $this->query->get_queried_object();
+				$this->children = [
+					( new \CPR\Component\Logo() )->set_config( 'type', $term->slug ?? '' ),
+					( new Menu() )->set_menu( $term->slug ?? '' ),
+				];
+				return $this;
 		}
 
 		return $this;
