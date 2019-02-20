@@ -308,7 +308,7 @@ class News extends \WP_Components\Component {
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
 										'post_limit'     => 4,
-										'query_args'     => self::get_backfill_args(),
+										'query_args' => self::get_backfill_args(),
 									]
 								),
 							],
