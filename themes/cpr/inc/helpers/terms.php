@@ -43,25 +43,54 @@ add_filter( 'term_link', __NAMESPACE__ . '\modify_podcast_term_link', 10, 3 );
  */
 function get_podcast_term_ids_by_section( $section_slugs ) {
 
-    // @todo Add some transient caching here.
-    $term_ids = [];
+	// Check for a cache hit.
+	$cache_key       = get_podcast_ids_cache_key( $section_slugs );
+	$cached_term_ids = get_transient( $cache_key );
 
-    $linked_posts = new \WP_Query(
-        [
-            'post_type' => 'podcast-post',
-            'tax_query' => [
-                [
-                    'taxonomy' => 'section',
-                    'field'    => 'slug',
-                    'terms'    => $section_slugs, // This can be a single string, or an array of strings.
-                ],
-            ],
-        ]
-    );
+	if ( false !== $cached_term_ids ) {
+		return $cached_term_ids;
+	}
 
-    foreach ( ( $linked_posts->posts ?? [] ) as $linked_post ) {
-        $term_ids[] = \Alleypack\Term_Post_Link::get_term_from_post( $linked_post->ID );
-    }
+	// Get the linked podcast posts.
+	$linked_posts = new \WP_Query(
+		[
+			'post_type' => 'podcast-post',
+			'tax_query' => [
+				[
+					'taxonomy' => 'section',
+					'field'    => 'slug',
+					'terms'    => $section_slugs, // This can be a single string, or an array of strings.
+				],
+			],
+		]
+	);
 
-    return $term_ids;
+	$term_ids = [];
+
+	// Get the corresponding term ID for each linked post.
+	foreach ( ( $linked_posts->posts ?? [] ) as $linked_post ) {
+		$term_ids[] = \Alleypack\Term_Post_Link::get_term_from_post( $linked_post->ID );
+	}
+
+	// Cache the term IDs for 15 minutes.
+	if ( ! empty( $term_ids ) ) {
+		set_transient( $cache_key, $term_ids, 5 * MINUTE_IN_SECONDS );
+	}
+
+	return $term_ids;
+}
+
+/**
+ * Get the cache key for storing podcast term ids for given section(s).
+ *
+ * @param string|array $section_slugs Section slug, or array of section slugs.
+ * @return string
+ */
+function get_podcast_ids_cache_key( $section_slugs ) {
+	if ( is_array( $section_slugs ) ) {
+		sort( $section_slugs );
+		$section_slugs = implode( '_', array_unique( $section_slugs ) );
+	}
+
+	return 'cpr_podcast_term_ids_' . md5( $section_slugs );
 }
