@@ -56,7 +56,7 @@ class Term_Archive extends \WP_Components\Component {
 				->set_config( 'show_excerpt', true )
 				->set_config( 'heading', $this->term->name )
 				->set_config( 'heading_border', true )
-				->parse_from_wp_query( $this->query )
+				->parse_from_wp_query( $this->query ),
 				// ->append_child(
 					/**
 					 * Pagination.

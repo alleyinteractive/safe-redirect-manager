@@ -61,7 +61,7 @@ class News extends \WP_Components\Component {
 	 * Get the backfill arguments for the Featured Topic content list, which is
 	 * content that's both within the News section and within a particular category.
 	 *
-	 * @param  int $term_id
+	 * @param  int $term_id Term ID.
 	 * @return array
 	 */
 	public static function get_backfill_args_with_cat( int $term_id ) {

@@ -52,6 +52,7 @@ class Header extends \WP_Components\Component {
 					];
 					return $this;
 				}
+				break;
 			case $this->query->is_tax( 'section' ):
 				$term = $this->query->get_queried_object();
 				$this->children = [
