@@ -108,9 +108,14 @@ class News extends \WP_Components\Component {
 			 * Featured content with a right sidebar.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				->set_config( 'image_size', 'feature_item' )
-				->set_config( 'theme', 'feature' )
-				->set_config( 'show_excerpt', true )
+				->merge_config(
+					[
+						'alight_item_content' => 'left',
+						'image_size'     	  => 'feature_item',
+						'theme'               => 'feature',
+						'show_excerpt'        => true,
+					]
+				)
 				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
 				->append_children(
 					[
@@ -118,8 +123,12 @@ class News extends \WP_Components\Component {
 						 * Right sidebar with an ad.
 						 */
 						( new \CPR\Component\Sidebar() )
-							->set_config( 'position', 'right' )
-							->set_config( 'has_ad', true )
+							->merge_config(
+								[
+									'position' => 'right',
+									'has_ad'   => true,
+								]
+							)
 							->append_child( ( new \CPR\Component\Ad() )->set_config( 'height', 600 ) ),
 					]
 				),
@@ -128,8 +137,12 @@ class News extends \WP_Components\Component {
 			 * Highlighted Content.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'theme', 'grid' )
+				->merge_config(
+					[
+						'image_size' => 'grid_item',
+						'theme'      => 'grid',
+					]
+				)
 				->parse_from_fm_data(
 					$data['highlighted_content'] ?? [],
 					4,
@@ -145,16 +158,20 @@ class News extends \WP_Components\Component {
 			 * "Featured Topic"
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				->set_config( 'theme', 'feature' )
-				->set_config( 'image_size', 'feature_item' )
-				->set_config( 'eyebrow_size', 'small' )
-				->set_config( 'show_excerpt', true )
-				->set_config( 'heading', get_term( $data['featured_topic']['topic_id'] ?? 0, 'category' )->name ?? '' )
-				->set_config( 'heading_link', get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ) )
-				->set_config( 'heading_border', true )
-				->set_config( 'heading_cta_label', __( 'More Stories', 'cpr' ) )
-				->set_config( 'heading_cta_link', get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ) )
-				->set_config( 'eyebrow_label', __( 'Featured Topic', 'cpr' ) )
+				->merge_config(
+					[
+						'theme'             => 'feature',
+						'image_size'        => 'feature_item',
+						'eyebrow_size'      => 'small',
+						'show_excerpt'      => true,
+						'heading'           => get_term( $data['featured_topic']['topic_id'] ?? 0, 'category' )->name ?? '',
+						'heading_link'      => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
+						'heading_border'    => true,
+						'heading_cta_label' => __( 'More Stories', 'cpr' ),
+						'heading_cta_link'  => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
+						'eyebrow_label'     => __( 'Featured Topic', 'cpr' ),
+					]
+				)
 				->parse_from_ids(
 					array_slice( $data['featured_topic']['content_item_ids'] ?? [], 0, 1 ),
 					1,
@@ -186,22 +203,30 @@ class News extends \WP_Components\Component {
 			 * Banner Ad.
 			 */
 			( new \CPR\Component\Ad() )
-				->set_config( 'background_color', '#f8f9fa' )
-				->set_config( 'background_padding', true )
-				->set_config( 'width', 468 )
-				->set_config( 'height', 60 ),
+				->merge_config(
+					[
+						'background_color', '#f8f9fa',
+						'background_padding' => true,
+						'width'              => 468,
+						'height'             => 60
+					]
+				),
 
 			/**
 			 * "More Stories" river.
 			 */
 			( new \CPR\Component\Modules\Content_List() )
-				->set_config( 'layout', 'river' )
-				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'show_excerpt', true )
-				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
-				->set_config( 'heading_border', true )
-				->set_config( 'call_to_action_label', __( 'More Stories', 'cpr' ) )
-				->set_config( 'call_to_action_link', home_url( '/section/news/' ) )
+				->merge_config(
+					[
+						'layout'               => 'river',
+						'image_size'           => 'grid_item',
+						'show_excerpt'         => true,
+						'heading'              => __( 'More Stories', 'cpr' ),
+						'heading_border'       => true,
+						'call_to_action_label' => __( 'More Stories', 'cpr' ),
+						'call_to_action_link'  => home_url( '/section/news/' ),
+					]
+				)
 				->parse_from_ids(
 					[],
 					8,
@@ -212,16 +237,24 @@ class News extends \WP_Components\Component {
 					 * Right Sidebar.
 					 */
 					( new \CPR\Component\Sidebar() )
-						->set_config( 'position', 'right' )
-						->set_config( 'has_ad', true )
+						->merge_config(
+							[
+								'position' => 'right',
+								'has_ad'   => true,
+							]
+						)
 						->append_children(
 							[
 								/**
 								 * River of content "Across Colorado"
 								 */
 								( new \CPR\Component\Modules\Content_List() )
-									->set_config( 'layout', 'river' )
-									->set_config( 'heading', __( 'Across Colorado', 'cpr' ) )
+									->merge_config(
+										[
+											'layout'  => 'river',
+											'heading' => __( 'Across Colorado', 'cpr' ),
+										]
+									)
 									->parse_from_ids(
 										[],
 										4,

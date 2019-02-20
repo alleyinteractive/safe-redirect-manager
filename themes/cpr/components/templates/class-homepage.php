@@ -46,6 +46,7 @@ class Homepage extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->set_config( 'image_size', 'feature_item' )
 				->set_config( 'theme', 'feature' )
+				->set_config( 'align_item_content', 'center' )
 				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
 				->append_children(
 					[
