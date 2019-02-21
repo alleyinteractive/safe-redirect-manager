@@ -1,0 +1,18 @@
+{
+	"public": true,
+	"show_in_rest": true,
+	"menu_icon": "dashicons-calendar-alt",
+	"supports": [
+		"title",
+		"thumbnail",
+		"editor",
+		"revisions",
+		"excerpt",
+		"custom-fields"
+	],
+	"taxonomies": [
+		"category",
+		"post_tag",
+		"section"
+	]
+}

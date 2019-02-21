@@ -164,4 +164,7 @@ require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-podcast-post.php';
 // Podcast Episodes Post Type (cpt:podcast-episode).
 require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-podcast-episode.php';
 
+// Events Post Type (cpt:event).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-event.php';
+
 /* End Data Structures */

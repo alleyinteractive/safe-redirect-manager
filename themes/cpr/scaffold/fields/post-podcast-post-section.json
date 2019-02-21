@@ -2,7 +2,7 @@
 	"contexts": [
 		{
 			"type": "post",
-			"post_types": [ "post", "podcast-post" ],
+			"post_types": [ "post", "podcast-post", "event" ],
 			"title": { "__": "Section" },
 			"context": "side"
 		}

@@ -1,6 +1,7 @@
 {
 	"object_types": [
 		"post",
+		"event",
 		"podcast-episode",
 		"podcast-post"
 	],
