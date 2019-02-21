@@ -99,6 +99,7 @@ class Homepage extends \WP_Components\Component {
 				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
 				->set_config( 'eyebrow_size', 'large' )
+				->set_config( 'eyebrow_location', 'top' )
 				->parse_from_fm_data(
 					$data['latest_podcast_episodes'] ?? [],
 					4,

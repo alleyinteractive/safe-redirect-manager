@@ -35,6 +35,7 @@ class Content_List extends \WP_Components\Component {
 			'eyebrow_label'        => '',
 			'eyebrow_link'         => '',
 			'eyebrow_size'         => 'small',
+			'eyebrow_location'     => 'bottom',
 			'heading'              => '',
 			'heading_border'       => false,
 			'heading_link'         => '',
@@ -77,12 +78,13 @@ class Content_List extends \WP_Components\Component {
 		return ( new \CPR\Component\Content_Item() )
 			->merge_config(
 				[
-					'align_content'  => $this->get_config( 'align_item_content' ),
-					'theme'          => $this->get_config( 'theme' ),
-					'image_size'     => $this->get_config( 'image_size' ),
-					'heading_border' => $this->get_config( 'heading_border' ),
-					'eyebrow_size'   => $this->get_config( 'eyebrow_size' ),
-					'show_excerpt'   => $this->get_config( 'show_excerpt' ),
+					'align_content'    => $this->get_config( 'align_item_content' ),
+					'theme'            => $this->get_config( 'theme' ),
+					'image_size'       => $this->get_config( 'image_size' ),
+					'heading_border'   => $this->get_config( 'heading_border' ),
+					'eyebrow_size'     => $this->get_config( 'eyebrow_size' ),
+					'eyebrow_location' => $this->get_config( 'eyebrow_location' ),
+					'show_excerpt'     => $this->get_config( 'show_excerpt' ),
 				]
 			)
 			->set_post( $content_item_id );
