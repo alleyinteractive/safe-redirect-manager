@@ -112,4 +112,4 @@ function build_components_endpoint(
 	$data['page'] = $template->to_array()['children'];
 	return $data;
 }
-add_action( 'wp_irving_components_route', __NAMESPACE__ . '\build_components_endpoint', 10, 5 );
+add_filter( 'wp_irving_components_route', __NAMESPACE__ . '\build_components_endpoint', 10, 5 );
