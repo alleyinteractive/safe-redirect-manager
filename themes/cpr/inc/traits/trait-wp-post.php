@@ -43,13 +43,29 @@ trait WP_Post {
 	}
 
 	/**
+	 * Set publish date.
+	 */
+	public function set_publish_date() {
+		$this->set_config( 'publish_date', get_the_date( 'F j, Y', $this->get_post_id() ) );
+	}
+
+	/**
 	 * Set the eyebrow.
 	 */
 	public function set_eyebrow() {
 		switch ( $this->post->post_type ?? '' ) {
+
 			case 'post':
-				$this->set_config( 'eyebrow_label', __( 'Placeholder Eyebrow', 'cpr' ) );
-				$this->set_config( 'eyebrow_link', home_url( '/placeholder-eyebrow/' ) );
+				// Use primary category as the eyebrow.
+				$primary_category_component = $this->get_primary_category_component();
+				if ( $primary_category_component->is_valid_term() ) {
+					$this->set_config( 'eyebrow_label', $primary_category_component->get_config( 'name' ) );
+					$this->set_config( 'eyebrow_link', $primary_category_component->get_config( 'link' ) );
+				} else {
+					$this->set_config( 'eyebrow_label', __( 'No Primary Category Found', 'cpr' ) );
+					$this->set_config( 'eyebrow_link', home_url( '/placeholder/' ) );
+				}
+
 				break;
 
 			case 'podcast-episode':
@@ -84,5 +100,26 @@ trait WP_Post {
 					->set_config_for_size( $size ),
 			]
 		);
+	}
+
+	/**
+	 * Set audio.
+	 *
+	 * @todo Do real things.
+	 */
+	public function set_audio() {
+		// @todo pull the actual article audio.
+		$this->set_config( 'audio_url', 'http://google.com/test.mp3' );
+		$this->set_config( 'audio_length', 415 );
+	}
+
+	/**
+	 * Get the primary category component.
+	 *
+	 * @return null|\WP_Components\Term
+	 */
+	public function get_primary_category_component() {
+		$category_id   = get_post_meta( $this->get_post_id(), 'primary_category_id', true );
+		return ( new \WP_Components\Term() )->set_term( $category_id );
 	}
 }
