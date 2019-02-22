@@ -30,7 +30,7 @@ class Slim_Navigation extends \WP_Components\Component {
 			new Listen_Live(),
 			new \CPR\Component\Social_Links(),
 			new Search(),
-			new \CPR\Component\Donate_Button(),
+			new \CPR\Component\Donate\Donate_Button(),
 		];
 	}
 }

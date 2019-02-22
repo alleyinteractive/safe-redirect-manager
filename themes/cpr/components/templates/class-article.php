@@ -41,14 +41,14 @@ class Article extends \WP_Components\Component {
 			/**
 			 * Content Header.
 			 */
-			// ( new \CPR\Component\Content\Header() )
-			// 	->set_post( $this->post ),
+			( new \CPR\Component\Content\Header() )
+				->set_post( $this->post ),
 
 			/**
 			 * Content Body.
 			 */
-			// ( new \CPR\Component\Content\Body() )
-			// 	->set_post( $this->post ),
+			( new \CPR\Component\Content\Body() )
+				->set_post( $this->post ),
 
 			/**
 			 * Content Footer.
