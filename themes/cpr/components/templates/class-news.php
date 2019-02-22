@@ -160,7 +160,7 @@ class News extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->merge_config(
 					[
-						'theme'             => 'feature',
+						'theme'             => 'featureTerm',
 						'image_size'        => 'feature_item',
 						'eyebrow_size'      => 'small',
 						'show_excerpt'      => true,
@@ -190,7 +190,7 @@ class News extends \WP_Components\Component {
 							 * River of additional items.
 							 */
 							( new \CPR\Component\Modules\Content_List() )
-								->set_config( 'layout', 'river' )
+								->set_config( 'theme', 'river' )
 								->parse_from_ids(
 									array_slice( $data['featured_topic']['content_item_ids'] ?? [], 1 ),
 									3,
