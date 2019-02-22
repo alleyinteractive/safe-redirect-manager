@@ -29,7 +29,7 @@ function build_components_endpoint(
 	// Build defaults.
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
-			new \WP_Components\Head()->set_query( $wp_query ),
+			( new \WP_Components\Head() )->set_query( $wp_query ),
 			new Component\Slim_Navigation\Slim_Navigation(),
 			( new Component\Header\Header() )->set_query( $wp_query ),
 			new \WP_Components\Body(),

@@ -55,7 +55,14 @@ class Header extends \WP_Components\Component {
 				$this->set_publish_date();
 				$this->set_audio();
 				$this->set_featured_image( $this->get_config( 'image_size' ) );
-				$this->prepend_child( new \CPR\Component\Ad() );
+				$this->append_child( new \CPR\Component\Ad() );
+				$this->append_child(
+					( new \WP_Components\Social_Sharing() )
+						->set_config( 'facebook', true )
+						->set_config( 'twitter', true )
+						->set_config( 'email', true )
+						->set_post( $this->post )
+				);
 				break;
 
 			case 'page':
