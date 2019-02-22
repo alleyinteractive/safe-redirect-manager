@@ -50,7 +50,7 @@ class Body extends \WP_Components\Component {
 						 * Advertisement.
 						 */
 						new \CPR\Component\Ad()
-					),
+					)
 
 					/**
 					 * Content List of 3 most recent articles.
