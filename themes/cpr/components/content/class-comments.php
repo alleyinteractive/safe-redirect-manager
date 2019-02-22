@@ -8,7 +8,7 @@
 namespace CPR\Component\Content;
 
 /**
- * Content Content class.
+ * Comments class.
  */
 class Comments extends \WP_Components\Component {
 

@@ -43,12 +43,9 @@ class Body extends \WP_Components\Component {
 					->append_child( $this->get_more_articles_sidebar_component() )
 
 					/**
-					 * Ad
+					 * Advertisement.
 					 */
 					->append_child(
-						/**
-						 * Advertisement.
-						 */
 						new \CPR\Component\Ad()
 					)
 
@@ -70,6 +67,9 @@ class Body extends \WP_Components\Component {
 
 		// Get primary category component.
 		$category_component = $this->get_primary_category_component();
+		if ( ! $category_component->is_valid_term() ) {
+			return;
+		}
 
 		return ( new \CPR\Component\Modules\Content_List() )
 			->set_config(
