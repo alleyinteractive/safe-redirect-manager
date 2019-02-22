@@ -160,16 +160,16 @@ class News extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->merge_config(
 					[
-						'theme'             => 'featureTerm',
-						'image_size'        => 'feature_item',
+						'eyebrow_label'     => __( 'Featured Topic', 'cpr' ),
 						'eyebrow_size'      => 'small',
-						'show_excerpt'      => true,
 						'heading'           => get_term( $data['featured_topic']['topic_id'] ?? 0, 'category' )->name ?? '',
-						'heading_link'      => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
 						'heading_border'    => true,
 						'heading_cta_label' => __( 'More Stories', 'cpr' ),
 						'heading_cta_link'  => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
-						'eyebrow_label'     => __( 'Featured Topic', 'cpr' ),
+						'heading_link'      => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
+						'image_size'        => 'feature_item',
+						'show_excerpt'      => true,
+						'theme'             => 'featureTerm',
 					]
 				)
 				->parse_from_ids(
