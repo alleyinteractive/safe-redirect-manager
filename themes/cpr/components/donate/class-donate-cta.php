@@ -77,7 +77,7 @@ class Donate_CTA extends \WP_Components\Component {
 				->set_config(
 					'content',
 					$settings['giving']['cta']['donate_cta']['description'] ?? $this->get_default_description(),
-				)
+				),
 		];
 	}
 

@@ -61,9 +61,9 @@ namespace CPR;
 				[
 					'default' => true,
 					'transforms' => [
-						'resize' => [ 960, 540 ]
+						'resize' => [ 960, 540 ],
 					],
-				]
+				],
 			],
 			'retina' => true,
 			'aspect_ratio' => 9 / 16,

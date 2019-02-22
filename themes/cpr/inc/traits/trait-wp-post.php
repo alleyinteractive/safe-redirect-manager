@@ -54,8 +54,8 @@ trait WP_Post {
 	 */
 	public function set_eyebrow() {
 		switch ( $this->post->post_type ?? '' ) {
-			case 'post':
 
+			case 'post':
 				// Use primary category as the eyebrow.
 				$primary_category_component = $this->get_primary_category_component();
 				if ( $primary_category_component->is_valid_term() ) {

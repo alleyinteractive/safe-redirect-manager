@@ -55,7 +55,7 @@ class Body extends \WP_Components\Component {
 					/**
 					 * Content List of 3 most recent articles.
 					 */
-					->append_child( $this->get_recent_articles_sidebar_component() )
+					->append_child( $this->get_recent_articles_sidebar_component() ),
 			]
 		);
 	}
@@ -75,6 +75,7 @@ class Body extends \WP_Components\Component {
 			->set_config(
 				'heading',
 				sprintf(
+					// Translators: %1$s, term name.
 					esc_html__( 'More in %1$s', 'cpr' ),
 					esc_html( $category_component->wp_term_get_name() )
 				)
