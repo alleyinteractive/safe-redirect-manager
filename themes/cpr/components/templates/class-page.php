@@ -37,6 +37,18 @@ class Page extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
-		return [];
+		return [
+			/**
+			 * Content Header.
+			 */
+			( new \CPR\Component\Content\Header() )
+				->set_post( $this->post ),
+
+			/**
+			 * Content Body.
+			 */
+			( new \CPR\Component\Content\Body() )
+				->set_post( $this->post ),
+		];
 	}
 }

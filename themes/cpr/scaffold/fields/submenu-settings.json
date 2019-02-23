@@ -3,12 +3,8 @@
 	"contexts": [
 		{
 			"type": "submenu",
-			"page_title": {
-				"__": "CPR Settings"
-			},
-			"menu_title": {
-				"__": "CPR Settings"
-			},
+			"page_title": { "__": "CPR Settings" },
+			"menu_title": { "__": "CPR Settings" },
 			"parent_slug": "options-general.php",
 			"capability": "manage_options"
 		}
@@ -16,24 +12,21 @@
 	"tabbed": "vertical",
 	"children": {
 		"analytics": {
-			"label": {
-				"__": "Analytics"
-			},
+			"label": { "__": "Analytics" },
 			"children": {
 				"parsely_site": {
-					"label": {
-						"__": "Parse.ly Site (e.g. cpr.org)"
-					}
+					"label": { "__": "Parse.ly Site (e.g. cpr.org)" }
 				}
 			}
 		},
 		"giving": {
-			"label": {
-				"__": "Giving"
-			},
+			"label": { "__": "Giving" },
 			"children": {
-				"donate": {
-					"children": "`( new \\CPR\\Component\\Donate_Button() )->get_fm_fields()`"
+				"cta": {
+					"children": "`( new \\CPR\\Component\\Donate\\Donate_CTA() )->get_fm_fields()`"
+				},
+				"button": {
+					"children": "`( new \\CPR\\Component\\Donate\\Donate_Button() )->get_fm_fields()`"
 				}
 			}
 		},

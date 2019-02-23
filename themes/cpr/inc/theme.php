@@ -97,3 +97,15 @@ function body_classes( $classes ) {
 	return $classes;
 }
 add_filter( 'body_class', __NAMESPACE__ . '\body_classes' );
+
+/**
+ * Return an array of content post types.
+ *
+ * @return array
+ */
+function get_content_post_types() {
+	return [
+		'post',
+		'podcast-episode',
+	];
+}

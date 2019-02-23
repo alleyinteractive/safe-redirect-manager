@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component;
+namespace CPR\Component\Donate;
 
 /**
  * Donate Button.
@@ -47,8 +47,8 @@ class Donate_Button extends \WP_Components\Component {
 		$settings = get_option( 'cpr-settings' );
 
 		return [
-			'label' => $settings['giving']['donate']['donate_button']['label'] ?? $this->get_default_label(),
-			'url'   => $settings['giving']['donate']['donate_button']['url'] ?? $this->get_default_url(),
+			'label' => $settings['giving']['button']['donate_button']['label'] ?? $this->get_default_label(),
+			'url'   => $settings['giving']['button']['donate_button']['url'] ?? $this->get_default_url(),
 		];
 	}
 
