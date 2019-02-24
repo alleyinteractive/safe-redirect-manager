@@ -21,3 +21,6 @@ add_action( 'init', __NAMESPACE__ . '\podcast_rewrites', 11 );
 
 // Add search rewrites.
 add_action( 'init', [ '\\CPR\\Component\\Templates\\Search', 'rewrite_rules' ] );
+
+// Add news rewrites.
+add_action( 'init', [ '\\CPR\\Component\\Templates\\News', 'rewrite_rules' ] );

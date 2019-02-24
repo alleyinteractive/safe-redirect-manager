@@ -8,3 +8,6 @@
  */
 
 namespace CPR;
+
+// Modfiy search results.
+add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\News', 'pre_get_posts' ] );
