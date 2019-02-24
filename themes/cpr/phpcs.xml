@@ -14,7 +14,7 @@
 	<arg name="basepath" value="./" />
 
 	<!-- Check up to 8 files simultaneously. -->
-	<arg name="parallel" value="8" />
+	<arg name="parallel" value="1" />
 
 	<!-- Only check the PHP files. -->
 	<arg name="extensions" value="php" />

@@ -43,6 +43,26 @@ namespace CPR;
 			'aspect_ratio' => 9 / 16,
 			'retina'       => true,
 		],
+		'feature_item_small' => [
+			'sources' => [
+				[
+					'transforms' => [
+						'resize' => [ 480, 360 ],
+					],
+					'descriptor' => 480,
+					'media' => [ 'max' => 'sm' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 640, 480 ],
+					],
+					'descriptor' => 640,
+					'default'    => true,
+				],
+			],
+			'aspect_ratio' => 3 / 4,
+			'retina'       => true,
+		],
 		'grid_item' => [
 			'sources' => [
 				[

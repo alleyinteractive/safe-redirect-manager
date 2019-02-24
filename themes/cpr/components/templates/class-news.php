@@ -110,8 +110,8 @@ class News extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->merge_config(
 					[
-						'alight_item_content' => 'left',
-						'image_size'     	  => 'feature_item',
+						'align_item_content'  => 'left',
+						'image_size'          => 'feature_item',
 						'theme'               => 'feature',
 						'show_excerpt'        => true,
 					]
@@ -167,7 +167,7 @@ class News extends \WP_Components\Component {
 						'heading_cta_label' => __( 'More Stories', 'cpr' ),
 						'heading_cta_link'  => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
 						'heading_link'      => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
-						'image_size'        => 'feature_item',
+						'image_size'        => 'feature_item_small',
 						'show_excerpt'      => true,
 						'theme'             => 'featureTerm',
 					]
@@ -218,7 +218,7 @@ class News extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->merge_config(
 					[
-						'layout'               => 'river',
+						'theme'                => 'riverFull',
 						'image_size'           => 'grid_item',
 						'show_excerpt'         => true,
 						'heading'              => __( 'More Stories', 'cpr' ),
@@ -251,7 +251,7 @@ class News extends \WP_Components\Component {
 								( new \CPR\Component\Modules\Content_List() )
 									->merge_config(
 										[
-											'layout'  => 'river',
+											'theme'  => 'river',
 											'heading' => __( 'Across Colorado', 'cpr' ),
 										]
 									)
