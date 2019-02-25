@@ -25,7 +25,7 @@ class News extends \WP_Components\Component {
 	 * Hook into post being set.
 	 */
 	public function post_has_set() {
-		$body = new \WP_Components\Body();
+		$body           = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;
@@ -110,10 +110,10 @@ class News extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->merge_config(
 					[
-						'align_item_content'  => 'left',
-						'image_size'          => 'feature_item',
-						'theme'               => 'feature',
-						'show_excerpt'        => true,
+						'align_item_content' => 'left',
+						'image_size'         => 'feature_item',
+						'theme'              => 'feature',
+						'show_excerpt'       => true,
 					]
 				)
 				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
@@ -208,7 +208,7 @@ class News extends \WP_Components\Component {
 						'background_color'   => '#f8f9fa',
 						'background_padding' => true,
 						'width'              => 468,
-						'height'             => 60
+						'height'             => 60,
 					]
 				),
 
@@ -218,11 +218,11 @@ class News extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->merge_config(
 					[
-						'theme'                => 'riverFull',
-						'image_size'           => 'grid_item',
-						'show_excerpt'         => true,
-						'heading'              => __( 'More Stories', 'cpr' ),
-						'heading_border'       => true,
+						'theme'          => 'riverFull',
+						'image_size'     => 'grid_item',
+						'show_excerpt'   => true,
+						'heading'        => __( 'More Stories', 'cpr' ),
+						'heading_border' => true,
 					]
 				)
 				->parse_from_ids(
@@ -249,7 +249,7 @@ class News extends \WP_Components\Component {
 								( new \CPR\Component\Modules\Content_List() )
 									->merge_config(
 										[
-											'theme'  => 'river',
+											'theme'   => 'river',
 											'heading' => __( 'Across Colorado', 'cpr' ),
 										]
 									)
@@ -271,7 +271,7 @@ class News extends \WP_Components\Component {
 							]
 						)
 				),
-				$this->get_pagination_component(),
+			$this->get_pagination_component(),
 		];
 	}
 
@@ -283,12 +283,14 @@ class News extends \WP_Components\Component {
 	public function get_pagination_component() {
 
 		// Create query.
-		$query = new \WP_Query( array_merge(
-			$this->get_backfill_args(),
-			[
-				'paged' => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
-			]
-		) );
+		$query = new \WP_Query(
+			array_merge(
+				$this->get_backfill_args(),
+				[
+					'paged' => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
+				]
+			)
+		);
 
 		// Create instance.
 		$pagination = new \WP_Components\Pagination();
@@ -304,7 +306,7 @@ class News extends \WP_Components\Component {
 
 		// Figure out the search result meta info.
 		$posts_per_page = absint( $query->get( 'posts_per_page' ) );
-		$page = absint( $query->get( 'paged' ) );
+		$page           = absint( $query->get( 'paged' ) );
 		if ( $page < 1 ) {
 			$page = 1;
 		}
@@ -334,8 +336,8 @@ class News extends \WP_Components\Component {
 					'src'   => 'landing_page_type',
 					'value' => 'news',
 				],
-				'children' => [
-					'featured_content' => new \Fieldmanager_Group(
+				'children'   => [
+					'featured_content'    => new \Fieldmanager_Group(
 						[
 							'label'    => __( 'Featured Content', 'cpr' ),
 							'children' => [
@@ -364,19 +366,19 @@ class News extends \WP_Components\Component {
 							],
 						]
 					),
-					'featured_topic' => new \Fieldmanager_Group(
+					'featured_topic'      => new \Fieldmanager_Group(
 						[
 							'label'    => __( 'Featured Topic', 'cpr' ),
 							'children' => [
-								'topic_id' => new \Fieldmanager_Select(
+								'topic_id'         => new \Fieldmanager_Select(
 									[
 										'label'       => __( 'Topic', 'cpr' ),
 										'description' => __( 'Begin typing to select a topic.', 'cpr' ),
 										'datasource'  => new \Fieldmanager_Datasource_Term(
 											[
-												'taxonomy'               => 'category',
+												'taxonomy' => 'category',
 												'taxonomy_save_to_terms' => false,
-												'only_save_to_taxonomy'  => false,
+												'only_save_to_taxonomy' => false,
 											]
 										),
 									]
@@ -409,7 +411,6 @@ class News extends \WP_Components\Component {
 	 * Modify rewrite rules.
 	 */
 	public static function rewrite_rules() {
-		print_r( 'hiya' );
 		add_rewrite_rule(
 			'^news/page/?([0-9]{1,})/?$',
 			add_query_arg(

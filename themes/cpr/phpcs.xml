@@ -10,9 +10,6 @@
 	-->
 	<arg value="psn" />
 
-	<!-- Strip the filepaths down to the relevant bit. -->
-	<arg name="basepath" value="./" />
-
 	<!-- Check up to 8 files simultaneously. -->
 	<arg name="parallel" value="1" />
 

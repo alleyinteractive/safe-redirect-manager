@@ -56,7 +56,6 @@ function build_components_endpoint(
 					break;
 
 				case 'news':
-					print_r( 'butts' );
 					$template = ( new Component\Templates\News() )->set_post( $wp_query->post );
 					break;
 
