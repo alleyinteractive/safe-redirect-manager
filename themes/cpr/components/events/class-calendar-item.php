@@ -41,13 +41,17 @@ class Calendar_Item extends \WP_Components\Component {
 	 * Set component properties after a post object has been validated and set.
 	 */
 	public function post_has_set() {
-		$this->set_title(); // @todo update to use $this->wp_post_set_title();
-		// @todo parse the date and add to config.
+		$timestamp = get_post_meta( $this->post->ID, 'start_datetime', true );
+
+		$this->wp_post_set_title();
+		$this->wp_post_set_link();
 		$this->merge_config(
 			[
-				'permalink' => get_permalink( $this->post->ID ), // @todo use wp_post_get_permalink
-				'type'      => $this->post->post_type ?? 'post',
-				'location'  => get_post_meta( $this->post->ID, 'location', true ),
+				'type'       => $this->post->post_type,
+				'location'   => get_post_meta( $this->post->ID, 'location', true ),
+				'day'        => date( 'd', $timestamp ),
+				'month'      => date( 'M', $timestamp ),
+				'start_time' => date( 'g:i a', $timestamp ),
 			]
 		);
 	}
