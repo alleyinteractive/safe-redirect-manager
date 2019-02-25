@@ -218,11 +218,13 @@ class News extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->merge_config(
 					[
-						'theme'          => 'riverFull',
-						'image_size'     => 'grid_item',
-						'show_excerpt'   => true,
-						'heading'        => __( 'More Stories', 'cpr' ),
-						'heading_border' => true,
+						'theme'                => 'riverFull',
+						'image_size'           => 'grid_item',
+						'show_excerpt'         => true,
+						'heading'              => __( 'More Stories', 'cpr' ),
+						'heading_border'       => true,
+						'call_to_action_label' => __( 'More Stories', 'cpr' ),
+						'call_to_action_link'  => home_url( '/section/news/' ),
 					]
 				)
 				->parse_from_ids(
@@ -271,54 +273,7 @@ class News extends \WP_Components\Component {
 							]
 						)
 				),
-			$this->get_pagination_component(),
 		];
-	}
-
-	/**
-	 * Get the pagination component.
-	 *
-	 * @return \WP_Components\Pagination
-	 */
-	public function get_pagination_component() {
-
-		// Create query.
-		$query = new \WP_Query(
-			array_merge(
-				$this->get_backfill_args(),
-				[
-					'paged' => ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1,
-				]
-			)
-		);
-
-		// Create instance.
-		$pagination = new \WP_Components\Pagination();
-
-		// Flag irving parameters to remove.
-		$pagination->set_config( 'url_params_to_remove', [ 'path', 'context' ] );
-
-		// Set the base URL for search.
-		$pagination->set_config( 'base_url', '/news/' );
-
-		// Apply to the current query.
-		$pagination->set_query( $query );
-
-		// Figure out the search result meta info.
-		$posts_per_page = absint( $query->get( 'posts_per_page' ) );
-		$page           = absint( $query->get( 'paged' ) );
-		if ( $page < 1 ) {
-			$page = 1;
-		}
-
-		$pagination->set_config( 'range_end', $page * $posts_per_page );
-		$pagination->set_config(
-			'range_start',
-			( $pagination->get_config( 'range_end' ) - $posts_per_page + 1 )
-		);
-		$pagination->set_config( 'total', absint( $query->found_posts ?? 0 ) );
-
-		return $pagination;
 	}
 
 	/**
@@ -396,32 +351,5 @@ class News extends \WP_Components\Component {
 			]
 		);
 		return $fields;
-	}
-
-	/**
-	 * Modify results.
-	 *
-	 * @param object $wp_query wp_query object.
-	 */
-	public static function pre_get_posts( $wp_query ) {
-		$wp_query->set( 'posts_per_page', 20 );
-	}
-
-	/**
-	 * Modify rewrite rules.
-	 */
-	public static function rewrite_rules() {
-		add_rewrite_rule(
-			'^news/page/?([0-9]{1,})/?$',
-			add_query_arg(
-				[
-					'dispatch'          => 'landing-page',
-					'landing-page-type' => 'news',
-					'paged'             => '$matches[1]',
-				],
-				'index.php'
-			),
-			'top'
-		);
 	}
 }
