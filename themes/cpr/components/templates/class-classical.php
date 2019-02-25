@@ -101,7 +101,14 @@ class Classical extends \WP_Components\Component {
 										$data['calendar'] ?? [],
 										4,
 										[
-											'post_type' => 'event', // @todo limit to section?
+											'post_type' => 'event',
+											'tax_query' => [
+												[
+													'taxonomy' => 'section',
+													'field'    => 'slug',
+													'terms'    => 'classical',
+												],
+											],
 										]
 									)
 							),
