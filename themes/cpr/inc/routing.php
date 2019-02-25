@@ -29,6 +29,7 @@ function build_components_endpoint(
 	// Build defaults.
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
+			( new \WP_Components\Head() )->set_query( $wp_query ),
 			new Component\Slim_Navigation\Slim_Navigation(),
 			( new Component\Header\Header() )->set_query( $wp_query ),
 			new \WP_Components\Body(),
@@ -112,4 +113,4 @@ function build_components_endpoint(
 	$data['page'] = $template->to_array()['children'];
 	return $data;
 }
-add_action( 'wp_irving_components_route', __NAMESPACE__ . '\build_components_endpoint', 10, 5 );
+add_filter( 'wp_irving_components_route', __NAMESPACE__ . '\build_components_endpoint', 10, 5 );

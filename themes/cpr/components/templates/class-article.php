@@ -39,16 +39,22 @@ class Article extends \WP_Components\Component {
 	public function get_components() : array {
 		return [
 			/**
-			 * Article Header
+			 * Content Header.
 			 */
+			( new \CPR\Component\Content\Header() )
+				->set_post( $this->post ),
 
 			/**
-			 * Article Body
+			 * Content Body.
 			 */
+			( new \CPR\Component\Content\Body() )
+				->set_post( $this->post ),
 
 			/**
-			 * Disqus Comments.
+			 * Content Footer.
 			 */
+			( new \CPR\Component\Content\Footer() )
+				->set_post( $this->post ),
 
 			/**
 			 * Recirculation module.
