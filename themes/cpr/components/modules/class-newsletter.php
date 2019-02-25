@@ -48,8 +48,9 @@ class Newsletter extends \WP_Components\Component {
 		$settings = get_option( 'cpr-settings' );
 
 		return [
-			'heading' => $settings['engagement']['newsletter']['heading'] ?? $this->get_default_heading(),
-			'tagline' => $settings['engagement']['newsletter']['tagline'] ?? $this->get_default_tagline(),
+			'heading'          => $settings['engagement']['newsletter']['heading'] ?? $this->get_default_heading(),
+			'tagline'          => $settings['engagement']['newsletter']['tagline'] ?? $this->get_default_tagline(),
+			'background_color' => \CPR\get_site_color(),
 		];
 	}
 

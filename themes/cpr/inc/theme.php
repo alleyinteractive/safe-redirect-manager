@@ -109,3 +109,24 @@ function get_content_post_types() {
 		'podcast-episode',
 	];
 }
+
+/**
+ * Get the site's accent color for a particular section.
+ *
+ * @param string $section Site section, default main.
+ * @return string
+ */
+function get_site_color( string $section = 'main' ) {
+	switch ( $section ) {
+		case 'classical':
+			return '#7F386C';
+
+		case 'openair':
+			return '#296795';
+		
+		case 'news':
+		case 'main':
+		default:
+			return '#EF6530';
+	}
+}
