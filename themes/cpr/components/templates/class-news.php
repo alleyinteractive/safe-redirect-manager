@@ -102,6 +102,7 @@ class News extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'news', true );
+		$featured_topic_term = get_term( $data['featured_topic']['topic_id'] ?? 0, 'category' );
 
 		return [
 			/**
@@ -162,7 +163,7 @@ class News extends \WP_Components\Component {
 					[
 						'eyebrow_label'     => __( 'Featured Topic', 'cpr' ),
 						'eyebrow_size'      => 'small',
-						'heading'           => get_term( $data['featured_topic']['topic_id'] ?? 0, 'category' )->name ?? '',
+						'heading'           => ( $featured_topic_term instanceof \WP_Term ) ? $featured_topic_term->name : '',
 						'heading_border'    => true,
 						'heading_cta_label' => __( 'More Stories', 'cpr' ),
 						'heading_cta_link'  => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
