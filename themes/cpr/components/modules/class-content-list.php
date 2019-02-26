@@ -29,11 +29,13 @@ class Content_List extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
+			'align_item_content'   => 'left',
 			'call_to_action_label' => '',
 			'call_to_action_link'  => '',
 			'eyebrow_label'        => '',
 			'eyebrow_link'         => '',
 			'eyebrow_size'         => 'small',
+			'eyebrow_location'     => 'bottom',
 			'heading'              => '',
 			'heading_border'       => false,
 			'heading_link'         => '',
@@ -74,11 +76,17 @@ class Content_List extends \WP_Components\Component {
 		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $content_item_id );
 
 		return ( new \CPR\Component\Content_Item() )
-			->set_config( 'theme', $this->get_config( 'theme' ) )
-			->set_config( 'image_size', $this->get_config( 'image_size' ) )
-			->set_config( 'heading_border', $this->get_config( 'heading_border' ) )
-			->set_config( 'eyebrow_size', $this->get_config( 'eyebrow_size' ) )
-			->set_config( 'show_excerpt', $this->get_config( 'show_excerpt' ) )
+			->merge_config(
+				[
+					'align_content'    => $this->get_config( 'align_item_content' ),
+					'theme'            => $this->get_config( 'theme' ),
+					'image_size'       => $this->get_config( 'image_size' ),
+					'heading_border'   => $this->get_config( 'heading_border' ),
+					'eyebrow_size'     => $this->get_config( 'eyebrow_size' ),
+					'eyebrow_location' => $this->get_config( 'eyebrow_location' ),
+					'show_excerpt'     => $this->get_config( 'show_excerpt' ),
+				]
+			)
 			->set_post( $content_item_id );
 	}
 
@@ -92,12 +100,16 @@ class Content_List extends \WP_Components\Component {
 	 * @return Content_List
 	 */
 	public function parse_from_fm_data( array $fm_data, $backfill_to = 0, $backfill_args = [] ) : Content_List {
-		$this->set_config( 'call_to_action_label', (string) ( $fm_data['call_to_action_label'] ?? '' ) );
-		$this->set_config( 'call_to_action_link', (string) ( $fm_data['call_to_action_link'] ?? '' ) );
-		$this->set_config( 'eyebrow_label', (string) ( $fm_data['eyebrow_label'] ?? '' ) );
-		$this->set_config( 'eyebrow_link', (string) ( $fm_data['eyebrow_link'] ?? '' ) );
-		$this->set_config( 'heading', (string) ( $fm_data['heading'] ?? '' ) );
-		$this->set_config( 'heading_link', (string) ( $fm_data['heading_link'] ?? '' ) );
+		$this->merge_config(
+			[
+				'call_to_action_label' => (string) ( $fm_data['call_to_action_label'] ?? '' ),
+				'call_to_action_link'  => (string) ( $fm_data['call_to_action_link'] ?? '' ),
+				'eyebrow_label'        => (string) ( $fm_data['eyebrow_label'] ?? '' ),
+				'eyebrow_link'         => (string) ( $fm_data['eyebrow_link'] ?? '' ),
+				'heading'              => (string) ( $fm_data['heading'] ?? '' ),
+				'heading_link'         => (string) ( $fm_data['heading_link'] ?? '' ),
+			]
+		);
 
 		$content_item_ids = $this->backfill_content_item_ids(
 			(array) ( $fm_data['content_item_ids'] ?? [] ),

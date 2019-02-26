@@ -29,6 +29,7 @@ class Content_Item extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
+			'align_content'    => 'left',
 			'excerpt'          => '',
 			'eyebrow_label'    => '',
 			'eyebrow_link'     => '',
