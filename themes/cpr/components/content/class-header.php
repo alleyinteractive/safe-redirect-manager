@@ -33,7 +33,7 @@ class Header extends \WP_Components\Component {
 			'audio_url'     => '',
 			'eyebrow_label' => '',
 			'eyebrow_link'  => '',
-			'image_size'    => 'featured-media',
+			'image_size'    => 'content_single',
 			'publish_date'  => '',
 			'title'         => '',
 		];

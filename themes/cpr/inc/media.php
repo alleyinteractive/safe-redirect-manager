@@ -23,6 +23,26 @@ namespace CPR;
  */
 \WP_Components\Image::register_sizes(
 	[
+		'content_single' => [
+			'sources' => [
+				[
+					'transforms' => [
+						'resize' => [ 480, 270 ],
+					],
+					'descriptor' => 480,
+					'media' => [ 'max' => 'sm' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 1032, 580 ],
+					],
+					'descriptor' => 1032,
+					'default'    => true,
+				],
+			],
+			'aspect_ratio' => 9 / 16,
+			'retina'       => true,
+		],
 		'feature_item' => [
 			'sources' => [
 				[
