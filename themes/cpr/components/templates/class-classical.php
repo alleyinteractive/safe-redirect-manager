@@ -222,7 +222,29 @@ class Classical extends \WP_Components\Component {
 					$data['podcast_episodes'] ?? [],
 					4,
 					self::get_classical_episodes_backfill_args()
+				),
+
+			/**
+			 * Videos content list.
+			 */
+			( new \CPR\Component\Modules\Content_List() )
+				->merge_config(
+					[
+						'heading'           => $data['videos']['heading'] ?? '',
+						'heading_border'    => true,
+						'heading_cta_label' => __( 'All Videos', 'cpr' ),
+						'heading_cta_link'  => home_url(), // @todo Update.
+						'image_size'        => 'feature_item_small',
+						'theme'             => 'featureHalf',
+						'eyebrow_location'  => 'none',
+						'show_excerpt'      => true,
+					]
 				)
+				->add_video_items(
+					$data['videos']['content_item_ids'] ?? [],
+					2,
+					self::get_classical_posts_backfill_args() // @todo Determine actual backfill args.
+				),
 		];
 	}
 

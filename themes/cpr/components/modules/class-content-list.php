@@ -224,4 +224,40 @@ class Content_List extends \WP_Components\Component {
 
 		return $this;
 	}
+
+	/**
+	 * Add content items with featured video children from a list of post IDs,
+	 * backfilling as needed.
+	 *
+	 * @param array   $ids           Post IDs.
+	 * @param integer $backfill_to   How many content items should this component
+	 *                               have.
+	 * @param array   $backfill_args WP_Query arguments for the backfill.
+	 * @return Content_List
+	 */
+	public function add_video_items( array $ids, $backfill_to = 0, $backfill_args = [] ) : Content_List {
+
+		// Backfill as needed.
+		$ids = $this->backfill_content_item_ids(
+			$ids,
+			$backfill_to,
+			$backfill_args
+		);
+
+		// Generate content items, each with an HTML child for the video embed.
+		foreach ( $ids as $id ) {
+			// @todo Get the video URL dynamically for each post.
+			$youtube_url = 'https://www.youtube.com/watch?v=7yujlqgVz5M';
+			$markup      = wp_oembed_get( $youtube_url );
+
+			$this->children[] = $this->create_content_item( $id )
+				->append_child(
+					( new \WP_Components\HTML() )
+						->set_config( 'content', $markup )
+						->set_name( 'featured-video' )
+				);
+		}
+
+		return $this;
+	}
 }
