@@ -58,6 +58,44 @@ class Classical extends \WP_Components\Component {
 	}
 
 	/**
+	 * Get the backfill arguments for posts in the classical section.
+	 * Used in the Articles component of this page.
+	 *
+	 * @return array
+	 */
+	public static function get_classical_posts_backfill_args() {
+		return [
+			'post_type' => [ 'post' ],
+			'tax_query' => [
+				[
+					'taxonomy' => 'section',
+					'field'    => 'slug',
+					'terms'    => 'classical',
+				],
+			],
+		];
+	}
+
+	/**
+	 * Get the backfill arguments for podcast episodes in the classical section.
+	 * Used in the Podcast Episodes component of this page.
+	 *
+	 * @return array
+	 */
+	public static function get_classical_episodes_backfill_args() {
+		return [
+			'post_type' => [ 'podcast-episode' ],
+			'tax_query' => [
+				[
+					'taxonomy' => 'podcast',
+					'field'    => 'term_id',
+					'terms'    => \CPR\get_podcast_term_ids_by_section( 'classical' ),
+				],
+			],
+		];
+	}
+
+	/**
 	 * Get an array of all components.
 	 *
 	 * @return array
@@ -120,10 +158,67 @@ class Classical extends \WP_Components\Component {
 			 */
 			( new \CPR\Component\Modules\Newsletter() )
 				->set_config( 'background_color', \CPR\get_site_color( 'classical' ) ),
+
+			/**
+			 * Articles content list.
+			 */
+			( new \CPR\Component\Modules\Content_List() )
+				->merge_config(
+					[
+						'heading'           => $data['articles']['heading'] ?? '',
+						'heading_border'    => true,
+						'heading_cta_label' => __( 'All Stories', 'cpr' ),
+						'heading_cta_link'  => get_term_link( 'classical', 'section' ),
+						'heading_link'      => get_term_link( 'classical', 'section' ),
+						'image_size'        => 'feature_item_small',
+						'show_excerpt'      => true,
+						'theme'             => 'featureTerm', // @todo Create another new theme?
+					]
+				)
+				->parse_from_ids(
+					array_slice( $data['articles']['content_item_ids'] ?? [], 0, 1 ),
+					1,
+					self::get_classical_posts_backfill_args()
+				)
+				->append_child(
+					/**
+					 * Right sidebar.
+					 */
+					( new \CPR\Component\Sidebar() )
+						->set_config( 'position', 'right' )
+						->append_child(
+							/**
+							 * Grid of additional items.
+							 */
+							( new \CPR\Component\Modules\Content_List() )
+								->set_config( 'theme', 'grid' )
+								->parse_from_ids(
+									array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
+									3,
+									self::get_classical_posts_backfill_args()
+								)
+						)
+				),
+
+			/**
+			 * Podcast episodes content list.
+			 */
+			( new \CPR\Component\Modules\Content_List() )
+				->merge_config(
+					[
+						'image_size' => 'grid_item',
+						'theme'      => 'grid',
+					]
+				)
+				->parse_from_fm_data(
+					$data['podcast_episodes'] ?? [],
+					4,
+					self::get_classical_episodes_backfill_args()
+				)
 		];
 	}
 
-		/**
+	/**
 	 * Add additional FM fields to a landing page.
 	 *
 	 * @param  array $fields FM fields.
@@ -160,41 +255,63 @@ class Classical extends \WP_Components\Component {
 							'children' => ( new \CPR\Component\Events\Calendar() )->get_fm_fields(),
 						]
 					),
-					'highlighted_content' => new \Fieldmanager_Group(
+					'articles' => new \Fieldmanager_Group(
 						[
-							'label'    => __( 'Highlighted Content', 'cpr' ),
+							'label'    => __( 'Articles', 'cpr' ),
 							'children' => [
+								'heading' => new \Fieldmanager_TextField(
+									[
+										'label'         => __( 'Heading', 'cpr' ),
+										'default_value' => __( 'Read', 'cpr' ),
+									]
+								),
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
-										'add_more_label' => __( 'Add Content', 'cpr' ),
-										'post_limit'     => 4,
-										'query_args'     => self::get_backfill_args(),
+										'label'      => __( 'Articles', 'cpr' ),
+										'post_limit' => 4,
+										'query_args' => self::get_classical_posts_backfill_args(),
 									]
 								),
 							],
 						]
 					),
-					'featured_topic' => new \Fieldmanager_Group(
+					'podcast_episodes' => new \Fieldmanager_Group(
 						[
-							'label'    => __( 'Featured Topic', 'cpr' ),
+							'label'    => __( 'Podcast Episodes', 'cpr' ),
 							'children' => [
-								'topic_id' => new \Fieldmanager_Select(
+								'heading' => new \Fieldmanager_TextField(
 									[
-										'label'       => __( 'Topic', 'cpr' ),
-										'description' => __( 'Begin typing to select a topic.', 'cpr' ),
-										'datasource'  => new \Fieldmanager_Datasource_Term(
-											[
-												'taxonomy'               => 'category',
-												'taxonomy_save_to_terms' => false,
-												'only_save_to_taxonomy'  => false,
-											]
-										),
+										'label'         => __( 'Heading', 'cpr' ),
+										'default_value' => __( 'Listen', 'cpr' ),
 									]
 								),
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
+										'label'      => __( 'Podcast Episodes', 'cpr' ),
 										'post_limit' => 4,
-										'query_args' => self::get_backfill_args(),
+										'query_args' => self::get_classical_episodes_backfill_args(),
+									]
+								),
+							],
+						]
+					),
+					'videos' => new \Fieldmanager_Group(
+						[
+							'label'    => __( 'Videos', 'cpr' ),
+							'children' => [
+								'heading' => new \Fieldmanager_TextField(
+									[
+										'label'         => __( 'Heading', 'cpr' ),
+										'default_value' => __( 'Watch', 'cpr' ),
+									]
+								),
+								'content_item_ids' => new \Fieldmanager_Zone_Field(
+									[
+										'label'      => __( 'Videos', 'cpr' ),
+										'post_limit' => 2,
+										'query_args' => [
+											'post_type' => 'post',
+										],
 									]
 								),
 							],
