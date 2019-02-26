@@ -172,7 +172,8 @@ class Classical extends \WP_Components\Component {
 						'heading_link'      => get_term_link( 'classical', 'section' ),
 						'image_size'        => 'feature_item_small',
 						'show_excerpt'      => true,
-						'theme'             => 'featureTerm', // @todo Create another new theme?
+						'theme'             => 'featureTerm', // @todo May need to be featureHalf, or other.
+						'eyebrow_location'  => 'none',
 					]
 				)
 				->parse_from_ids(
@@ -191,10 +192,15 @@ class Classical extends \WP_Components\Component {
 							 * Grid of additional items.
 							 */
 							( new \CPR\Component\Modules\Content_List() )
-								->set_config( 'theme', 'grid' )
+							->merge_config(
+									[
+										'theme'             => 'grid',
+										'eyebrow_location'  => 'none',
+									]
+								)
 								->parse_from_ids(
 									array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
-									3,
+									4,
 									self::get_classical_posts_backfill_args()
 								)
 						)
@@ -206,8 +212,10 @@ class Classical extends \WP_Components\Component {
 			( new \CPR\Component\Modules\Content_List() )
 				->merge_config(
 					[
-						'image_size' => 'grid_item',
-						'theme'      => 'grid',
+						'image_size'       => 'grid_item',
+						'theme'            => 'grid',
+						'background_color' => '#f8f9fa',
+						'eyebrow_location' => 'top',
 					]
 				)
 				->parse_from_fm_data(
@@ -268,7 +276,7 @@ class Classical extends \WP_Components\Component {
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
 										'label'      => __( 'Articles', 'cpr' ),
-										'post_limit' => 4,
+										'post_limit' => 5,
 										'query_args' => self::get_classical_posts_backfill_args(),
 									]
 								),

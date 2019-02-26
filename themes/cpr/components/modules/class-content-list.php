@@ -30,6 +30,7 @@ class Content_List extends \WP_Components\Component {
 	public function default_config() : array {
 		return [
 			'align_item_content'   => 'left',
+			'background_color'     => '',
 			'call_to_action_label' => '',
 			'call_to_action_link'  => '',
 			'eyebrow_label'        => '',
