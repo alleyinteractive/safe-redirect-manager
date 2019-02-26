@@ -245,6 +245,19 @@ class Classical extends \WP_Components\Component {
 					2,
 					self::get_classical_posts_backfill_args() // @todo Determine actual backfill args.
 				),
+
+			/**
+			 * Banner Ad.
+			 */
+			( new \CPR\Component\Ad() )
+				->merge_config(
+					[
+						'background_color'   => '#f8f9fa',
+						'background_padding' => true,
+						'width'              => 468,
+						'height'             => 60,
+					]
+				),
 		];
 	}
 
