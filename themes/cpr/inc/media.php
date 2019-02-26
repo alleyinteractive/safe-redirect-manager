@@ -27,10 +27,31 @@ namespace CPR;
 			'sources' => [
 				[
 					'transforms' => [
-						'resize' => [ 480, 270 ],
+						'resize' => [ 434, 244 ],
 					],
-					'descriptor' => 480,
+					'descriptor' => 434,
 					'media' => [ 'max' => 'sm' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 722, 406 ],
+					],
+					'descriptor' => 722,
+					'media' => [ 'max' => 'md' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 948, 533 ],
+					],
+					'descriptor' => 948,
+					'media' => [ 'max' => 'lg' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 854, 480 ],
+					],
+					'descriptor' => 854,
+					'media' => [ 'max' => 'xl' ],
 				],
 				[
 					'transforms' => [

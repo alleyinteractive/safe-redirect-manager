@@ -58,9 +58,15 @@ class Header extends \WP_Components\Component {
 				$this->append_child( new \CPR\Component\Ad() );
 				$this->append_child(
 					( new \WP_Components\Social_Sharing() )
-						->set_config( 'facebook', true )
-						->set_config( 'twitter', true )
-						->set_config( 'email', true )
+						->merge_config(
+							[
+								'services' => [
+									'facebook' => true,
+									'twitter'  => true,
+									'email'    => true,
+								],
+							]
+						)
 						->set_post( $this->post )
 				);
 				break;
