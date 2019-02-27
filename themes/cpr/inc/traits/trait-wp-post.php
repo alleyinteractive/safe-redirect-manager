@@ -13,36 +13,6 @@ namespace CPR;
 trait WP_Post {
 
 	/**
-	 * Set the title.
-	 */
-	public function set_title() {
-		$this->set_config( 'title', html_entity_decode( (string) get_the_title( $this->post ) ) );
-	}
-
-	/**
-	 * Set the excerpt.
-	 */
-	public function set_excerpt() {
-		// Modify global state.
-		global $post;
-
-		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
-		$backup_post = $post;
-
-		// Setup post data for this item.
-		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
-		$post = get_post( $this->post->ID );
-		setup_postdata( $post );
-
-		$this->set_config( 'excerpt', html_entity_decode( (string) get_the_excerpt() ) );
-
-		// Undo global modification.
-		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
-		$post = $backup_post;
-		setup_postdata( $post );
-	}
-
-	/**
 	 * Set publish date.
 	 */
 	public function set_publish_date() {
@@ -84,22 +54,6 @@ trait WP_Post {
 	public function set_byline() {
 		$bylines = \WP_Components\Byline::get_post_bylines( $this->get_post_id() );
 		$this->append_children( $bylines );
-	}
-
-	/**
-	 * Create Image component and add to children.
-	 *
-	 * @param string $size Image size to use for child image component.
-	 * @todo add fallback image.
-	 */
-	public function set_featured_image( $size = 'full' ) {
-		$this->append_children(
-			[
-				( new \WP_Components\Image() )
-					->set_post_id( $this->post->ID )
-					->set_config_for_size( $size ),
-			]
-		);
 	}
 
 	/**

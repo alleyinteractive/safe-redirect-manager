@@ -1,0 +1,55 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "event" ],
+			"title": { "__": "Settings" }
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"tabbed": "vertical",
+	"children": {
+		"settings": {
+			"label": { "__": "Settings" },
+			"serialize_data": false,
+			"add_to_prefix": false,
+			"children": {
+				"section_id": {
+					"label": { "__": "Section" },
+					"type": "select",
+					"description": { "__": "Select a section." },
+					"datasource": {
+						"type": "term",
+						"taxonomy": "section",
+						"taxonomy_save_to_terms": true,
+						"only_save_to_taxonomy": true
+					}
+				}
+			}
+		},
+		"event_details": {
+			"label": { "__": "Event Details" },
+			"serialize_data": false,
+			"add_to_prefix": false,
+			"children": {
+				"start_datetime": {
+					"type": "datepicker",
+					"label": { "__": "Start Date" },
+					"use_am_pm": true,
+					"use_time": true
+				},
+				"end_datetime": {
+					"type": "datepicker",
+					"label": { "__": "End Date" },
+					"use_am_pm": true,
+					"use_time": true
+				},
+				"location": {
+					"type": "text",
+					"label": { "__": "Location" }
+				}
+			}
+		}
+	}
+}

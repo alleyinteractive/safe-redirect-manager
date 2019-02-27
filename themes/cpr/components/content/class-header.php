@@ -45,7 +45,7 @@ class Header extends \WP_Components\Component {
 	public function post_has_set() {
 
 		// Default settings.
-		$this->set_title();
+		$this->wp_post_set_title();
 
 		// Set configs and children based on post type.
 		switch ( $this->post->post_type ?? '' ) {
