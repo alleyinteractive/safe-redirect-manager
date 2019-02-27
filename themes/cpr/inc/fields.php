@@ -305,3 +305,32 @@ function cpr_fm_post_article_post_types_settings() {
 add_action( 'fm_post_post', 'cpr_fm_post_article_post_types_settings' );
 add_action( 'fm_post_podcast-post', 'cpr_fm_post_article_post_types_settings' );
 /* end fm:post-article-post-types-settings */
+
+/* begin fm:post-guest-author-settings */
+/**
+ * `post-guest-author-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_guest_author_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-guest-author-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'children' => [
+				'cap-user_email' => new Fieldmanager_TextField( __( 'Email', 'cpr' ) ),
+				'type' => new Fieldmanager_Select(
+					[
+						'label' => __( 'Type', 'cpr' ),
+						'options' => [
+							'author' => __( 'Author', 'cpr' ),
+							'host' => __( 'Host', 'cpr' ),
+						],
+					]
+				),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Info', 'cpr' ), [ 'guest-author' ], 'normal', 'low' );
+}
+add_action( 'fm_post_guest-author', 'cpr_fm_post_guest_author_settings' );
+/* end fm:post-guest-author-settings */

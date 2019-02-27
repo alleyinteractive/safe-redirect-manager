@@ -44,7 +44,7 @@ class Calendar_Item extends \WP_Components\Component {
 		$timestamp = get_post_meta( $this->post->ID, 'start_datetime', true );
 
 		$this->wp_post_set_title();
-		$this->wp_post_set_link();
+		$this->wp_post_set_permalink();
 		$this->merge_config(
 			[
 				'type'       => $this->post->post_type,

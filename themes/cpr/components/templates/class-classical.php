@@ -258,7 +258,50 @@ class Classical extends \WP_Components\Component {
 						'height'             => 60,
 					]
 				),
+
+			/**
+			 * People list.
+			 */
+			$this->get_people_list( $data['people'] ?? [] ),
 		];
+	}
+
+	/**
+	 * Generate a content list of people items from FM data.
+	 *
+	 * @param  array $data People data array.
+	 * @return \CPR\Component\Modules\Content_List
+	 */
+	public function get_people_list( $data ) : \CPR\Component\Modules\Content_List {
+		$people_list = ( new \CPR\Component\Modules\Content_List() )
+			->merge_config(
+				[
+					'heading'           => $data['heading'] ?? '',
+					'heading_border'    => true,
+					'heading_cta_label' => get_the_title( $data['heading_cta_id'] ?? 0 ),
+					'heading_cta_link'  => get_permalink( $data['heading_cta_id'] ?? 0 ),
+					'image_size'        => 'feature_item_small', // @todo change
+					'theme'             => 'featureHalf', // @todo change
+					'eyebrow_location'  => 'none',
+				]
+			);
+
+		foreach ( ( $data['content_items'] ?? [] ) as $item ) {
+			$people_list->append_child(
+				( new \CPR\Component\Person_Item() )
+					->set_guest_author( get_post( $item['guest_author'] ?? 0 ) )
+					->merge_config(
+						[
+							'subheading' => sprintf(
+								esc_html__( 'Host, “%s”', 'cpr' ),
+								$item['show'] ?? ''
+							)
+						]
+					)
+			);
+		}
+		
+		return $people_list;
 	}
 
 	/**
@@ -354,6 +397,69 @@ class Classical extends \WP_Components\Component {
 										'post_limit' => 2,
 										'query_args' => [
 											'post_type' => 'post',
+										],
+									]
+								),
+							],
+						]
+					),
+					'people' => new \Fieldmanager_Group(
+						[
+							'label'    => __( 'People', 'cpr' ),
+							'children' => [
+								'heading' => new \Fieldmanager_TextField(
+									[
+										'label'         => __( 'Heading', 'cpr' ),
+										'default_value' => __( 'Hosts', 'cpr' ),
+									]
+								),
+								'heading_cta_id' => new \Fieldmanager_Autocomplete(
+									[
+										'label'       => __( 'Call to Action button', 'cpr' ),
+										'description' => __( 'Select the page to link to in the CTA.', 'cpr' ),
+										'datasource'  => new \Fieldmanager_Datasource_Post(
+											[
+												'query_args' => [
+													'post_type' => 'page',
+												],
+											]
+										),
+									]
+								),
+								'content_items' => new \Fieldmanager_Group(
+									[
+										'add_more_label' => __( 'Add a host', 'consensys' ),
+										'label'          => __( 'Host', 'cpr' ),
+										'label_macro'    => [ 'Host: %s', 'guest_author' ],
+										'extra_elements' => 0,
+										'limit'          => 0,
+										'collapsed'      => true,
+										'sortable'       => true,
+										'children'       => [
+											'guest_author' => new \Fieldmanager_Autocomplete(
+												[
+													'label'       => __( 'Host', 'cpr' ),
+													'datasource'  => new \Fieldmanager_Datasource_Post(
+														[
+															'query_args' => [
+																'post_type'  => 'guest-author',
+																'meta_query' => [
+																	[
+																		'key'     => 'type',
+																		'value'   => 'host',
+																		'compare' => '=',
+																	],
+																],
+															],
+														]
+													),
+												]
+											),
+											'show' => new \Fieldmanager_TextField(
+												[
+													'label' => __( 'Show Title', 'cpr' ),
+												]
+											),
 										],
 									]
 								),

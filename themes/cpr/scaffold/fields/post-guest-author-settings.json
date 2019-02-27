@@ -1,0 +1,27 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "guest-author" ],
+			"title": "Info",
+			"context": "normal",
+			"priority": "low"
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"children": {
+		"cap-user_email": {
+			"type": "text",
+			"label": { "__": "Email" }
+		},
+		"type": {
+			"label": { "__": "Type" },
+			"type": "select",
+			"options": {
+				"author": { "__": "Author" },
+				"host": { "__": "Host" }
+			}
+		}
+	}
+}
