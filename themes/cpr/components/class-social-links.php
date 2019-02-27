@@ -10,7 +10,7 @@ namespace CPR\Component;
 /**
  * Social Links.
  */
-class Social_Links extends \WP_Components\Component {
+class Social_Links extends \WP_Components\Social_Links {
 
 	/**
 	 * Unique component slug.
@@ -18,6 +18,22 @@ class Social_Links extends \WP_Components\Component {
 	 * @var string
 	 */
 	public $name = 'social-links';
+
+	/**
+	 * Define a default config shape.
+	 *
+	 * @return array Default config.
+	 */
+	public function default_config() {
+		return [
+			'services'      => [
+				'instagram' => __( 'Instagram', 'cpr' ),
+				'facebook'  => __( 'Facebook', 'cpr' ),
+				'twitter'   => __( 'Twitter', 'cpr' ),
+			],
+			'display_icons' => true,
+		];
+	}
 
 	/**
 	 * Get the default Facebook link.
@@ -47,64 +63,49 @@ class Social_Links extends \WP_Components\Component {
 	}
 
 	/**
-	 * Define default children.
-	 *
-	 * @return array Default children.
-	 */
-	public function default_children() {
-
-		$settings = get_option( 'cpr-settings' );
-
-		return [
-			( new Social_Links_Item() )
-				->merge_config(
-					[
-						'type' => 'facebook',
-						'url'  => $settings['social']['social']['facebook'] ?? $this->get_default_facebook(),
-					]
-				),
-			( new Social_Links_Item() )
-				->merge_config(
-					[
-						'type' => 'twitter',
-						'url'  => $settings['social']['social']['twitter'] ?? $this->get_default_twitter(),
-					]
-				),
-			( new Social_Links_Item() )
-				->merge_config(
-					[
-						'type' => 'instagram',
-						'url'  => $settings['social']['social']['instagram'] ?? $this->get_default_instagram(),
-					]
-				),
-		];
-	}
-
-	/**
 	 * Component Fieldmanager fields.
 	 *
 	 * @return array Fieldmanager fields.
 	 */
 	public function get_fm_fields() {
-		return [
-			'facebook' => new \Fieldmanager_Link(
+		$services = $this->config['services'];
+		$fields   = [];
+
+		foreach ( $services as $service => $label ) {
+			$fields[ $service ] = new \Fieldmanager_Link(
 				[
-					'label'         => __( 'Facebook', 'cpr' ),
-					'default_value' => $this->get_default_facebook(),
+					'label'         => $label,
+					'default_value' => method_exists( $this, "get_default_{$service}" ) ?
+						call_user_func( [ $this, "get_default_{$service}" ] ) : $service,
 				]
-			),
-			'twitter' => new \Fieldmanager_Link(
-				[
-					'label'         => __( 'Twitter', 'cpr' ),
-					'default_value' => $this->get_default_twitter(),
-				]
-			),
-			'instagram' => new \Fieldmanager_Link(
-				[
-					'label'         => __( 'Instagram', 'cpr' ),
-					'default_value' => $this->get_default_instagram(),
-				]
-			),
-		];
+			);
+		}
+
+		return $fields;
+	}
+
+	/**
+	 * Parse data from a saved FM field.
+	 *
+	 * @return Social_Links Instance of this class.
+	 */
+	public function parse_from_fm_data() : self {
+		$links         = get_option( 'cpr-settings', [] )['social']['social'] ?? [];
+		$display_icons = $this->get_config( 'display_icons' );
+		$link_configs  = [];
+
+		if ( ! empty( $links ) ) {
+			foreach ( $links as $service => $url ) {
+				$link_configs[ $service ] = [
+					'type'        => $service ?? '',
+					'url'         => $url ?? '',
+					'displayIcon' => $display_icons,
+				];
+			}
+		}
+
+		$this->create_link_components( $link_configs );
+
+		return $this;
 	}
 }

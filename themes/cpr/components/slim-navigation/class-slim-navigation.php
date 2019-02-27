@@ -28,7 +28,8 @@ class Slim_Navigation extends \WP_Components\Component {
 		return [
 			new Menu(),
 			new Listen_Live(),
-			new \CPR\Component\Social_Links(),
+			( new \CPR\Component\Social_Links() )
+				->parse_from_fm_data(),
 			new Search(),
 			new \CPR\Component\Donate\Donate_Button(),
 		];
