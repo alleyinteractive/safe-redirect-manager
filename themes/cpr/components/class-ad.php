@@ -17,7 +17,7 @@ class Ad extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'advertisement';
+	public $name = 'ad-unit';
 
 	/**
 	 * Define a default config.

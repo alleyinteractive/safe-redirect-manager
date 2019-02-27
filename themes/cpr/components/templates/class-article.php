@@ -25,7 +25,7 @@ class Article extends \WP_Components\Component {
 	 * Hook into post being set.
 	 */
 	public function post_has_set() {
-		$body = new \WP_Components\Body();
+		$body           = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;

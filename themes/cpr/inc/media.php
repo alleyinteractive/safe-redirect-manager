@@ -23,6 +23,47 @@ namespace CPR;
  */
 \WP_Components\Image::register_sizes(
 	[
+		'content_single' => [
+			'sources' => [
+				[
+					'transforms' => [
+						'resize' => [ 434, 244 ],
+					],
+					'descriptor' => 434,
+					'media' => [ 'max' => 'sm' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 722, 406 ],
+					],
+					'descriptor' => 722,
+					'media' => [ 'max' => 'md' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 948, 533 ],
+					],
+					'descriptor' => 948,
+					'media' => [ 'max' => 'lg' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 854, 480 ],
+					],
+					'descriptor' => 854,
+					'media' => [ 'max' => 'xl' ],
+				],
+				[
+					'transforms' => [
+						'resize' => [ 1032, 580 ],
+					],
+					'descriptor' => 1032,
+					'default'    => true,
+				],
+			],
+			'aspect_ratio' => 9 / 16,
+			'retina'       => true,
+		],
 		'feature_item' => [
 			'sources' => [
 				[

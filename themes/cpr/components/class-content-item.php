@@ -34,6 +34,7 @@ class Content_Item extends \WP_Components\Component {
 			'eyebrow_label'    => '',
 			'eyebrow_link'     => '',
 			'eyebrow_location' => 'bottom',
+			'eyebrow_size'     => 'small',
 			'image_size'       => 'grid-item',
 			'permalink'        => '',
 			'show_excerpt'     => false,

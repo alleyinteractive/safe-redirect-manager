@@ -127,27 +127,25 @@ class News extends \WP_Components\Component {
 							->merge_config(
 								[
 									'position' => 'right',
-									'has_ad'   => true,
 								]
 							)
 							->append_child( ( new \CPR\Component\Ad() )->set_config( 'height', 600 ) ),
+						/**
+						 * Highlighted Content.
+						 */
+						( new \CPR\Component\Modules\Content_List() )
+							->merge_config(
+								[
+									'image_size' => 'grid_item',
+									'theme'      => 'grid',
+								]
+							)
+							->parse_from_fm_data(
+								$data['highlighted_content'] ?? [],
+								4,
+								self::get_backfill_args()
+							),
 					]
-				),
-
-			/**
-			 * Highlighted Content.
-			 */
-			( new \CPR\Component\Modules\Content_List() )
-				->merge_config(
-					[
-						'image_size' => 'grid_item',
-						'theme'      => 'grid',
-					]
-				)
-				->parse_from_fm_data(
-					$data['highlighted_content'] ?? [],
-					4,
-					self::get_backfill_args()
 				),
 
 			/**
@@ -241,7 +239,6 @@ class News extends \WP_Components\Component {
 						->merge_config(
 							[
 								'position' => 'right',
-								'has_ad'   => true,
 							]
 						)
 						->append_children(
