@@ -45,12 +45,6 @@
 					"use_am_pm": true,
 					"use_time": true
 				},
-				// "timezone": {
-				// 	"type": "select",
-				// 	"label": { "__": "Timezone" },
-				// 	"description": { "__": "Select the event's local timezone." },
-				// 	"options": "`DateTimeZone::listIdentifiers( DateTimeZone::ALL )`"
-				// },
 				"location": {
 					"type": "text",
 					"label": { "__": "Location" }
