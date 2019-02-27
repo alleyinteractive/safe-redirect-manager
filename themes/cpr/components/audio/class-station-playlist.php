@@ -55,9 +55,9 @@ class Station_Playlist extends \WP_Components\Component {
 			->merge_config(
 				[
 					'name'         => __( 'Kevin Puts', 'cpr' ),
-					'performed_by' => __( 'Fort Worth Symphony Orchestra/Miguel Harth-Bedoya' ),
+					'performed_by' => __( 'Fort Worth Symphony Orchestra/Miguel Harth-Bedoya', 'cpr' ),
 					'time'         => '1:18 PM',
-					'title'        => __( 'Symphony #3: III "it\'s not meant to be a strife"', 'cpr' ),	
+					'title'        => __( 'Symphony #3: III "it\'s not meant to be a strife"', 'cpr' ),
 				]
 			);
 	}

@@ -42,7 +42,6 @@ class Person_Item extends \WP_Components\Component {
 	public function guest_author_has_set() {
 		// @todo Determine why this breaks things on the Irving side and fix it.
 		// $this->set_guest_author_avatar( $this->get_config( 'image_size' ) );
-
 		$this->merge_config(
 			[
 				'heading'   => $this->guest_author->post_title ?? '',

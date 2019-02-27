@@ -192,7 +192,7 @@ class Classical extends \WP_Components\Component {
 							 * Grid of additional items.
 							 */
 							( new \CPR\Component\Modules\Content_List() )
-							->merge_config(
+								->merge_config(
 									[
 										'theme'             => 'grid',
 										'eyebrow_location'  => 'none',
@@ -293,9 +293,10 @@ class Classical extends \WP_Components\Component {
 					->merge_config(
 						[
 							'subheading' => sprintf(
+								/* translators: a show title */
 								esc_html__( 'Host, “%s”', 'cpr' ),
 								$item['show'] ?? ''
-							)
+							),
 						]
 					)
 			);
@@ -428,7 +429,7 @@ class Classical extends \WP_Components\Component {
 								),
 								'content_items' => new \Fieldmanager_Group(
 									[
-										'add_more_label' => __( 'Add a host', 'consensys' ),
+										'add_more_label' => __( 'Add a host', 'cpr' ),
 										'label'          => __( 'Host', 'cpr' ),
 										'label_macro'    => [ 'Host: %s', 'guest_author' ],
 										'extra_elements' => 0,
