@@ -139,8 +139,18 @@ class Classical extends \WP_Components\Component {
 										$data['calendar'] ?? [],
 										4,
 										[
-											'post_type' => 'event',
-											'tax_query' => [
+											'post_type'  => 'event',
+											'order'      => 'ASC',
+											'orderby'    => 'meta_value_num',
+											'meta_key'   => 'start_datetime',
+											'meta_query' => [
+												[
+													'key'     => 'end_datetime',
+													'value'   => date( 'U' ),
+													'compare' => '>=',
+												],
+											],
+											'tax_query'  => [
 												[
 													'taxonomy' => 'section',
 													'field'    => 'slug',
