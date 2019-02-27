@@ -26,9 +26,9 @@ class Playlist_Item extends \WP_Components\Component {
 	 */
 	public function default_config() {
 		return [
-			'album'        => '', // OpenAir.
-			'name'         => '', // The personality (OpenAir) or composer (Classical).
-			'performed_by' => '', // Classical.
+			'album'        => '',
+			'name'         => '',
+			'performed_by' => '',
 			'time'         => '',
 			'title'        => '',
 		];
