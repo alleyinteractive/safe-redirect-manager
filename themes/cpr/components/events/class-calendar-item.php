@@ -13,7 +13,6 @@ namespace CPR\Component\Events;
 class Calendar_Item extends \WP_Components\Component {
 
 	use \WP_Components\WP_Post;
-	use \CPR\WP_Post;
 
 	/**
 	 * Unique component slug.
