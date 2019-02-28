@@ -119,10 +119,10 @@ function get_content_post_types() {
 function get_site_color( string $section = 'main' ) {
 	switch ( $section ) {
 		case 'classical':
-			return '#7F386C';
+			return '#7F386C'; // 81356C
 
 		case 'openair':
-			return '#296795';
+			return '#296795'; // 236495
 		
 		case 'news':
 		case 'main':
