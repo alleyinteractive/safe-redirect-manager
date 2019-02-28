@@ -76,5 +76,7 @@ class Header extends \WP_Components\Component {
 			case 'page':
 				break;
 		}
+
+		return $this;
 	}
 }
