@@ -57,7 +57,7 @@ class Content_Item extends \WP_Components\Component {
 		$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
 		$this->merge_config(
 			[
-				'permalink' => get_permalink( $this->post->ID ),
+				'permalink' => get_permalink( $this->post->ID ?? 0 ),
 				'type'      => $this->post->post_type ?? 'post',
 			]
 		);
