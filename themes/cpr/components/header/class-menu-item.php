@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Header;
+namespace CPR\Components\Header;
 
 /**
  * Header Menu Item.
@@ -26,7 +26,7 @@ class Menu_Item extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'id'    => '',
 			'label' => '',
@@ -37,9 +37,10 @@ class Menu_Item extends \WP_Components\Component {
 	/**
 	 * Callback function once menu item has been set.
 	 *
-	 * @return void
+	 * @return self
 	 */
-	public function menu_item_has_set() {
+	public function menu_item_has_set() : self {
 		$this->set_config_from_menu_item();
+		return $self;
 	}
 }

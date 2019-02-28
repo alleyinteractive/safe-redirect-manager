@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Search template.
@@ -41,7 +41,7 @@ class Search extends \WP_Components\Component {
 			/**
 			 * Search results.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
 				->parse_from_wp_query( $this->query )

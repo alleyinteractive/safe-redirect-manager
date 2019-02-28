@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Header;
+namespace CPR\Components\Header;
 
 /**
  * Header Sections.
@@ -24,7 +24,7 @@ class Sections extends \WP_Components\Component {
 	 *
 	 * @return array
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'sections' => [
 				[

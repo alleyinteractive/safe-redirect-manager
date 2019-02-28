@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component;
+namespace CPR\Components;
 
 /**
  * Content Item.
@@ -46,8 +46,10 @@ class Content_Item extends \WP_Components\Component {
 
 	/**
 	 * Set component properties after a post object has been validated and set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$this->wp_post_set_title();
 		$this->wp_post_set_excerpt();
 		$this->set_eyebrow();
@@ -59,5 +61,6 @@ class Content_Item extends \WP_Components\Component {
 				'type'      => $this->post->post_type ?? 'post',
 			]
 		);
+		return $this;
 	}
 }

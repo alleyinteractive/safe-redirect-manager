@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Events;
+namespace CPR\Components\Events;
 
 /**
  * Calendar Item.
@@ -26,7 +26,7 @@ class Calendar_Item extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'day'        => '',
 			'location'   => '',
@@ -38,8 +38,10 @@ class Calendar_Item extends \WP_Components\Component {
 
 	/**
 	 * Set component properties after a post object has been validated and set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$timestamp = get_post_meta( $this->post->ID, 'start_datetime', true );
 
 		$this->wp_post_set_title();
@@ -53,5 +55,6 @@ class Calendar_Item extends \WP_Components\Component {
 				'start_time' => date( 'g:i a', $timestamp ),
 			]
 		);
+		return $this;
 	}
 }

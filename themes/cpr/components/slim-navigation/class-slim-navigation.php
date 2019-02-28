@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Slim_Navigation;
+namespace CPR\Components\Slim_Navigation;
 
 /**
  * Slim Navigation.
@@ -28,10 +28,10 @@ class Slim_Navigation extends \WP_Components\Component {
 		return [
 			new Menu(),
 			new Listen_Live(),
-			( new \CPR\Component\Social_Links() )
+			( new \CPR\Components\Social_Links() )
 				->parse_from_fm_data(),
 			new Search(),
-			new \CPR\Component\Donate\Donate_Button(),
+			new \CPR\Components\Donate\Donate_Button(),
 		];
 	}
 }

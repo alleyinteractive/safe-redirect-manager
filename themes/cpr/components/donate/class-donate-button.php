@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Donate;
+namespace CPR\Components\Donate;
 
 /**
  * Donate Button.
@@ -24,7 +24,7 @@ class Donate_Button extends \WP_Components\Component {
 	 *
 	 * @return string
 	 */
-	public function get_default_label() {
+	public function get_default_label() : string {
 		return __( 'Donate to CPR', 'cpr' );
 	}
 
@@ -33,7 +33,7 @@ class Donate_Button extends \WP_Components\Component {
 	 *
 	 * @return string
 	 */
-	public function get_default_url() {
+	public function get_default_url() : string {
 		return '/donate/';
 	}
 
@@ -42,7 +42,7 @@ class Donate_Button extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 
 		$settings = get_option( 'cpr-settings' );
 
@@ -57,7 +57,7 @@ class Donate_Button extends \WP_Components\Component {
 	 *
 	 * @return array Fieldmanager fields.
 	 */
-	public function get_fm_fields() {
+	public function get_fm_fields() : array {
 		return [
 			'donate_button' => new \Fieldmanager_Group(
 				[

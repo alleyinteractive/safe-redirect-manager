@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Content;
+namespace CPR\Components\Content;
 
 /**
  * Content Header class.
@@ -27,7 +27,7 @@ class Header extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'audio_length'  => '',
 			'audio_url'     => '',
@@ -41,8 +41,10 @@ class Header extends \WP_Components\Component {
 
 	/**
 	 * Fires after the post object has been set on this class.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 
 		// Default settings.
 		$this->wp_post_set_title();
@@ -55,7 +57,7 @@ class Header extends \WP_Components\Component {
 				$this->set_publish_date();
 				$this->set_audio();
 				$this->set_featured_image( $this->get_config( 'image_size' ) );
-				$this->append_child( new \CPR\Component\Ad() );
+				$this->append_child( new \CPR\Components\Ad() );
 				$this->append_child(
 					( new \WP_Components\Social_Sharing() )
 						->merge_config(

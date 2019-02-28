@@ -7,6 +7,24 @@
 
 namespace CPR;
 
+// Filter the namespace for autoloading.
+add_filter(
+	'wp_components_theme_components_namespace',
+	function() {
+		return 'CPR\Components';
+	}
+);
+
+// Filter the theme component path for autoloading.
+add_filter(
+	'wp_components_theme_components_path',
+	function( $class, $dirs ) {
+		return get_template_directory() . '/components' . implode( '/', $dirs ) . "/class-{$class}.php";
+	},
+	10,
+	2
+);
+
 /**
  * Execute components based on routing.
  *
@@ -30,10 +48,10 @@ function build_components_endpoint(
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
 			( new \WP_Components\Head() )->set_query( $wp_query ),
-			new Component\Slim_Navigation\Slim_Navigation(),
-			( new Component\Header\Header() )->set_query( $wp_query ),
+			new Components\Slim_Navigation\Slim_Navigation(),
+			( new Components\Header\Header() )->set_query( $wp_query ),
 			new \WP_Components\Body(),
-			new Component\Footer\Footer(),
+			new Components\Footer\Footer(),
 		];
 	}
 
@@ -44,7 +62,7 @@ function build_components_endpoint(
 		 * Search results.
 		 */
 		case $wp_query->is_search():
-			$template = ( new Component\Templates\Search() )->set_query( $wp_query );
+			$template = ( new Components\Templates\Search() )->set_query( $wp_query );
 			break;
 
 		/**
@@ -53,19 +71,19 @@ function build_components_endpoint(
 		case 'landing-page' === $wp_query->get( 'dispatch' ):
 			switch ( $wp_query->get( 'landing-page-type' ) ) {
 				case 'homepage':
-					$template = ( new Component\Templates\Homepage() )->set_post( $wp_query->post );
+					$template = ( new Components\Templates\Homepage() )->set_post( $wp_query->post );
 					break;
 
 				case 'news':
-					$template = ( new Component\Templates\News() )->set_post( $wp_query->post );
+					$template = ( new Components\Templates\News() )->set_post( $wp_query->post );
 					break;
 
 				case 'classical':
-					$template = ( new Component\Templates\Classical() )->set_post( $wp_query->post );
+					$template = ( new Components\Templates\Classical() )->set_post( $wp_query->post );
 					break;
 
 				case 'openair':
-					$template = ( new Component\Templates\Openair() )->set_post( $wp_query->post );
+					$template = ( new Components\Templates\Openair() )->set_post( $wp_query->post );
 					break;
 			}
 			break;
@@ -75,7 +93,7 @@ function build_components_endpoint(
 		 * Author archive.
 		 */
 		case $wp_query->is_author():
-			$template = ( new Component\Templates\Author_Archive() )->set_query( $wp_query );
+			$template = ( new Components\Templates\Author_Archive() )->set_query( $wp_query );
 			break;
 
 		/**
@@ -84,21 +102,21 @@ function build_components_endpoint(
 		case $wp_query->is_tax():
 		case $wp_query->is_tag():
 		case $wp_query->is_category():
-			$template = ( new Component\Templates\Term_Archive() )->set_query( $wp_query );
+			$template = ( new Components\Templates\Term_Archive() )->set_query( $wp_query );
 			break;
 
 		/**
 		 * Article.
 		 */
 		case $wp_query->is_single():
-			$template = ( new Component\Templates\Article() )->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Article() )->set_post( $wp_query->post );
 			break;
 
 		/**
 		 * Page.
 		 */
 		case $wp_query->is_page():
-			$template = ( new Component\Templates\Page() )->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
 			break;
 
 		/**
@@ -106,7 +124,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_404():
 		default:
-			$template = ( new Component\Templates\Error() )->set_query( $wp_query );
+			$template = ( new Components\Templates\Error() )->set_query( $wp_query );
 			break;
 	}
 

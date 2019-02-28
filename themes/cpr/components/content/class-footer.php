@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Content;
+namespace CPR\Components\Content;
 
 /**
  * Content Footer class.
@@ -24,15 +24,18 @@ class Footer extends \WP_Components\Component {
 
 	/**
 	 * Fires after the post object has been set on this class.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$this->append_children(
 			[
 				( new Keep_Reading() )->set_post( $this->post ),
 				( new Related_Tags() )->set_post( $this->post ),
-				new \CPR\Component\Donate\Donate_CTA(),
+				new \CPR\Components\Donate\Donate_CTA(),
 				new Comments(),
 			]
 		);
+		return $this;
 	}
 }

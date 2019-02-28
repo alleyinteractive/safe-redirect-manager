@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Header;
+namespace CPR\Components\Header;
 
 /**
  * Header.
@@ -28,7 +28,7 @@ class Header extends \WP_Components\Component {
 	 */
 	public function default_children() {
 		return [
-			new \CPR\Component\Logo(),
+			new \CPR\Components\Logo(),
 			new Sections(),
 			( new Menu() )->set_menu( 'header' ),
 		];
@@ -47,7 +47,7 @@ class Header extends \WP_Components\Component {
 				$type = $this->query->get( 'landing-page-type' );
 				if ( 'homepage' !== $type ) {
 					$this->children = [
-						( new \CPR\Component\Logo() )->set_config( 'type', $type ),
+						( new \CPR\Components\Logo() )->set_config( 'type', $type ),
 						( new Menu() )->set_menu( $type ),
 					];
 					return $this;
@@ -56,7 +56,7 @@ class Header extends \WP_Components\Component {
 			case $this->query->is_tax( 'section' ):
 				$term = $this->query->get_queried_object();
 				$this->children = [
-					( new \CPR\Component\Logo() )->set_config( 'type', $term->slug ?? '' ),
+					( new \CPR\Components\Logo() )->set_config( 'type', $term->slug ?? '' ),
 					( new Menu() )->set_menu( $term->slug ?? '' ),
 				];
 				return $this;
