@@ -24,7 +24,7 @@ class Slim_Navigation extends \WP_Components\Component {
 	 *
 	 * @return array Default children.
 	 */
-	public function default_children() {
+	public function default_children() : array {
 		return [
 			new Menu(),
 			new Listen_Live(),
