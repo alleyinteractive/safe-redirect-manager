@@ -52,7 +52,7 @@ class Header extends \WP_Components\Component {
 		// Set configs and children based on post type.
 		switch ( $this->post->post_type ?? '' ) {
 			case 'post':
-				// Configs
+				// Configs.
 				$this->set_eyebrow();
 				$this->set_byline();
 				$this->set_publish_date();
