@@ -40,14 +40,8 @@ class Homepage extends \WP_Components\Component {
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'homepage', true );
 		return [
-			/**
-			 * Featured content with a left and right sidebar.
-			 */
-			( new \CPR\Component\Modules\Content_List() )
-				->set_config( 'image_size', 'feature_item' )
-				->set_config( 'theme', 'feature' )
-				->set_config( 'align_item_content', 'center' )
-				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+			( new \CPR\Component\Feature() )
+				->set_config( 'theme', 'three-column' )
 				->append_children(
 					[
 						/**
@@ -71,6 +65,13 @@ class Homepage extends \WP_Components\Component {
 									)
 									->set_config( 'eyebrow_label', __( 'Top Headlines', 'cpr' ) )
 							),
+						/**
+						 * Featured content with a left and right sidebar.
+						 */
+						( new \CPR\Component\Modules\Content_List() )
+							->set_config( 'theme', 'feature' )
+							->set_config( 'image_size', 'feature_item' )
+							->parse_from_fm_data( $data['featured_content'] ?? [], 1 ),
 
 						/**
 						 * Right sidebar with an ad.
