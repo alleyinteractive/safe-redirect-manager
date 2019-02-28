@@ -52,11 +52,14 @@ class Header extends \WP_Components\Component {
 		// Set configs and children based on post type.
 		switch ( $this->post->post_type ?? '' ) {
 			case 'post':
+				// Configs
 				$this->set_eyebrow();
 				$this->set_byline();
 				$this->set_publish_date();
 				$this->set_audio();
-				$this->set_featured_image( $this->get_config( 'image_size' ) );
+
+				// Children.
+				$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
 				$this->append_child( new \CPR\Components\Ad() );
 				$this->append_child(
 					( new \WP_Components\Social_Sharing() )
