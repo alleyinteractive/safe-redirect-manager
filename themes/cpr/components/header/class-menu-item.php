@@ -41,6 +41,6 @@ class Menu_Item extends \WP_Components\Component {
 	 */
 	public function menu_item_has_set() : self {
 		$this->set_config_from_menu_item();
-		return $self;
+		return $this;
 	}
 }
