@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Content;
+namespace CPR\Components\Content;
 
 /**
  * Comments class.
@@ -27,7 +27,7 @@ class Comments extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'label' => __( 'Show Comments', 'cpr' ),
 		];

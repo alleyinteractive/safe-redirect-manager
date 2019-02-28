@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Audio;
+namespace CPR\Components\Audio;
 
 /**
  * Playlist Item.
@@ -24,7 +24,7 @@ class Playlist_Item extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'album'        => '',
 			'name'         => '',

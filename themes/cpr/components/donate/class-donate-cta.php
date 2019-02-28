@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Donate;
+namespace CPR\Components\Donate;
 
 /**
  * Donate CTA.
@@ -24,7 +24,7 @@ class Donate_CTA extends \WP_Components\Component {
 	 *
 	 * @return string
 	 */
-	public function get_default_heading() {
+	public function get_default_heading() : string {
 		return __( 'Donate to CPR', 'cpr' );
 	}
 
@@ -33,7 +33,7 @@ class Donate_CTA extends \WP_Components\Component {
 	 *
 	 * @return string
 	 */
-	public function get_default_description() {
+	public function get_default_description() : string {
 		return __( 'Support impartial journalism, music exploration, and discovery with your monthly gift today.', 'cpr' );
 	}
 
@@ -42,7 +42,7 @@ class Donate_CTA extends \WP_Components\Component {
 	 *
 	 * @return string
 	 */
-	public function get_default_button_label() {
+	public function get_default_button_label() : string {
 		return __( 'Donate Now', 'cpr' );
 	}
 
@@ -51,7 +51,7 @@ class Donate_CTA extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		$settings = get_option( 'cpr-settings' );
 
 		return [
@@ -64,7 +64,7 @@ class Donate_CTA extends \WP_Components\Component {
 	 *
 	 * @return array Default children.
 	 */
-	public function default_children() {
+	public function default_children() : array {
 		$settings = get_option( 'cpr-settings' );
 
 		return [
@@ -86,7 +86,7 @@ class Donate_CTA extends \WP_Components\Component {
 	 *
 	 * @return array Fieldmanager fields.
 	 */
-	public function get_fm_fields() {
+	public function get_fm_fields() : array {
 		return [
 			'donate_cta' => new \Fieldmanager_Group(
 				[

@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component;
+namespace CPR\Components;
 
 /**
  * Advertisement.
@@ -24,7 +24,7 @@ class Ad extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'background_color'   => '',
 			'background_padding' => false,

@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component;
+namespace CPR\Components;
 
 /**
  * Social Links.
@@ -24,7 +24,7 @@ class Social_Links extends \WP_Components\Social_Links {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'services'      => [
 				'instagram' => __( 'Instagram', 'cpr' ),
@@ -40,7 +40,7 @@ class Social_Links extends \WP_Components\Social_Links {
 	 *
 	 * @return string
 	 */
-	public function get_default_facebook() {
+	public function get_default_facebook() : string {
 		return 'https://www.facebook.com/ColoradoPublicRadio/';
 	}
 
@@ -49,7 +49,7 @@ class Social_Links extends \WP_Components\Social_Links {
 	 *
 	 * @return string
 	 */
-	public function get_default_twitter() {
+	public function get_default_twitter() : string {
 		return 'https://twitter.com/copublicradio/';
 	}
 
@@ -58,7 +58,7 @@ class Social_Links extends \WP_Components\Social_Links {
 	 *
 	 * @return string
 	 */
-	public function get_default_instagram() {
+	public function get_default_instagram() : string {
 		return 'https://www.instagram.com/newscpr/';
 	}
 
@@ -67,7 +67,7 @@ class Social_Links extends \WP_Components\Social_Links {
 	 *
 	 * @return array Fieldmanager fields.
 	 */
-	public function get_fm_fields() {
+	public function get_fm_fields() : array {
 		$services = $this->config['services'];
 		$fields   = [];
 
@@ -87,7 +87,7 @@ class Social_Links extends \WP_Components\Social_Links {
 	/**
 	 * Parse data from a saved FM field.
 	 *
-	 * @return Social_Links Instance of this class.
+	 * @return self
 	 */
 	public function parse_from_fm_data() : self {
 		$links         = get_option( 'cpr-settings', [] )['social']['social'] ?? [];

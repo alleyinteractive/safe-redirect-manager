@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Footer;
+namespace CPR\Components\Footer;
 
 /**
  * Footer.

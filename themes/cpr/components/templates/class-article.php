@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Article template.
@@ -23,8 +23,10 @@ class Article extends \WP_Components\Component {
 
 	/**
 	 * Hook into post being set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$body           = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
@@ -41,25 +43,25 @@ class Article extends \WP_Components\Component {
 			/**
 			 * Content Header.
 			 */
-			( new \CPR\Component\Content\Header() )
+			( new \CPR\Components\Content\Header() )
 				->set_post( $this->post ),
 
 			/**
 			 * Content Body.
 			 */
-			( new \CPR\Component\Content\Body() )
+			( new \CPR\Components\Content\Body() )
 				->set_post( $this->post ),
 
 			/**
 			 * Content Footer.
 			 */
-			( new \CPR\Component\Content\Footer() )
+			( new \CPR\Components\Content\Footer() )
 				->set_post( $this->post ),
 
 			/**
 			 * Recirculation module.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'theme', 'grid' )
 				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'heading', __( 'Related Content', 'cpr' ) )

@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * News Landing Page template.
@@ -23,8 +23,10 @@ class News extends \WP_Components\Component {
 
 	/**
 	 * Hook into post being set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$body           = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
@@ -36,7 +38,7 @@ class News extends \WP_Components\Component {
 	 *
 	 * @return array
 	 */
-	public static function get_backfill_args() {
+	public static function get_backfill_args() : array {
 		return [
 			'post_type' => [ 'post', 'podcast-episode' ],
 			'tax_query' => [
@@ -64,7 +66,7 @@ class News extends \WP_Components\Component {
 	 * @param  int $term_id Term ID.
 	 * @return array
 	 */
-	public static function get_backfill_args_with_cat( int $term_id ) {
+	public static function get_backfill_args_with_cat( int $term_id ) : array {
 		return [
 			'post_type' => [ 'post', 'podcast-episode' ],
 			'tax_query' => [
@@ -108,7 +110,7 @@ class News extends \WP_Components\Component {
 			/**
 			 * Featured content with a right sidebar.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->merge_config(
 					[
 						'align_item_content' => 'left',
@@ -123,17 +125,17 @@ class News extends \WP_Components\Component {
 						/**
 						 * Right sidebar with an ad.
 						 */
-						( new \CPR\Component\Sidebar() )
+						( new \CPR\Components\Sidebar() )
 							->merge_config(
 								[
 									'position' => 'right',
 								]
 							)
-							->append_child( ( new \CPR\Component\Ad() )->set_config( 'height', 600 ) ),
+							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) ),
 						/**
 						 * Highlighted Content.
 						 */
-						( new \CPR\Component\Modules\Content_List() )
+						( new \CPR\Components\Modules\Content_List() )
 							->merge_config(
 								[
 									'image_size' => 'grid_item',
@@ -151,12 +153,12 @@ class News extends \WP_Components\Component {
 			/**
 			 * Newsletter CTA.
 			 */
-			new \CPR\Component\Modules\Newsletter(),
+			new \CPR\Components\Modules\Newsletter(),
 
 			/**
 			 * "Featured Topic"
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->merge_config(
 					[
 						'eyebrow_label'     => __( 'Featured Topic', 'cpr' ),
@@ -181,14 +183,14 @@ class News extends \WP_Components\Component {
 					/**
 					 * Right sidebar.
 					 */
-					( new \CPR\Component\Sidebar() )
+					( new \CPR\Components\Sidebar() )
 						->set_config( 'position', 'right' )
 						->append_child(
 
 							/**
 							 * River of additional items.
 							 */
-							( new \CPR\Component\Modules\Content_List() )
+							( new \CPR\Components\Modules\Content_List() )
 								->set_config( 'theme', 'river' )
 								->parse_from_ids(
 									array_slice( $data['featured_topic']['content_item_ids'] ?? [], 1 ),
@@ -201,7 +203,7 @@ class News extends \WP_Components\Component {
 			/**
 			 * Banner Ad.
 			 */
-			( new \CPR\Component\Ad() )
+			( new \CPR\Components\Ad() )
 				->merge_config(
 					[
 						'background_color'   => '#f8f9fa',
@@ -214,7 +216,7 @@ class News extends \WP_Components\Component {
 			/**
 			 * "More Stories" river.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->merge_config(
 					[
 						'theme'                => 'riverFull',
@@ -235,7 +237,7 @@ class News extends \WP_Components\Component {
 					/**
 					 * Right Sidebar.
 					 */
-					( new \CPR\Component\Sidebar() )
+					( new \CPR\Components\Sidebar() )
 						->merge_config(
 							[
 								'position' => 'right',
@@ -246,7 +248,7 @@ class News extends \WP_Components\Component {
 								/**
 								 * River of content "Across Colorado"
 								 */
-								( new \CPR\Component\Modules\Content_List() )
+								( new \CPR\Components\Modules\Content_List() )
 									->merge_config(
 										[
 											'theme'   => 'river',
@@ -262,12 +264,12 @@ class News extends \WP_Components\Component {
 								/**
 								 * Colorado Wonders question form.
 								 */
-								// new \CPR\Component\Colorado_Wonders(),.
+								// new \CPR\Components\Colorado_Wonders(),.
 
 								/**
 								 * Advertisement.
 								 */
-								new \CPR\Component\Ad(),
+								new \CPR\Components\Ad(),
 							]
 						)
 				),
@@ -280,7 +282,7 @@ class News extends \WP_Components\Component {
 	 * @param  array $fields FM fields.
 	 * @return array
 	 */
-	public static function landing_page_fields( $fields ) {
+	public static function landing_page_fields( $fields ) : array {
 		$fields['news'] = new \Fieldmanager_Group(
 			[
 				'label'      => __( 'News', 'cpr' ),

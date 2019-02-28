@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component;
+namespace CPR\Components;
 
 /**
  * Person Item.

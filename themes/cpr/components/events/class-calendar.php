@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Events;
+namespace CPR\Components\Events;
 
 /**
  * Calendar.
@@ -26,7 +26,7 @@ class Calendar extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'heading'      => __( 'Concert Calendar', 'cpr' ),
 			'heading_link' => home_url( 'events' ),
@@ -37,7 +37,7 @@ class Calendar extends \WP_Components\Component {
 	 * Create a calendar item.
 	 *
 	 * @param number $content_item_id Post ID for content item.
-	 * @return \CPR\Component\Events\Calendar_Item
+	 * @return \CPR\Components\Events\Calendar_Item
 	 */
 	public function create_calendar_item( $content_item_id ) : Calendar_Item {
 

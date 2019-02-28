@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Modules;
+namespace CPR\Components\Modules;
 
 /**
  * Content List.
@@ -69,14 +69,14 @@ class Content_List extends \WP_Components\Component {
 	 * Create a content item.
 	 *
 	 * @param number $content_item_id Post ID for content item.
-	 * @return \CPR\Component\Content_Item
+	 * @return \CPR\Components\Content_Item
 	 */
 	public function create_content_item( $content_item_id ) {
 
 		// Track content item ID as already used.
 		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $content_item_id );
 
-		return ( new \CPR\Component\Content_Item() )
+		return ( new \CPR\Components\Content_Item() )
 			->merge_config(
 				[
 					'align_content'    => $this->get_config( 'align_item_content' ),

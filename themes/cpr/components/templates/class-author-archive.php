@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Author Archive template.
@@ -49,7 +49,7 @@ class Author_Archive extends \WP_Components\Component {
 			/**
 			 * Search results.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'theme', 'grid' )
 				->set_config( 'image_size', 'grid_item' )
 				->parse_from_wp_query( $this->query )

@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Slim_Navigation;
+namespace CPR\Components\Slim_Navigation;
 
 /**
  * Slim Navigation Menu.

@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Header;
+namespace CPR\Components\Header;
 
 /**
  * Header Menu.
@@ -26,19 +26,20 @@ class Menu extends \WP_Components\Component {
 	 *
 	 * @return array
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'type'            => 'menu',
-			'menu_item_class' => '\CPR\Component\Header\Menu_Item',
+			'menu_item_class' => '\CPR\Components\Header\Menu_Item',
 		];
 	}
 
 	/**
 	 * Callback function once menu object has been set.
 	 *
-	 * @return void
+	 * @return self
 	 */
-	public function menu_has_set() {
+	public function menu_has_set() : self {
 		$this->parse_wp_menu();
+		return $this;
 	}
 }

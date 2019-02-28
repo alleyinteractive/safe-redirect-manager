@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Homepage template.
@@ -24,8 +24,10 @@ class Homepage extends \WP_Components\Component {
 
 	/**
 	 * Hook into post being set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$body = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
@@ -43,7 +45,7 @@ class Homepage extends \WP_Components\Component {
 			/**
 			 * Featured content with a left and right sidebar.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'feature_item' )
 				->set_config( 'theme', 'feature' )
 				->set_config( 'align_item_content', 'center' )
@@ -53,13 +55,13 @@ class Homepage extends \WP_Components\Component {
 						/**
 						 * Left sidebar with a river of content items.
 						 */
-						( new \CPR\Component\Sidebar() )
+						( new \CPR\Components\Sidebar() )
 							->set_config( 'position', 'left' )
 							->append_child(
 								/**
 								 * River content list for "Top Headlines"
 								 */
-								( new \CPR\Component\Modules\Content_List() )
+								( new \CPR\Components\Modules\Content_List() )
 									->set_config( 'theme', 'river' )
 									// Modify the source data so the component
 									// can parse more easily.
@@ -75,16 +77,16 @@ class Homepage extends \WP_Components\Component {
 						/**
 						 * Right sidebar with an ad.
 						 */
-						( new \CPR\Component\Sidebar() )
+						( new \CPR\Components\Sidebar() )
 							->set_config( 'position', 'right' )
-							->append_child( ( new \CPR\Component\Ad() )->set_config( 'height', 600 ) ),
+							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) ),
 					]
 				),
 
 			/**
 			 * Highlighted Content.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
 				->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
@@ -94,7 +96,7 @@ class Homepage extends \WP_Components\Component {
 			/**
 			 * Latest podcast episodes.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
 				->set_config( 'eyebrow_size', 'large' )
@@ -110,7 +112,7 @@ class Homepage extends \WP_Components\Component {
 			/**
 			 * Newsletter CTA.
 			 */
-			new \CPR\Component\Modules\Newsletter(),
+			new \CPR\Components\Modules\Newsletter(),
 
 			/**
 			 * Playlists for Classical and OpenAir.
@@ -121,7 +123,7 @@ class Homepage extends \WP_Components\Component {
 			/**
 			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'theme', 'grid' )
 				->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
@@ -132,19 +134,19 @@ class Homepage extends \WP_Components\Component {
 					/**
 					 * Sidebar.
 					 */
-					( new \CPR\Component\Sidebar() )
+					( new \CPR\Components\Sidebar() )
 						->set_config( 'position', 'right' )
 						->append_children(
 							[
 								/**
 								 * Colorado Wonders question form.
 								 */
-								// new \CPR\Component\Colorado_Wonders(),.
+								// new \CPR\Components\Colorado_Wonders(),.
 
 								/**
 								 * Advertisement.
 								 */
-								new \CPR\Component\Ad(),
+								new \CPR\Components\Ad(),
 							]
 						)
 				),
@@ -152,14 +154,14 @@ class Homepage extends \WP_Components\Component {
 			/**
 			 * Banner Ad.
 			 */
-			new \CPR\Component\Ad(),
+			new \CPR\Components\Ad(),
 		];
 	}
 
 	/**
 	 * Add additional FM fields to a landing page.
 	 *
-	 * @param  array $fields FM fields.
+	 * @param array $fields FM fields.
 	 * @return array
 	 */
 	public static function landing_page_fields( array $fields ) : array {
