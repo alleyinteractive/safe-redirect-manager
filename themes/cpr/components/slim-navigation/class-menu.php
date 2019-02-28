@@ -24,7 +24,7 @@ class Menu extends \WP_Components\Component {
 	 *
 	 * @return array Default children.
 	 */
-	public function default_children() {
+	public function default_children() : array {
 
 		$children = [];
 
