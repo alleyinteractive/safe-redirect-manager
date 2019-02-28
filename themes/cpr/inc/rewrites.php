@@ -20,4 +20,4 @@ function podcast_rewrites() {
 add_action( 'init', __NAMESPACE__ . '\podcast_rewrites', 11 );
 
 // Add search rewrites.
-add_action( 'init', [ '\\CPR\\Component\\Templates\\Search', 'rewrite_rules' ] );
+add_action( 'init', [ '\\CPR\\Components\\Templates\\Search', 'rewrite_rules' ] );
