@@ -49,7 +49,7 @@ class Newsletter extends \WP_Components\Component {
 
 		return [
 			'background_color' => \CPR\get_site_color(),
-			'group'            => 'lookout',
+			'subscribe_group'  => 'lookout',
 			'heading'          => $settings['engagement']['newsletter']['heading'] ?? $this->get_default_heading(),
 			'tagline'          => $settings['engagement']['newsletter']['tagline'] ?? $this->get_default_tagline(),
 		];

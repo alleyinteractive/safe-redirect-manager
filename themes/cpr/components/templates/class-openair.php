@@ -172,7 +172,7 @@ class Openair extends \WP_Components\Component {
 				->merge_config(
 					[
 						'background_color' => \CPR\get_site_color( 'openair' ),
-						'group'            => 'spinsider',
+						'subscribe_group'  => 'spinsider',
 						'heading'          => __( 'Sign Up For Spinsider From CPR\'s OpenAir', 'cpr' ),
 						'tagline'          => __( 'To sign up to receive our emails, fill in the following field and hit submit. Thanks, and welcome!', 'cpr' ),
 					]
