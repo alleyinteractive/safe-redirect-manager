@@ -46,9 +46,13 @@ class Content_Item extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 		$this->append_child(
-			( new \WP_Components\Component() )
-				->set_name( 'title' )
-				->set_config( 'content', $this->wp_post_get_title() )
+			( new \CPR\Components\Content\Title() )
+				->merge_config(
+					[
+						'content' => $this->wp_post_get_title(),
+						'link'    => get_permalink( $this->post->ID ),
+					]
+				)
 				->set_theme( $this->get_config( 'theme_name' ) )
 		);
 

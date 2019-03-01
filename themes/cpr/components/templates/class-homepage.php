@@ -57,20 +57,21 @@ class Homepage extends \WP_Components\Component {
 								( new \CPR\Components\Modules\Content_List() )
 									// Modify the source data so the component
 									// can parse more easily.
+									->set_config( 'eyebrow_label', __( 'Top Headlines', 'cpr' ) )
 									->parse_from_fm_data(
 										[
 											'content_item_ids' => $data['featured_content']['top_headlines_content_item_ids'] ?? [],
 										],
 										4
 									)
-									->set_config( 'eyebrow_label', __( 'Top Headlines', 'cpr' ) )
 							)
 							->set_theme( 'left' )
 							->set_child_themes(
 								[
-									'content-list' => 'river',
-									'content-item' => 'river',
-									'eyebrow'      => 'small',
+									'content-list'         => 'river',
+									'content-list-eyebrow' => 'black',
+									'content-item'         => 'river',
+									'eyebrow'              => 'small',
 								]
 							),
 						/**

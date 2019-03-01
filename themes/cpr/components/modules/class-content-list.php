@@ -29,14 +29,11 @@ class Content_List extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'align_item_content'   => 'left',
 			'background_color'     => '',
 			'call_to_action_label' => '',
 			'call_to_action_link'  => '',
 			'eyebrow_label'        => '',
 			'eyebrow_link'         => '',
-			'eyebrow_size'         => 'small',
-			'eyebrow_location'     => 'bottom',
 			'heading'              => '',
 			'heading_border'       => false,
 			'heading_link'         => '',
@@ -87,6 +84,20 @@ class Content_List extends \WP_Components\Component {
 	}
 
 	/**
+	 * Create an eyebrow component.
+	 *
+	 * @param array $config Config for eyebrow component.
+	 * @return void
+	 */
+	public function set_eyebrow( $config ) {
+		$this->append_child(
+			( new \CPR\Components\Content\Eyebrow() )
+				->set_name( 'content-list-eyebrow' )
+				->merge_config( $config )
+		);
+	}
+
+	/**
 	 * Parse the stored FM data to be used by this component.
 	 *
 	 * @param array   $fm_data       Stored Fieldmanager data.
@@ -100,8 +111,6 @@ class Content_List extends \WP_Components\Component {
 			[
 				'call_to_action_label' => (string) ( $fm_data['call_to_action_label'] ?? '' ),
 				'call_to_action_link'  => (string) ( $fm_data['call_to_action_link'] ?? '' ),
-				'eyebrow_label'        => (string) ( $fm_data['eyebrow_label'] ?? '' ),
-				'eyebrow_link'         => (string) ( $fm_data['eyebrow_link'] ?? '' ),
 				'heading'              => (string) ( $fm_data['heading'] ?? '' ),
 				'heading_link'         => (string) ( $fm_data['heading_link'] ?? '' ),
 			]
@@ -111,6 +120,13 @@ class Content_List extends \WP_Components\Component {
 			(array) ( $fm_data['content_item_ids'] ?? [] ),
 			$backfill_to,
 			$backfill_args
+		);
+
+		$this->set_eyebrow(
+			[
+				'eyebrow_label' => (string) ( $fm_data['eyebrow_label'] ?? $this->get_config( 'eyebrow_label' ) ),
+				'eyebrow_link'  => (string) ( $fm_data['eyebrow_link'] ?? $this->get_config( 'eyebrow_link' ) ),
+			]
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
