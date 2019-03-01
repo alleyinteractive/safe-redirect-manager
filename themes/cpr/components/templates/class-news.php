@@ -107,47 +107,55 @@ class News extends \WP_Components\Component {
 		$featured_topic_term = get_term( $data['featured_topic']['topic_id'] ?? 0, 'category' );
 
 		return [
-			/**
-			 * Featured content with a right sidebar.
-			 */
-			( new \CPR\Components\Modules\Content_List() )
-				->merge_config(
-					[
-						'align_item_content' => 'left',
-						'image_size'         => 'feature_item',
-						'theme'              => 'feature',
-						'show_excerpt'       => true,
-					]
-				)
-				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'twoColumn' )
 				->append_children(
 					[
+						/**
+						 * Featured content with a right sidebar.
+						 */
+						( new \CPR\Components\Modules\Content_List() )
+							->merge_config(
+								[
+									'align_item_content' => 'left',
+									'image_size'         => 'feature_item',
+									'show_excerpt'       => true,
+								]
+							)
+							->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+							->set_theme( 'feature' )
+							->set_child_themes(
+								[
+									'content-item' => 'featureSecondary',
+									'title'        => 'feature',
+									'eyebrow'      => 'small',
+								]
+							),
 						/**
 						 * Right sidebar with an ad.
 						 */
 						( new \CPR\Components\Sidebar() )
-							->merge_config(
-								[
-									'position' => 'right',
-								]
-							)
+							->set_theme( 'right' )
 							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) ),
 						/**
 						 * Highlighted Content.
 						 */
 						( new \CPR\Components\Modules\Content_List() )
-							->merge_config(
-								[
-									'image_size' => 'grid_item',
-									'theme'      => 'grid',
-								]
-							)
+							->set_config( 'image_size', 'grid_item' )
 							->parse_from_fm_data(
 								$data['highlighted_content'] ?? [],
 								4,
 								self::get_backfill_args()
+							)
+							->set_theme( 'gridLarge' )
+							->set_child_themes(
+								[
+									'content-item' => 'gridPrimary',
+									'title'        => 'grid',
+									'eyebrow'      => 'small',
+								]
 							),
-					]
+					],
 				),
 
 			/**
@@ -170,7 +178,6 @@ class News extends \WP_Components\Component {
 						'heading_link'      => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
 						'image_size'        => 'feature_item_small',
 						'show_excerpt'      => true,
-						'theme'             => 'featureTerm',
 					]
 				)
 				->parse_from_ids(
@@ -178,25 +185,40 @@ class News extends \WP_Components\Component {
 					1,
 					self::get_backfill_args_with_cat( $data['featured_topic']['topic_id'] ?? 0 )
 				)
+				->set_theme( 'featureTerm' )
+				->set_child_themes(
+					[
+						'content-item' => 'featureTerm',
+						'title'        => 'featureSecondary',
+						'eyebrow'      => 'small',
+					]
+				)
 				->append_child(
 
 					/**
 					 * Right sidebar.
 					 */
 					( new \CPR\Components\Sidebar() )
-						->set_config( 'position', 'right' )
+						->set_theme( 'right' )
 						->append_child(
 
 							/**
 							 * River of additional items.
 							 */
 							( new \CPR\Components\Modules\Content_List() )
-								->set_config( 'theme', 'river' )
 								->parse_from_ids(
 									array_slice( $data['featured_topic']['content_item_ids'] ?? [], 1 ),
 									3,
 									self::get_backfill_args_with_cat( $data['featured_topic']['topic_id'] ?? 0 )
 								)
+								->set_theme( 'river' )
+						)
+						->set_child_themes(
+							[
+								'content-list'         => 'river',
+								'content-item'         => 'river',
+								'eyebrow'              => 'small',
+							]
 						)
 				),
 
@@ -232,6 +254,14 @@ class News extends \WP_Components\Component {
 					[],
 					8,
 					self::get_backfill_args()
+				)
+				->set_theme( 'riverFull' )
+				->set_child_themes(
+					[
+						'content-item'         => 'riverFull',
+						'title'                => 'featureSecondary',
+						'eyebrow'              => 'small',
+					]
 				)
 				->append_child(
 					/**

@@ -95,6 +95,7 @@ class Content_List extends \WP_Components\Component {
 			$this->append_child(
 				( new \CPR\Components\Content\Eyebrow() )
 					->set_name( 'content-list-eyebrow' )
+					->set_theme( 'black' )
 					->merge_config(
 						[
 							'eyebrow_label' => $label,

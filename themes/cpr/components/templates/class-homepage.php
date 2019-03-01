@@ -69,7 +69,6 @@ class Homepage extends \WP_Components\Component {
 							->set_child_themes(
 								[
 									'content-list'         => 'river',
-									'content-list-eyebrow' => 'black',
 									'content-item'         => 'river',
 									'eyebrow'              => 'small',
 								]
@@ -84,7 +83,7 @@ class Homepage extends \WP_Components\Component {
 							->set_child_themes(
 								[
 									'content-item' => 'featurePrimary',
-									'title'        => 'featurePrimary',
+									'title'        => 'feature',
 									'eyebrow'      => 'small',
 								]
 							),
@@ -95,26 +94,25 @@ class Homepage extends \WP_Components\Component {
 						( new \CPR\Components\Sidebar() )
 							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) )
 							->set_theme( 'right' ),
+
+						/**
+						 * Highlighted Content.
+						 */
+						( new \CPR\Components\Modules\Content_List() )
+							->set_config( 'image_size', 'grid_item' )
+							->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
+							->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
+							->set_config( 'call_to_action_link', home_url( '/all/' ) )
+							->set_theme( 'gridLarge' )
+							->set_child_themes(
+								[
+									'content-item' => 'gridPrimary',
+									'title'        => 'grid',
+									'eyebrow'      => 'small',
+								]
+							),
 					]
 				),
-
-			/**
-			 * Highlighted Content.
-			 */
-			( new \CPR\Components\Modules\Content_List() )
-				->set_config( 'image_size', 'grid_item' )
-				->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
-				->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
-				->set_config( 'call_to_action_link', home_url( '/all/' ) )
-				->set_theme( 'grid' )
-				->set_child_themes(
-					[
-						'content-item' => 'gridPrimary',
-						'title'        => 'gridPrimary',
-						'eyebrow'      => 'small',
-					]
-				),
-
 
 			/**
 			 * Latest podcast episodes.
@@ -128,11 +126,11 @@ class Homepage extends \WP_Components\Component {
 						'post_type' => 'podcast-episode',
 					]
 				)
-				->set_theme( 'grid' )
+				->set_theme( 'gridCentered' )
 				->set_child_themes(
 					[
 						'content-item' => 'gridSecondary',
-						'title'        => 'gridSecondary',
+						'title'        => 'grid',
 						'eyebrow'      => 'large',
 					]
 				),
@@ -152,7 +150,7 @@ class Homepage extends \WP_Components\Component {
 			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.
 			 */
 			( new \CPR\Components\Column_Area() )
-				->set_theme( 'two-column' )
+				->set_theme( 'twoColumn' )
 				->append_children(
 					[
 						( new \CPR\Components\Modules\Content_List() )
@@ -160,7 +158,7 @@ class Homepage extends \WP_Components\Component {
 							->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
 							->set_config( 'heading', __( 'More Stories', 'cpr' ) )
 							->set_config( 'heading_border', true )
-							->set_theme( 'grid' )
+							->set_theme( 'gridSmall' )
 							->set_child_themes(
 								[
 									'content-item' => 'gridPrimary',
@@ -172,19 +170,20 @@ class Homepage extends \WP_Components\Component {
 						 * Sidebar.
 						 */
 						( new \CPR\Components\Sidebar() )
-						->append_children(
-							[
-								/**
-								 * Colorado Wonders question form.
-								 */
-								// new \CPR\Components\Colorado_Wonders(),.
+							->set_theme( 'right' )
+							->append_children(
+								[
+									/**
+									 * Colorado Wonders question form.
+									 */
+									// new \CPR\Components\Colorado_Wonders(),.
 
-								/**
-								 * Advertisement.
-								 */
-								new \CPR\Components\Ad(),
-							]
-						)
+									/**
+									 * Advertisement.
+									 */
+									new \CPR\Components\Ad(),
+								]
+							)
 					]
 				),
 
