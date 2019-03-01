@@ -1,6 +1,6 @@
 <?php
 /**
- * Feature component.
+ * Column_Area component.
  *
  * @package CPR
  */
@@ -8,16 +8,16 @@
 namespace CPR\Components;
 
 /**
- * Feature.
+ * Column_Area.
  */
-class Feature extends \WP_Components\Component {
+class Column_Area extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.
 	 *
 	 * @var string
 	 */
-	public $name = 'feature';
+	public $name = 'column-area';
 
 	/**
 	 * Define a default config.

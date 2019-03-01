@@ -42,8 +42,8 @@ class Homepage extends \WP_Components\Component {
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'homepage', true );
 		return [
-			( new \CPR\Components\Feature() )
-				->set_theme( 'three-column' )
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'threeColumn' )
 				->append_children(
 					[
 						/**
@@ -84,6 +84,7 @@ class Homepage extends \WP_Components\Component {
 							->set_child_themes(
 								[
 									'content-item' => 'featurePrimary',
+									'title'        => 'featurePrimary',
 									'eyebrow'      => 'small',
 								]
 							),
@@ -109,6 +110,7 @@ class Homepage extends \WP_Components\Component {
 				->set_child_themes(
 					[
 						'content-item' => 'gridPrimary',
+						'title'        => 'gridPrimary',
 						'eyebrow'      => 'small',
 					]
 				),
@@ -130,6 +132,7 @@ class Homepage extends \WP_Components\Component {
 				->set_child_themes(
 					[
 						'content-item' => 'gridSecondary',
+						'title'        => 'gridSecondary',
 						'eyebrow'      => 'large',
 					]
 				),
@@ -148,24 +151,27 @@ class Homepage extends \WP_Components\Component {
 			/**
 			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.
 			 */
-			( new \CPR\Components\Modules\Content_List() )
-				->set_config( 'image_size', 'grid_item' )
-				->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
-				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
-				->set_config( 'heading_border', true )
-				->set_theme( 'grid' )
-				->set_child_themes(
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'two-column' )
+				->append_children(
 					[
-						'content-item' => 'grid',
-						'eyebrow'      => 'small',
-						'sidebar'      => 'right',
-					]
-				)
-				->append_child(
-					/**
-					 * Sidebar.
-					 */
-					( new \CPR\Components\Sidebar() )
+						( new \CPR\Components\Modules\Content_List() )
+							->set_config( 'image_size', 'grid_item' )
+							->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
+							->set_config( 'heading', __( 'More Stories', 'cpr' ) )
+							->set_config( 'heading_border', true )
+							->set_theme( 'grid' )
+							->set_child_themes(
+								[
+									'content-item' => 'gridPrimary',
+									'eyebrow'      => 'small',
+									'sidebar'      => 'right',
+								]
+							),
+						/**
+						 * Sidebar.
+						 */
+						( new \CPR\Components\Sidebar() )
 						->append_children(
 							[
 								/**
@@ -179,6 +185,7 @@ class Homepage extends \WP_Components\Component {
 								new \CPR\Components\Ad(),
 							]
 						)
+					]
 				),
 
 			/**

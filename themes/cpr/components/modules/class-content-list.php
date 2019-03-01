@@ -86,15 +86,23 @@ class Content_List extends \WP_Components\Component {
 	/**
 	 * Create an eyebrow component.
 	 *
-	 * @param array $config Config for eyebrow component.
+	 * @param string $label Text content of eyebrow.
+	 * @param string $link URL for eyebrow to link to.
 	 * @return void
 	 */
-	public function set_eyebrow( $config ) {
-		$this->append_child(
-			( new \CPR\Components\Content\Eyebrow() )
-				->set_name( 'content-list-eyebrow' )
-				->merge_config( $config )
-		);
+	public function set_eyebrow( $label, $link = '' ) {
+		if ( ! empty( $label ) ) {
+			$this->append_child(
+				( new \CPR\Components\Content\Eyebrow() )
+					->set_name( 'content-list-eyebrow' )
+					->merge_config(
+						[
+							'eyebrow_label' => $label,
+							'eyebrow_link'  => $link,
+						]
+					)
+			);
+		}
 	}
 
 	/**
@@ -123,10 +131,8 @@ class Content_List extends \WP_Components\Component {
 		);
 
 		$this->set_eyebrow(
-			[
-				'eyebrow_label' => (string) ( $fm_data['eyebrow_label'] ?? $this->get_config( 'eyebrow_label' ) ),
-				'eyebrow_link'  => (string) ( $fm_data['eyebrow_link'] ?? $this->get_config( 'eyebrow_link' ) ),
-			]
+			(string) ( $fm_data['eyebrow_label'] ?? $this->get_config( 'eyebrow_label' ) ),
+			(string) ( $fm_data['eyebrow_link'] ?? $this->get_config( 'eyebrow_link' ) ),
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {

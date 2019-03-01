@@ -34,7 +34,7 @@ class Content_Item extends \WP_Components\Component {
 			'image_size'    => 'grid-item',
 			'permalink'     => '',
 			'show_excerpt'  => false,
-			'theme_name'    => 'grid',
+			'theme_name'    => 'gridPrimary',
 			'type'          => '',
 		];
 	}
@@ -53,7 +53,6 @@ class Content_Item extends \WP_Components\Component {
 						'link'    => get_permalink( $this->post->ID ),
 					]
 				)
-				->set_theme( $this->get_config( 'theme_name' ) )
 		);
 
 		// Get excerpt if required.
