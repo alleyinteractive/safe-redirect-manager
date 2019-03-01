@@ -96,12 +96,12 @@ function cpr_fm_submenu_settings() {
 						'children' => [
 							'cta' => new Fieldmanager_Group(
 								[
-									'children' => ( new \CPR\Component\Donate\Donate_CTA() )->get_fm_fields(),
+									'children' => ( new \CPR\Components\Donate\Donate_CTA() )->get_fm_fields(),
 								]
 							),
 							'button' => new Fieldmanager_Group(
 								[
-									'children' => ( new \CPR\Component\Donate\Donate_Button() )->get_fm_fields(),
+									'children' => ( new \CPR\Components\Donate\Donate_Button() )->get_fm_fields(),
 								]
 							),
 						],
@@ -115,7 +115,7 @@ function cpr_fm_submenu_settings() {
 							'newsletter' => new Fieldmanager_Group(
 								[
 									'label' => __( 'Newsletter Settings', 'cpr' ),
-									'children' => ( new \CPR\Component\Modules\Newsletter() )->get_fm_fields(),
+									'children' => ( new \CPR\Components\Modules\Newsletter() )->get_fm_fields(),
 								]
 							),
 						],
@@ -128,7 +128,7 @@ function cpr_fm_submenu_settings() {
 							'social' => new Fieldmanager_Group(
 								[
 									'label' => __( 'Social Settings', 'cpr' ),
-									'children' => ( new \CPR\Component\Social_Links() )->get_fm_fields(),
+									'children' => ( new \CPR\Components\Social_Links() )->get_fm_fields(),
 								]
 							),
 						],

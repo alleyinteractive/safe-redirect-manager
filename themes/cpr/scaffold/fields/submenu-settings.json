@@ -23,10 +23,10 @@
 			"label": { "__": "Giving" },
 			"children": {
 				"cta": {
-					"children": "`( new \\CPR\\Component\\Donate\\Donate_CTA() )->get_fm_fields()`"
+					"children": "`( new \\CPR\\Components\\Donate\\Donate_CTA() )->get_fm_fields()`"
 				},
 				"button": {
-					"children": "`( new \\CPR\\Component\\Donate\\Donate_Button() )->get_fm_fields()`"
+					"children": "`( new \\CPR\\Components\\Donate\\Donate_Button() )->get_fm_fields()`"
 				}
 			}
 		},
@@ -44,7 +44,7 @@
 					"label": {
 						"__": "Newsletter Settings"
 					},
-					"children": "`( new \\CPR\\Component\\Modules\\Newsletter() )->get_fm_fields()`"
+					"children": "`( new \\CPR\\Components\\Modules\\Newsletter() )->get_fm_fields()`"
 				}
 			}
 		},
@@ -57,7 +57,7 @@
 					"label": {
 						"__": "Social Settings"
 					},
-					"children": "`( new \\CPR\\Component\\Social_Links() )->get_fm_fields()`"
+					"children": "`( new \\CPR\\Components\\Social_Links() )->get_fm_fields()`"
 				}
 			}
 		}
