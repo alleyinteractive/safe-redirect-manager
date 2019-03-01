@@ -28,7 +28,7 @@ class Title extends \WP_Components\Component {
 		return [
 			'content'    => '',
 			'link'       => '',
-			'theme_name' => 'feature',
+			'theme_name' => 'grid',
 		];
 	}
 }

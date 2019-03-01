@@ -71,6 +71,7 @@ class Homepage extends \WP_Components\Component {
 									'content-list'         => 'river',
 									'content-item'         => 'river',
 									'eyebrow'              => 'small',
+									'title'                => 'grid',
 								]
 							),
 						/**
@@ -126,6 +127,7 @@ class Homepage extends \WP_Components\Component {
 						'post_type' => 'podcast-episode',
 					]
 				)
+				->set_heading_from_fm_data( $data['latest_podcast_episodes'] ?? [] )
 				->set_theme( 'gridCentered' )
 				->set_child_themes(
 					[
@@ -151,13 +153,12 @@ class Homepage extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'twoColumn' )
+				->merge_config( [ 'heading' => __( 'More Stories', 'cpr' ) ] )
 				->append_children(
 					[
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'grid_item' )
 							->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
-							->set_config( 'heading', __( 'More Stories', 'cpr' ) )
-							->set_config( 'heading_border', true )
 							->set_theme( 'gridSmall' )
 							->set_child_themes(
 								[
@@ -183,7 +184,7 @@ class Homepage extends \WP_Components\Component {
 									 */
 									new \CPR\Components\Ad(),
 								]
-							)
+							),
 					]
 				),
 

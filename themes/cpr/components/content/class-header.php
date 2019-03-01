@@ -59,7 +59,10 @@ class Header extends \WP_Components\Component {
 				$this->set_audio();
 
 				// Children.
-				$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
+				$this->wp_post_set_featured_image(
+					$this->get_config( 'image_size' ),
+					[ 'show_caption' => true ]
+				);
 				$this->append_child( new \CPR\Components\Ad() );
 				$this->append_child(
 					( new \WP_Components\Social_Sharing() )

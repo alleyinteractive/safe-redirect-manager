@@ -35,10 +35,7 @@ class Content_List extends \WP_Components\Component {
 			'eyebrow_label'        => '',
 			'eyebrow_link'         => '',
 			'heading'              => '',
-			'heading_border'       => false,
 			'heading_link'         => '',
-			'heading_cta_label'    => '',
-			'heading_cta_link'     => '',
 			'image_size'           => '',
 			'show_excerpt'         => false,
 			'theme_name'           => '',
@@ -107,6 +104,21 @@ class Content_List extends \WP_Components\Component {
 	}
 
 	/**
+	 * Set content list heading from FM data.
+	 *
+	 * @param array $fm_data Stored Fieldmanager data.
+	 * @return self
+	 */
+	public function set_heading_from_fm_data( $fm_data ) {
+		return $this->merge_config(
+			[
+				'heading'              => (string) ( $fm_data['heading'] ?? '' ),
+				'heading_link'         => (string) ( $fm_data['heading_link'] ?? '' ),
+			]
+		);
+	}
+
+	/**
 	 * Parse the stored FM data to be used by this component.
 	 *
 	 * @param array   $fm_data       Stored Fieldmanager data.
@@ -119,9 +131,7 @@ class Content_List extends \WP_Components\Component {
 		$this->merge_config(
 			[
 				'call_to_action_label' => (string) ( $fm_data['call_to_action_label'] ?? '' ),
-				'call_to_action_link'  => (string) ( $fm_data['call_to_action_link'] ?? '' ),
-				'heading'              => (string) ( $fm_data['heading'] ?? '' ),
-				'heading_link'         => (string) ( $fm_data['heading_link'] ?? '' ),
+				'call_to_action_link'  => (string) ( $fm_data['call_tso_action_link'] ?? '' ),
 			]
 		);
 

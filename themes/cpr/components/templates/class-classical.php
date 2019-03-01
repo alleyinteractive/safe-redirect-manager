@@ -105,20 +105,30 @@ class Classical extends \WP_Components\Component {
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'classical', true );
 		return [
-			/**
-			 * Featured content with a left and right sidebar.
-			 */
-			( new \CPR\Components\Modules\Content_List() )
-				->set_config( 'image_size', 'feature_item' )
-				->set_theme( 'feature' )
-				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'threeColumn' )
 				->append_children(
 					[
+						/**
+						 * Featured content with a left and right sidebar.
+						 */
+						( new \CPR\Components\Modules\Content_List() )
+							->set_config( 'image_size', 'feature_item' )
+							->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+							->set_theme( 'feature' )
+							->set_child_themes(
+								[
+									'content-item' => 'featurePrimary',
+									'title'        => 'feature',
+									'eyebrow'      => 'small',
+								]
+							),
+
 						/**
 						 * Left sidebar with a station playlist.
 						 */
 						( new \CPR\Components\Sidebar() )
-							->set_config( 'position', 'left' )
+							->set_theme( 'left' )
 							->append_child(
 								/**
 								 * Station Playlist.
@@ -131,7 +141,7 @@ class Classical extends \WP_Components\Component {
 						 * Right sidebar with a concert calendar.
 						 */
 						( new \CPR\Components\Sidebar() )
-							->set_config( 'position', 'right' )
+							->set_theme( 'right' )
 							->append_child(
 								/**
 								 * Concert Calendar.
@@ -174,48 +184,65 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * Articles content list.
 			 */
-			( new \CPR\Components\Modules\Content_List() )
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'split' )
 				->merge_config(
 					[
 						'heading'           => $data['articles']['heading'] ?? '',
-						'heading_border'    => true,
 						'heading_cta_label' => __( 'All Stories', 'cpr' ),
 						'heading_cta_link'  => get_term_link( 'classical', 'section' ),
 						'heading_link'      => get_term_link( 'classical', 'section' ),
-						'image_size'        => 'feature_item_small',
-						'show_excerpt'      => true,
-						'theme'             => 'featureTerm', // @todo May need to be featureHalf, or other.
-						'eyebrow_location'  => 'none',
 					]
 				)
-				->parse_from_ids(
-					array_slice( $data['articles']['content_item_ids'] ?? [], 0, 1 ),
-					1,
-					self::get_classical_posts_backfill_args()
-				)
-				->append_child(
-					/**
-					 * Right sidebar.
-					 */
-					( new \CPR\Components\Sidebar() )
-						->set_config( 'position', 'right' )
-						->append_child(
-							/**
-							 * Grid of additional items.
-							 */
-							( new \CPR\Components\Modules\Content_List() )
-								->merge_config(
-									[
-										'theme'             => 'grid',
-										'eyebrow_location'  => 'none',
-									]
-								)
-								->parse_from_ids(
-									array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
-									4,
-									self::get_classical_posts_backfill_args()
-								)
-						)
+				->append_children(
+					[
+						( new \CPR\Components\Modules\Content_List() )
+							->merge_config(
+								[
+									'image_size'        => 'feature_item_small',
+									'show_excerpt'      => true,
+									'eyebrow_location'  => 'none',
+								]
+							)
+							->parse_from_ids(
+								array_slice( $data['articles']['content_item_ids'] ?? [], 0, 1 ),
+								1,
+								self::get_classical_posts_backfill_args()
+							)
+							->set_theme( 'feature' )
+							->set_child_themes(
+								[
+									'content-item' => 'featureHalf',
+									'eyebrow'      => 'small',
+									'title'        => 'featureSecondary',
+								]
+							),
+
+						/**
+						 * Right sidebar.
+						 */
+						( new \CPR\Components\Sidebar() )
+							->set_theme( 'right' )
+							->append_child(
+								/**
+								 * Grid of additional items.
+								 */
+								( new \CPR\Components\Modules\Content_List() )
+									->parse_from_ids(
+										array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
+										4,
+										self::get_classical_posts_backfill_args()
+									)
+							)
+							->set_child_themes(
+								[
+									'content-list' => 'gridPrimary',
+									'content-item' => 'gridPrimary',
+									'eyebrow'      => 'small',
+									'title'        => 'grid',
+								]
+							),
+					]
 				),
 
 			/**
@@ -225,15 +252,22 @@ class Classical extends \WP_Components\Component {
 				->merge_config(
 					[
 						'image_size'       => 'grid_item',
-						'theme'            => 'grid',
 						'background_color' => '#f8f9fa',
 						'eyebrow_location' => 'top',
 					]
 				)
+				->set_theme( 'gridCentered' )
 				->parse_from_fm_data(
 					$data['podcast_episodes'] ?? [],
 					4,
 					self::get_classical_episodes_backfill_args()
+				)
+				->set_child_themes(
+					[
+						'content-item' => 'gridPrimary',
+						'eyebrow'      => 'small',
+						'title'        => 'grid',
+					]
 				),
 
 			/**

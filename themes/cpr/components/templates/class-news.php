@@ -166,60 +166,66 @@ class News extends \WP_Components\Component {
 			/**
 			 * "Featured Topic"
 			 */
-			( new \CPR\Components\Modules\Content_List() )
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'twoColumn' )
 				->merge_config(
 					[
-						'eyebrow_label'     => __( 'Featured Topic', 'cpr' ),
-						'eyebrow_size'      => 'small',
 						'heading'           => ( $featured_topic_term instanceof \WP_Term ) ? $featured_topic_term->name : '',
-						'heading_border'    => true,
 						'heading_cta_label' => __( 'More Stories', 'cpr' ),
 						'heading_cta_link'  => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
 						'heading_link'      => get_term_link( $data['featured_topic']['topic_id'] ?? 0, 'category' ),
-						'image_size'        => 'feature_item_small',
-						'show_excerpt'      => true,
 					]
 				)
-				->parse_from_ids(
-					array_slice( $data['featured_topic']['content_item_ids'] ?? [], 0, 1 ),
-					1,
-					self::get_backfill_args_with_cat( $data['featured_topic']['topic_id'] ?? 0 )
-				)
-				->set_theme( 'featureTerm' )
-				->set_child_themes(
+				->append_children(
 					[
-						'content-item' => 'featureTerm',
-						'title'        => 'featureSecondary',
-						'eyebrow'      => 'small',
+						( new \CPR\Components\Modules\Content_List() )
+							->merge_config(
+								[
+									'eyebrow_label'     => __( 'Featured Topic', 'cpr' ),
+									'eyebrow_size'      => 'small',
+									'image_size'        => 'feature_item_small',
+									'show_excerpt'      => true,
+								]
+							)
+							->parse_from_ids(
+								array_slice( $data['featured_topic']['content_item_ids'] ?? [], 0, 1 ),
+								1,
+								self::get_backfill_args_with_cat( $data['featured_topic']['topic_id'] ?? 0 )
+							)
+							->set_theme( 'featureTerm' )
+							->set_child_themes(
+								[
+									'content-item' => 'featureTerm',
+									'title'        => 'featureSecondary',
+									'eyebrow'      => 'small',
+								]
+							),
+						/**
+						 * Right sidebar.
+						 */
+						( new \CPR\Components\Sidebar() )
+							->set_theme( 'right' )
+							->append_child(
+
+								/**
+								 * River of additional items.
+								 */
+								( new \CPR\Components\Modules\Content_List() )
+									->parse_from_ids(
+										array_slice( $data['featured_topic']['content_item_ids'] ?? [], 1 ),
+										3,
+										self::get_backfill_args_with_cat( $data['featured_topic']['topic_id'] ?? 0 )
+									)
+							)
+							->set_child_themes(
+								[
+									'content-list'         => 'river',
+									'content-item'         => 'river',
+									'title'                => 'grid',
+									'eyebrow'              => 'small',
+								]
+							),
 					]
-				)
-				->append_child(
-
-					/**
-					 * Right sidebar.
-					 */
-					( new \CPR\Components\Sidebar() )
-						->set_theme( 'right' )
-						->append_child(
-
-							/**
-							 * River of additional items.
-							 */
-							( new \CPR\Components\Modules\Content_List() )
-								->parse_from_ids(
-									array_slice( $data['featured_topic']['content_item_ids'] ?? [], 1 ),
-									3,
-									self::get_backfill_args_with_cat( $data['featured_topic']['topic_id'] ?? 0 )
-								)
-								->set_theme( 'river' )
-						)
-						->set_child_themes(
-							[
-								'content-list'         => 'river',
-								'content-item'         => 'river',
-								'eyebrow'              => 'small',
-							]
-						)
 				),
 
 			/**
@@ -238,70 +244,73 @@ class News extends \WP_Components\Component {
 			/**
 			 * "More Stories" river.
 			 */
-			( new \CPR\Components\Modules\Content_List() )
-				->merge_config(
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'twoColumn' )
+				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
+				->append_children(
 					[
-						'theme'                => 'riverFull',
-						'image_size'           => 'grid_item',
-						'show_excerpt'         => true,
-						'heading'              => __( 'More Stories', 'cpr' ),
-						'heading_border'       => true,
-						'call_to_action_label' => __( 'More Stories', 'cpr' ),
-						'call_to_action_link'  => home_url( '/section/news/' ),
-					]
-				)
-				->parse_from_ids(
-					[],
-					8,
-					self::get_backfill_args()
-				)
-				->set_theme( 'riverFull' )
-				->set_child_themes(
-					[
-						'content-item'         => 'riverFull',
-						'title'                => 'featureSecondary',
-						'eyebrow'              => 'small',
-					]
-				)
-				->append_child(
-					/**
-					 * Right Sidebar.
-					 */
-					( new \CPR\Components\Sidebar() )
-						->merge_config(
-							[
-								'position' => 'right',
-							]
-						)
-						->append_children(
-							[
-								/**
-								 * River of content "Across Colorado"
-								 */
-								( new \CPR\Components\Modules\Content_List() )
-									->merge_config(
-										[
-											'theme'   => 'river',
-											'heading' => __( 'Across Colorado', 'cpr' ),
-										]
-									)
-									->parse_from_ids(
-										[],
-										4,
-										[] // TODO: Determine what kind of content this actually is.
-									),
+						( new \CPR\Components\Modules\Content_List() )
+							->merge_config(
+								[
+									'theme'                => 'riverFull',
+									'image_size'           => 'grid_item',
+									'show_excerpt'         => true,
+									'call_to_action_label' => __( 'More Stories', 'cpr' ),
+									'call_to_action_link'  => home_url( '/section/news/' ),
+								]
+							)
+							->parse_from_ids(
+								[],
+								8,
+								self::get_backfill_args()
+							)
+							->set_theme( 'riverFull' )
+							->set_child_themes(
+								[
+									'content-item'         => 'riverFull',
+									'title'                => 'featureSecondary',
+									'eyebrow'              => 'small',
+								]
+							),
 
-								/**
-								 * Colorado Wonders question form.
-								 */
-								// new \CPR\Components\Colorado_Wonders(),.
+						/**
+						 * Right Sidebar.
+						 */
+						( new \CPR\Components\Sidebar() )
+							->set_theme( 'right' )
+							->append_children(
+								[
+									/**
+									 * River of content "Across Colorado"
+									 */
+									( new \CPR\Components\Modules\Content_List() )
+										->set_config( 'heading', __( 'Across Colorado', 'cpr' ) )
+										->set_theme( 'river' )
+										->parse_from_ids(
+											[],
+											4,
+											[] // TODO: Determine what kind of content this actually is.
+										)
+										->set_child_themes(
+											[
+												'content-item' => 'river',
+												'title'        => 'grid',
+												'eyebrow'      => 'small',
+											]
+										),
 
-								/**
-								 * Advertisement.
-								 */
-								new \CPR\Components\Ad(),
-							]
-						)
+									/**
+									 * Colorado Wonders question form.
+									 */
+									// new \CPR\Components\Colorado_Wonders(),.
+
+									/**
+									 * Advertisement.
+									 */
+									new \CPR\Components\Ad(),
+								]
+							),
+					]
 				),
 		];
 	}

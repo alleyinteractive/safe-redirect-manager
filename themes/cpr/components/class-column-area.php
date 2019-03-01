@@ -27,6 +27,25 @@ class Column_Area extends \WP_Components\Component {
 	public function default_config() : array {
 		return [
 			'theme_name' => 'three-column',
+			'heading'              => '',
+			'heading_link'         => '',
+			'heading_cta_label'    => '',
+			'heading_cta_link'     => '',
 		];
+	}
+
+	/**
+	 * Set content list heading from FM data.
+	 *
+	 * @param array $fm_data Stored Fieldmanager data.
+	 * @return self
+	 */
+	public function set_heading_from_fm_data( $fm_data ) {
+		return $this->merge_config(
+			[
+				'heading'              => (string) ( $fm_data['heading'] ?? '' ),
+				'heading_link'         => (string) ( $fm_data['heading_link'] ?? '' ),
+			]
+		);
 	}
 }
