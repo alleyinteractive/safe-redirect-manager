@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Modules;
+namespace CPR\Components\Modules;
 
 /**
  * Content List.
@@ -44,7 +44,7 @@ class Content_List extends \WP_Components\Component {
 			'heading_cta_link'     => '',
 			'image_size'           => '',
 			'show_excerpt'         => false,
-			'theme'                => '',
+			'theme_name'           => '',
 		];
 	}
 
@@ -69,23 +69,18 @@ class Content_List extends \WP_Components\Component {
 	 * Create a content item.
 	 *
 	 * @param number $content_item_id Post ID for content item.
-	 * @return \CPR\Component\Content_Item
+	 * @return \CPR\Components\Content_Item
 	 */
 	public function create_content_item( $content_item_id ) {
 
 		// Track content item ID as already used.
 		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $content_item_id );
 
-		return ( new \CPR\Component\Content_Item() )
+		return ( new \CPR\Components\Content_Item() )
 			->merge_config(
 				[
-					'align_content'    => $this->get_config( 'align_item_content' ),
-					'theme'            => $this->get_config( 'theme' ),
-					'image_size'       => $this->get_config( 'image_size' ),
-					'heading_border'   => $this->get_config( 'heading_border' ),
-					'eyebrow_size'     => $this->get_config( 'eyebrow_size' ),
-					'eyebrow_location' => $this->get_config( 'eyebrow_location' ),
-					'show_excerpt'     => $this->get_config( 'show_excerpt' ),
+					'image_size'   => $this->get_config( 'image_size' ),
+					'show_excerpt' => $this->get_config( 'show_excerpt' ),
 				]
 			)
 			->set_post( $content_item_id );

@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Audio;
+namespace CPR\Components\Audio;
 
 /**
  * Station Playlist.
@@ -24,7 +24,7 @@ class Station_Playlist extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'heading'      => __( 'Playlist', 'cpr' ),
 			'heading_link' => home_url(),
@@ -38,7 +38,7 @@ class Station_Playlist extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function set_playlist_item_components( int $count = 4 ) : self {
-		for ( $i = 0; $i < $count; $i++ ) { 
+		for ( $i = 0; $i < $count; $i++ ) {
 			$this->children[] = $this->create_playlist_item();
 		}
 		return $this;
@@ -51,7 +51,7 @@ class Station_Playlist extends \WP_Components\Component {
 	 * @return Playlist_Item
 	 */
 	public function create_playlist_item() : Playlist_Item {
-		return ( new \CPR\Component\Audio\Playlist_Item() )
+		return ( new \CPR\Components\Audio\Playlist_Item() )
 			->merge_config(
 				[
 					'name'         => __( 'Kevin Puts', 'cpr' ),

@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component;
+namespace CPR\Components;
 
 /**
  * Content Item.
@@ -29,35 +29,52 @@ class Content_Item extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'align_content'    => 'left',
-			'excerpt'          => '',
-			'eyebrow_label'    => '',
-			'eyebrow_link'     => '',
-			'eyebrow_location' => 'bottom',
-			'eyebrow_size'     => 'small',
-			'image_size'       => 'grid-item',
-			'permalink'        => '',
-			'show_excerpt'     => false,
-			'theme'            => 'grid',
-			'title'            => '',
-			'type'             => '',
+			'audio_url'     => '',
+			'audio_length'  => '',
+			'image_size'    => 'grid-item',
+			'permalink'     => '',
+			'show_excerpt'  => false,
+			'theme_name'    => 'grid',
+			'type'          => '',
 		];
 	}
 
 	/**
 	 * Set component properties after a post object has been validated and set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
-		$this->wp_post_set_title();
-		$this->wp_post_set_excerpt();
+	public function post_has_set() : self {
+		$this->append_child(
+			( new \WP_Components\Component() )
+				->set_name( 'title' )
+				->set_config( 'content', $this->wp_post_get_title() )
+				->set_theme( $this->get_config( 'theme_name' ) )
+		);
+
+		// Get excerpt if required.
+		if ( $this->get_config( 'show_exceprt' ) ) {
+			$this->append_child(
+				( new \WP_Components\Component() )
+					->set_name( 'excerpt' )
+					->set_config( 'content', $this->wp_post_get_excerpt() )
+			);
+		}
+
 		$this->set_eyebrow();
+
+		// Set audio if applicable.
+		if ( 'podcast-episode' === $this->post->post_type ) {
+			$this->set_audio();
+		}
+
 		$this->set_byline();
 		$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
 		$this->merge_config(
 			[
 				'permalink' => get_permalink( $this->post->ID ),
-				'type'      => $this->post->post_type ?? 'post',
 			]
 		);
+		return $this;
 	}
 }

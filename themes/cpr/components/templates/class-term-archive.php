@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Term Archive template.
@@ -50,7 +50,7 @@ class Term_Archive extends \WP_Components\Component {
 			/**
 			 * "More Stories" river.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'layout', 'river' )
 				->set_config( 'image_size', 'grid_item' )
 				->set_config( 'show_excerpt', true )

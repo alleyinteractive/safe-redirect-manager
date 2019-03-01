@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Content;
+namespace CPR\Components\Content;
 
 /**
  * Content Body class.
@@ -25,7 +25,7 @@ class Body extends \WP_Components\Component {
 	/**
 	 * Fires after the post object has been set on this class.
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 
 		// Ensure this post isn't used in the backfill.
 		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $this->get_post_id() );
@@ -33,7 +33,7 @@ class Body extends \WP_Components\Component {
 		$this->append_children(
 			[
 				( new \WP_Components\Gutenberg_Content() )->set_post( $this->post ),
-				( new \CPR\Component\Sidebar() )
+				( new \CPR\Components\Sidebar() )
 					->set_config( 'has_ad', true )
 					->set_config( 'position', 'right' )
 
@@ -46,7 +46,7 @@ class Body extends \WP_Components\Component {
 					 * Advertisement.
 					 */
 					->append_child(
-						new \CPR\Component\Ad()
+						new \CPR\Components\Ad()
 					)
 
 					/**
@@ -61,7 +61,7 @@ class Body extends \WP_Components\Component {
 	 * Return a Content List component to be used in the sidebar as
 	 * `More in {$primary_category}`.
 	 *
-	 * @return \CPR\Component\Modules\Content_List
+	 * @return \CPR\Components\Modules\Content_List
 	 */
 	public function get_more_articles_sidebar_component() {
 
@@ -71,7 +71,7 @@ class Body extends \WP_Components\Component {
 			return;
 		}
 
-		return ( new \CPR\Component\Modules\Content_List() )
+		return ( new \CPR\Components\Modules\Content_List() )
 			->set_config(
 				'heading',
 				sprintf(
@@ -80,7 +80,7 @@ class Body extends \WP_Components\Component {
 					esc_html( $category_component->wp_term_get_name() )
 				)
 			)
-			->set_config( 'theme', 'river' )
+			->set_theme( 'river' )
 			->parse_from_ids(
 				[],
 				3,
@@ -100,12 +100,12 @@ class Body extends \WP_Components\Component {
 	 * Return a Content List component to be used in the sidebar as
 	 * `Most Recent`.
 	 *
-	 * @return \CPR\Component\Modules\Content_List
+	 * @return \CPR\Components\Modules\Content_List
 	 */
 	public function get_recent_articles_sidebar_component() {
-		return ( new \CPR\Component\Modules\Content_List() )
+		return ( new \CPR\Components\Modules\Content_List() )
 			->set_config( 'heading', __( 'Most Recent', 'cpr' ) )
-			->set_config( 'theme', 'river' )
+			->set_theme( 'river' )
 			->parse_from_wp_query(
 				new \Alleypack\Unique_WP_Query(
 					[

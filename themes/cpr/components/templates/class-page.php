@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Page template.
@@ -23,8 +23,10 @@ class Page extends \WP_Components\Component {
 
 	/**
 	 * Hook into post being set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$body = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
@@ -41,13 +43,13 @@ class Page extends \WP_Components\Component {
 			/**
 			 * Content Header.
 			 */
-			( new \CPR\Component\Content\Header() )
+			( new \CPR\Components\Content\Header() )
 				->set_post( $this->post ),
 
 			/**
 			 * Content Body.
 			 */
-			( new \CPR\Component\Content\Body() )
+			( new \CPR\Components\Content\Body() )
 				->set_post( $this->post ),
 		];
 	}

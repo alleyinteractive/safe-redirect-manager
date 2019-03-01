@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Modules;
+namespace CPR\Components\Modules;
 
 /**
  * Newsletter.

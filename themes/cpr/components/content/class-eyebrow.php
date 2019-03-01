@@ -1,6 +1,6 @@
 <?php
 /**
- * Comments component.
+ * Eyebrow component.
  *
  * @package CPR
  */
@@ -8,19 +8,16 @@
 namespace CPR\Components\Content;
 
 /**
- * Comments class.
+ * Eyebrow.
  */
-class Comments extends \WP_Components\Component {
-
-	use \CPR\WP_Post;
-	use \WP_Components\WP_Post;
+class Eyebrow extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.
 	 *
 	 * @var string
 	 */
-	public $name = 'comments';
+	public $name = 'eyebrow';
 
 	/**
 	 * Define a default config.
@@ -29,7 +26,9 @@ class Comments extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'label' => __( 'Show Comments', 'cpr' ),
+			'eyebrow_label' => '',
+			'eyebrow_link'  => '',
+			'theme_name'    => 'small',
 		];
 	}
 }

@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Slim_Navigation;
+namespace CPR\Components\Slim_Navigation;
 
 /**
  * Slim Navigation Menu.
@@ -24,7 +24,7 @@ class Menu extends \WP_Components\Component {
 	 *
 	 * @return array Default children.
 	 */
-	public function default_children() {
+	public function default_children() : array {
 
 		$children = [];
 

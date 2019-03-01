@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Content;
+namespace CPR\Components\Content;
 
 /**
  * Keep Reading class.
@@ -26,7 +26,7 @@ class Keep_Reading extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'heading' => __( 'Keep Reading', 'cpr' ),
 		];
@@ -34,14 +34,18 @@ class Keep_Reading extends \WP_Components\Component {
 
 	/**
 	 * Fires after the post object has been set on this class.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$post_ids = (array) get_post_meta( $this->get_post_id(), 'keep_reading_ids', true );
 
 		foreach ( $post_ids as $post_id ) {
 			$this->append_child(
-				( new \CPR\Component\Content_Item() )->set_post( $post_id )
+				( new \CPR\Components\Content_Item() )->set_post( $post_id )
 			);
 		}
+
+		return $this;
 	}
 }

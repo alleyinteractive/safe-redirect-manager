@@ -33,45 +33,6 @@ if ( WP_Utils::wp_cli() ) {
 	require_once CPR_PATH . '/inc/cli.php';
 }
 
-// WP Irving.
-if ( defined( 'WP_IRVING_VERSION' ) && WP_IRVING_VERSION ) {
-
-	/**
-	 * Autoload components.
-	 *
-	 * @param string $class Class name.
-	 */
-	spl_autoload_register(
-		function( $class ) {
-			$class = ltrim( $class, '\\' );
-			if ( false !== strpos( $class, 'CPR\\Component\\' ) ) {
-
-				/**
-				 * Strip the namespace, replace underscores with dashes, and lowercase.
-				 *
-				 * `\CPR\Component\Slim_Navigation\Menu`
-				 * becomes
-				 * `slim-navigation\class-menu.php`
-				 */
-				$class = strtolower(
-					str_replace(
-						[ 'CPR\\Component\\', '_' ],
-						[ '', '-' ],
-						$class
-					)
-				);
-
-				$dirs  = explode( '\\', $class );
-				$class = array_pop( $dirs );
-				$path  = get_template_directory() . rtrim( '/components/' . implode( '/', $dirs ), '/' ) . "/class-{$class}.php";
-				if ( file_exists( $path ) ) {
-					require_once $path;
-				}
-			}
-		}
-	);
-}
-
 // Traits.
 require_once CPR_PATH . '/inc/traits/trait-backfill.php';
 require_once CPR_PATH . '/inc/traits/trait-wp-post.php';

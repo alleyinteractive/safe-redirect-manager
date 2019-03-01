@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Homepage template.
@@ -24,9 +24,11 @@ class Homepage extends \WP_Components\Component {
 
 	/**
 	 * Hook into post being set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
-		$body = new \WP_Components\Body();
+	public function post_has_set() : self {
+		$body           = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;
@@ -40,21 +42,19 @@ class Homepage extends \WP_Components\Component {
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'homepage', true );
 		return [
-			( new \CPR\Component\Feature() )
-				->set_config( 'theme', 'three-column' )
+			( new \CPR\Components\Feature() )
+				->set_theme( 'three-column' )
 				->append_children(
 					[
 						/**
 						 * Left sidebar with a river of content items.
 						 */
-						( new \CPR\Component\Sidebar() )
-							->set_config( 'position', 'left' )
+						( new \CPR\Components\Sidebar() )
 							->append_child(
 								/**
 								 * River content list for "Top Headlines"
 								 */
-								( new \CPR\Component\Modules\Content_List() )
-									->set_config( 'theme', 'river' )
+								( new \CPR\Components\Modules\Content_List() )
 									// Modify the source data so the component
 									// can parse more easily.
 									->parse_from_fm_data(
@@ -64,54 +64,79 @@ class Homepage extends \WP_Components\Component {
 										4
 									)
 									->set_config( 'eyebrow_label', __( 'Top Headlines', 'cpr' ) )
+							)
+							->set_theme( 'left' )
+							->set_child_themes(
+								[
+									'content-list' => 'river',
+									'content-item' => 'river',
+									'eyebrow'      => 'small',
+								]
 							),
 						/**
 						 * Featured content with a left and right sidebar.
 						 */
-						( new \CPR\Component\Modules\Content_List() )
-							->set_config( 'theme', 'feature' )
+						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'feature_item' )
-							->parse_from_fm_data( $data['featured_content'] ?? [], 1 ),
+							->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+							->set_theme( 'feature' )
+							->set_child_themes(
+								[
+									'content-item' => 'featurePrimary',
+									'eyebrow'      => 'small',
+								]
+							),
 
 						/**
 						 * Right sidebar with an ad.
 						 */
-						( new \CPR\Component\Sidebar() )
-							->set_config( 'position', 'right' )
-							->append_child( ( new \CPR\Component\Ad() )->set_config( 'height', 600 ) ),
+						( new \CPR\Components\Sidebar() )
+							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) )
+							->set_theme( 'right' ),
 					]
 				),
 
 			/**
 			 * Highlighted Content.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'theme', 'grid' )
 				->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
 				->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
-				->set_config( 'call_to_action_link', home_url( '/all/' ) ),
+				->set_config( 'call_to_action_link', home_url( '/all/' ) )
+				->set_theme( 'grid' )
+				->set_child_themes(
+					[
+						'content-item' => 'gridPrimary',
+						'eyebrow'      => 'small',
+					]
+				),
+
 
 			/**
 			 * Latest podcast episodes.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'theme', 'grid' )
-				->set_config( 'eyebrow_size', 'large' )
-				->set_config( 'eyebrow_location', 'top' )
 				->parse_from_fm_data(
 					$data['latest_podcast_episodes'] ?? [],
 					4,
 					[
 						'post_type' => 'podcast-episode',
 					]
+				)
+				->set_theme( 'grid' )
+				->set_child_themes(
+					[
+						'content-item' => 'gridSecondary',
+						'eyebrow'      => 'large',
+					]
 				),
 
 			/**
 			 * Newsletter CTA.
 			 */
-			new \CPR\Component\Modules\Newsletter(),
+			new \CPR\Components\Modules\Newsletter(),
 
 			/**
 			 * Playlists for Classical and OpenAir.
@@ -122,30 +147,35 @@ class Homepage extends \WP_Components\Component {
 			/**
 			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'theme', 'grid' )
 				->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
 				->set_config( 'heading', __( 'More Stories', 'cpr' ) )
 				->set_config( 'heading_border', true )
+				->set_theme( 'grid' )
+				->set_child_themes(
+					[
+						'content-item' => 'grid',
+						'eyebrow'      => 'small',
+						'sidebar'      => 'right',
+					]
+				)
 				->append_child(
-
 					/**
 					 * Sidebar.
 					 */
-					( new \CPR\Component\Sidebar() )
-						->set_config( 'position', 'right' )
+					( new \CPR\Components\Sidebar() )
 						->append_children(
 							[
 								/**
 								 * Colorado Wonders question form.
 								 */
-								// new \CPR\Component\Colorado_Wonders(),.
+								// new \CPR\Components\Colorado_Wonders(),.
 
 								/**
 								 * Advertisement.
 								 */
-								new \CPR\Component\Ad(),
+								new \CPR\Components\Ad(),
 							]
 						)
 				),
@@ -153,14 +183,14 @@ class Homepage extends \WP_Components\Component {
 			/**
 			 * Banner Ad.
 			 */
-			new \CPR\Component\Ad(),
+			new \CPR\Components\Ad(),
 		];
 	}
 
 	/**
 	 * Add additional FM fields to a landing page.
 	 *
-	 * @param  array $fields FM fields.
+	 * @param array $fields FM fields.
 	 * @return array
 	 */
 	public static function landing_page_fields( array $fields ) : array {
@@ -172,7 +202,7 @@ class Homepage extends \WP_Components\Component {
 					'src'   => 'landing_page_type',
 					'value' => 'homepage',
 				],
-				'children' => [
+				'children'   => [
 					'featured_content' => new \Fieldmanager_Group(
 						[
 							'label'    => __( 'Featured Content', 'cpr' ),

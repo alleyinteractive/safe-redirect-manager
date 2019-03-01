@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Error template.

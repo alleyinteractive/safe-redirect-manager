@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Modules;
+namespace CPR\Components;
 
 /**
  * Feature.
@@ -26,7 +26,7 @@ class Feature extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'theme' => 'three-column',
+			'theme_name' => 'three-column',
 		];
 	}
 }

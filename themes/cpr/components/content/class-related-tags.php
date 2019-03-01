@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Content;
+namespace CPR\Components\Content;
 
 /**
  * Related Tags class.
@@ -26,7 +26,7 @@ class Related_Tags extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'heading' => __( 'Related Tags', 'cpr' ),
 		];
@@ -34,8 +34,10 @@ class Related_Tags extends \WP_Components\Component {
 
 	/**
 	 * Fires after the post object has been set on this class.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$tags = (array) get_the_tags( $this->get_post_id() );
 
 		foreach ( $tags as $tag ) {
@@ -43,5 +45,6 @@ class Related_Tags extends \WP_Components\Component {
 				( new \WP_Components\Term() )->set_term( $tag )
 			);
 		}
+		return $this;
 	}
 }

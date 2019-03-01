@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component;
+namespace CPR\Components;
 
 /**
  * Logo.
@@ -24,7 +24,7 @@ class Logo extends \WP_Components\Component {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() {
+	public function default_config() : array {
 		return [
 			'type' => 'main',
 		];

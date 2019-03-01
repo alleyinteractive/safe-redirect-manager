@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Component\Templates;
+namespace CPR\Components\Templates;
 
 /**
  * Classical template.
@@ -23,8 +23,10 @@ class Classical extends \WP_Components\Component {
 
 	/**
 	 * Hook into post being set.
+	 *
+	 * @return self
 	 */
-	public function post_has_set() {
+	public function post_has_set() : self {
 		$body = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
@@ -36,7 +38,7 @@ class Classical extends \WP_Components\Component {
 	 *
 	 * @return array
 	 */
-	public static function get_backfill_args() {
+	public static function get_backfill_args() : array {
 		return [
 			'post_type' => [ 'post', 'podcast-episode' ],
 			'tax_query' => [
@@ -63,7 +65,7 @@ class Classical extends \WP_Components\Component {
 	 *
 	 * @return array
 	 */
-	public static function get_classical_posts_backfill_args() {
+	public static function get_classical_posts_backfill_args() : array {
 		return [
 			'post_type' => [ 'post' ],
 			'tax_query' => [
@@ -82,7 +84,7 @@ class Classical extends \WP_Components\Component {
 	 *
 	 * @return array
 	 */
-	public static function get_classical_episodes_backfill_args() {
+	public static function get_classical_episodes_backfill_args() : array {
 		return [
 			'post_type' => [ 'podcast-episode' ],
 			'tax_query' => [
@@ -106,35 +108,35 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * Featured content with a left and right sidebar.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'feature_item' )
-				->set_config( 'theme', 'feature' )
+				->set_theme( 'feature' )
 				->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
 				->append_children(
 					[
 						/**
 						 * Left sidebar with a station playlist.
 						 */
-						( new \CPR\Component\Sidebar() )
+						( new \CPR\Components\Sidebar() )
 							->set_config( 'position', 'left' )
 							->append_child(
 								/**
 								 * Station Playlist.
 								 */
-								( new \CPR\Component\Audio\Station_Playlist() )
+								( new \CPR\Components\Audio\Station_Playlist() )
 									->set_playlist_item_components( 4 )
 							),
 
 						/**
 						 * Right sidebar with a concert calendar.
 						 */
-						( new \CPR\Component\Sidebar() )
+						( new \CPR\Components\Sidebar() )
 							->set_config( 'position', 'right' )
 							->append_child(
 								/**
 								 * Concert Calendar.
 								 */
-								( new \CPR\Component\Events\Calendar() )
+								( new \CPR\Components\Events\Calendar() )
 									->parse_from_fm_data(
 										$data['calendar'] ?? [],
 										4,
@@ -166,13 +168,13 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * Newsletter CTA.
 			 */
-			( new \CPR\Component\Modules\Newsletter() )
+			( new \CPR\Components\Modules\Newsletter() )
 				->set_config( 'background_color', \CPR\get_site_color( 'classical' ) ),
 
 			/**
 			 * Articles content list.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->merge_config(
 					[
 						'heading'           => $data['articles']['heading'] ?? '',
@@ -195,13 +197,13 @@ class Classical extends \WP_Components\Component {
 					/**
 					 * Right sidebar.
 					 */
-					( new \CPR\Component\Sidebar() )
+					( new \CPR\Components\Sidebar() )
 						->set_config( 'position', 'right' )
 						->append_child(
 							/**
 							 * Grid of additional items.
 							 */
-							( new \CPR\Component\Modules\Content_List() )
+							( new \CPR\Components\Modules\Content_List() )
 								->merge_config(
 									[
 										'theme'             => 'grid',
@@ -219,7 +221,7 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * Podcast episodes content list.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->merge_config(
 					[
 						'image_size'       => 'grid_item',
@@ -237,7 +239,7 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * Videos content list.
 			 */
-			( new \CPR\Component\Modules\Content_List() )
+			( new \CPR\Components\Modules\Content_List() )
 				->merge_config(
 					[
 						'heading'           => $data['videos']['heading'] ?? '',
@@ -259,7 +261,7 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * Banner Ad.
 			 */
-			( new \CPR\Component\Ad() )
+			( new \CPR\Components\Ad() )
 				->merge_config(
 					[
 						'background_color'   => '#f8f9fa',
@@ -279,11 +281,11 @@ class Classical extends \WP_Components\Component {
 	/**
 	 * Generate a content list of people items from FM data.
 	 *
-	 * @param  array $data People data array.
-	 * @return \CPR\Component\Modules\Content_List
+	 * @param array $data People data array.
+	 * @return \CPR\Components\Modules\Content_List
 	 */
-	public function get_people_list( $data ) : \CPR\Component\Modules\Content_List {
-		$people_list = ( new \CPR\Component\Modules\Content_List() )
+	public function get_people_list( $data ) : \CPR\Components\Modules\Content_List {
+		$people_list = ( new \CPR\Components\Modules\Content_List() )
 			->merge_config(
 				[
 					'heading'           => $data['heading'] ?? '',
@@ -298,7 +300,7 @@ class Classical extends \WP_Components\Component {
 
 		foreach ( ( $data['content_items'] ?? [] ) as $item ) {
 			$people_list->append_child(
-				( new \CPR\Component\Person_Item() )
+				( new \CPR\Components\Person_Item() )
 					->set_guest_author( get_post( $item['guest_author'] ?? 0 ) )
 					->merge_config(
 						[
@@ -311,17 +313,17 @@ class Classical extends \WP_Components\Component {
 					)
 			);
 		}
-		
+
 		return $people_list;
 	}
 
 	/**
 	 * Add additional FM fields to a landing page.
 	 *
-	 * @param  array $fields FM fields.
+	 * @param array $fields FM fields.
 	 * @return array
 	 */
-	public static function landing_page_fields( $fields ) {
+	public static function landing_page_fields( $fields ) : array {
 		$fields['classical'] = new \Fieldmanager_Group(
 			[
 				'label'      => __( 'Classical', 'cpr' ),
@@ -349,7 +351,7 @@ class Classical extends \WP_Components\Component {
 					'calendar' => new \Fieldmanager_Group(
 						[
 							'label'    => __( 'Concert Calendar', 'cpr' ),
-							'children' => ( new \CPR\Component\Events\Calendar() )->get_fm_fields(),
+							'children' => ( new \CPR\Components\Events\Calendar() )->get_fm_fields(),
 						]
 					),
 					'articles' => new \Fieldmanager_Group(
