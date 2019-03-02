@@ -334,3 +334,83 @@ function cpr_fm_post_guest_author_settings() {
 }
 add_action( 'fm_post_guest-author', 'cpr_fm_post_guest_author_settings' );
 /* end fm:post-guest-author-settings */
+
+/* begin fm:post-top-30-albums */
+/**
+ * `album_ids` Fieldmanager fields.
+ */
+function cpr_fm_post_top_30_albums() {
+	$fm = new Fieldmanager_Zone_Field(
+		[
+			'name' => 'album_ids',
+			'description' => __( 'Select the top 30 albums for this week.', 'cpr' ),
+			'description_after_element' => false,
+			'post_limit' => 30,
+			'query_args' => [
+				'post_type' => [ 'album' ],
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Top 30 Albums', 'cpr' ), [ 'top-30' ], 'normal', 'high' );
+}
+add_action( 'fm_post_top-30', 'cpr_fm_post_top_30_albums' );
+/* end fm:post-top-30-albums */
+
+/* begin fm:post-album-settings */
+/**
+ * `post-album-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_album_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-album-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'tabbed' => 'vertical',
+			'children' => [
+				'album_details' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Album Details', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
+							'_thumbnail_id' => new Fieldmanager_Media( __( 'Album cover', 'cpr' ) ),
+							'year' => new Fieldmanager_TextField( __( 'Year', 'cpr' ) ),
+							'artist_id' => new Fieldmanager_Autocomplete(
+								[
+									'label' => __( 'Artist', 'cpr' ),
+									'description' => __( 'Select an artist.', 'cpr' ),
+									'remove_default_meta_boxes' => true,
+									'datasource' => new Fieldmanager_Datasource_Term(
+										[
+											'taxonomy' => 'artist',
+											'taxonomy_save_to_terms' => true,
+											'only_save_to_taxonomy' => true,
+										]
+									),
+								]
+							),
+							'label_id' => new Fieldmanager_Autocomplete(
+								[
+									'label' => __( 'Album label', 'cpr' ),
+									'description' => __( 'Select a label.', 'cpr' ),
+									'remove_default_meta_boxes' => true,
+									'datasource' => new Fieldmanager_Datasource_Term(
+										[
+											'taxonomy' => 'label',
+											'taxonomy_save_to_terms' => true,
+											'only_save_to_taxonomy' => true,
+										]
+									),
+								]
+							),
+						],
+					]
+				),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'album' ] );
+}
+add_action( 'fm_post_album', 'cpr_fm_post_album_settings' );
+/* end fm:post-album-settings */

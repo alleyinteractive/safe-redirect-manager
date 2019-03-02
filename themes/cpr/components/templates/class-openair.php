@@ -203,6 +203,8 @@ class Openair extends \WP_Components\Component {
 			/**
 			 * Top 30.
 			 */
+			( new \CPR\Components\Audio\Top_30() )
+				->set_from_latest(),
 
 			/**
 			 * Podcast episodes content list.

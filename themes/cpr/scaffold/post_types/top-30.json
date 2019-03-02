@@ -1,0 +1,10 @@
+{
+	"public": true,
+	"has_archive": true,
+	"show_in_rest": true,
+	"menu_icon": "dashicons-star-filled",
+	"supports": [
+		"title",
+		"custom-fields"
+	]
+}

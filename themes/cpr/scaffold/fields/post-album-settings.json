@@ -1,0 +1,53 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "album" ],
+			"title": { "__": "Settings" }
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"tabbed": "vertical",
+	"children": {
+		"album_details": {
+			"label": { "__": "Album Details" },
+			"serialize_data": false,
+			"add_to_prefix": false,
+			"children": {
+				"_thumbnail_id": {
+					"label": { "__": "Album cover" },
+					"type": "media"
+				},
+				"year": {
+					"label": { "__": "Year" },
+					"type": "text"
+				},
+				"artist_id": {
+					"label": { "__": "Artist" },
+					"type": "autocomplete",
+					"description": { "__": "Select an artist." },
+					"remove_default_meta_boxes": true,
+					"datasource": {
+						"type": "term",
+						"taxonomy": "artist",
+						"taxonomy_save_to_terms": true,
+						"only_save_to_taxonomy": true
+					}
+				},
+				"label_id": {
+					"label": { "__": "Album label" },
+					"type": "autocomplete",
+					"description": { "__": "Select a label." },
+					"remove_default_meta_boxes": true,
+					"datasource": {
+						"type": "term",
+						"taxonomy": "label",
+						"taxonomy_save_to_terms": true,
+						"only_save_to_taxonomy": true
+					}
+				}
+			}
+		}
+	}
+}

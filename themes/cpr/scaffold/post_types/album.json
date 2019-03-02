@@ -1,0 +1,14 @@
+{
+	"public": true,
+	"publicly_queryable": false,
+	"show_in_rest": true,
+	"menu_icon": "dashicons-album",
+	"supports": [
+		"title",
+		"custom-fields"
+	],
+	"taxonomies": [
+		"artist",
+		"label"
+	]
+}

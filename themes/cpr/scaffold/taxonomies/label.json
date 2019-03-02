@@ -1,0 +1,7 @@
+{
+	"object_types": [
+		"album"
+	],
+	"show_admin_column": true,
+	"show_in_rest": true
+}

@@ -1,0 +1,18 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "top-30" ],
+			"title": { "__": "Top 30 Albums" },
+			"priority": "high"
+		}
+	],
+	"name": "album_ids",
+	"description": { "__": "Select the top 30 albums for this week." },
+	"description_after_element": false,
+ 	"type": "`Fieldmanager_Zone_Field`",
+ 	"post_limit": 30,
+ 	"query_args": {
+		"post_type": [ "album" ]
+	}
+}
