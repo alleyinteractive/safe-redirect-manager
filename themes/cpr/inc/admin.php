@@ -18,5 +18,8 @@ function remove_postcustom() {
 	// Remove all default coauthor meta fields.
 	remove_meta_box( 'coauthors-manage-guest-author-bio', null, 'normal' );
 	remove_meta_box( 'coauthors-manage-guest-author-contact-info', null, 'normal' );
+
+	// Remove sharing meta.
+	remove_meta_box( 'sharing_meta', null, 'side' );
 }
 add_action( 'add_meta_boxes', __NAMESPACE__ . '\remove_postcustom', 100 );
