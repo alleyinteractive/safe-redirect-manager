@@ -73,7 +73,7 @@ trait WP_Post {
 	 * @return null|\WP_Components\Term
 	 */
 	public function get_primary_category_component() {
-		$category_id   = get_post_meta( $this->get_post_id(), 'primary_category_id', true );
+		$category_id = get_post_meta( $this->get_post_id(), 'primary_category_id', true );
 		return ( new \WP_Components\Term() )->set_term( $category_id );
 	}
 }
