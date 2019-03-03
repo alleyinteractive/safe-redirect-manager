@@ -112,8 +112,8 @@ class Content_List extends \WP_Components\Component {
 	public function set_heading_from_fm_data( $fm_data ) {
 		return $this->merge_config(
 			[
-				'heading'              => (string) ( $fm_data['heading'] ?? '' ),
-				'heading_link'         => (string) ( $fm_data['heading_link'] ?? '' ),
+				'heading'      => (string) ( $fm_data['heading'] ?? '' ),
+				'heading_link' => (string) ( $fm_data['heading_link'] ?? '' ),
 			]
 		);
 	}

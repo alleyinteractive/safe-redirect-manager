@@ -26,7 +26,6 @@ trait WP_Post {
 	 */
 	public function set_eyebrow( $additional_config = [] ) {
 		$eyebrow = ( new \CPR\Components\Content\Eyebrow() )
-			->set_name( 'eyebrow' )
 			->merge_config( $additional_config );
 
 		switch ( $this->post->post_type ?? '' ) {
