@@ -85,7 +85,6 @@ class Content_List extends \WP_Components\Component {
 	 *
 	 * @param string $label Text content of eyebrow.
 	 * @param string $link URL for eyebrow to link to.
-	 * @return void
 	 */
 	public function set_eyebrow( $label, $link = '' ) {
 		if ( ! empty( $label ) ) {
