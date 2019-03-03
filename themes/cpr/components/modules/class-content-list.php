@@ -143,7 +143,7 @@ class Content_List extends \WP_Components\Component {
 
 		$this->set_eyebrow(
 			(string) ( $fm_data['eyebrow_label'] ?? $this->get_config( 'eyebrow_label' ) ),
-			(string) ( $fm_data['eyebrow_link'] ?? $this->get_config( 'eyebrow_link' ) ),
+			(string) ( $fm_data['eyebrow_link'] ?? $this->get_config( 'eyebrow_link' ) )
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
