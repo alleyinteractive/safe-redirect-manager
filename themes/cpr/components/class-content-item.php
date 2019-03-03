@@ -56,7 +56,7 @@ class Content_Item extends \WP_Components\Component {
 		);
 
 		// Get excerpt if required.
-		if ( $this->get_config( 'show_exceprt' ) ) {
+		if ( $this->get_config( 'show_excerpt' ) ) {
 			$this->append_child(
 				( new \WP_Components\Component() )
 					->set_name( 'excerpt' )
