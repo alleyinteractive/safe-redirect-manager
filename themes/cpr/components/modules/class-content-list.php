@@ -85,7 +85,6 @@ class Content_List extends \WP_Components\Component {
 	 *
 	 * @param string $label Text content of eyebrow.
 	 * @param string $link URL for eyebrow to link to.
-	 * @return void
 	 */
 	public function set_eyebrow( $label, $link = '' ) {
 		if ( ! empty( $label ) ) {
@@ -109,7 +108,7 @@ class Content_List extends \WP_Components\Component {
 	 * @param array $fm_data Stored Fieldmanager data.
 	 * @return self
 	 */
-	public function set_heading_from_fm_data( $fm_data ) {
+	public function set_heading_from_fm_data( $fm_data ) : self {
 		return $this->merge_config(
 			[
 				'heading'      => (string) ( $fm_data['heading'] ?? '' ),
@@ -131,7 +130,7 @@ class Content_List extends \WP_Components\Component {
 		$this->merge_config(
 			[
 				'call_to_action_label' => (string) ( $fm_data['call_to_action_label'] ?? '' ),
-				'call_to_action_link'  => (string) ( $fm_data['call_tso_action_link'] ?? '' ),
+				'call_to_action_link'  => (string) ( $fm_data['call_to_action_link'] ?? '' ),
 			]
 		);
 
@@ -143,7 +142,7 @@ class Content_List extends \WP_Components\Component {
 
 		$this->set_eyebrow(
 			(string) ( $fm_data['eyebrow_label'] ?? $this->get_config( 'eyebrow_label' ) ),
-			(string) ( $fm_data['eyebrow_link'] ?? $this->get_config( 'eyebrow_link' ) ),
+			(string) ( $fm_data['eyebrow_link'] ?? $this->get_config( 'eyebrow_link' ) )
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {

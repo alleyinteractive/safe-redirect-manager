@@ -50,13 +50,13 @@ class Content_Item extends \WP_Components\Component {
 				->merge_config(
 					[
 						'content' => $this->wp_post_get_title(),
-						'link'    => get_permalink( $this->post->ID ),
+						'link'    => $this->wp_post_get_permalink(),
 					]
 				)
 		);
 
 		// Get excerpt if required.
-		if ( $this->get_config( 'show_exceprt' ) ) {
+		if ( $this->get_config( 'show_excerpt' ) ) {
 			$this->append_child(
 				( new \WP_Components\Component() )
 					->set_name( 'excerpt' )

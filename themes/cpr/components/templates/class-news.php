@@ -155,7 +155,7 @@ class News extends \WP_Components\Component {
 									'eyebrow'      => 'small',
 								]
 							),
-					],
+					]
 				),
 
 			/**
