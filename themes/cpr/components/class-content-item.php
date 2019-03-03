@@ -50,7 +50,7 @@ class Content_Item extends \WP_Components\Component {
 				->merge_config(
 					[
 						'content' => $this->wp_post_get_title(),
-						'link'    => get_permalink( $this->post->ID ),
+						'link'    => $this->wp_post_get_permalink(),
 					]
 				)
 		);
