@@ -130,7 +130,7 @@ class Content_List extends \WP_Components\Component {
 		$this->merge_config(
 			[
 				'call_to_action_label' => (string) ( $fm_data['call_to_action_label'] ?? '' ),
-				'call_to_action_link'  => (string) ( $fm_data['call_tso_action_link'] ?? '' ),
+				'call_to_action_link'  => (string) ( $fm_data['call_to_action_link'] ?? '' ),
 			]
 		);
 
