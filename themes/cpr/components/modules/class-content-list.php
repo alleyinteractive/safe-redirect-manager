@@ -108,7 +108,7 @@ class Content_List extends \WP_Components\Component {
 	 * @param array $fm_data Stored Fieldmanager data.
 	 * @return self
 	 */
-	public function set_heading_from_fm_data( $fm_data ) {
+	public function set_heading_from_fm_data( $fm_data ) : self {
 		return $this->merge_config(
 			[
 				'heading'              => (string) ( $fm_data['heading'] ?? '' ),
