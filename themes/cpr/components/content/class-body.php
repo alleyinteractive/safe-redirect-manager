@@ -30,7 +30,7 @@ class Body extends \WP_Components\Component {
 		// Ensure this post isn't used in the backfill.
 		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $this->get_post_id() );
 
-		$this->append_children(
+		return $this->append_children(
 			[
 				( new \WP_Components\Gutenberg_Content() )->set_post( $this->post ),
 				( new \CPR\Components\Sidebar() )
@@ -80,7 +80,7 @@ class Body extends \WP_Components\Component {
 					esc_html( $category_component->wp_term_get_name() )
 				)
 			)
-			->set_config( 'theme', 'river' )
+			->set_theme( 'river' )
 			->parse_from_ids(
 				[],
 				3,
@@ -105,7 +105,7 @@ class Body extends \WP_Components\Component {
 	public function get_recent_articles_sidebar_component() {
 		return ( new \CPR\Components\Modules\Content_List() )
 			->set_config( 'heading', __( 'Most Recent', 'cpr' ) )
-			->set_config( 'theme', 'river' )
+			->set_theme( 'river' )
 			->parse_from_wp_query(
 				new \Alleypack\Unique_WP_Query(
 					[
