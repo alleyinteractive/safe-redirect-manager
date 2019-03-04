@@ -348,10 +348,9 @@ class Openair extends \WP_Components\Component {
 							'children' => [
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
-										'add_more_label' => __( 'Add Content', 'cpr' ),
-										'label'          => __( 'Featured Story', 'cpr' ),
-										'post_limit'     => 1,
-										'query_args'     => self::get_backfill_args(),
+										'label'      => __( 'Featured Story', 'cpr' ),
+										'post_limit' => 1,
+										'query_args' => self::get_backfill_args(),
 									]
 								),
 							],
