@@ -67,7 +67,7 @@ class Top_30 extends \WP_Components\Component {
 					'content',
 					sprintf(
 						'<a href="%1$s">%2$s</a> / %3$s',
-						esc_url( home_url( '/top-30/' ) ),
+						$this->wp_post_get_permalink(),
 						__( 'Top 30', 'cpr' ),
 						$this->wp_post_get_title()
 					)
