@@ -60,6 +60,9 @@ class Cpr_Post_Type_Top_30 extends Cpr_Post_Type {
 				'has_archive' => true,
 				'show_in_rest' => true,
 				'menu_icon' => 'dashicons-star-filled',
+				'rewrite' => [
+					'slug' => 'openair/top-30',
+				],
 				'supports' => [ 'title', 'custom-fields' ],
 			]
 		);

@@ -27,7 +27,10 @@ class Top_30 extends \WP_Components\Component {
 	 * @return array Default config.
 	 */
 	public function default_config() : array {
-		return [];
+		return [
+			'cta_label' => __( 'All Top 30', 'cpr' ),
+			'cta_link'  => get_post_type_archive_link( 'top-30' ),
+		];
 	}
 
 	/**

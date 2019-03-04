@@ -97,6 +97,13 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Top 30 archive.
+		 */
+		case $wp_query->is_post_type_archive( 'top-30' ):
+			$template = ( new Components\Templates\Top_30_Archive() )->set_query( $wp_query );
+			break;
+
+		/**
 		 * Term archives.
 		 */
 		case $wp_query->is_tax():

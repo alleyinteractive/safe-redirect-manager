@@ -60,6 +60,12 @@ class Header extends \WP_Components\Component {
 					( new Menu() )->set_menu( $term->slug ?? '' ),
 				];
 				return $this;
+			case $this->query->is_post_type_archive( 'top-30' ):
+				$this->children = [
+					( new \CPR\Components\Logo() )->set_config( 'type', 'openair' ),
+					( new Menu() )->set_menu( 'openair' ),
+				];
+				return $this;
 		}
 
 		return $this;
