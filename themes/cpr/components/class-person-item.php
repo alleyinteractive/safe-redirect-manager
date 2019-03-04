@@ -32,7 +32,7 @@ class Person_Item extends \WP_Components\Component {
 			'image_size' => 'grid-item',
 			'permalink'  => '',
 			'subheading' => '',
-			'theme'      => 'grid',
+			'theme_name' => 'grid',
 		];
 	}
 

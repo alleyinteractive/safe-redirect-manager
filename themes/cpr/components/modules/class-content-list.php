@@ -29,22 +29,16 @@ class Content_List extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'align_item_content'   => 'left',
 			'background_color'     => '',
 			'call_to_action_label' => '',
 			'call_to_action_link'  => '',
 			'eyebrow_label'        => '',
 			'eyebrow_link'         => '',
-			'eyebrow_size'         => 'small',
-			'eyebrow_location'     => 'bottom',
 			'heading'              => '',
-			'heading_border'       => false,
 			'heading_link'         => '',
-			'heading_cta_label'    => '',
-			'heading_cta_link'     => '',
 			'image_size'           => '',
 			'show_excerpt'         => false,
-			'theme'                => '',
+			'theme_name'           => '',
 		];
 	}
 
@@ -79,16 +73,48 @@ class Content_List extends \WP_Components\Component {
 		return ( new \CPR\Components\Content_Item() )
 			->merge_config(
 				[
-					'align_content'    => $this->get_config( 'align_item_content' ),
-					'theme'            => $this->get_config( 'theme' ),
-					'image_size'       => $this->get_config( 'image_size' ),
-					'heading_border'   => $this->get_config( 'heading_border' ),
-					'eyebrow_size'     => $this->get_config( 'eyebrow_size' ),
-					'eyebrow_location' => $this->get_config( 'eyebrow_location' ),
-					'show_excerpt'     => $this->get_config( 'show_excerpt' ),
+					'image_size'   => $this->get_config( 'image_size' ),
+					'show_excerpt' => $this->get_config( 'show_excerpt' ),
 				]
 			)
 			->set_post( $content_item_id );
+	}
+
+	/**
+	 * Create an eyebrow component.
+	 *
+	 * @param string $label Text content of eyebrow.
+	 * @param string $link URL for eyebrow to link to.
+	 */
+	public function set_eyebrow( $label, $link = '' ) {
+		if ( ! empty( $label ) ) {
+			$this->append_child(
+				( new \CPR\Components\Content\Eyebrow() )
+					->set_name( 'content-list-eyebrow' )
+					->set_theme( 'black' )
+					->merge_config(
+						[
+							'eyebrow_label' => $label,
+							'eyebrow_link'  => $link,
+						]
+					)
+			);
+		}
+	}
+
+	/**
+	 * Set content list heading from FM data.
+	 *
+	 * @param array $fm_data Stored Fieldmanager data.
+	 * @return self
+	 */
+	public function set_heading_from_fm_data( $fm_data ) : self {
+		return $this->merge_config(
+			[
+				'heading'      => (string) ( $fm_data['heading'] ?? '' ),
+				'heading_link' => (string) ( $fm_data['heading_link'] ?? '' ),
+			]
+		);
 	}
 
 	/**
@@ -105,10 +131,6 @@ class Content_List extends \WP_Components\Component {
 			[
 				'call_to_action_label' => (string) ( $fm_data['call_to_action_label'] ?? '' ),
 				'call_to_action_link'  => (string) ( $fm_data['call_to_action_link'] ?? '' ),
-				'eyebrow_label'        => (string) ( $fm_data['eyebrow_label'] ?? '' ),
-				'eyebrow_link'         => (string) ( $fm_data['eyebrow_link'] ?? '' ),
-				'heading'              => (string) ( $fm_data['heading'] ?? '' ),
-				'heading_link'         => (string) ( $fm_data['heading_link'] ?? '' ),
 			]
 		);
 
@@ -116,6 +138,11 @@ class Content_List extends \WP_Components\Component {
 			(array) ( $fm_data['content_item_ids'] ?? [] ),
 			$backfill_to,
 			$backfill_args
+		);
+
+		$this->set_eyebrow(
+			(string) ( $fm_data['eyebrow_label'] ?? $this->get_config( 'eyebrow_label' ) ),
+			(string) ( $fm_data['eyebrow_link'] ?? $this->get_config( 'eyebrow_link' ) )
 		);
 
 		foreach ( $content_item_ids as $content_item_id ) {
