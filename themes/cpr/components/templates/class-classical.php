@@ -273,23 +273,29 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * Videos content list.
 			 */
-			( new \CPR\Components\Modules\Content_List() )
+			( new \CPR\Components\Column_Area() )
 				->merge_config(
 					[
 						'heading'           => $data['videos']['heading'] ?? '',
-						'heading_border'    => true,
 						'heading_cta_label' => __( 'All Videos', 'cpr' ),
-						'heading_cta_link'  => home_url(), // @todo Update.
-						'image_size'        => 'feature_item_small',
-						'theme'             => 'featureHalf',
-						'eyebrow_location'  => 'none',
-						'show_excerpt'      => true,
+						'heading_cta_link'  => home_url(), // @todo Update once known.
+						
 					]
 				)
-				->add_video_items(
-					$data['videos']['content_item_ids'] ?? [],
-					2,
-					self::get_classical_posts_backfill_args() // @todo Determine actual backfill args.
+				->append_child(
+					( new \CPR\Components\Modules\Content_List() )
+						->merge_config(
+							[
+								'image_size'        => 'feature_item_small',
+								'theme'             => 'featureHalf',
+								'show_excerpt'      => true,
+							]
+						)
+						->add_video_items(
+							$data['videos']['content_item_ids'] ?? [],
+							2,
+							self::get_classical_posts_backfill_args() // @todo Determine actual backfill args.
+						)
 				),
 
 			/**
