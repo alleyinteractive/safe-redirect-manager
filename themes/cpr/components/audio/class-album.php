@@ -45,7 +45,7 @@ class Album extends \WP_Components\Component {
 		$this->wp_post_set_title();
 
 		// Create child for the album cover image.
-		$this->wp_post_set_featured_image();
+		$this->wp_post_set_featured_image( 'album_cover' );
 
 		// Get the terms.
 		$artists = (array) wp_get_post_terms( $this->get_post_id(), 'artist' );
