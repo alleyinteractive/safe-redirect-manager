@@ -134,7 +134,7 @@ class Classical extends \WP_Components\Component {
 								 * Station Playlist.
 								 */
 								( new \CPR\Components\Audio\Station_Playlist() )
-									->set_playlist_item_components( 4 )
+									->set_playlist_item_components( 4, 'classical' )
 							),
 
 						/**
