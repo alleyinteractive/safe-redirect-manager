@@ -314,7 +314,18 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * People list.
 			 */
-			$this->get_people_list( $data['people'] ?? [] ),
+			( new \CPR\Components\Column_Area() )
+				->merge_config(
+					[
+						'heading'           => $data['people']['heading'] ?? '',
+						'heading_cta_label' => get_the_title( $data['people']['heading_cta_id'] ?? 0 ),
+						'heading_cta_link'  => get_permalink( $data['people']['heading_cta_id'] ?? 0 ),
+						
+					]
+				)
+				->append_child(
+					$this->get_people_list( $data['people'] ?? [] )
+				),
 		];
 	}
 
@@ -328,13 +339,8 @@ class Classical extends \WP_Components\Component {
 		$people_list = ( new \CPR\Components\Modules\Content_List() )
 			->merge_config(
 				[
-					'heading'           => $data['heading'] ?? '',
-					'heading_border'    => true,
-					'heading_cta_label' => get_the_title( $data['heading_cta_id'] ?? 0 ),
-					'heading_cta_link'  => get_permalink( $data['heading_cta_id'] ?? 0 ),
 					'image_size'        => 'feature_item_small', // @todo change
 					'theme'             => 'featureHalf', // @todo change
-					'eyebrow_location'  => 'none',
 				]
 			);
 
