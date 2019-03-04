@@ -46,7 +46,7 @@ class Station_Playlist extends \WP_Components\Component {
 	}
 
 	/**
-	 * Create classical playlist items.
+	 * Create playlist items.
 	 *
 	 * @todo Use real data from an API.
 	 * @param string $type Type of playlist items to generate.
