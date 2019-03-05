@@ -67,7 +67,7 @@ class Content_Item extends \WP_Components\Component {
 		$this->set_eyebrow();
 
 		// Set audio if applicable.
-		if ( 'podcast-episode' === $this->post->post_type ) {
+		if ( 'podcast-episode' === ( $this->post->post_type ?? '' ) ) {
 			$this->set_audio();
 		}
 
@@ -75,7 +75,7 @@ class Content_Item extends \WP_Components\Component {
 		$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
 		$this->merge_config(
 			[
-				'permalink' => get_permalink( $this->post->ID ),
+				'permalink' => get_permalink( $this->post->ID ?? 0 ),
 			]
 		);
 		return $this;

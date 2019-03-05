@@ -117,6 +117,18 @@ namespace CPR;
 			'aspect_ratio' => 9 / 16,
 			'retina'       => true,
 		],
+		'album_cover' => [
+			'sources' => [
+				[
+					'default'    => true,
+					'transforms' => [
+						'resize' => [ 195, 184 ],
+					],
+					'descriptor' => 195,
+				],
+			],
+			'retina'  => true,
+		],
 		'content_image' => [
 			'sources' => [
 				[

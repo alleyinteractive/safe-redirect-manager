@@ -18,7 +18,7 @@ function form_endpoints( $form_endpoints ) {
 		$form_endpoints,
 		[
 			'slug' => 'newsletter',
-			'callback' => [ __NAMESPACE__ . '\Component\Modules\Newsletter', 'get_route_response' ],
+			'callback' => [ __NAMESPACE__ . '\Components\Modules\Newsletter', 'get_route_response' ],
 		]
 	);
 
