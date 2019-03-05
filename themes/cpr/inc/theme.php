@@ -26,7 +26,7 @@ function theme_setup() {
 	add_theme_support( 'automatic-feed-links' );
 
 	// Add styles to visual editor.
-	add_editor_style( 'client/build/css/editor.css' );
+	add_editor_style( home_url( '/static/css/editor.css' ) );
 
 	/*
 	 * Let WordPress manage the document title.
@@ -123,7 +123,7 @@ function get_site_color( string $section = 'main' ) {
 
 		case 'openair':
 			return '#296795';
-		
+
 		case 'news':
 		case 'main':
 		default:
