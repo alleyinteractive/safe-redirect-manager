@@ -1,14 +1,7 @@
 /* global ent */
 // Entry points used for all but `admin` webpack build/config
 const entry = {
-  article: ['client/src/entries/article/index.js'],
-  home: ['client/src/entries/home/index.js'],
-};
-
-// Entry used for admin webpack build/config
-const admin = {
   admin: ['client/src/admin/admin.js'],
-  editor: ['client/src/admin/editor/index.js'],
 };
 
 /**
