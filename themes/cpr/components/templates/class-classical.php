@@ -134,7 +134,7 @@ class Classical extends \WP_Components\Component {
 								 * Station Playlist.
 								 */
 								( new \CPR\Components\Audio\Station_Playlist() )
-									->set_playlist_item_components( 4 )
+									->set_playlist_item_components( 4, 'classical' )
 							),
 
 						/**
@@ -273,23 +273,29 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * Videos content list.
 			 */
-			( new \CPR\Components\Modules\Content_List() )
+			( new \CPR\Components\Column_Area() )
 				->merge_config(
 					[
 						'heading'           => $data['videos']['heading'] ?? '',
-						'heading_border'    => true,
 						'heading_cta_label' => __( 'All Videos', 'cpr' ),
-						'heading_cta_link'  => home_url(), // @todo Update.
-						'image_size'        => 'feature_item_small',
-						'theme'             => 'featureHalf',
-						'eyebrow_location'  => 'none',
-						'show_excerpt'      => true,
+						'heading_cta_link'  => home_url(), // @todo Update once known.
+						
 					]
 				)
-				->add_video_items(
-					$data['videos']['content_item_ids'] ?? [],
-					2,
-					self::get_classical_posts_backfill_args() // @todo Determine actual backfill args.
+				->append_child(
+					( new \CPR\Components\Modules\Content_List() )
+						->merge_config(
+							[
+								'image_size'        => 'feature_item_small',
+								'theme'             => 'featureHalf',
+								'show_excerpt'      => true,
+							]
+						)
+						->add_video_items(
+							$data['videos']['content_item_ids'] ?? [],
+							2,
+							self::get_classical_posts_backfill_args() // @todo Determine actual backfill args.
+						)
 				),
 
 			/**
@@ -308,7 +314,18 @@ class Classical extends \WP_Components\Component {
 			/**
 			 * People list.
 			 */
-			$this->get_people_list( $data['people'] ?? [] ),
+			( new \CPR\Components\Column_Area() )
+				->merge_config(
+					[
+						'heading'           => $data['people']['heading'] ?? '',
+						'heading_cta_label' => get_the_title( $data['people']['heading_cta_id'] ?? 0 ),
+						'heading_cta_link'  => get_permalink( $data['people']['heading_cta_id'] ?? 0 ),
+						
+					]
+				)
+				->append_child(
+					$this->get_people_list( $data['people'] ?? [] )
+				),
 		];
 	}
 
@@ -322,13 +339,8 @@ class Classical extends \WP_Components\Component {
 		$people_list = ( new \CPR\Components\Modules\Content_List() )
 			->merge_config(
 				[
-					'heading'           => $data['heading'] ?? '',
-					'heading_border'    => true,
-					'heading_cta_label' => get_the_title( $data['heading_cta_id'] ?? 0 ),
-					'heading_cta_link'  => get_permalink( $data['heading_cta_id'] ?? 0 ),
 					'image_size'        => 'feature_item_small', // @todo change
 					'theme'             => 'featureHalf', // @todo change
-					'eyebrow_location'  => 'none',
 				]
 			);
 
@@ -373,10 +385,9 @@ class Classical extends \WP_Components\Component {
 							'children' => [
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
-										'add_more_label' => __( 'Add Content', 'cpr' ),
-										'label'          => __( 'Featured Story', 'cpr' ),
-										'post_limit'     => 1,
-										'query_args'     => self::get_backfill_args(),
+										'label'      => __( 'Featured Story', 'cpr' ),
+										'post_limit' => 1,
+										'query_args' => self::get_backfill_args(),
 									]
 								),
 							],

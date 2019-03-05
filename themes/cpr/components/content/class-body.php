@@ -55,6 +55,8 @@ class Body extends \WP_Components\Component {
 					->append_child( $this->get_recent_articles_sidebar_component() ),
 			]
 		);
+
+		return $this;
 	}
 
 	/**

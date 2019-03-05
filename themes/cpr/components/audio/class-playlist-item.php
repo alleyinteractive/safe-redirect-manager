@@ -26,9 +26,8 @@ class Playlist_Item extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'album'        => '',
-			'name'         => '',
-			'performed_by' => '',
+			'artist'       => '',
+			'subheading'   => '',
 			'time'         => '',
 			'title'        => '',
 		];
