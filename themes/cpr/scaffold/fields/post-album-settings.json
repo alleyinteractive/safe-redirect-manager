@@ -31,8 +31,7 @@
 					"datasource": {
 						"type": "term",
 						"taxonomy": "artist",
-						"taxonomy_save_to_terms": true,
-						"only_save_to_taxonomy": true
+						"taxonomy_save_to_terms": true
 					}
 				},
 				"label_id": {
@@ -43,8 +42,7 @@
 					"datasource": {
 						"type": "term",
 						"taxonomy": "label",
-						"taxonomy_save_to_terms": true,
-						"only_save_to_taxonomy": true
+						"taxonomy_save_to_terms": true
 					}
 				}
 			}

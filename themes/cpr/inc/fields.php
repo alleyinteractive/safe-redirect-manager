@@ -385,7 +385,6 @@ function cpr_fm_post_album_settings() {
 										[
 											'taxonomy' => 'artist',
 											'taxonomy_save_to_terms' => true,
-											'only_save_to_taxonomy' => true,
 										]
 									),
 								]
@@ -399,7 +398,6 @@ function cpr_fm_post_album_settings() {
 										[
 											'taxonomy' => 'label',
 											'taxonomy_save_to_terms' => true,
-											'only_save_to_taxonomy' => true,
 										]
 									),
 								]
