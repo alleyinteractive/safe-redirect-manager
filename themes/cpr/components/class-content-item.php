@@ -67,7 +67,7 @@ class Content_Item extends \WP_Components\Component {
 		$this->set_eyebrow();
 
 		// Set audio if applicable.
-		if ( 'podcast-episode' === $this->post->post_type ) {
+		if ( 'podcast-episode' === ( $this->post->post_type ?? '' ) ) {
 			$this->set_audio();
 		}
 
