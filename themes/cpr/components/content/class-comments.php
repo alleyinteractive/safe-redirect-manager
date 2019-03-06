@@ -44,7 +44,7 @@ class Comments extends \WP_Components\Component {
 		$this->append_child(
 			( new \WP_Components\Integrations\Disqus() )
 				->set_post( $this->post )
-				->set_config( 'forum_shortname', $settings['engagement']['forum_shortname'] ?? '' ),
+				->set_config( 'forum_shortname', $settings['engagement']['forum_shortname'] ?? '' )
 		);
 
 		return $this;
