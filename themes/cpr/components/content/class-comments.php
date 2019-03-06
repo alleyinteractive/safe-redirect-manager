@@ -32,4 +32,21 @@ class Comments extends \WP_Components\Component {
 			'label' => __( 'Show Comments', 'cpr' ),
 		];
 	}
+
+	/**
+	 * Hook into post being set.
+	 *
+	 * @return self
+	 */
+	public function post_has_set() : self {
+		$settings = get_option( 'cpr-settings' );
+
+		$this->append_child(
+			( new \WP_Components\Integrations\Disqus() )
+				->set_post( $this->post )
+				->set_config( 'forum_shortname', $settings['engagement']['forum_shortname'] ?? '' ),
+		);
+
+		return $this;
+	}
 }

@@ -34,7 +34,7 @@ class Footer extends \WP_Components\Component {
 				( new Related_Tags() )->set_post( $this->post ),
 				( new Bylines() )->set_post( $this->post ),
 				new \CPR\Components\Donate\Donate_CTA(),
-				new Comments(),
+				( new Comments() )->set_post( $this->post ),
 			]
 		);
 		return $this;
