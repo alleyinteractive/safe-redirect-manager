@@ -15,6 +15,10 @@
 			"type": "text",
 			"label": { "__": "Email" }
 		},
+		"twitter": {
+			"type": "text",
+			"label": { "__": "Twitter" }
+		},
 		"type": {
 			"label": { "__": "Type" },
 			"type": "select",
