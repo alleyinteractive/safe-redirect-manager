@@ -8,19 +8,19 @@
  * @param {Number} $base-value Root font size on which to base conversions
  */
 @function _px-to-relative($px, $em, $base-size) {
-	@if ( 'em' == unit( $px ) or 'rem' == unit( $px ) ) {
-		@return $px;
-	}
+  @if ( 'em' == unit( $px ) or 'rem' == unit( $px ) ) {
+    @return $px;
+  }
 
-	@if ( 'px' == unit( $px ) ) {
-		$px: $px / 1px;
-	}
+  @if ( 'px' == unit( $px ) ) {
+    $px: $px / 1px;
+  }
 
-	@if $em == true {
-		@return $px / $base-size * 1em;
-	} @else {
-		@return $px / $base-size * 1rem;
-	}
+  @if $em == true {
+    @return $px / $base-size * 1em;
+  } @else {
+    @return $px / $base-size * 1rem;
+  }
 }
 
 /**
@@ -31,24 +31,24 @@
  * @param {Number} $base-value Root font size on which to base conversions
  */
 @function _px-to-relative-list($values, $em, $base-value) {
-	$num: length($values);
-	$relative-values: ();
+  $num: length($values);
+  $relative-values: ();
 
-	@if $num == 1 {
-		@return _px-to-relative(nth($values, 1), $em, $base-value);
-	}
+  @if $num == 1 {
+    @return _px-to-relative(nth($values, 1), $em, $base-value);
+  }
 
-	@for $i from 1 through $num {
-		$value: nth($values, $i);
-		// It's 'auto'
-		@if (string == type-of($value)) {
-			$relative-values: append($relative-values, $value);
-		} @else if (number == type-of($value)) {
-			$relative-values: append($relative-values, _px-to-relative(nth($values, $i), $em, $base-value));
-		}
-	}
+  @for $i from 1 through $num {
+    $value: nth($values, $i);
+    // It's 'auto'
+    @if (string == type-of($value)) {
+      $relative-values: append($relative-values, $value);
+    } @else if (number == type-of($value)) {
+      $relative-values: append($relative-values, _px-to-relative(nth($values, $i), $em, $base-value));
+    }
+  }
 
-	@return $relative-values;
+  @return $relative-values;
 }
 
 /**
@@ -58,7 +58,7 @@
  * @param {Number} $base-value Root font size on which to base conversions
  */
 @function em($values, $base-value: 16) {
-	@return _px-to-relative-list($values, true, $base-value);
+  @return _px-to-relative-list($values, true, $base-value);
 }
 
 /**
@@ -68,32 +68,32 @@
  * @param {Number} $base-value Root font size on which to base conversions
  */
 @function rem($values, $base-value: 16) {
-	@return _px-to-relative-list($values, false, $base-value);
+  @return _px-to-relative-list($values, false, $base-value);
 }
 
 /**
  * Remove default browser button styles
  */
 @mixin buttonReset {
-	background-color: transparent;
-	border: none;
-	border-radius: 0;
-	outline: none;
-	overflow: visible;
-	text-decoration: none;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  overflow: visible;
+  text-decoration: none;
 }
 
 /**
  * Visually hide an element and leave it only for screenreaders
  */
 @mixin screenreaderOnly {
-	border: 0;
-	clip: rect(0, 0, 0, 0);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden;
-	padding: 0;
-	position: absolute;
-	width: 1px;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
 }
 /* stylelint-enable */

@@ -1,3 +1,17 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [CPR Client-side Source Files](#cpr-client-side-source-files)
+  - [Running `watch` or `dev` for a specific entry point](#running-watch-or-dev-for-a-specific-entry-point)
+  - [Hot reloading in the `dev` environment](#hot-reloading-in-the-dev-environment)
+    - [Why are there two steps?](#why-are-there-two-steps)
+    - [Adding a script to the hot-reloaded `dev.bundle.js`](#adding-a-script-to-the-hot-reloaded-devbundlejs)
+    - [Configuring PostCSS](#configuring-postcss)
+    - [Configuring Babel](#configuring-babel)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # CPR Client-side Source Files
 
 This is the root directory of client-side source file assets. Webpack will compile and/or copy your files to `static` for use in the site. Three NPM scripts are available from the theme root:

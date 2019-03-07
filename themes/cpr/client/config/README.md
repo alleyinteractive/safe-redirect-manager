@@ -1,21 +1,64 @@
-# WP starter theme front-end build configuration files
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [CPR front-end build configuration files](#cpr-front-end-build-configuration-files)
+  - [Using This Directory](#using-this-directory)
+  - [Additional configurations](#additional-configurations)
+  - [Enabling `splitChunks`](#enabling-splitchunks)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# CPR front-end build configuration files
 
 This directory contains configurations for webpack and its constituent modules.
 
 ## Using This Directory
 
-Each of the [`dev`](client/config/webpack.dev.config.js), [`watch`](client/config/webpack.watch.config.js), [`build`](client/config/webpack.build.config.js), and [`build-admin`](client/config/webpack.admin.config.js) npm scripts has its own separate webpack configuration. These configurations contain a lot of common elements, each of which is housed in its own JS module. These modules, generally speaking, are split up by concern (or roughly by webpack configuration property):
+The Webpack configurations (`dev` & `build`) contain a lot of common elements, each of which is housed in its own JS module. These modules, generally speaking, are split up by concern (or roughly by Webpack configuration property):
 
-* `entry.js` - Config and functions for managing entry points.
-* `externals.js` - Config for the `externals` config property.
-* `filenames.js` - Various common filenames and filename templates used throughout the configs.
-* `loaders.js` - Common webpack loader configs. 
+* `webpack/devServer.js` - Webpack Dev Server configuration.
+* `webpack/devtool.js` - Determines the sourcemap plugin to use.
+* `webpack/entry.js` - Config and functions for managing entry points.
+* `webpack/index.js` - Imports config settings. 
+* `webpack/optimization.js` - Build optimization config. 
+* `webpack/output.js` - Determines the output paths and naming. 
+* `webpack/plugins.js` - webpack plugins used across the configs. This contains a set of default plugins used in all builds (`plugins`), and smaller sets used only conditionally in `development` and `production`.
+* `webpack/rules.js` - Common Webpack `rules` configs. 
+* `webpack/wpAssets.js` - Writes out hashed filesnames to be consumed by assets.php. 
 * `paths.js` - Path definitions used to point to entry point files, output directories, etc.
-* `plugins.js` - webpack plugins used across the configs. This contains a small set of default plugins used in all configs (`defaultPlugins`), and a larger set used only in `build` and `start` (`buildPlugins`).
-* `resolve.js` - Common config for webpack's `resolve` property.
-* `themename.js` - Logic for determining the name of the current WordPress theme for use in pointing webpack to the appropriate location for built files.
+* `themename.js` - Logic for determining the name of the current WordPress theme for use in pointing Webpack to the appropriate location for built files.
 
 ## Additional configurations
 
 * `stylelint.config.js` - Config for CSS and SASS linting.
 * `postcss.config.js` - Config for the `postcss-loader`. Any additional postcss plugins should be added to this file.
+
+## Enabling `splitChunks`
+
+Edit `./webpack/optimizations.js` to add the following as the `return` statement for the `default` case, which also applies to the `production` case:
+
+```js
+// optimizations.js
+
+return {
+	splitChunks: {
+		name: 'common',
+		chunks: (chunk) => (! chunk.name.includes('admin')),
+		minChunks: 2, // a good starting value - update as needed
+	},
+};
+```
+
+
+Add the following to the top of the `enqueue_assets` function in `assets.php`, taking care to update the project domain:
+
+```php
+// assets.php
+
+if ( ! is_dev() ) {
+	// Common bundle is a production-only optimization to allow page-specific entry points to hot reload properly.
+	wp_enqueue_script( 'cpr-common-js', ai_get_versioned_asset_path( 'common.js' ), [ 'jquery' ], '1.0', true );
+	wp_enqueue_style( 'cpr-common-js', ai_get_versioned_asset_path( 'common.css' ), [], '1.0' );
+}
+```

@@ -10,16 +10,16 @@ $bp-values: (
  * Generate map of breakpoint values
  */
 @function _create-breakpoints() {
-	$merged: ();
+  $merged: ();
 
-	@each $name, $value in $bp-values {
-		$merged: map_merge($merged, (
-			'#{$name}-min': 'min-width: #{rem($value)}',
-			'#{$name}-max': 'max-width: #{rem($value - 1)}',
-		));
-	}
+  @each $name, $value in $bp-values {
+    $merged: map_merge($merged, (
+      '#{$name}-min': 'min-width: #{rem($value)}',
+      '#{$name}-max': 'max-width: #{rem($value - 1)}',
+    ));
+  }
 
-	@return $merged;
+  @return $merged;
 }
 
 /**
@@ -27,7 +27,7 @@ $bp-values: (
  * (example 'admin-bar' media query provided)
  */
 $media-queries: map_merge((
-	admin-bar: 'min-width: 600px',
+  admin-bar: 'min-width: 600px',
 ), _create-breakpoints());
 
 /**
@@ -38,5 +38,5 @@ $media-queries: map_merge((
  *                        and either 'min' (for `min-width`) or 'max' (for `max-width`), separated by a hyphen.
  */
 @function media($query) {
-	@return map-get($media-queries, $query);
+  @return map-get($media-queries, $query);
 }

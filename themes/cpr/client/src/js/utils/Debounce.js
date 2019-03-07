@@ -29,13 +29,14 @@ export default class Debounce {
     this.frequency = frequency;
     this.timer = false;
     this.initial = initial;
+    this.callback = callback;
 
     // Bound events
     this.requestTick = this.requestTick.bind(this);
     this.update = this.update.bind(this);
 
     if (! this.callback) {
-      window.error('Debounce error: you must specify a callback.');
+      console.error('Debounce error: you must specify a callback.');
     } else {
       this.addHandler();
     }

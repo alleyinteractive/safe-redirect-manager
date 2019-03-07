@@ -11,7 +11,7 @@ import 'components/footer';
 import 'scss/index.scss';
 
 // Additional utilities specific to this entry point
-import homeLogic from './homeLogic'; // eslint-disable-line no-unused-vars
+import test from './test'; // eslint-disable-line no-unused-vars
 
 // Create instance of the component manager using `cpr`
 const manager = new ComponentManager('cpr');
