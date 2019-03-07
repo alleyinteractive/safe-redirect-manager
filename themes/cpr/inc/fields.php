@@ -318,7 +318,12 @@ function cpr_fm_post_guest_author_settings() {
 			'add_to_prefix' => false,
 			'children' => [
 				'cap-user_email' => new Fieldmanager_TextField( __( 'Email', 'cpr' ) ),
-				'twitter' => new Fieldmanager_TextField( __( 'Twitter', 'cpr' ) ),
+				'twitter' => new Fieldmanager_TextField(
+					[
+						'label' => __( 'Twitter', 'cpr' ),
+						'sanitize' => function( $value ) { return str_replace( '@', '', $value ); },
+					]
+				),
 				'description' => new Fieldmanager_RichTextArea(
 					[
 						'label' => __( 'Guest Author Bio', 'cpr' ),
