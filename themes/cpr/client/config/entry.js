@@ -1,5 +1,4 @@
-/* global ent */
-// Entry points used for all but `admin` webpack build/config
+// Entry points.
 const entry = {
   admin: ['client/src/admin/admin.js'],
 };
@@ -18,7 +17,7 @@ function getSingleEntry(env) {
         return selectedEntryKeys.includes(entryName) ?
           Object.assign(acc, { [entryName]: entry[entryName] }) :
           acc;
-        }, {});
+      }, {});
   }
 
   return entry;
@@ -42,7 +41,6 @@ function getHotEntry(env) {
 
 module.exports = {
   entry,
-  admin,
   getSingleEntry,
   getHotEntry,
 };

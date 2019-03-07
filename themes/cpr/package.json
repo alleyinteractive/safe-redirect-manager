@@ -7,8 +7,7 @@
     "preinstall": "npx check-node-version --package",
     "dev": "webpack-dev-server --config client/config/webpack.dev.config.js --env.dev",
     "watch": "webpack --config client/config/webpack.watch.config.js --debug --watch --colors --output-pathinfo --env.watch",
-    "build": "webpack --config client/config/webpack.build.config.js --optimize-minimize --env.production && npm run build-admin",
-    "build-admin": "webpack --config client/config/webpack.admin.config.js --optimize-minimize --env.production",
+    "build": "webpack --config client/config/webpack.build.config.js --optimize-minimize --env.production",
     "scaffold": "scaffold dir ./scaffold --theme=./",
     "watch-scaffold": "nodemon -l -e json -w scaffold -x 'npm run scaffold'",
     "lint-configs": "eslint client/bin/*.js client/config/*.js"

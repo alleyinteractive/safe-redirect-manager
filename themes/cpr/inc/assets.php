@@ -76,6 +76,8 @@ function enqueue_assets() {
 	} else {
 		wp_enqueue_script( 'cpr-common-js', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'common.js' ), array( 'jquery' ), '1.0' );
 		wp_enqueue_style( 'cpr-common-css', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'common.css' ), array(), '1.0' );
+		wp_enqueue_script( 'cpr-admin-js', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'admin.js' ), array(), '1.0' );
+		wp_enqueue_style( 'cpr-admin-css', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'admin.css' ), array(), '1.0' );
 	}
 }
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_assets' );
@@ -92,8 +94,11 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_gutenberg' 
  * Enqueues scripts and styles for admin screens
  */
 function enqueue_admin() {
-	wp_enqueue_script( 'cpr-admin-js', get_template_directory_uri() . '/client/build/js/admin.bundle.js', array(), '1.0', true );
-	wp_enqueue_style( 'cpr-admin-css', get_template_directory_uri() . '/client/build/css/admin.css', array(), '1.0' );
+	wp_enqueue_script( 'cpr-common-js', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'common.js' ), array( 'jquery' ), '1.0' );
+	wp_enqueue_style( 'cpr-common-css', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'common.css' ), array(), '1.0' );
+	wp_enqueue_script( 'cpr-admin-js', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'admin.js' ), array(), '1.0' );
+	wp_enqueue_style( 'cpr-admin-css', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'admin.css' ), array(), '1.0' );
+	
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin' );
 
