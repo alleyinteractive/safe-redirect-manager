@@ -17,7 +17,8 @@
 		},
 		"twitter": {
 			"type": "text",
-			"label": { "__": "Twitter" }
+			"label": { "__": "Twitter" },
+			"sanitize": "`function( $value ) { return str_replace( '@', '', $value ); }`"
 		},
 		"description": {
 			"type": "richtext",
