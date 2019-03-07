@@ -24,7 +24,7 @@ class Byline extends \WP_Components\Byline {
 	 *
 	 * @return array Default config.
 	 */
-	public function default_config() : array {
+	public function default_config(): array {
 		return [
 			'email'   => '',
 			'link'    => '',
