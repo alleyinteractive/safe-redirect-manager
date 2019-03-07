@@ -15,6 +15,25 @@
 			"type": "text",
 			"label": { "__": "Email" }
 		},
+		"twitter": {
+			"type": "text",
+			"label": { "__": "Twitter" }
+		},
+		"description": {
+			"type": "richtext",
+			"label": { "__": "Guest Author Bio" },
+			"type": "richtextarea",
+			"buttons_1": [ "bold", "italic", "link" ],
+			"buttons_2": [],
+			"sanitize": "wp_filter_post_kses",
+			"editor_settings": {
+				"media_buttons": false
+			},
+			"attributes": {
+				"style": "width: 100%",
+				"rows": 4
+			}
+		},
 		"type": {
 			"label": { "__": "Type" },
 			"type": "select",

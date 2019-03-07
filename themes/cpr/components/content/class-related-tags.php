@@ -42,7 +42,9 @@ class Related_Tags extends \WP_Components\Component {
 
 		foreach ( $tags as $tag ) {
 			$this->append_child(
-				( new \WP_Components\Term() )->set_term( $tag )
+				( new \WP_Components\Term() )
+					->set_term( $tag )
+					->set_name( 'related-tag' )
 			);
 		}
 		return $this;

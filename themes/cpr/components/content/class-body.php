@@ -34,7 +34,6 @@ class Body extends \WP_Components\Component {
 			[
 				( new \WP_Components\Gutenberg_Content() )->set_post( $this->post ),
 				( new \CPR\Components\Sidebar() )
-					->set_config( 'has_ad', true )
 					->set_config( 'position', 'right' )
 
 					/**
@@ -82,7 +81,6 @@ class Body extends \WP_Components\Component {
 					esc_html( $category_component->wp_term_get_name() )
 				)
 			)
-			->set_theme( 'river' )
 			->parse_from_ids(
 				[],
 				3,
@@ -94,6 +92,15 @@ class Body extends \WP_Components\Component {
 							'terms'    => $category_component->wp_term_get_id(),
 						],
 					],
+				]
+			)
+			->set_theme( 'river' )
+			->set_child_themes(
+				[
+					'content-list'         => 'river',
+					'content-item'         => 'river',
+					'eyebrow'              => 'small',
+					'title'                => 'grid',
 				]
 			);
 	}
@@ -107,13 +114,21 @@ class Body extends \WP_Components\Component {
 	public function get_recent_articles_sidebar_component() {
 		return ( new \CPR\Components\Modules\Content_List() )
 			->set_config( 'heading', __( 'Most Recent', 'cpr' ) )
-			->set_theme( 'river' )
 			->parse_from_wp_query(
 				new \Alleypack\Unique_WP_Query(
 					[
 						'posts_per_page' => 3,
 					]
 				)
+			)
+			->set_theme( 'river' )
+			->set_child_themes(
+				[
+					'content-list'         => 'river',
+					'content-item'         => 'river',
+					'eyebrow'              => 'small',
+					'title'                => 'grid',
+				]
 			);
 	}
 }

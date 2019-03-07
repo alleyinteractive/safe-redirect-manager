@@ -318,6 +318,22 @@ function cpr_fm_post_guest_author_settings() {
 			'add_to_prefix' => false,
 			'children' => [
 				'cap-user_email' => new Fieldmanager_TextField( __( 'Email', 'cpr' ) ),
+				'twitter' => new Fieldmanager_TextField( __( 'Twitter', 'cpr' ) ),
+				'description' => new Fieldmanager_RichTextArea(
+					[
+						'label' => __( 'Guest Author Bio', 'cpr' ),
+						'buttons_1' => [ 'bold', 'italic', 'link' ],
+						'buttons_2' => [],
+						'sanitize' => 'wp_filter_post_kses',
+						'editor_settings' => [
+							'media_buttons' => false,
+						],
+						'attributes' => [
+							'style' => 'width: 100%',
+							'rows' => 4,
+						],
+					]
+				),
 				'type' => new Fieldmanager_Select(
 					[
 						'label' => __( 'Type', 'cpr' ),
