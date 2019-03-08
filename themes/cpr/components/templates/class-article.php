@@ -61,11 +61,24 @@ class Article extends \WP_Components\Component {
 			/**
 			 * Recirculation module.
 			 */
-			( new \CPR\Components\Modules\Content_List() )
-				->set_theme( 'grid' )
-				->set_config( 'image_size', 'grid_item' )
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'oneColumn' )
 				->set_config( 'heading', __( 'Related Content', 'cpr' ) )
-				->parse_from_jetpack_related( $this->get_post_id(), 3, [] ),
+				->append_children(
+					[
+						( new \CPR\Components\Modules\Content_List() )
+							->set_config( 'image_size', 'grid_item' )
+							->parse_from_jetpack_related( $this->get_post_id(), 3, [] )
+							->set_theme( 'gridLarge' )
+							->set_child_themes(
+								[
+									'content-item' => 'gridPrimary',
+									'eyebrow'      => 'small',
+									'title'        => 'grid',
+								]
+							),
+					]
+				),
 		];
 	}
 }
