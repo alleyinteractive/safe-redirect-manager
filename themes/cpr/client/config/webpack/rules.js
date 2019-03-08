@@ -1,13 +1,12 @@
 const path = require('path');
-const paths = require('./paths');
+const paths = require('../paths');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const exclude = [
   /node_modules/,
   /\.min\.js$/,
 ];
-
-// Loaders used for processing CSS
-module.exports.cssLoaders = [
+const cssUse = [
   {
     loader: 'css-loader',
     options: {
@@ -33,9 +32,7 @@ module.exports.cssLoaders = [
     },
   },
 ];
-
-// Loaders common to all webpack configs
-module.exports.defaultLoaders = [
+const defaultRules = [
   {
     enforce: 'pre',
     test: /\.js$/,
@@ -105,3 +102,39 @@ module.exports.defaultLoaders = [
     },
   },
 ];
+
+module.exports = function getEntry(mode) {
+  switch (mode) {
+    case 'development':
+      return [
+        {
+          test: /\.s?css$/,
+          exclude: paths.appRoot,
+          use: [
+            'style-loader',
+            ...cssUse
+          ],
+        },
+        ...defaultRules,
+      ];
+
+    case 'production':
+    default:
+      return [
+        {
+          test: /\.s?css$/,
+          exclude: paths.appRoot,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: '../',
+              },
+            },
+            ...cssUse,
+          ],
+        },
+        ...defaultRules,
+      ];
+  }
+};

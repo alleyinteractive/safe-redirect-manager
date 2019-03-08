@@ -7,21 +7,30 @@
 
 namespace CPR;
 
-// @codingStandardsIgnoreFile WordPress.VIP.RestrictedFunctions.cookies_setcookie WordPress.VIP.RestrictedVariables.cache_constraints___COOKIE
+/**
+ * Check if we're in FE development mode
+ *
+ * @return bool whether or not we're in development mode
+ */
+function is_dev() {
+	return (
+		( ! empty( $_GET['fe-dev'] ) && 'on' === $_GET['fe-dev'] ) || // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.VIP.SuperGlobalInputUsage.AccessDetected
+		! empty( $_COOKIE['fe-dev'] ) // phpcs:ignore WordPress.VIP.RestrictedVariables.cache_constraints___COOKIE, WordPress.VIP.SuperGlobalInputUsage.AccessDetected
+	);
+}
 
 /**
- * Add custom query var for webpack hot-reloading.
- *
- * @param array $vars Array of current query vars.
- * @return array $vars Array of query vars.
+ * Set cookie to truthy value if fe-dev param is set to 'on', otherwise set cookie to falsy value
  */
-function webpack_query_vars( $vars ) {
-	// Add a query var to enable hot reloading.
-	$vars[] = 'fe-dev';
-
-	return $vars;
+function set_dev_cookie() {
+	if ( ! empty( $_GET['fe-dev'] ) && 'off' === $_GET['fe-dev'] ) { // phpcs:ignore WordPress.Security.NonceVerification.NoNonceVerification, WordPress.VIP.SuperGlobalInputUsage.AccessDetected
+		setcookie( 'fe-dev', '0', 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl() ); // phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.cookies_setcookie
+		$_COOKIE['fe-dev'] = null; // phpcs:ignore WordPress.VIP.RestrictedVariables.cache_constraints___COOKIE
+	} elseif ( is_dev() ) {
+		setcookie( 'fe-dev', '1', 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl() ); // phpcs:ignore WordPressVIPMinimum.VIP.RestrictedFunctions.cookies_setcookie
+	}
 }
-add_filter( 'query_vars', __NAMESPACE__ . '\webpack_query_vars' );
+add_action( 'init', __NAMESPACE__ . '\set_dev_cookie' );
 
 /**
  * Get the version for a given asset.
@@ -29,15 +38,20 @@ add_filter( 'query_vars', __NAMESPACE__ . '\webpack_query_vars' );
  * @param string $asset_path Entry point and asset type separated by a '.'.
  * @return string The asset version.
  */
-function ai_get_versioned_asset( $asset_path ) {
+function ai_get_versioned_asset_path( $asset_path ) {
 	static $asset_map;
+
+	// Create public path.
+	$base_path = is_dev() ?
+		'//8080-httpsproxy.alley.test/client/build/' :
+		CPR_URL . '/client/build/';
 
 	if ( ! isset( $asset_map ) ) {
 		$asset_map_file = CPR_PATH . '/client/build/assetMap.json';
 
 		if ( file_exists( $asset_map_file ) && 0 === validate_file( $asset_map_file ) ) {
 			ob_start();
-			include $asset_map_file;
+			include $asset_map_file; // phpcs:ignore WordPressVIPMinimum.Files.IncludingFile.IncludingFile
 			$asset_map = json_decode( ob_get_clean(), true );
 		} else {
 			$asset_map = [];
@@ -49,42 +63,20 @@ function ai_get_versioned_asset( $asset_path ) {
 	 * allowing the variable names to be more readable via list().
 	 */
 	list( $entrypoint, $type ) = explode( '.', "$asset_path." );
+	$versioned_path            = isset( $asset_map[ $entrypoint ][ $type ] ) ? $asset_map[ $entrypoint ][ $type ] : false;
 
-	return isset( $asset_map[ $entrypoint ][ $type ] ) ? $asset_map[ $entrypoint ][ $type ] : '';
-}
-
-/**
- * Enqueues scripts and styles for the frontend
- */
-function enqueue_assets() {
-	// Dev-specific scripts.
-	$toggle_fe_dev_mode = get_query_var( 'fe-dev' );
-	if ( 'off' === $toggle_fe_dev_mode ) {
-		setcookie( 'fe-dev', '0', 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl() );
-		$_COOKIE['fe-dev'] = null;
+	if ( $versioned_path ) {
+		return $base_path . $versioned_path;
 	}
 
-	if ( 'on' === $toggle_fe_dev_mode || ! empty( $_COOKIE['fe-dev'] ) ) {
-		wp_enqueue_script( // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NoExplicitVersion
-			'dev',
-			'//localhost:8080/client/build/js/dev.bundle.js',
-			array(),
-			false,
-			false
-		);
-		setcookie( 'fe-dev', '1', 0, COOKIEPATH, COOKIE_DOMAIN, is_ssl() );
-	} else {
-		wp_enqueue_script( 'cpr-common-js', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'common.js' ), array( 'jquery' ), '1.0' );
-		wp_enqueue_style( 'cpr-common-css', get_template_directory_uri() . '/client/build/' . ai_get_versioned_asset( 'common.css' ), array(), '1.0' );
-	}
+	return '';
 }
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_assets' );
 
 /**
  * Enqueues scripts and styles for admin screens
  */
 function enqueue_gutenberg() {
-	wp_enqueue_style( 'cpr-gutenberg-css', home_url( '/static/css/editor.css' ) );
+	wp_enqueue_style( 'cpr-gutenberg-css', home_url( '/static/css/editor.css' ), [], '1.0' );
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_gutenberg' );
 
@@ -92,16 +84,9 @@ add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_gutenberg' 
  * Enqueues scripts and styles for admin screens
  */
 function enqueue_admin() {
-	wp_enqueue_script( 'cpr-admin-js', get_template_directory_uri() . '/client/build/js/admin.bundle.js', array(), '1.0', true );
-	wp_enqueue_style( 'cpr-admin-css', get_template_directory_uri() . '/client/build/css/admin.css', array(), '1.0' );
+	wp_enqueue_script( 'cpr-common-js', ai_get_versioned_asset_path( 'common.js' ), [ 'jquery' ], '1.0', true );
+	wp_enqueue_style( 'cpr-common-css', ai_get_versioned_asset_path( 'common.css' ), [], '1.0' );
+	wp_enqueue_script( 'cpr-admin-js', ai_get_versioned_asset_path( 'admin.js' ), [], '1.0', true );
+	wp_enqueue_style( 'cpr-admin-css', ai_get_versioned_asset_path( 'admin.css' ), [], '1.0' );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin' );
-
-/**
- * Removes scripts that could potentially cause style conflicts
- */
-function dequeue_scripts() {
-	wp_dequeue_style( 'jetpack-slideshow' );
-	wp_dequeue_style( 'jetpack-carousel' );
-}
-add_action( 'wp_print_scripts', __NAMESPACE__ . '\dequeue_scripts' );

@@ -1,9 +1,9 @@
 @import '../../scss/core/index.scss';
 
 .site-footer {
-	background-color: $white;
+  background-color: $white;
 
-	@media (media('xl-min')) {
-		background-color: blue;
-	}
+  @media (media('xl-min')) {
+    background-color: blue;
+  }
 }

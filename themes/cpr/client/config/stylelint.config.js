@@ -1,4 +1,9 @@
+const path = require('path');
+
 module.exports = {
+  plugins: [
+    'stylelint-order',
+  ],
   rules: {
     'at-rule-empty-line-before': ['always', {
       except: [
@@ -7,6 +12,7 @@ module.exports = {
       ],
       ignore: ['after-comment'],
     }],
+    indentation: 2,
     'at-rule-name-case': 'lower',
     'at-rule-name-space-after': 'always',
     'at-rule-semicolon-newline-after': 'always',
@@ -31,6 +37,7 @@ module.exports = {
     'no-extra-semicolons': true,
     'no-missing-end-of-source-newline': true,
     'number-leading-zero': 'always',
+    'order/properties-alphabetical-order': true,
     'rule-empty-line-before': ['always', {
       ignore: ['after-comment'],
     }],
@@ -38,16 +45,20 @@ module.exports = {
     'selector-combinator-space-before': 'always',
     'selector-descendant-combinator-no-non-space': true,
     'selector-list-comma-newline-after': 'always',
-    'selector-max-specificity': '0,2,1',
+    'selector-max-specificity': ['0,2,1', {
+      ignoreSelectors: [':global', ':local'],
+    }],
     'selector-no-vendor-prefix': true,
     'selector-pseudo-class-case': 'lower',
     'selector-pseudo-class-parentheses-space-inside': 'never',
     'selector-pseudo-element-case': 'lower',
     'selector-pseudo-element-colon-notation': 'double',
     'unit-no-unknown': true,
-    'value-keyword-case': 'lower',
     'value-list-comma-newline-after': 'always-multi-line',
-    'value-list-comma-space-after': 'always',
+    'value-list-comma-space-after': 'always-single-line',
     'value-no-vendor-prefix': true,
   },
+  ignoreFiles: [
+    path.join(process.cwd(), 'node_modules/**/*.css'),
+  ],
 };
