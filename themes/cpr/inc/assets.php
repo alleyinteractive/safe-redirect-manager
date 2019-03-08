@@ -76,7 +76,7 @@ function ai_get_versioned_asset_path( $asset_path ) {
  * Enqueues scripts and styles for admin screens
  */
 function enqueue_gutenberg() {
-	wp_enqueue_style( 'cpr-gutenberg-css', home_url( '/static/css/editor.css' ) );
+	wp_enqueue_style( 'cpr-gutenberg-css', home_url( '/static/css/editor.css' ), [], '1.0' );
 }
 add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_gutenberg' );
 
