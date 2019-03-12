@@ -61,7 +61,7 @@ class Search extends \WP_Components\Component {
 										'eyebrow'      => 'small',
 									]
 								),
-                ] ),
+				] ),
 
 			/**
 			 * Pagination for results.
