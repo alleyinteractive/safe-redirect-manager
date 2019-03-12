@@ -52,9 +52,16 @@ class Term_Archive extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		return [
+			/**
+			 * Column Area
+			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'one-column' )
 				->append_children( [
+
+					/**
+					 * Content List
+					 */
 					( new \CPR\Components\Modules\Content_List() )
 						->set_config( 'heading', $this->wp_term_get_name() )
 						->parse_from_wp_query( $this->query )
@@ -65,8 +72,12 @@ class Term_Archive extends \WP_Components\Component {
 									'title'        => 'grid',
 									'eyebrow'      => 'small',
 								]
-                            ),
+							),
 				] ),
+
+			/**
+			 * Pagination.
+			 */
 			$this->get_pagination_component(),
 		];
 	}
