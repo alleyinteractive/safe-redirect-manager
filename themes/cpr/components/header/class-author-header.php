@@ -21,18 +21,18 @@ class Author_Header extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-    public $name = 'author-header';
-    
-    /**
+	public $name = 'author-header';
+	
+	/**
 	 * Define a default config.
 	 *
 	 * @return array Default config.
 	 */
 	public function default_config() : array {
 		return [
-            'email'       => '',
+			'email'       => '',
 			'link'        => '',
-            'name'        => '',
+			'name'        => '',
 			'twitter'     => '',
 		];
 	}
