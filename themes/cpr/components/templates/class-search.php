@@ -41,28 +41,27 @@ class Search extends \WP_Components\Component {
 	public function get_components() : array {
 		return [
 			/**
-			 * Search bar.
-			 */
-			( new \CPR\Components\Search\Search_Bar() )->set_config( 's', $this->query->get( 's' ) ),
-
-			/**
 			 * Search results grid.
 			 */
 			( new \CPR\Components\Column_Area() )
-				->set_config( 'heading', __( 'Search Results for:', 'cpr' ) )
 				->set_theme( 'one-column' )
 				->append_children( [
+
+					/**
+					 * Content List
+					 */
 					( new \CPR\Components\Modules\Content_List() )
-						->parse_from_wp_query( $this->query )
-						->set_theme( 'gridLarge' )
-							->set_child_themes(
-								[
-									'content-item' => 'gridPrimary',
-									'title'        => 'grid',
-									'eyebrow'      => 'small',
-								]
-							),	
-                ] ),
+							->set_config( 'heading', __( 'Search Results for:', 'cpr' ) )
+							->parse_from_wp_query( $this->query )
+							->set_theme( 'gridLarge' )
+								->set_child_themes(
+									[
+										'content-item' => 'gridPrimary',
+										'title'        => 'grid',
+										'eyebrow'      => 'small',
+									]
+								),	
+					] ),
 
 			/**
 			 * Pagination for results.
@@ -105,20 +104,6 @@ class Search extends \WP_Components\Component {
 		$pagination->set_config( 'total', absint( $this->query->found_posts ?? 0 ) );
 
 		return $pagination;
-	}
-
-	/**
-	 * Modify results.
-	 *
-	 * @param object $wp_query wp_query object.
-	 */
-	public static function pre_get_posts( $wp_query ) {
-		if (
-			$wp_query->is_search()
-			&& ! empty( $wp_query->get( 'irving-path' ) )
-		) {
-			$wp_query->set( 'posts_per_page', 16 );
-		}
 	}
 
 	/**
