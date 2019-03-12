@@ -75,7 +75,7 @@ class Author_Archive extends \WP_Components\Component {
 							( new \WP_Components\HTML() )
 								->set_config( 'content', get_post_meta( $this->guest_author->ID, 'description', true ) )
 						)
-					),
+				),
 
 			/**
 			 * Column Area
@@ -88,7 +88,7 @@ class Author_Archive extends \WP_Components\Component {
 							// Translators: %1$s, author archive heading name.
 							esc_html__( 'Stories by %1$s', 'cpr' ),
 							esc_html( $this->get_author_display_name() )
-						)
+						),
 					]
 				)
 				->append_children( [
@@ -122,8 +122,8 @@ class Author_Archive extends \WP_Components\Component {
 								 */
 								( new \CPR\Components\Modules\Content_List() )
 									->set_config( 'eyebrow_label', __( 'Across Colorado', 'cpr' ) ) // $todo Change to the source of the data.
-									->set_heading_from_fm_data( $data['author_arhive_stories'] ?? [] )
-									->parse_from_fm_data( $data['author_arhive_stories'] ?? [], 4 ) // $todo Change to the source of the data.
+									->set_heading_from_fm_data( $data['author_archive_stories'] ?? [] )
+									->parse_from_fm_data( $data['author_archive_stories'] ?? [], 4 ) // $todo Change to the source of the data.
 									->set_child_themes(
 										[
 											'content-list'         => 'river',
@@ -147,8 +147,8 @@ class Author_Archive extends \WP_Components\Component {
 						),
 
 					/**
-			 		* Pagination.
-			 		*/
+					 * Pagination
+					 */
 					$this->get_pagination_component(),
 				] ),
 		];
