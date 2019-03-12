@@ -68,7 +68,7 @@ class Article extends \WP_Components\Component {
 					[
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'grid_item' )
-							->parse_from_jetpack_related( $this->get_post_id(), 3, [] )
+							->parse_from_jetpack_related( $this->get_post_id(), 4, [] )
 							->set_theme( 'gridLarge' )
 							->set_child_themes(
 								[
