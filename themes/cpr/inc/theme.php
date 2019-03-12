@@ -46,7 +46,10 @@ function theme_setup() {
 	// Set up theme's use of wp_nav_menu().
 	register_nav_menus( array(
 		'header'    => __( 'Header', 'cpr' ),
-		'footer'    => __( 'Footer', 'cpr' ),
+		'footer-1'  => __( 'Footer 1', 'cpr' ),
+		'footer-2'  => __( 'Footer 2', 'cpr' ),
+		'footer-3'  => __( 'Footer 3', 'cpr' ),
+		'footer-4'  => __( 'Footer 4', 'cpr' ),
 		'news'      => __( 'News', 'cpr' ),
 		'classical' => __( 'Classical', 'cpr' ),
 		'openair'   => __( 'OpenAir', 'cpr' ),
