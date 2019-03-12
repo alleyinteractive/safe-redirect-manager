@@ -16,7 +16,7 @@ class Search_Bar extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-    public $name = 'search-bar';
+	public $name = 'search-bar';
 
 	/**
 	 * Define the default config of a search bar.
