@@ -24,17 +24,22 @@ class Term_Archive extends \WP_Components\Component {
 
 	/**
 	 * Hook into query being set.
+	 * 
+	 * @return self
 	 */
-	public function query_has_set() {
+	public function query_has_set() : self {
 		// Also set the term.
 		$this->set_term( $this->get_queried_object() );
+		return $this;
 	}
 
 	/**
 	 * Hook into term being set.
+	 * 
+	 * @return self
 	 */
-	public function term_has_set() {
-		$body = new \WP_Components\Body();
+	public function term_has_set() : self {
+		$body           = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;
@@ -47,23 +52,58 @@ class Term_Archive extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		return [
-			/**
-			 * "More Stories" river.
-			 */
-			( new \CPR\Components\Modules\Content_List() )
-				->set_config( 'layout', 'river' )
-				->set_config( 'image_size', 'grid_item' )
-				->set_config( 'show_excerpt', true )
-				->set_config( 'heading', $this->term->name )
-				->set_config( 'heading_border', true )
-				->parse_from_wp_query( $this->query ),
-				// ->append_child(
-					/**
-					 * Pagination.
-					 *
-					 * @todo Implement.
-					 */
-				// ),
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'one-column' )
+				->append_children( [
+					( new \CPR\Components\Modules\Content_List() )
+						->set_config( 'heading', $this->wp_term_get_name() )
+						->parse_from_wp_query( $this->query )
+						->set_theme( 'gridLarge' )
+							->set_child_themes(
+								[
+									'content-item' => 'gridPrimary',
+									'title'        => 'grid',
+									'eyebrow'      => 'small',
+								]
+							),	
+				] ),
+			$this->get_pagination_component(),
 		];
+	}
+
+	/**
+	 * Get the pagination component.
+	 *
+	 * @return \WP_Components\Pagination
+	 */
+	public function get_pagination_component() : \WP_Components\Pagination {
+		// Create instance.
+		$pagination = new \WP_Components\Pagination();
+
+		// Flag irving parameters to remove.
+		$pagination->set_config( 'url_params_to_remove', [ 'path', 'context' ] );
+
+		// Set the base URL for search.
+		$pagination->set_config( 'base_url', "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/" );
+
+		// Apply to the current query.
+		$pagination->set_query( $this->query );
+
+		// Figure out the term archive meta info.
+		$posts_per_page = 16;
+		$page           = absint( $this->query->get( 'paged' ) );
+		if ( $page < 1 ) {
+			$page = 1;
+		}
+
+		$pagination->set_config( 'range_end', $page * $posts_per_page );
+		$pagination->set_config(
+			'range_start',
+			( $pagination->get_config( 'range_end' ) - $posts_per_page + 1 )
+		);
+
+		$pagination->set_config( 'total', absint( $this->query->found_posts ?? 0 ) );
+
+		return $pagination;
 	}
 }
