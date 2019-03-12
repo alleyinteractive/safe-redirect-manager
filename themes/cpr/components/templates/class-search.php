@@ -60,8 +60,8 @@ class Search extends \WP_Components\Component {
 										'title'        => 'grid',
 										'eyebrow'      => 'small',
 									]
-								),	
-					] ),
+								),
+                ] ),
 
 			/**
 			 * Pagination for results.
