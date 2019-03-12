@@ -21,12 +21,12 @@ cpr.org is a headless [Irving](https://github.com/alleyinteractive/irving) proje
 
 **Staging**
 * [Frontend Irving](https://cpr-staging.herokuapp.com)
-* [WP Admin](http://content-staging.cpr.org/wp-admin/) - Creds in 1pass
+* [WP Admin](https://staging-coloradopublicradio.alleydev.com/wp-admin/) - Creds in 1pass
 * [Pantheon Dashboard](https://dashboard.pantheon.io/sites/abd2856d-7c34-4a5b-88be-f30ce0274247#staging)
 
-**Production**
+**Production (in development)**
 * [Frontend Irving](https://cpr-production.herokuapp.com/)
-* [WP Admin](http://content.cpr.org/wp-admin/) - Creds in 1pass
+* [WP Admin](https://live-coloradopublicradio.alleydev.com/wp-admin/) - Creds in 1pass
 * [Pantheon Dashboard](https://dashboard.pantheon.io/sites/abd2856d-7c34-4a5b-88be-f30ce0274247#production)
 
 **Others**
@@ -54,12 +54,12 @@ There are other commands available in [package.json](https://github.com/alleyint
 ## Branch Workflow
 1. Branch off of `production` (let's call the new branch `feature`)
 1. Develop `feature`
-1. Create a pull request to merge `feature` into `staging` and merge at will into `staging`
-1. `staging` auto-deploys to https://staging.cpr.org
+1. Create a pull request to merge `feature` into `staging` and merge at will into `staging` (if desired)
+1. `staging` auto-deploys to https://cpr-staging.herokuapp.com/
 1. Verify your changes there ^
 1. Pull request `feature` into `production` and code review :horse:
 1. Merge `feature` into `production`
-1. `production` auto-deploys to https://cpr.org
+1. `production` auto-deploys to https://cpr-production.herokuapp.com
 
 ## Updating Core Irving
 To keep this project updated, changes from Core Irving should often be merged in. This can be accomplished easily by merging from `irving-production`, which is a remote to Irving already setup as part of `apm install`.
@@ -78,9 +78,9 @@ The backend is WordPress, and this repo lives in /wp-content/. It is hosted on P
 ## Branch Workflow
 1. Branch off of `production` (let's call the new branch `feature`)
 1. Develop `feature`
-1. Create a pull request to merge `feature` into `staging` and merge at will into `staging`
-1. `staging` auto-deploys to https://content-staging.cpr.org
+1. Create a pull request to merge `feature` into `staging` and merge at will into `staging` (if desired)
+1. `staging` auto-deploys to https://staging-coloradopublicradio.alleydev.com/wp-admin/
 1. Verify your changes there ^
 1. Pull request `feature` into `production` and code review :horse:
 1. Merge `feature` into `production`
-1. `production` auto-deploys to https://content.consensys.net/wp-admin
+1. `production` auto-deploys to https://live-coloradopublicradio.alleydev.com/wp-admin/
