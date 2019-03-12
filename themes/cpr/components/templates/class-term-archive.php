@@ -65,7 +65,7 @@ class Term_Archive extends \WP_Components\Component {
 									'title'        => 'grid',
 									'eyebrow'      => 'small',
 								]
-							),	
+                            ),
 				] ),
 			$this->get_pagination_component(),
 		];
