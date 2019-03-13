@@ -99,7 +99,7 @@ class Author_Archive extends \WP_Components\Component {
 					( new \CPR\Components\Modules\Content_List() )
 						->set_config( 'image_size', 'grid_item' )
 						->set_config( 'show_excerpt', true )
-						
+
 						->parse_from_wp_query( $this->query )
 						->set_theme( 'river_full' )
 							->set_child_themes(
@@ -116,7 +116,7 @@ class Author_Archive extends \WP_Components\Component {
 						->set_theme( 'right' )
 						->append_children(
 							[
-						
+
 								/**
 								 * Grid of additional items.
 								 */
@@ -149,50 +149,12 @@ class Author_Archive extends \WP_Components\Component {
 					/**
 					 * Pagination
 					 */
-					$this->get_pagination_component(),
+					( new \WP_Components\Pagination() )
+						->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+						->set_config( 'base_url', "/author/{$this->query->get( 'author_name' )}/" )
+						->set_query( $this->query ),
 				] ),
 		];
-	}
-
-	/**
-	 * Get the pagination component.
-	 *
-	 * @return \WP_Components\Pagination
-	 */
-	public function get_pagination_component() : \WP_Components\Pagination {
-
-		// Create instance.
-		$pagination = new \WP_Components\Pagination();
-
-		// Flag irving parameters to remove.
-		$pagination->set_config( 'url_params_to_remove', [ 'path', 'context' ] );
-
-		// Set the base URL for search.
-		$pagination->set_config( 'base_url', "/author/{$this->query->get( 'author_name' )}/" );
-
-		// Apply to the current query.
-		$pagination->set_query( $this->query );
-
-		// Figure out the term archive meta info.
-		$posts_per_page = absint( $this->query->get( 'posts_per_page' ) );
-		$page = absint( $this->query->get( 'paged' ) );
-		if ( $page < 1 ) {
-			$page = 1;
-		}
-
-		$pagination->set_config( 'range_end', $page * $posts_per_page );
-		$pagination->set_config(
-			'range_start',
-			absint( $pagination->get_config( 'range_end' ) - $posts_per_page + 1 )
-		);
-		$pagination->set_config( 'total', absint( $this->query->found_posts ?? 0 ) );
-
-		// Ensure the range isn't larger than the total.
-		if ( $pagination->get_config( 'range_end' ) > $pagination->get_config( 'total' ) ) {
-			$pagination->set_config( 'range_end', absint( $pagination->get_config( 'total' ) ) );
-		}
-
-		return $pagination;
 	}
 
 	/**

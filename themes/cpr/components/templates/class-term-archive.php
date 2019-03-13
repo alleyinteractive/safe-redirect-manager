@@ -24,7 +24,7 @@ class Term_Archive extends \WP_Components\Component {
 
 	/**
 	 * Hook into query being set.
-	 * 
+	 *
 	 * @return self
 	 */
 	public function query_has_set() : self {
@@ -35,7 +35,7 @@ class Term_Archive extends \WP_Components\Component {
 
 	/**
 	 * Hook into term being set.
-	 * 
+	 *
 	 * @return self
 	 */
 	public function term_has_set() : self {
@@ -78,43 +78,10 @@ class Term_Archive extends \WP_Components\Component {
 			/**
 			 * Pagination.
 			 */
-			$this->get_pagination_component(),
+			( new \WP_Components\Pagination() )
+				->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+				->set_config( 'base_url', "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/" )
+				->set_query( $this->query ),
 		];
-	}
-
-	/**
-	 * Get the pagination component.
-	 *
-	 * @return \WP_Components\Pagination
-	 */
-	public function get_pagination_component() : \WP_Components\Pagination {
-		// Create instance.
-		$pagination = new \WP_Components\Pagination();
-
-		// Flag irving parameters to remove.
-		$pagination->set_config( 'url_params_to_remove', [ 'path', 'context' ] );
-
-		// Set the base URL for search.
-		$pagination->set_config( 'base_url', "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/" );
-
-		// Apply to the current query.
-		$pagination->set_query( $this->query );
-
-		// Figure out the term archive meta info.
-		$posts_per_page = 16;
-		$page           = absint( $this->query->get( 'paged' ) );
-		if ( $page < 1 ) {
-			$page = 1;
-		}
-
-		$pagination->set_config( 'range_end', $page * $posts_per_page );
-		$pagination->set_config(
-			'range_start',
-			( $pagination->get_config( 'range_end' ) - $posts_per_page + 1 )
-		);
-
-		$pagination->set_config( 'total', absint( $this->query->found_posts ?? 0 ) );
-
-		return $pagination;
 	}
 }
