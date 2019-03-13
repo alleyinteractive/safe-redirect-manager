@@ -49,6 +49,7 @@ function build_components_endpoint(
 		$data['defaults'] = [
 			( new \WP_Components\Head() )->set_query( $wp_query ),
 			new Components\Slim_Navigation\Slim_Navigation(),
+			new Components\Primary_Navigation\Primary_Navigation(),
 			( new Components\Header\Header() )->set_query( $wp_query ),
 			new \WP_Components\Body(),
 			new Components\Footer\Footer(),
@@ -65,7 +66,7 @@ function build_components_endpoint(
 		 * Search results.
 		 */
 		case $wp_query->is_search():
-		$head->set_query( $wp_query );
+			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Search() )->set_query( $wp_query );
 			break;
 
