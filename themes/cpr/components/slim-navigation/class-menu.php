@@ -25,10 +25,7 @@ class Menu extends \WP_Components\Component {
 	 * @return array Default children.
 	 */
 	public function default_children() : array {
-
-		$children = [];
-
-		$children = [
+		return [
 			( new Menu_Item() )
 				->set_config( 'label', __( 'News', 'cpr' ) )
 				->set_config( 'link', home_url( '/news/' ) ),
@@ -41,7 +38,5 @@ class Menu extends \WP_Components\Component {
 				->set_config( 'label', __( 'OpenAir', 'cpr' ) )
 				->set_config( 'link', home_url( '/openair/' ) ),
 		];
-
-		return $children;
 	}
 }
