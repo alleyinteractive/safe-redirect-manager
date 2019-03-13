@@ -55,6 +55,9 @@ function build_components_endpoint(
 		];
 	}
 
+	// Begin building a head instance for this page.
+	$head = new \WP_Components\Head();
+
 	// Build page.
 	switch ( true ) {
 
@@ -62,6 +65,7 @@ function build_components_endpoint(
 		 * Search results.
 		 */
 		case $wp_query->is_search():
+		$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Search() )->set_query( $wp_query );
 			break;
 
@@ -71,18 +75,22 @@ function build_components_endpoint(
 		case 'landing-page' === $wp_query->get( 'dispatch' ):
 			switch ( $wp_query->get( 'landing-page-type' ) ) {
 				case 'homepage':
+					$head->set_post( $wp_query->post );
 					$template = ( new Components\Templates\Homepage() )->set_post( $wp_query->post );
 					break;
 
 				case 'news':
+					$head->set_post( $wp_query->post );
 					$template = ( new Components\Templates\News() )->set_post( $wp_query->post );
 					break;
 
 				case 'classical':
+					$head->set_post( $wp_query->post );
 					$template = ( new Components\Templates\Classical() )->set_post( $wp_query->post );
 					break;
 
 				case 'openair':
+					$head->set_post( $wp_query->post );
 					$template = ( new Components\Templates\Openair() )->set_post( $wp_query->post );
 					break;
 			}
@@ -93,6 +101,7 @@ function build_components_endpoint(
 		 * Author archive.
 		 */
 		case $wp_query->is_author():
+			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Author_Archive() )->set_query( $wp_query );
 			break;
 
@@ -100,6 +109,7 @@ function build_components_endpoint(
 		 * Top 30 archive.
 		 */
 		case $wp_query->is_post_type_archive( 'top-30' ):
+			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Top_30_Archive() )->set_query( $wp_query );
 			break;
 
@@ -109,6 +119,7 @@ function build_components_endpoint(
 		case $wp_query->is_tax():
 		case $wp_query->is_tag():
 		case $wp_query->is_category():
+			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Term_Archive() )->set_query( $wp_query );
 			break;
 
@@ -116,6 +127,7 @@ function build_components_endpoint(
 		 * Article.
 		 */
 		case $wp_query->is_single():
+			$head->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Article() )->set_post( $wp_query->post );
 			break;
 
@@ -123,6 +135,7 @@ function build_components_endpoint(
 		 * Page.
 		 */
 		case $wp_query->is_page():
+			$head->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
 			break;
 
@@ -131,11 +144,20 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_404():
 		default:
+			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Error() )->set_query( $wp_query );
 			break;
 	}
 
+	// Setup the page data based on routing.
 	$data['page'] = $template->to_array()['children'];
+
+	// Unshift the head to the top.
+	array_unshift(
+		$data['page'],
+		apply_filters( 'cpr_head', $head )
+	);
+
 	return $data;
 }
 add_filter( 'wp_irving_components_route', __NAMESPACE__ . '\build_components_endpoint', 10, 5 );
