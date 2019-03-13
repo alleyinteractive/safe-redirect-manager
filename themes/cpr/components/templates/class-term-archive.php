@@ -84,4 +84,20 @@ class Term_Archive extends \WP_Components\Component {
 				->set_query( $this->query ),
 		];
 	}
+
+	/**
+	 * Modify results.
+	 *
+	 * @param object $wp_query wp_query object.
+	 */
+	public static function pre_get_posts( $wp_query ) {
+		if (
+			(
+				$wp_query->is_category()
+				|| $wp_query->is_tax()
+			) && ! empty( $wp_query->get( 'irving-path' ) )
+		) {
+			$wp_query->set( 'posts_per_page', 16 );
+		}
+	}
 }

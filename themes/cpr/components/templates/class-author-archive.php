@@ -164,7 +164,7 @@ class Author_Archive extends \WP_Components\Component {
 	 */
 	public static function pre_get_posts( $wp_query ) {
 		if ( $wp_query->is_author() && ! empty( $wp_query->get( 'irving-path' ) ) ) {
-			$wp_query->set( 'posts_per_page', 7 );
+			$wp_query->set( 'posts_per_page', 16 );
 		}
 	}
 }

@@ -8,3 +8,12 @@
  */
 
 namespace CPR;
+
+// Modfiy search results.
+add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Search', 'pre_get_posts' ] );
+
+// Modify term archive results.
+add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Term_Archive', 'pre_get_posts' ] );
+
+// Modify author archive results.
+add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Author_Archive', 'pre_get_posts' ] );
