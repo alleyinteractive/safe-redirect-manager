@@ -66,7 +66,7 @@ function build_components_endpoint(
 		 * Search results.
 		 */
 		case $wp_query->is_search():
-		$head->set_query( $wp_query );
+			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Search() )->set_query( $wp_query );
 			break;
 
