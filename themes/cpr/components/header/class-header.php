@@ -29,8 +29,42 @@ class Header extends \WP_Components\Component {
 	public function default_children() : array {
 		return [
 			new \CPR\Components\Logo(),
-			new Sections(),
-			( new Menu() )->set_menu( 'header' ),
+			( new \WP_Components\Menu() )
+				->append_children(
+					[
+						( new \WP_Components\Menu_Item() )
+							->merge_config(
+								[
+									'id'    => 0,
+									'label' => __( 'News', 'cpr' ),
+									'url'   => home_url( '/news/' ),
+								],
+							),
+						( new \WP_Components\Menu_Item() )
+							->merge_config(
+								[
+									'id'    => 1,
+									'label' => __( 'Classical', 'cpr' ),
+									'url'   => home_url( '/classical/' ),
+								],
+							),
+						( new \WP_Components\Menu_Item() )
+							->merge_config(
+								[
+									'id'    => 2,
+									'label' => __( 'OpenAir', 'cpr' ),
+									'url'   => home_url( '/openair/' ),
+								],
+							),
+					]
+				)
+				->set_theme( 'sections' )
+				->set_child_themes( [ 'menu-item' => 'sections' ] ),
+			( new \WP_Components\Menu() )
+				->set_menu( 'header' )
+				->parse_wp_menu()
+				->set_theme( 'header' )
+				->set_child_themes( [ 'menu-item' => 'header' ] ),
 		];
 	}
 
