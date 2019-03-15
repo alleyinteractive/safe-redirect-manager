@@ -37,8 +37,16 @@ class Footer extends \WP_Components\Component {
 
 		return array_merge(
 			[
-				new \CPR\Components\Logo(),
-				new \CPR\Components\Modules\Newsletter(),
+				( new \CPR\Components\Logo() )
+					->set_theme( 'footer' ),
+				( new \CPR\Components\Modules\Newsletter() )
+					->set_theme( 'footer' )
+					->merge_config(
+						[
+							'background_color' => 'transparent',
+							'tagline'          => '',
+						]
+					),
 				( new \WP_Components\HTML() )
 					->set_config(
 						'content',

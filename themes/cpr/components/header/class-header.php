@@ -28,7 +28,8 @@ class Header extends \WP_Components\Component {
 	 */
 	public function default_children() : array {
 		return [
-			new \CPR\Components\Logo(),
+			( new \CPR\Components\Logo() )
+				->set_theme( 'primary' ),
 			( new \WP_Components\Menu() )
 				->append_children(
 					[
@@ -81,7 +82,9 @@ class Header extends \WP_Components\Component {
 				$type = $this->query->get( 'landing-page-type' );
 				if ( 'homepage' !== $type ) {
 					$this->children = [
-						( new \CPR\Components\Logo() )->set_config( 'type', $type ),
+						( new \CPR\Components\Logo() )
+							->set_config( 'type', $type )
+							->set_theme( 'primary' ),
 						( new Menu() )->set_menu( $type ),
 					];
 					return $this;
@@ -90,13 +93,17 @@ class Header extends \WP_Components\Component {
 			case $this->query->is_tax( 'section' ):
 				$term = $this->query->get_queried_object();
 				$this->children = [
-					( new \CPR\Components\Logo() )->set_config( 'type', $term->slug ?? '' ),
+					( new \CPR\Components\Logo() )
+						->set_config( 'type', $term->slug ?? '' )
+						->set_theme( 'primary' ),
 					( new Menu() )->set_menu( $term->slug ?? '' ),
 				];
 				return $this;
 			case $this->query->is_post_type_archive( 'top-30' ):
 				$this->children = [
-					( new \CPR\Components\Logo() )->set_config( 'type', 'openair' ),
+					( new \CPR\Components\Logo() )
+						->set_config( 'type', 'openair' )
+						->set_theme( 'primary' ),
 					( new Menu() )->set_menu( 'openair' ),
 				];
 				return $this;
