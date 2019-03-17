@@ -28,9 +28,44 @@ class Header extends \WP_Components\Component {
 	 */
 	public function default_children() : array {
 		return [
-			new \CPR\Components\Logo(),
-			new Sections(),
-			( new Menu() )->set_menu( 'header' ),
+			( new \CPR\Components\Logo() )
+				->set_theme( 'primary' ),
+			( new \WP_Components\Menu() )
+				->append_children(
+					[
+						( new \WP_Components\Menu_Item() )
+							->merge_config(
+								[
+									'id'    => 0,
+									'label' => __( 'News', 'cpr' ),
+									'url'   => home_url( '/news/' ),
+								]
+							),
+						( new \WP_Components\Menu_Item() )
+							->merge_config(
+								[
+									'id'    => 1,
+									'label' => __( 'Classical', 'cpr' ),
+									'url'   => home_url( '/classical/' ),
+								]
+							),
+						( new \WP_Components\Menu_Item() )
+							->merge_config(
+								[
+									'id'    => 2,
+									'label' => __( 'OpenAir', 'cpr' ),
+									'url'   => home_url( '/openair/' ),
+								]
+							),
+					]
+				)
+				->set_theme( 'sections' )
+				->set_child_themes( [ 'menu-item' => 'sections' ] ),
+			( new \WP_Components\Menu() )
+				->set_menu( 'header' )
+				->parse_wp_menu()
+				->set_theme( 'header' )
+				->set_child_themes( [ 'menu-item' => 'header' ] ),
 		];
 	}
 
@@ -47,7 +82,9 @@ class Header extends \WP_Components\Component {
 				$type = $this->query->get( 'landing-page-type' );
 				if ( 'homepage' !== $type ) {
 					$this->children = [
-						( new \CPR\Components\Logo() )->set_config( 'type', $type ),
+						( new \CPR\Components\Logo() )
+							->set_config( 'type', $type )
+							->set_theme( 'primary' ),
 						( new Menu() )->set_menu( $type ),
 					];
 					return $this;
@@ -56,13 +93,17 @@ class Header extends \WP_Components\Component {
 			case $this->query->is_tax( 'section' ):
 				$term = $this->query->get_queried_object();
 				$this->children = [
-					( new \CPR\Components\Logo() )->set_config( 'type', $term->slug ?? '' ),
+					( new \CPR\Components\Logo() )
+						->set_config( 'type', $term->slug ?? '' )
+						->set_theme( 'primary' ),
 					( new Menu() )->set_menu( $term->slug ?? '' ),
 				];
 				return $this;
 			case $this->query->is_post_type_archive( 'top-30' ):
 				$this->children = [
-					( new \CPR\Components\Logo() )->set_config( 'type', 'openair' ),
+					( new \CPR\Components\Logo() )
+						->set_config( 'type', 'openair' )
+						->set_theme( 'primary' ),
 					( new Menu() )->set_menu( 'openair' ),
 				];
 				return $this;

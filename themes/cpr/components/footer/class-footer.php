@@ -25,26 +25,45 @@ class Footer extends \WP_Components\Component {
 	 * @return array Default children.
 	 */
 	public function default_children() : array {
-		return [
-			new \CPR\Components\Logo(),
-			new \CPR\Components\Modules\Newsletter(),
-			( new \WP_Components\HTML() )
-				->set_config(
-					'content',
-					sprintf(
-						'© %1$s %2$s <a href="%3$s">%4$s</a>.',
-						date( 'Y' ),
-						__( 'Colorado Public Radio. All Rights Reserved.', 'cpr' ),
-						home_url( '/privacy-policy/' ),
-						__( 'Privacy Policy', 'cpr' )
-					)
-				),
-			( new \CPR\Components\Social_Links() )
-				->parse_from_fm_data(),
-			( new Menu() )->set_menu( 'footer-1' ),
-			( new Menu() )->set_menu( 'footer-2' ),
-			( new Menu() )->set_menu( 'footer-3' ),
-			( new Menu() )->set_menu( 'footer-4' ),
-		];
+		$menus = array_map(
+			function( $menu ) {
+				return ( new \WP_Components\Menu() )
+					->set_menu( $menu )
+					->parse_wp_menu()
+					->wp_menu_set_title()
+					->set_theme( 'footer' )
+					->set_child_themes( [ 'menu-item' => 'footer' ] );
+			},
+			[ 'footer-1', 'footer-2', 'footer-3', 'footer-4' ]
+		);
+
+		return array_merge(
+			[
+				( new \CPR\Components\Logo() )
+					->set_theme( 'footer' ),
+				( new \CPR\Components\Modules\Newsletter() )
+					->set_theme( 'footer' )
+					->merge_config(
+						[
+							'background_color' => 'transparent',
+							'tagline'          => '',
+						]
+					),
+				( new \WP_Components\HTML() )
+					->set_config(
+						'content',
+						sprintf(
+							'© %1$s %2$s <a href="%3$s">%4$s</a>.',
+							date( 'Y' ),
+							__( 'Colorado Public Radio. All Rights Reserved.', 'cpr' ),
+							home_url( '/privacy-policy/' ),
+							__( 'Privacy Policy', 'cpr' )
+						)
+					),
+				( new \CPR\Components\Social_Links() )
+					->parse_from_fm_data(),
+			],
+			$menus
+		);
 	}
 }
