@@ -25,15 +25,17 @@ class Footer extends \WP_Components\Component {
 	 * @return array Default children.
 	 */
 	public function default_children() : array {
-		$menu_slugs = [ 'footer-1', 'footer-2', 'footer-3', 'footer-4' ];
-		$menus = array_map( function( $menu ) {
-			return ( new \WP_Components\Menu() )
-				->set_menu( $menu )
-				->parse_wp_menu()
-				->wp_menu_set_title()
-				->set_theme( 'footer' )
-				->set_child_themes( [ 'menu-item' => 'footer' ] );
-		}, $menu_slugs );
+		$menus = array_map(
+			function( $menu ) {
+				return ( new \WP_Components\Menu() )
+					->set_menu( $menu )
+					->parse_wp_menu()
+					->wp_menu_set_title()
+					->set_theme( 'footer' )
+					->set_child_themes( [ 'menu-item' => 'footer' ] );
+			},
+			[ 'footer-1', 'footer-2', 'footer-3', 'footer-4' ]
+		);
 
 		return array_merge(
 			[
