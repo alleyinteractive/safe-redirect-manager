@@ -26,7 +26,11 @@ class Primary_Navigation extends \WP_Components\Component {
 	 */
 	public function default_children() : array {
 		return [
-			( new Menu() )->set_menu( 'primary-navigation' ),
+			( new \WP_Components\Menu() )
+				->set_menu( 'primary-navigation' )
+				->parse_wp_menu()
+				->set_theme( 'primary-nav' )
+				->set_child_themes( [ 'menu-item' => 'primary-nav' ] ),
 		];
 	}
 }
