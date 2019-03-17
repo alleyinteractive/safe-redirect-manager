@@ -32,6 +32,7 @@ class Footer extends \WP_Components\Component {
 					->parse_wp_menu()
 					->wp_menu_set_title()
 					->set_theme( 'footer' )
+					->set_config( 'display_title', true )
 					->set_child_themes( [ 'menu-item' => 'footer' ] );
 			},
 			[ 'footer-1', 'footer-2', 'footer-3', 'footer-4' ]
