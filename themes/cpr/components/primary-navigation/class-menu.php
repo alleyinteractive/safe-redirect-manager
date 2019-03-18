@@ -1,14 +1,14 @@
 <?php
 /**
- * Header Menu component.
+ * Primary Navigation Menu component.
  *
  * @package CPR
  */
 
-namespace CPR\Components\Header;
+namespace CPR\Components\Primary_Navigation;
 
 /**
- * Header Menu.
+ * Primary Navigation Menu.
  */
 class Menu extends \WP_Components\Component {
 
@@ -19,17 +19,18 @@ class Menu extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'header-menu';
+	public $name = 'primary-navigation-menu';
 
 	/**
-	 * Default config is the sections.
+	 * Define a default config.
 	 *
 	 * @return array
 	 */
 	public function default_config() : array {
 		return [
+			'title'           => '',
 			'type'            => 'menu',
-			'menu_item_class' => '\CPR\Components\Header\Menu_Item',
+			'menu_item_class' => '\CPR\Components\Primary_Navigation\Menu_Item',
 		];
 	}
 
@@ -39,6 +40,7 @@ class Menu extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function menu_has_set() : self {
+		$this->wp_menu_set_title();
 		$this->parse_wp_menu();
 		return $this;
 	}

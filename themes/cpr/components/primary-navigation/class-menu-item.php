@@ -1,14 +1,14 @@
 <?php
 /**
- * Header Menu Item component.
+ * Primary Navigation Menu Item component.
  *
  * @package CPR
  */
 
-namespace CPR\Components\Header;
+namespace CPR\Components\Primary_Navigation;
 
 /**
- * Header Menu Item.
+ * Primary Navigation Menu Item.
  */
 class Menu_Item extends \WP_Components\Component {
 
@@ -19,7 +19,7 @@ class Menu_Item extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'header-menu-item';
+	public $name = 'primary-navigation-menu-item';
 
 	/**
 	 * Define a default config.
