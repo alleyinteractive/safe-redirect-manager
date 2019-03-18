@@ -25,7 +25,7 @@ class Footer extends \WP_Components\Component {
 	 * @return array Default children.
 	 */
 	public function default_children() : array {
-		// @TODO deterimine if it's cool to hard-code the order of title links or if we need to make it more customizble.
+		// @TODO determine if it's cool to hard-code the order of title links or if we need to make it more customizable.
 		$menus = array_map(
 			function( $menu, $title_link ) {
 				return ( new \WP_Components\Menu() )
