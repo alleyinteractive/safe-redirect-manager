@@ -12,6 +12,9 @@ namespace CPR\Migration;
  */
 class Migration {
 
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
 
 		// Load the sync script.
