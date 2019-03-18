@@ -28,7 +28,6 @@ class Menu extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'title'           => '',
 			'type'            => 'menu',
 			'menu_item_class' => '\CPR\Components\Primary_Navigation\Menu_Item',
 		];
