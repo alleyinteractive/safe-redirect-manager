@@ -46,8 +46,10 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 		if ( isset( $files[ $offset ] ) ) {
 			$source_object_id = str_replace( '.json', '', $files[ $offset ] );
 			$source_object = \CPR\Migration\Migration::load_json_data( $source_object_id, $this->sync_slug );
+
+			return [ $source_object ];
 		}
 
-		return [ $source_object ];
+		return [];
 	}
 }
