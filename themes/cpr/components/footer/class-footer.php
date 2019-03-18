@@ -25,16 +25,29 @@ class Footer extends \WP_Components\Component {
 	 * @return array Default children.
 	 */
 	public function default_children() : array {
+		// @TODO determine if it's cool to hard-code the order of title links or if we need to make it more customizable.
 		$menus = array_map(
-			function( $menu ) {
+			function( $menu, $title_link ) {
 				return ( new \WP_Components\Menu() )
 					->set_menu( $menu )
 					->parse_wp_menu()
 					->wp_menu_set_title()
 					->set_theme( 'footer' )
+					->set_config( 'title_link', $title_link )
 					->set_child_themes( [ 'menu-item' => 'footer' ] );
 			},
-			[ 'footer-1', 'footer-2', 'footer-3', 'footer-4' ]
+			[
+				'footer-1',
+				'footer-2',
+				'footer-3',
+				'footer-4',
+			],
+			[
+				home_url(),
+				home_url( '/news/' ),
+				home_url( '/classical/' ),
+				home_url( '/openair/' ),
+			]
 		);
 
 		return array_merge(
