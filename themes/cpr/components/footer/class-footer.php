@@ -33,7 +33,12 @@ class Footer extends \WP_Components\Component {
 					->parse_wp_menu()
 					->wp_menu_set_title()
 					->set_theme( 'footer' )
-					->set_config( 'title_link', $title_link )
+					->merge_config(
+						[
+							'display_title' => true,
+							'title_link'    => $title_link,
+						]
+					)
 					->set_child_themes( [ 'menu-item' => 'footer' ] );
 			},
 			[

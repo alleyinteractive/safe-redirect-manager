@@ -26,7 +26,30 @@ class Primary_Navigation extends \WP_Components\Component {
 	 */
 	public function default_children() : array {
 		return [
-			( new Menu() )->set_menu( 'primary-navigation' ),
+			( new Menu() )
+				->set_menu( 'primary-navigation' )
+				->children_callback( function ( $menu_item ) {
+					// Set submenus to use regular 'menu' name.
+					$menu_item->children_callback( function( $submenu ) {
+						// Set submenu items to use regular 'menu-item' name.
+						$submenu->set_name( 'menu' )
+							->children_callback( function( $submenu_item ) {
+								$submenu_item->set_name( 'menu-item' );
+
+								return $submenu_item;
+							} );
+
+						return $submenu;
+					} );
+
+					return $menu_item;
+				} )
+				->set_child_themes(
+					[
+						'menu'      => 'primaryNavSubmenu',
+						'menu-item' => 'primaryNavSubmenu',
+					]
+				),
 		];
 	}
 }

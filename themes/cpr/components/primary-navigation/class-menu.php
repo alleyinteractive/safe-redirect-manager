@@ -28,7 +28,6 @@ class Menu extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'title'           => '',
 			'type'            => 'menu',
 			'menu_item_class' => '\CPR\Components\Primary_Navigation\Menu_Item',
 		];
@@ -40,7 +39,6 @@ class Menu extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function menu_has_set() : self {
-		$this->wp_menu_set_title();
 		$this->parse_wp_menu();
 		return $this;
 	}
