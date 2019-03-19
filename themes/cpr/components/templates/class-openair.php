@@ -192,12 +192,13 @@ class Openair extends \WP_Components\Component {
 			 * Videos content list.
 			 */
 			( new \CPR\Components\Column_Area() )
+				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
 						'heading'           => $data['videos']['heading'] ?? '',
 						'heading_cta_label' => __( 'All Videos', 'cpr' ),
 						'heading_cta_link'  => home_url(), // @todo Update once known.
-						
+
 					]
 				)
 				->append_child(
@@ -213,6 +214,13 @@ class Openair extends \WP_Components\Component {
 							$data['videos']['content_item_ids'] ?? [],
 							2,
 							self::get_openair_posts_backfill_args() // @todo Determine actual backfill args.
+						)
+						->set_theme( 'gridHalf' )
+						->set_child_themes(
+							[
+								'content-item' => 'featureSecondary',
+								'title'        => 'featureSecondary',
+							]
 						)
 				),
 
@@ -241,7 +249,7 @@ class Openair extends \WP_Components\Component {
 				)
 				->set_child_themes(
 					[
-						'content-item' => 'gridPrimary',
+						'content-item' => 'grid',
 						'eyebrow'      => 'small',
 						'title'        => 'grid',
 					]
@@ -291,7 +299,7 @@ class Openair extends \WP_Components\Component {
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
-									'content-item' => 'featureHalf',
+									'content-item' => 'featureSecondary',
 									'eyebrow'      => 'small',
 									'title'        => 'featureSecondary',
 								]
@@ -315,8 +323,8 @@ class Openair extends \WP_Components\Component {
 							)
 							->set_child_themes(
 								[
-									'content-list' => 'gridPrimary',
-									'content-item' => 'gridPrimary',
+									'content-list' => 'gridHalf',
+									'content-item' => 'grid',
 									'eyebrow'      => 'small',
 									'title'        => 'grid',
 								]
