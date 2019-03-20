@@ -99,7 +99,7 @@ class Social_Links extends \WP_Components\Social_Links {
 				$link_configs[ $service ] = [
 					'type'        => $service ?? '',
 					'url'         => $url ?? '',
-					'displayIcon' => $display_icons,
+					'display_icon' => $display_icons,
 				];
 			}
 		}
