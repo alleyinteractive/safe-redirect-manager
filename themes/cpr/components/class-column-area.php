@@ -26,7 +26,7 @@ class Column_Area extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'theme_name'        => 'three-column',
+			'theme_name'        => 'threeColumn',
 			'heading'           => '',
 			'heading_link'      => '',
 			'heading_cta_label' => '',

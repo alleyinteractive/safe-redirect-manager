@@ -56,7 +56,7 @@ class Search extends \WP_Components\Component {
 							->set_theme( 'gridLarge' )
 								->set_child_themes(
 									[
-										'content-item' => 'gridPrimary',
+										'content-item' => 'grid',
 										'title'        => 'grid',
 										'eyebrow'      => 'small',
 									]

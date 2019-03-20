@@ -85,7 +85,7 @@ class Header extends \WP_Components\Component {
 						( new \CPR\Components\Logo() )
 							->set_config( 'type', $type )
 							->set_theme( 'primary' ),
-						( new Menu() )->set_menu( $type ),
+						( new \WP_Components\Menu() )->set_menu( $type ),
 					];
 					return $this;
 				}
@@ -96,7 +96,7 @@ class Header extends \WP_Components\Component {
 					( new \CPR\Components\Logo() )
 						->set_config( 'type', $term->slug ?? '' )
 						->set_theme( 'primary' ),
-					( new Menu() )->set_menu( $term->slug ?? '' ),
+					( new \WP_Components\Menu() )->set_menu( $term->slug ?? '' ),
 				];
 				return $this;
 			case $this->query->is_post_type_archive( 'top-30' ):
@@ -104,7 +104,7 @@ class Header extends \WP_Components\Component {
 					( new \CPR\Components\Logo() )
 						->set_config( 'type', 'openair' )
 						->set_theme( 'primary' ),
-					( new Menu() )->set_menu( 'openair' ),
+					( new \WP_Components\Menu() )->set_menu( 'openair' ),
 				];
 				return $this;
 		}

@@ -72,7 +72,7 @@ class Article extends \WP_Components\Component {
 							->set_theme( 'gridLarge' )
 							->set_child_themes(
 								[
-									'content-item' => 'gridPrimary',
+									'content-item' => 'grid',
 									'eyebrow'      => 'small',
 									'title'        => 'grid',
 								]
