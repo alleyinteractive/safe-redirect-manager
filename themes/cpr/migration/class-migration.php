@@ -45,7 +45,7 @@ class Migration {
 		$files = array_values(
 			array_filter(
 				array_map(
-					function( $file ) {
+					function ( $file ) {
 						if ( false !== strpos( $file, '.json' ) ) {
 							return $file;
 						}
