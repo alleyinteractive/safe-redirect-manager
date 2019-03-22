@@ -34,7 +34,7 @@ class Content_Item extends \WP_Components\Component {
 			'image_size'    => 'grid-item',
 			'permalink'     => '',
 			'show_excerpt'  => false,
-			'theme_name'    => 'gridPrimary',
+			'theme_name'    => 'grid',
 			'type'          => '',
 		];
 	}

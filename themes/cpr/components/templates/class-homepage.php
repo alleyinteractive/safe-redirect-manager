@@ -107,7 +107,7 @@ class Homepage extends \WP_Components\Component {
 							->set_theme( 'gridLarge' )
 							->set_child_themes(
 								[
-									'content-item' => 'gridPrimary',
+									'content-item' => 'grid',
 									'title'        => 'grid',
 									'eyebrow'      => 'small',
 								]
@@ -131,7 +131,7 @@ class Homepage extends \WP_Components\Component {
 				->set_theme( 'gridCentered' )
 				->set_child_themes(
 					[
-						'content-item' => 'gridSecondary',
+						'content-item' => 'grid',
 						'title'        => 'grid',
 						'eyebrow'      => 'large',
 					]
@@ -162,7 +162,7 @@ class Homepage extends \WP_Components\Component {
 							->set_theme( 'gridSmall' )
 							->set_child_themes(
 								[
-									'content-item' => 'gridPrimary',
+									'content-item' => 'grid',
 									'eyebrow'      => 'small',
 									'sidebar'      => 'right',
 								]
