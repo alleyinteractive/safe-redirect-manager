@@ -33,6 +33,9 @@ if ( WP_Utils::wp_cli() ) {
 	require_once CPR_PATH . '/inc/cli.php';
 }
 
+// Migration.
+require_once CPR_PATH . '/migration/class-migration.php';
+
 // Traits.
 require_once CPR_PATH . '/inc/traits/trait-backfill.php';
 require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
