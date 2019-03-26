@@ -17,7 +17,7 @@ class Migration {
 	 */
 	public function __construct() {
 
-		// Load the sync script.
+		// Load some AlleyPack modules.
 		\Alleypack\load_module( 'attachments', '1.0' );
 		\Alleypack\load_module( 'sync-script', '1.1' );
 

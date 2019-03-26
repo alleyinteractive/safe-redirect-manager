@@ -50,10 +50,10 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		// Map additional fields.
 		$this->object['display_name']  = $this->source['title'] ?? __( 'Missing Name', 'cpr' );
 		$this->object['user_login']    = sanitize_title( "{$this->object['first_name']} {$this->object['last_name']}" );
-        $this->object['twitter']       = $this->source['field_twitter']['und'][0]['title'] ?? false;
-        $this->object['bio']           = $this->source['body']['und'][0]['value'] ?? false;
+		$this->object['twitter']       = $this->source['field_twitter']['und'][0]['title'] ?? false;
+		$this->object['bio']           = $this->source['body']['und'][0]['value'] ?? false;
 
-        // Map meta.
+		// Map meta.
 		$this->object['meta_input'] = [
 			'legacy_id' => $this->source['nid'],
 		];
@@ -136,22 +136,22 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			return false;
 		}
 
-        // Setup meta.
-        $meta = [
-            'nid'              => $this->object['nid'] ?? '',
-            'cap-display_name' => $this->object['display_name'] ?? '',
-            'cap-first_name'   => $this->object['first_name'] ?? '',
-            'cap-last_name'    => $this->object['last_name'] ?? '',
-            'cap-user_email'   => $this->object['user_email'] ?? '',
-            'twitter'          => $this->object['twitter'] ?? '',
-            'description'      => $this->object['bio'] ?? '',
-        ];
+		// Setup meta.
+		$meta = [
+			'nid'              => $this->object['nid'] ?? '',
+			'cap-display_name' => $this->object['display_name'] ?? '',
+			'cap-first_name'   => $this->object['first_name'] ?? '',
+			'cap-last_name'    => $this->object['last_name'] ?? '',
+			'cap-user_email'   => $this->object['user_email'] ?? '',
+			'twitter'          => $this->object['twitter'] ?? '',
+			'description'      => $this->object['bio'] ?? '',
+		];
 
-        foreach ( $meta as $key => $value ) {
-            if ( ! empty( $value ) ) {
-                update_post_meta( $guest_author_id, $key, $value );
-            }
-        }
+		foreach ( $meta as $key => $value ) {
+			if ( ! empty( $value ) ) {
+				update_post_meta( $guest_author_id, $key, $value );
+			}
+		}
 
 		// Set byline image.
 		if ( ! empty( $this->source['field_photo']['uri'] ) && ! has_post_thumbnail( $guest_author_id ) ) {
@@ -166,13 +166,13 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * Parse the email address.
 	 */
 	private function parse_email() {
-        $this->object['user_email'] = '';
-        
+		$this->object['user_email'] = '';
+		
 		if ( empty( $this->source['field_email']['und'][0]['value'] ) ) {
-            return;
+			return;
 		}
-        
-        $email = $this->source['field_email']['und'][0]['value'];
+		
+		$email = $this->source['field_email']['und'][0]['value'];
 
 		// This definitely isn't an email address.
 		if ( ! is_email( $email ) ) {
@@ -190,7 +190,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		$this->object['first_name'] = '';
 		$this->object['last_name']  = '';
 
-        // Get the author's full name from the source.
+		// Get the author's full name from the source.
 		$name = $this->source['title'] ?? '';
 
 		// Bail if we don't have a name.
