@@ -34,7 +34,7 @@ class Feed_Item extends \Alleypack\Sync_Script\User_Feed_Item {
 		return $this->source['nid'] ?? false;
 	}
 
-		/**
+	/**
 	 * Map source data to the object.
 	 */
 	public function map_source_to_object() {
