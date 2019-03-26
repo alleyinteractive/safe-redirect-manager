@@ -13,21 +13,16 @@ use function Alleypack\create_attachment_from_url;
 /**
  * Person Feed Item.
  */
-class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
+class Feed_Item extends \Alleypack\Sync_Script\User_Feed_Item {
 
 	/**
-	 * Post type.
+	 * This object should always sync.
 	 *
-	 * @var string
+	 * @return bool
 	 */
-	public static $post_type = 'guest-author';
-
-	/**
-	 * Meta key for storing unique id.
-	 *
-	 * @var string
-	 */
-	protected $unique_id_key = 'nid';
+	public function should_object_sync() : bool {
+		return true;
+	}
 
 	/**
 	 * Get a unique id that will be used to associate the source data to the
@@ -39,19 +34,31 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		return $this->source['nid'] ?? false;
 	}
 
-	/**
+		/**
 	 * Map source data to the object.
 	 */
 	public function map_source_to_object() {
+
 		// Set the author's first/last name and email.
 		$this->parse_author_name();
 		$this->parse_email();
 
-		// Map additional fields.
-		$this->object['display_name']  = $this->source['title'] ?? __( 'Missing Name', 'cpr' );
-		$this->object['user_login']    = sanitize_title( "{$this->object['first_name']} {$this->object['last_name']}" );
-		$this->object['twitter']       = $this->source['field_twitter']['und'][0]['title'] ?? false;
-		$this->object['bio']           = $this->source['body']['und'][0]['value'] ?? false;
+		$user_login = $this->object['first_name'] ?? $this->object['last_name'];
+		$name       = "{$this->object['first_name']} {$this->object['last_name']}";
+
+		$this->object['user_login']   = sanitize_key( $user_login );
+		$this->object['display_name'] = sanitize_title( $name ?? '' );
+		$this->object['user_email']   = $this->object['user_email'] ?? '';
+		$this->object['description']  = wp_strip_all_tags( $this->source['body']['und'][0]['value'] ?? '' );
+		$this->object['user_pass']    = wp_generate_password();
+		$this->object['role']         = 'author';
+
+		// Object registered date.
+		$date = $this->source['created'] ?? '';
+		if ( empty( $date ) ) {
+			$date = time();
+		}
+		$this->object['user_registered'] = date( 'Y-m-d H:i:s', $date );
 
 		// Map meta.
 		$this->object['meta_input'] = [
@@ -64,94 +71,26 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	}
 
 	/**
-	 * Override method so that post statuses are left alone during sync.
-	 */
-	public static function mark_existing_content_as_syncing() {
-	}
-
-	/**
-	 * Override method so that post statuses are left alone during sync.
-	 */
-	public static function unpublish_unsynced_content() {
-	}
-
-	/**
-	 * Create or update the post object.
-	 *
-	 * @return bool Did the object save?
-	 */
-	public function save_object() {
-		global $coauthors_plus;
-
-		// Look for an existing guest author based on NID.
-		$posts = get_posts(
-			[
-				'post_type'        => 'guest-author',
-				'posts_per_page'   => 1,
-				'fields'           => 'ids',
-				'suppress_filters' => false,
-				'meta_key'         => 'nid',
-				'meta_value'       => $this->get_unique_id(),
-			]
-		);
-
-		// Existing guest author found.
-		if ( ! empty( $posts[0] ) ) {
-
-			// Update the post title if author's display name has changed.
-			if ( get_the_title( $posts[0] ) !== $this->object['display_name'] ) {
-				wp_update_post(
-					[
-						'ID'         => $posts[0],
-						'post_title' => $this->object['display_name'],
-					]
-				);
-			}
-
-			return true;
-		}
-
-		// Create guest author.
-		$guest_author_id = $coauthors_plus->guest_authors->create( $this->object );
-
-		// Add various caching and version meta.
-		if ( ! $guest_author_id instanceof \WP_Error ) {
-			alleypack_log( "Guest author created with ID {$guest_author_id}." );
-			$this->object['ID'] = $guest_author_id;
-			$this->update_object_cache( $guest_author_id );
-			return true;
-		}
-
-		alleypack_log( 'Error encountered while creating guest author.', $guest_author_id );
-		return false;
-	}
-
-	/**
 	 * Modify object after it's been saved.
 	 */
 	public function post_object_save() {
-		$guest_author_id = $this->get_object_id();
+		$user_id = $this->get_object_id();
 
-		if ( is_null( $guest_author_id ) ) {
+		if ( is_null( $user_id ) ) {
 			return false;
 		}
 
-		// Setup meta.
-		$meta = [
-			'nid'              => $this->object['nid'] ?? '',
-			'cap-display_name' => $this->object['display_name'] ?? '',
-			'cap-first_name'   => $this->object['first_name'] ?? '',
-			'cap-last_name'    => $this->object['last_name'] ?? '',
-			'cap-user_email'   => $this->object['user_email'] ?? '',
-			'twitter'          => $this->object['twitter'] ?? '',
-			'description'      => $this->object['bio'] ?? '',
-		];
+		// Create guest author.
+		$guest_author_id = $this->create_guest_author_from_user_id( $user_id );
 
-		foreach ( $meta as $key => $value ) {
-			if ( ! empty( $value ) ) {
-				update_post_meta( $guest_author_id, $key, $value );
-			}
+		// Add various caching and version meta.
+		if ( $guest_author_id instanceof \WP_Error ) {
+			alleypack_log( 'Error encountered while creating guest author.' );
+			return false;
 		}
+
+		// Save meta.
+		update_post_meta( $guest_author_id, 'twitter', $this->source['field_twitter']['und'][0]['title'] ?? false );
 
 		// Set byline image.
 		if ( ! empty( $this->source['field_photo']['uri'] ) && ! has_post_thumbnail( $guest_author_id ) ) {
@@ -160,6 +99,20 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 				set_post_thumbnail( $guest_author_id, $attachment_id );
 			}
 		}
+
+		alleypack_log( "Guest author created with ID {$guest_author_id}. And meta data saved." );
+	}
+
+	/**
+	 * Do nothing.
+	 */
+	public static function mark_existing_content_as_syncing() {
+	}
+
+	/**
+	 * Do nothing.
+	 */
+	public static function unpublish_unsynced_content() {
 	}
 
 	/**
