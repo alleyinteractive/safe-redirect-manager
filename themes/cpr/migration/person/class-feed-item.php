@@ -50,7 +50,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		// Map additional fields.
 		$this->object['display_name']  = $this->source['title'] ?? __( 'Missing Name', 'cpr' );
 		$this->object['user_login']    = sanitize_title( "{$this->object['first_name']} {$this->object['last_name']}" );
-        $this->object['twitter']       = $this->source['field_twitter']['und'][0]['value'] ?? false;
+        $this->object['twitter']       = $this->source['field_twitter']['und'][0]['title'] ?? false;
         $this->object['bio']           = $this->source['body']['und'][0]['value'] ?? false;
 
         // Map meta.
