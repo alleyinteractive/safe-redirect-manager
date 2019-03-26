@@ -18,13 +18,18 @@ class Migration {
 	public function __construct() {
 
 		// Load the sync script.
+		\Alleypack\load_module( 'attachments', '1.0' );
 		\Alleypack\load_module( 'sync-script', '1.1' );
 
-		// Migration.
+		// Story Migration.
 		require_once CPR_PATH . '/migration/story/class-feed.php';
 		require_once CPR_PATH . '/migration/story/class-feed-item.php';
 		\Alleypack\Sync_Script\register_feed( '\CPR\Migration\Story\Feed' );
 
+		// Person Migration.
+		require_once CPR_PATH . '/migration/person/class-feed.php';
+		require_once CPR_PATH . '/migration/person/class-feed-item.php';
+		\Alleypack\Sync_Script\register_feed( '\CPR\Migration\Person\Feed' );
 	}
 
 	/**
