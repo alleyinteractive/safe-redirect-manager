@@ -81,7 +81,7 @@ class Feed_Item extends \Alleypack\Sync_Script\User_Feed_Item {
 		}
 
 		// Create guest author.
-		$guest_author_id = $this->create_guest_author_from_user_id( $user_id );
+		$guest_author_id = static::create_guest_author_from_user_id( $user_id );
 
 		// Add various caching and version meta.
 		if ( $guest_author_id instanceof \WP_Error ) {
