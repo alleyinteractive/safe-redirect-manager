@@ -161,7 +161,7 @@ function build_components_endpoint(
 	// Unshift the head to the top.
 	array_unshift(
 		$data['page'],
-		( new Components\Header\Header() )->set_query( $wp_query ),
+		( new Components\Header\Header() )->set_query( $wp_query )
 	);
 
 	return $data;
