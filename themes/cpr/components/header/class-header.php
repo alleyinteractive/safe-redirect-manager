@@ -90,6 +90,17 @@ class Header extends \WP_Components\Component {
 					return $this;
 				}
 				break;
+			case $this->query->is_single():
+				$sections = wp_get_post_terms( ( $this->query->post->ID ?? 0 ), 'section' );
+				if ( ! empty( $sections[0] ) && $sections[0] instanceof \WP_Term ) {
+					$this->children = [
+						( new \CPR\Components\Logo() )
+							->set_config( 'type', $sections[0]->slug ?? '' )
+							->set_theme( 'primary' ),
+						( new \WP_Components\Menu() )->set_menu( $sections[0]->slug ?? '' ),
+					];
+				}
+				return $this;
 			case $this->query->is_tax( 'section' ):
 				$term = $this->query->get_queried_object();
 				$this->children = [

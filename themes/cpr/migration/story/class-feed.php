@@ -34,6 +34,13 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	protected $batch_size = 1;
 
 	/**
+	 * No cron, use CLI instead.
+	 *
+	 * @var bool
+	 */
+	protected $use_cron = false;
+
+	/**
 	 * Load feed items.
 	 *
 	 * @param int $limit  Feed limit.

@@ -158,6 +158,11 @@ function build_components_endpoint(
 		$data['page'],
 		apply_filters( 'cpr_head', $head )
 	);
+	// Unshift the head to the top.
+	array_unshift(
+		$data['page'],
+		( new Components\Header\Header() )->set_query( $wp_query ),
+	);
 
 	return $data;
 }
