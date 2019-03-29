@@ -5,7 +5,7 @@
 			"post_types": [ "guest-author" ],
 			"title": "Info",
 			"context": "normal",
-			"priority": "low"
+			"priority": "high"
 		}
 	],
 	"serialize_data": false,

@@ -351,7 +351,7 @@ function cpr_fm_post_guest_author_settings() {
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Info', 'cpr' ), [ 'guest-author' ], 'normal', 'low' );
+	$fm->add_meta_box( __( 'Info', 'cpr' ), [ 'guest-author' ], 'normal', 'high' );
 }
 add_action( 'fm_post_guest-author', 'cpr_fm_post_guest_author_settings' );
 /* end fm:post-guest-author-settings */
