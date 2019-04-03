@@ -38,7 +38,7 @@ class Keep_Reading extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
-		$post_ids = (array) get_post_meta( $this->get_post_id(), 'keep_reading_ids', true );
+		$post_ids = array_filter( (array) get_post_meta( $this->get_post_id(), 'keep_reading_ids', true ) );
 
 		foreach ( $post_ids as $post_id ) {
 			$this->append_child(
