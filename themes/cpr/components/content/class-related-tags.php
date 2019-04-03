@@ -38,7 +38,7 @@ class Related_Tags extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
-		$tags = (array) get_the_tags( $this->get_post_id() );
+		$tags = array_filter( (array) get_the_tags( $this->get_post_id() ) );
 
 		foreach ( $tags as $tag ) {
 			$this->append_child(
