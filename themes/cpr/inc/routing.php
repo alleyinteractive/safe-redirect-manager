@@ -18,11 +18,13 @@ add_filter(
 // Filter the theme component path for autoloading.
 add_filter(
 	'wp_components_theme_components_path',
-	function( $class, $dirs ) {
-		return get_template_directory() . '/components' . implode( '/', $dirs ) . "/class-{$class}.php";
+	function( $path, $class, $dirs, $filename ) {
+		// Remove last $dirs entry since we don't nest our components in an extra folder.
+		array_pop( $dirs );
+		return get_template_directory() . '/components/' . implode( '/', $dirs ) . "/class-{$filename}.php";
 	},
 	10,
-	2
+	4
 );
 
 /**
