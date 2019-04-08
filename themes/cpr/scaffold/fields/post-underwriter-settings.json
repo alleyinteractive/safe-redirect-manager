@@ -1,0 +1,33 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "underwriter" ],
+			"title": { "__": "Settings" }
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+    "children": {
+      "website": {
+        "label": { "__": "Website" },
+        "type": "link",
+        "description": { "__": "Enter the link for the underwriter's website." }
+      },
+      "address": {
+        "label": { "__": "Address" },
+        "type": "textarea",
+        "description": { "__": "Enter the underwriter's address." }
+      },
+      "phone_number": {
+        "label": { "__": "Phone Number" },
+        "type": "textfield",
+        "description": { "__": "Enter the underwriter's phone number." }
+      },
+      "is_corporate_partner": {
+        "label": { "__": "Corporate Partner" },
+        "type": "checkbox",
+        "description": { "__": "Check here if the underwriter is a corporate partner." }
+      } 
+    }
+}
