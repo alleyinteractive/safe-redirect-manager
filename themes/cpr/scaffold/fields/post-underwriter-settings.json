@@ -9,7 +9,7 @@
 	"serialize_data": false,
 	"add_to_prefix": false,
     "children": {
-      "website": {
+      "link": {
         "label": { "__": "Website" },
         "type": "link",
         "description": { "__": "Enter the link for the underwriter's website." }
