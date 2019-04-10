@@ -433,3 +433,46 @@ function cpr_fm_post_album_settings() {
 }
 add_action( 'fm_post_album', 'cpr_fm_post_album_settings' );
 /* end fm:post-album-settings */
+
+/* begin fm:post-underwriter-settings */
+/**
+ * `post-underwriter-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_underwriter_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-underwriter-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'children' => [
+				'website' => new Fieldmanager_Link(
+					[
+						'label' => __( 'Website', 'cpr' ),
+						'description' => __( "Enter the link for the underwriter's website.", 'cpr' ),
+					]
+				),
+				'address' => new Fieldmanager_TextArea(
+					[
+						'label' => __( 'Address', 'cpr' ),
+						'description' => __( "Enter the underwriter's address.", 'cpr' ),
+					]
+				),
+				'phone_number' => new Fieldmanager_Textfield(
+					[
+						'label' => __( 'Phone Number', 'cpr' ),
+						'description' => __( "Enter the underwriter's phone number.", 'cpr' ),
+					]
+				),
+				'is_corporate_partner' => new Fieldmanager_Checkbox(
+					[
+						'label' => __( 'Corporate Partner', 'cpr' ),
+						'description' => __( 'Check here if the underwriter is a corporate partner.', 'cpr' ),
+					]
+				),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'underwriter' ] );
+}
+add_action( 'fm_post_underwriter', 'cpr_fm_post_underwriter_settings' );
+/* end fm:post-underwriter-settings */

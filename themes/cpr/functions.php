@@ -143,4 +143,7 @@ require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-label.php';
 // Artists Taxonomy (tax:artist).
 require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-artist.php';
 
+// Underwriters Post Type (cpt:underwriter).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-underwriter.php';
+
 /* End Data Structures */
