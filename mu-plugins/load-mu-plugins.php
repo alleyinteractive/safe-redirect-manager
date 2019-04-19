@@ -14,6 +14,7 @@ $plugins = [
 	'/fm-zones/fm-zones.php',
 	'/msm-sitemap/msm-sitemap.php',
 	'/safe-redirect-manager/safe-redirect-manager.php',
+	'/the-events-calendar/the-events-calendar.php',
 	'/wordpress-fieldmanager/fieldmanager.php',
 	'/wp-components/wp-components.php',
 	'/wp-irving/wp-irving.php',

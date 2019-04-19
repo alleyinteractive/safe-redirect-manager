@@ -37,3 +37,6 @@
 [submodule "mu-plugins/wp-components"]
 	path = mu-plugins/wp-components
 	url = git@github.com:alleyinteractive/wp-components.git
+[submodule "mu-plugins/the-events-calendar"]
+	path = mu-plugins/the-events-calendar
+	url = https://github.com/moderntribe/the-events-calendar
