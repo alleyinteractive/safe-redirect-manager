@@ -6,71 +6,6 @@
  */
 
 
-/* begin fm:post-event-settings */
-/**
- * `post-event-settings` Fieldmanager fields.
- */
-function cpr_fm_post_event_settings() {
-	$fm = new Fieldmanager_Group(
-		[
-			'name' => 'post-event-settings',
-			'serialize_data' => false,
-			'add_to_prefix' => false,
-			'tabbed' => 'vertical',
-			'children' => [
-				'settings' => new Fieldmanager_Group(
-					[
-						'label' => __( 'Settings', 'cpr' ),
-						'serialize_data' => false,
-						'add_to_prefix' => false,
-						'children' => [
-							'section_id' => new Fieldmanager_Select(
-								[
-									'label' => __( 'Section', 'cpr' ),
-									'description' => __( 'Select a section.', 'cpr' ),
-									'datasource' => new Fieldmanager_Datasource_Term(
-										[
-											'taxonomy' => 'section',
-											'taxonomy_save_to_terms' => true,
-											'only_save_to_taxonomy' => true,
-										]
-									),
-								]
-							),
-						],
-					]
-				),
-				'event_details' => new Fieldmanager_Group(
-					[
-						'label' => __( 'Event Details', 'cpr' ),
-						'serialize_data' => false,
-						'add_to_prefix' => false,
-						'children' => [
-							'start_datetime' => new Fieldmanager_Datepicker(
-								[
-									'label' => __( 'Start Date', 'cpr' ),
-									'use_am_pm' => true,
-									'use_time' => true,
-								]
-							),
-							'end_datetime' => new Fieldmanager_Datepicker(
-								[
-									'label' => __( 'End Date', 'cpr' ),
-									'use_am_pm' => true,
-									'use_time' => true,
-								]
-							),
-							'location' => new Fieldmanager_TextField( __( 'Location', 'cpr' ) ),
-						],
-					]
-				),
-			],
-		]
-	);
-	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'event' ] );
-}
-add_action( 'fm_post_event', 'cpr_fm_post_event_settings' );
-/* end fm:post-event-settings */
 
 /* begin fm:submenu-settings */
 /**
@@ -445,30 +380,10 @@ function cpr_fm_post_underwriter_settings() {
 			'serialize_data' => false,
 			'add_to_prefix' => false,
 			'children' => [
-				'website' => new Fieldmanager_Link(
-					[
-						'label' => __( 'Website', 'cpr' ),
-						'description' => __( "Enter the link for the underwriter's website.", 'cpr' ),
-					]
-				),
-				'address' => new Fieldmanager_TextArea(
-					[
-						'label' => __( 'Address', 'cpr' ),
-						'description' => __( "Enter the underwriter's address.", 'cpr' ),
-					]
-				),
-				'phone_number' => new Fieldmanager_Textfield(
-					[
-						'label' => __( 'Phone Number', 'cpr' ),
-						'description' => __( "Enter the underwriter's phone number.", 'cpr' ),
-					]
-				),
-				'is_corporate_partner' => new Fieldmanager_Checkbox(
-					[
-						'label' => __( 'Corporate Partner', 'cpr' ),
-						'description' => __( 'Check here if the underwriter is a corporate partner.', 'cpr' ),
-					]
-				),
+				'link' => new Fieldmanager_Link( __( 'Website', 'cpr' ) ),
+				'address' => new Fieldmanager_TextArea( __( 'Address', 'cpr' ) ),
+				'phone_number' => new Fieldmanager_Textfield( __( 'Phone Number', 'cpr' ) ),
+				'is_corporate_partner' => new Fieldmanager_Checkbox( __( 'Corporate Partner', 'cpr' ) ),
 			],
 		]
 	);
