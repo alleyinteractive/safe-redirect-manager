@@ -21,3 +21,4 @@ plugins/*
 !plugins/gutenberg
 !plugins/jetpack
 !plugins/meta-inspector
+!plugins/npr-story-api
