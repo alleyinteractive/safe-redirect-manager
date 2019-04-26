@@ -22,3 +22,4 @@ plugins/*
 !plugins/jetpack
 !plugins/meta-inspector
 !plugins/npr-story-api
+!plugins/pym-shortcode
