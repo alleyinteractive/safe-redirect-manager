@@ -1,0 +1,17 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "external-link" ],
+			"title": { "__": "Settings" }
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+    "children": {
+      "link": {
+        "label": { "__": "Link to External Content" },
+        "type": "link"
+      } 
+    }
+}

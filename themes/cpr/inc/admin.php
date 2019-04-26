@@ -23,3 +23,18 @@ function remove_postcustom() {
 	remove_meta_box( 'sharing_meta', null, 'side' );
 }
 add_action( 'add_meta_boxes', __NAMESPACE__ . '\remove_postcustom', 100 );
+
+/**
+ * Make post type searchable in the backend so Zoninator can find it.
+ */
+function allow_searching_post_types_in_admin() {
+	if ( is_admin() ) {
+		global $wp_post_types;
+		foreach ( [ 'guest-author', 'external-link' ] as $post_type ) {
+			if ( ! empty( $wp_post_types[ $post_type ] ) ) {
+				$wp_post_types[ $post_type ]->exclude_from_search = false;
+			}
+		}
+	}
+}
+add_action( 'init', __NAMESPACE__ . '\allow_searching_post_types_in_admin', 15 );
