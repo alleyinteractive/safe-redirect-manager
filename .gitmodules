@@ -37,3 +37,9 @@
 [submodule "mu-plugins/wp-components"]
 	path = mu-plugins/wp-components
 	url = git@github.com:alleyinteractive/wp-components.git
+[submodule "plugins/aws-ses-wp-mail"]
+	path = plugins/aws-ses-wp-mail
+	url = https://github.com/humanmade/aws-ses-wp-mail
+[submodule "plugins/S3-Uploads"]
+	path = plugins/S3-Uploads
+	url = https://github.com/humanmade/S3-Uploads
