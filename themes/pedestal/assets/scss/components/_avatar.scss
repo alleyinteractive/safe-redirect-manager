@@ -1,0 +1,9 @@
+.c-avatar {
+  position: relative;
+  margin: 0 auto;
+}
+
+.c-avatar__img {
+  border-radius: $global-rounded;
+  overflow: hidden;
+}

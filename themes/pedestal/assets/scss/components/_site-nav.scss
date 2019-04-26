@@ -1,0 +1,145 @@
+.site-nav__list {
+  margin-bottom: rem( 16px );
+}
+
+.site-nav__item {
+  list-style: none;
+  padding: 0;
+}
+
+.site-nav__link {
+  display: block;
+  padding: rem( 4px ) 0;
+  line-height: rem( 28px ) / $site-nav-font-size;
+  white-space: nowrap;
+  font-size: $site-nav-font-size;
+  font-weight: 400;
+}
+
+.site-nav__icon {
+  width: rem( 24px );
+  color: $white;
+  margin-right: rem( 4px );
+  text-align: center;
+}
+
+
+.site-nav--desktop {
+  display: none;
+}
+
+
+.site-nav--primary {
+  .site-nav__item:first-child {
+    .site-nav__link {
+      padding-top: 0;
+    }
+  }
+}
+
+
+.site-nav--secondary {
+  flex: 1; // To push down the footer and lock it to the bottom of the modal
+
+  .site-nav__icon {
+    color: $accent-1-color;
+  }
+}
+
+
+@media #{$site-header-breakpoint} {
+
+  .site-nav__list {
+    display: flex;
+    margin-bottom: 0;
+  }
+
+  .site-nav__item {
+    flex-direction: row;
+    flex-grow: 1;
+    list-style: none;
+    padding: 0;
+  }
+
+  .site-nav--mobile {
+    display: none;
+  }
+
+  .site-nav--desktop {
+    display: block;
+  }
+
+  .site-nav--primary__outer {
+    @include explode-component( $inner-selector: '.site-nav__list' );
+  }
+
+  .site-nav--primary {
+    background-color: $site-nav-primary-background-color--bp-up;
+
+    .site-nav__item--search {
+      .site-nav__text {
+        display: none;
+      }
+    }
+
+    .site-nav__link {
+      display: block;
+      padding: 0;
+      font-size: rem( 15px );
+      font-weight: 600;
+      line-height: rem( 24px ) / rem( 15px );
+
+      &:hover,
+      &:focus {
+        .site-nav__link__inner {
+          border-bottom-color: $accent-1-color;
+        }
+      }
+    }
+
+    .site-nav__link__inner {
+      border-bottom: rem( 4px ) solid transparent;
+
+      // Keep the border from touching the nav item to the right
+      display: inline-block;
+      padding: rem( 8px ) rem( 16px ) rem( 4px ) 0;
+    }
+
+    .site-nav__icon {
+      font-size: rem( 16px );
+    }
+  } // end .site-nav--primary
+
+  .site-nav--secondary {
+    position: absolute;
+    top: rem( 8px );
+    right: 0;
+
+    .site-nav__item--support-our-work,
+    .site-nav__item--support-us {
+      .site-nav__link {
+        background-color: $accent-1-color;
+      }
+    }
+
+    .site-nav__link {
+      padding: 0 rem( 16px );
+      font-weight: 600;
+      font-size: $site-nav-secondary-font-size--bp-up;
+      line-height: em( 30px, $site-nav-secondary-font-size--bp-up );
+      color: $body-font-color;
+      letter-spacing: em( 0.4px );
+      text-align: right;
+      text-transform: uppercase;
+
+      &:hover,
+      &:focus {
+        background-color: $accent-1-color;
+      }
+    }
+
+    .site-nav__icon {
+      display: none;
+    }
+  } // end .site-nav--secondary
+}

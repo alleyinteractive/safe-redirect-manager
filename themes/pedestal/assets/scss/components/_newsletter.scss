@@ -1,0 +1,33 @@
+.newsletter-items {
+  .newsletter-item {
+    margin-bottom: rem( 16px );
+    border-bottom: $border-standard;
+    padding-bottom: rem( 16px );
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+
+  .newsletter-item--event + .newsletter-item--event {
+    border-top: 0;
+    margin-top: 0;
+
+    &::before {
+      width: 0;
+    }
+  }
+}
+
+.newsletter-item__title,
+.newsletter-item__description {
+  margin-bottom: rem( 12px );
+}
+
+.newsletter-item__title {
+  @include h-size( 4 );
+}
+
+.newsletter-item__description > * {
+  @include h-size( 5 );
+}

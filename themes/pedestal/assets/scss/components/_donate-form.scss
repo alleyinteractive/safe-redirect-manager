@@ -1,0 +1,198 @@
+.donate-form {
+  background-color: $brand-1-color;
+  color: text-contrast();
+  margin-bottom: rem( 40px );
+  padding: rem( 32px ) 0;
+}
+
+.donate-form__inner,
+.donate-form__fields,
+.donate-form__submit {
+  max-width: rem( 300px );
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+}
+
+
+@media #{$small-only} {
+  .donate-form {
+    @include explode-component( $inner-selector: '&__inner-wrap' );
+  }
+}
+
+
+@media #{$medium-up} {
+  .donate-form__inner,
+  .donate-form__fields {
+    max-width: rem( 500px );
+  }
+
+  .donate-form__fields {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+
+//
+// Amount Field + Label
+// ==========================================================================
+// 1. Hide spin box from number input
+// 2. Handle inconsistent input sizing across browsers
+
+.donate-form__amount {
+  margin-bottom: rem( 16px );
+}
+
+.donate-form__amount__label,
+.donate-form__frequency-option .form-radio__label {
+  color: text-contrast();
+  font-size: rem( 16px );
+  font-weight: normal;
+}
+
+.donate-form__amount__input-group {
+  width: rem( 160px );
+  display: block;
+  padding: 0; /* 2 */
+  background-color: $white;
+
+  @include firefox-only {
+    padding: rem( 8px ) rem( 10px ); /* 2 */
+  }
+}
+
+.donate-form__amount__prefix,
+.donate-form__amount__input {
+  font-size: rem( 16px );
+  line-height: 2.5;
+
+  @include firefox-only {
+    line-height: 1.75; /* 2 */
+  }
+}
+
+.donate-form__amount__input {
+  max-width: 100%;
+  border: 0;
+  background: $white;
+  appearance: textfield; /* 1 */
+  font-style: italic;
+  color: $body-font-color;
+
+  /* 1 */
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+  }
+
+  @include ie-only {
+    height: rem( 40px ); /* 2 */
+  }
+}
+
+
+@media #{$medium-up} {
+  .donate-form__amount {
+    float: none;
+    margin-right: rem( 32px );
+  }
+}
+
+
+.donate-form__amount__input-group {
+  margin-top: rem( 4px );
+}
+
+.donate-form__amount__prefix {
+  @include ie-only {
+    height: rem( 24px ); /* 2 */
+  }
+}
+
+
+//
+// Donation frequency radio inputs
+// ==========================================================================
+
+.donate-form__frequency {
+  border: 0;
+  padding: 0;
+}
+
+.donate-form__frequency-option {
+  color: text-contrast();
+  display: block;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.donate-form__frequency-option__input {
+  height: rem( 18px );
+  width: rem( 18px );
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+//
+// Submit wrapper + button
+// ==========================================================================
+
+.donate-form__submit {
+  max-width: rem( 275px );
+}
+
+.donate-form__submit__button {
+  margin-top: rem( 24px );
+  margin-bottom: rem( 10px );
+  width: 100%;
+}
+
+
+//
+// Secured by Stripe
+// ==========================================================================
+
+.donate-form__secured-by {
+  font-size: rem( 16px );
+  text-align: center;
+
+  > * {
+    display: inline-block;
+    height: rem( 24px );
+    line-height: rem( 24px );
+    vertical-align: middle;
+  }
+}
+
+.donate-form__secured-by__lock,
+.donate-form__stripe-logo {
+  opacity: 0.5;
+}
+
+.donate-form__secured-by__lock {
+  // Hacky sizing for the weirdly shaped SVG
+  line-height: rem( 20px );
+  // stylelint-disable-next-line unit-blacklist
+  margin-right: -0.2em;
+}
+
+.donate-form__secured-by__text {
+  font-size: rem( 12px );
+}
+
+.donate-form__stripe-logo {
+  // Slight spacing tweak
+  // stylelint-disable-next-line unit-blacklist
+  margin-left: -0.3em;
+
+  // stylelint-disable-next-line selector-max-type
+  svg {
+    height: rem( 24px );
+    width: rem( 50px );
+  }
+}

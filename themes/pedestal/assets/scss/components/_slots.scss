@@ -1,0 +1,119 @@
+$c-slot-item-pd      : rem( 8px );
+$c-slot-item-lead-pd : rem( 16px );
+
+
+.c-slot {
+  &__item {
+    &,
+    > * {
+      display: inline-block;
+    }
+
+    > * {
+      margin: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+
+  &__label {
+    color: $dimmed-text-color;
+    font-size: $small-font-size;
+    font-weight: 300;
+    // stylelint-disable-next-line unit-blacklist
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-right: $c-slot-item-pd;
+  }
+
+
+  &__img {
+    // stylelint-disable-next-line selector-max-type
+    img {
+      max-width: rem( 150px );
+    }
+  }
+
+}
+
+
+
+
+
+//
+// Positions
+// ==========================================================================
+
+
+// * Shortcode Position -- All Scopes
+// * Newsletter Item Position -- All Scopes
+// * Component Position -- All Scopes
+// * Stream Entity Position -- Site Scope
+[data-slot-position*="shortcode"],
+[data-slot-position*="newsletter_item"],
+[data-slot-position*="component"],
+[data-slot-position="site_stream_entity"] {
+  .c-slot__img {
+    // stylelint-disable-next-line selector-max-type
+    img {
+      max-height: rem( 50px );
+    }
+  }
+}
+
+// * Shortcode Position -- All Scopes
+// * Newsletter Item Position -- All Scopes
+// * Component Position -- All Scopes
+[data-slot-position*="shortcode"],
+[data-slot-position*="newsletter_item"],
+[data-slot-position*="component"] {
+  .c-slot__item {
+    padding-bottom: $c-slot-item-pd;
+    padding-left: $c-slot-item-pd;
+  }
+}
+
+// * Lead Position -- All Scopes
+// * Stream Entity Position -- Site Scope
+// * Component Position -- All Scopes
+[data-slot-position*="lead"],
+[data-slot-position="site_stream_entity"],
+[data-slot-position*="component"] {
+  &.c-slot {
+    text-align: center;
+  }
+}
+
+
+// * Supports -- Premium Images
+[data-slot-supports-premium] {
+  .c-slot__item {
+    > * {
+      margin-bottom: rem( 4px );
+    }
+  }
+
+  .c-slot__img {
+    // stylelint-disable-next-line selector-max-type
+    img {
+      max-width: 100%;
+      max-height: rem( 111px );
+    }
+  }
+}
+
+// Single Lead Position -- Site Scope
+[data-slot-position="site_single_lead"] {
+  &.c-slot {
+    padding-bottom: $c-slot-item-lead-pd;
+  }
+}
+
+// * Stream Entity Position -- Site Scope
+[data-slot-position="site_stream_entity"] {
+  &.c-slot {
+    padding-top: rem( 12px );
+    padding-bottom: rem( 16px );
+  }
+}

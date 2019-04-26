@@ -1,0 +1,47 @@
+{% if position %}
+{% set position_class = 'share-buttons--' ~ position ~ ' js-share-buttons-' ~ position %}
+{% endif %}
+
+{% if 'bottom' != position %}
+    {% set hidden_attr = 'aria-hidden="true"' %}
+{% endif %}
+
+<div
+    class="share-buttons {{ position_class }} js-share-buttons"
+    {{ hidden_attr }}
+>
+    <ul class="share-buttons__inner">
+        <li class="share-buttons__item">
+            <a class="share-buttons__link share-buttons__link--facebook js-share-button"
+                target="_blank"
+                href="{{ item.get_facebook_share_link }}"
+                data-ga-category="post-share-button"
+                data-ga-action="facebook"
+                data-ga-label="{{ position|esc_attr }}">
+                {{ ped_icon( 'facebook-square', 'share-buttons__icon' ) }}
+                Share
+            </a>
+        </li>
+        <li class="share-buttons__item">
+            <a class="share-buttons__link share-buttons__link--twitter js-share-button"
+                target="_blank"
+                href="{{ item.get_twitter_share_link }}"
+                data-ga-category="post-share-button"
+                data-ga-action="twitter"
+                data-ga-label="{{ position|esc_attr }}">
+                {{ ped_icon( 'twitter-square', 'share-buttons__icon' ) }}
+                Tweet
+            </a>
+        </li>
+        <li class="share-buttons__item">
+            <a class="share-buttons__link share-buttons__link--email js-share-button"
+                href="{{ item.get_mailto_share_string }}"
+                data-ga-category="post-share-button"
+                data-ga-action="email"
+                data-ga-label="{{ position|esc_attr }}">
+                {{ ped_icon( 'envelope-open', 'share-buttons__icon' ) }}
+                Email
+            </a>
+        </li>
+    </ul>
+</div>

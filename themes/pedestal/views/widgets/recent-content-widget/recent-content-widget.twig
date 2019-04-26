@@ -1,0 +1,13 @@
+{{ before_widget }}
+
+    {{ before_title }}
+        {% if title_link %}
+            <a href="{{ title_link }}">{{ title }}</a>
+        {% else %}
+            {{ title }}
+        {% endif %}
+    {{ after_title }}
+
+    {{ items }}
+
+{{ after_widget }}

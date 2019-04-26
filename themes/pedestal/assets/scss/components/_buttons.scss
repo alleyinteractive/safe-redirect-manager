@@ -1,0 +1,69 @@
+%_btn {
+  @include button( $include-base-styles: true );
+}
+
+// stylelint-disable-next-line selector-max-type
+button {
+  // Override default browser styles
+  border: 0;
+}
+
+/// Basic button with primary color background
+.btn {
+  @extend %_btn;
+}
+
+/// Button with an oval shape
+.btn--oval {
+  @extend %_btn;
+  @include button( 'oval', $include-base-styles: false );
+}
+
+/// Button with a border
+.btn--bordered {
+  @extend %_btn;
+  @include button( 'bordered', $include-base-styles: false );
+}
+
+
+//
+// Background Color Variations
+// ==========================================================================
+
+.btn--bg-secondary {
+  @extend %_btn;
+  @include button-color-variant( $brand-2-color );
+}
+
+.btn--bg-light {
+  @extend %_btn;
+  @include button-color-variant( $white );
+}
+
+.btn--bg-accent {
+  @extend %_btn;
+  @include button-color-variant( $accent-1-color );
+}
+
+.btn--bg-accent-2 {
+  @extend %_btn;
+  @include button-color-variant( $accent-2-color );
+}
+
+.btn--bg-gray {
+  @extend %_btn;
+  @include button-color-variant( $gray-color );
+}
+
+
+//
+// Arrow Buttons
+// ==========================================================================
+
+.btn--arrow {
+  @include button-arrow( $brand-1-color );
+
+  &.btn--bg-accent {
+    @include button-arrow( $accent-1-color, $include-base-styles: false );
+  }
+}

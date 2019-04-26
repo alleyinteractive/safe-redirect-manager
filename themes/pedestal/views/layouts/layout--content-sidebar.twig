@@ -1,0 +1,21 @@
+{% extends 'base.twig' %}
+
+{% block the_body %}
+    <main role="main" class="c-main columns large-8 js-main {{ main_classes }}">
+        {% block content %}
+        {% endblock %}
+    </main>
+{% endblock %}
+
+{% block the_sidebar %}
+    <aside class="rail columns large-4 js-rail {{ rail_class }}">
+        <ul class="sidebar {{ sidebar_class }}">
+            {% block sidebar_ad sidebar_ad %}
+
+            {% block sidebar sidebar %}
+
+            {% block sidebar_secondary %}
+            {% endblock sidebar_secondary %}
+        </ul>
+    </aside>
+{% endblock %}

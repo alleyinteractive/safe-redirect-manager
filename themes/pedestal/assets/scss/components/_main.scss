@@ -1,0 +1,79 @@
+.c-main__content {
+  @include clearfix;
+
+  position: relative;
+}
+
+.c-main__header {
+  margin-bottom: $main-header-margin-bottom;
+
+  .page & {
+    margin-bottom: $main-header-margin-bottom / 2;
+  }
+}
+
+.c-main__title {
+  font-size: $main-title-font-size;
+  font-weight: $main-title-font-weight;
+
+  a {
+    @include link-dark;
+  }
+}
+
+.c-main__title--page {
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.c-main__description {
+  font-size: $main-description-font-size;
+  font-weight: $main-description-font-weight;
+  color: $main-description-text-color;
+  line-height: 1.33333;
+}
+
+.c-main__supplemental {
+  padding-top: rem( 16px );
+}
+
+// stylelint-disable selector-max-type
+.c-main__footnotes {
+  &,
+  p {
+    @include de-emphasized;
+
+    @if $enable-italic-footnotes {
+      font-style: italic;
+      color: $dimmed-text-color;
+
+      // Since footnotes are already italic, when adding 'italics' to footnotes,
+      // they should be normal text
+      em,
+      i {
+        font-style: normal;
+      }
+    }
+  }
+}
+// stylelint-enable selector-max-type
+
+.c-main__footer {
+  margin-top: rem( 32px );
+
+  .stream-item--sponsored {
+    margin-bottom: $stream-item-spacing;
+  }
+}
+
+
+.c-main__content--password-required {
+  text-align: center;
+}
+
+
+@media print {
+  .c-main__footer {
+    display: none;
+  }
+}

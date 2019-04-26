@@ -1,0 +1,12 @@
+.c-panel {
+  @include radius;
+
+  border: $border-standard;
+  background-color: $c-panel-bg;
+}
+
+
+.c-panel__inner {
+  padding: rem( 16px );
+  min-height: ( rem( 80px ) );
+}

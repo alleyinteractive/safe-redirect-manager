@@ -1,0 +1,101 @@
+{#
+    Similiar to standard-stream-item.twig
+     - Links need rel="nofollow" and target="_blank"
+     - Overline has been re-arranged
+     - Removed some values that aren't relevant
+#}
+
+{% if stream_index %}
+    {% set stream_index = 'data-stream-index="' ~ stream_index|esc_attr ~ '"' %}
+{% endif %}
+
+<article class="stream-item stream-item--{{ type }}" {{ stream_index }}>
+
+    <div class="stream-item__inner">
+
+        {% if thumbnail_image %}
+            <figure class="stream-item__thumbnail-container">
+                {% if permalink %}
+                    <a
+                        href="{{ permalink|esc_url }}"
+                        class="stream-item__thumbnail-image-link"
+                        data-ga-category="sponsored-link"
+                        data-ga-label="{{ ga_label|esc_attr }}"
+                    >
+                        {{ thumbnail_image }}
+                    </a>
+                {% else %}
+                    {{ thumbnail_image }}
+                {% endif %}
+            </figure>
+        {% endif %}
+
+        <div class="stream-item__body">
+
+            {% if overline %}
+                <p class="stream-item__overline c-heading--overline">
+                    {% if overline_url %}
+                        <a
+                            href="{{ overline_url|esc_url }}"
+                            rel="nofollow"
+                            target="_blank"
+                            class="stream-item__overline-link"
+                            data-ga-category="sponsored-link"
+                            data-ga-label="{{ ga_label|esc_attr }}"
+                        >
+                            {{ overline }}
+                        </a>
+                    {% else %}
+                        {{ overline }}
+                    {% endif %}
+                </p>
+            {% endif %}
+
+            <h1 class="stream-item__title">
+                {% if permalink %}
+                    <a
+                        href="{{ permalink|esc_url }}"
+                        rel="nofollow"
+                        target="_blank"
+                        class="stream-item__title-link"
+                        data-ga-category="sponsored-link"
+                        data-ga-label="{{ ga_label|esc_attr }}"
+                    >
+                        {{ title }}
+                    </a>
+                {% else %}
+                    {{ title }}
+                {% endif %}
+            </h1>
+
+            {% if source_image or source_name %}
+            <footer class="stream-item__footer">
+
+                {# Setup some attributes #}
+                {% if source_link %}
+                    {% set source_link_href = 'href="' ~ source_link|esc_url ~ '"' %}
+                {% endif %}
+
+                {% if source_name %}
+                    <div class="stream-item__footer__text">
+                        Sponsored by
+                        <a
+                            {{ source_link_href }}
+                            rel="nofollow"
+                            target="_blank"
+                            class="stream-item__source-name"
+                            data-ga-category="sponsored-link"
+                            data-ga-label="{{ ga_label|esc_attr }}"
+                        >
+                            {{ source_name }}
+                        </a>
+                    </div>
+                {% endif %}
+
+            </footer>
+            {% endif %}
+
+        </div>
+
+    </div>
+</article>

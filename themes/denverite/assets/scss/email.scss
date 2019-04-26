@@ -1,0 +1,12 @@
+@charset 'UTF-8';
+/*!*
+ * Version: 7.15.4
+ *
+ * Copyright ( c ) 2019 Spirited Media
+ */
+
+$site-theme-name: 'denverite';
+
+@import 'pedestal';
+@import 'helpers/denverite-settings';
+@import 'pedestal-email';

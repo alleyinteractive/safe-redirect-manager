@@ -1,0 +1,42 @@
+<table class="email-container" {{ email_table_atts }} align="center">
+    <tr>
+        <td class="email-footer x-gmail-data-detectors">
+
+            {% if shareable %}
+                {% include 'emails/messages/partials/share.twig' %}
+            {% endif %}
+
+            <br>
+
+            &copy; {{ now|date('Y') }} by Spirited Media. All rights reserved.<br>
+
+            {% if email_type %}
+                You are receiving this because you signed up for <a href="{{ site.url }}">{{ site.name }}</a> {{ email_type }}.<br>
+            {% endif %}
+
+            If you have any questions, email <a href="mailto:{{ site.emails.contact }}">{{ site.emails.contact }}</a>.<br><br>
+
+            Our mailing address is:<br><br>
+
+            {% if 'ac' == email_provider %}
+                %SENDER-INFO-SINGLELINE%<br>
+            {% elseif 'mc' == email_provider %}
+                *|LIST:ADDRESS|*<br>
+            {% else %}
+                {% include 'partials/footer/mailing-address.twig' %}<br>
+            {% endif %}
+
+            {% if 'ac' == email_provider %}
+                <p><a href="%UNSUBSCRIBELINK%">Unsubscribe</a></p>
+            {% endif %}
+
+            {% if 'mc' == email_provider %}
+                <p>This email was sent to <em>*|EMAIL|*</em>. You can <a href="*|UPDATE_PROFILE|*" target="_blank">update your preferences</a> or <a href="*|UNSUB|*" target="_blank">unsubscribe</a> from all our emails. We'll miss you.<p>
+
+                *|IF:REWARDS|* *|HTML:REWARDS|* *|END:IF|*
+
+            {% endif %}
+
+        </td>
+    </tr>
+</table>

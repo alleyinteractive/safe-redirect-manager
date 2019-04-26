@@ -1,0 +1,70 @@
+<div class="c-whos-next-item__person">
+    <h1 class="c-whos-next-item__person__name">{{ person.get_the_title }}</h1>
+
+    {% if person.get_known_for %}
+    <div class="c-whos-next-item__person__role">
+        {{ ped_icon( 'briefcase', 'c-whos-next-item__person__icon' ) }}
+        <span class="c-whos-next-item__person__text">{{ person.get_known_for }}</span>
+    </div>
+    {% endif %}
+
+    {% if person.get_age %}
+    <div class="c-whos-next-item__person__age">
+        {{ ped_icon( 'birthday-cake', 'c-whos-next-item__person__icon' ) }}
+        <span class="c-whos-next-item__person__text">{{ person.get_age }} years old</span>
+    </div>
+    {% endif %}
+
+    {% if person.get_twitter_handle %}
+    <div class="c-whos-next-item__person__twitter">
+        {{ ped_icon( 'twitter', 'c-whos-next-item__person__icon' ) }}
+
+        <a href="{{ person.get_twitter_profile_url }}"
+            title="@{{ person.get_twitter_handle }} on twitter"
+            class="c-whos-next-item__person__text"
+            target="_blank"
+            data-ga-category="post-content"
+            data-ga-label="person-link">
+
+            @{{ person.get_twitter_handle }}
+
+        </a>
+
+    </div>
+    {% endif %}
+
+    {% if person.get_instagram_handle %}
+    <div class="c-whos-next-item__person__instagram">
+        {{ ped_icon( 'instagram', 'c-whos-next-item__person__icon' ) }}
+
+        <a href="{{ person.get_instagram_url }}"
+            title="@{{ person.get_instagram_handle }} on Instagram"
+            class="c-whos-next-item__person__text"
+            target="_blank"
+            data-ga-category="post-content"
+            data-ga-label="person-link">
+
+            @{{ person.get_instagram_handle }}
+
+        </a>
+
+    </div>
+    {% endif %}
+
+    {% if person.get_linkedin_url %}
+    <div class="c-whos-next-item__person__linkedin">
+        {{ ped_icon( 'linkedin', 'c-whos-next-item__person__icon' ) }}
+
+        <a href="{{ person.get_linkedin_url }}"
+            title="{{ person.get_the_title }} on LinkedIn"
+            class="c-whos-next-item__person__text"
+            target="_blank"
+            data-ga-category="post-content"
+            data-ga-label="person-link">
+            LinkedIn
+        </a>
+
+    </div>
+    {% endif %}
+
+</div>

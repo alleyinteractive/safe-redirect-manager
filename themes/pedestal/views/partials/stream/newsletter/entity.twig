@@ -1,0 +1,28 @@
+{% set title = newsletter_item.title %}
+{% set stream = true %}
+
+{% if item.css_classes %}
+    {% set classes = item.css_classes ~ '  ' ~ classes %}
+{% endif %}
+
+<article class="{{ classes }} newsletter-item"
+    {{ item.get_the_data_atts }}>
+
+    <h1 class="newsletter-item__title">
+        {% if newsletter_item.url %}
+            <a
+                href="{{ newsletter_item.url|esc_url }}"
+                data-ga-category="{{ gaCategory|esc_attr }}"
+                data-ga-label="Title|{{ title|esc_attr }}"
+            >
+                {{ title }}
+            </a>
+        {% else %}
+            {{ title }}
+        {% endif %}
+    </h1>
+
+    <div class="newsletter-item__description">
+        {{ newsletter_item.description }}
+    </div>
+</article>

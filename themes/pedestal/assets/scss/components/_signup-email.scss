@@ -1,0 +1,195 @@
+.signup-email__form {
+  // Set this as the initial alignment for the email input and submit button
+  text-align: center;
+}
+
+.is-success .signup-email__inner,
+.is-loading .signup-email__submit-text {
+  display: none;
+}
+
+.signup-email__input-group,
+.signup-email__button {
+  margin: 0 auto rem( 8px );
+}
+
+.signup-email__input-group {
+  text-align: center;
+  // Input group must be inline-block
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.signup-email__button {
+  display: block;
+  text-transform: uppercase;
+  @include button( $include-base-styles: true );
+}
+
+.signup-email__email-input {
+  // Hide placeholder text on focus
+  &:focus::placeholder {
+    color: transparent;
+  }
+}
+
+.signup-email__success-header {
+  margin-bottom: rem( 12px );
+}
+
+.signup-email__success-icon,
+.signup-email__success-title {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.signup-email__success-icon {
+  margin-right: rem( 8px );
+  color: $accent-2-color;
+  font-size: rem( 30px );
+  line-height: 0;
+}
+
+.signup-email__success-title {
+  font-size: rem( 20px );
+  font-weight: 700;
+  color: $blackish-color;
+  line-height: 1.2;
+}
+
+// stylelint-disable-next-line selector-max-type
+.signup-email__success-details p {
+  margin-bottom: rem( 8px );
+  line-height: 1.4;
+}
+
+
+@media #{$medium-up} {
+
+  .signup-email__form {
+    // Alignment for the input and button
+    text-align: left;
+  }
+
+  .signup-email__input-holder {
+    text-align: center;
+  }
+
+  .signup-email__input-group,
+  .signup-email__button {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .signup-email__input-group {
+    margin-right: rem( 16px );
+  }
+
+  .signup-email__success-header {
+    margin-bottom: rem( 16px );
+  }
+
+  .signup-email__success-icon,
+  .signup-email__success-title {
+    width: auto;
+  }
+
+}
+
+//
+// Follow Cluster Signup
+// ==========================================================================
+
+.signup-email--cluster {
+  margin-bottom: rem( 16px );
+  background-color: $light-gray-color;
+
+  .signup-email__form {
+    padding: rem( 32px );
+  }
+
+  .signup-email__success-header,
+  .signup-email__title, {
+    margin-bottom: rem( 12px );
+  }
+
+  .signup-email__title {
+    font-size: rem( 16px );
+    line-height: 1.25;
+
+    :last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  .signup-email__button {
+    @include button-color-variant( $accent-2-color );
+  }
+}
+
+@media #{$medium-up} {
+  .subscription-confirmation-page .signup-email--cluster {
+    @include explode-component( $inner-selector: '.signup-email__form' );
+  }
+}
+
+@media #{$medium-down} {
+  .signup-email--cluster {
+    @include explode-component( $inner-selector: '.signup-email__form' );
+  }
+}
+
+@media #{$large-up} {
+  .signup-email--cluster {
+    @include explode-component(
+      $side: 'left',
+      $inner-selector: '.signup-email__form',
+      $inner-max-columns: 8
+    );
+
+    .signup-email__form {
+      text-align: center;
+    }
+  }
+}
+
+
+//
+// Email signup shortcode
+// ==========================================================================
+.signup-email--shortcode {
+  margin-bottom: rem( 16px );
+
+  // We don't want the input fields centered
+  .signup-email__input-holder {
+    text-align: left;
+  }
+
+  &.is-success {
+
+    .signup-email__success-header {
+      margin-right: rem( 16px );
+      margin-bottom: rem( 8px );
+    }
+
+    .signup-email__success-title {
+      display: none;
+    }
+
+    .signup-email__success-icon {
+      color: $yet-another-red;
+      font-size: rem( 40px );
+      width: auto;
+    }
+
+    .signup-email__success-message {
+      display: flex;
+      align-items: center;
+      text-align: left;
+    }
+  }
+}
