@@ -105,7 +105,7 @@ if ( ! class_exists( '\\Pedestal\\Pedestal' ) ) :
 
             // The following constants can not be modified so we set them first.
             if ( ! defined( 'PEDESTAL_VERSION' ) ) {
-                $version = file_get_contents( ABSPATH . '/VERSION' );
+                $version = file_get_contents( ABSPATH . '/wp-content/VERSION' );
                 $version = str_replace( 'Version:', '', $version );
                 define( 'PEDESTAL_VERSION', trim( $version ) );
             }

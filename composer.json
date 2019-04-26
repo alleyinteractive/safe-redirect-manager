@@ -21,92 +21,18 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:humanmade/mercator.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:humanmade/aws-ses-wp-mail.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:humanmade/S3-Uploads.git"
-    },
-    {
-      "type": "package",
-      "package": {
-        "name": "humanmade/tachyon-plugin",
-        "type": "wordpress-plugin",
-        "version": "dev-master",
-        "source": {
-          "type": "git",
-          "url": "git@github.com:humanmade/tachyon-plugin.git",
-          "reference": "master"
-        }
-      }
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:spiritedmedia/image-shortcake.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:spiritedmedia/shortcake-bakery.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:spiritedmedia/tablepress-responsive-tables.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:spiritedmedia/wordpress-enhanced-media-library-pro.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:spiritedmedia/wordpress-fieldmanager.git"
-    },
-    {
-      "type": "vcs",
-      "url": "git@github.com:ineagu/wp-menu-item-custom-fields.git"
     }
   ],
   "require": {
     "php": ">=7.0",
     "composer/installers": "~1.0.12",
-    "alleyinteractive/wordpress-fieldmanager": "dev-spiritedmedia",
-    "fusioneng/image-shortcake": "dev-spiritedmedia",
-    "fusioneng/shortcake-bakery": "dev-spiritedmedia",
-    "humanmade/mercator": "dev-master#04251f596eef8e3c7c12dce7b0627958b44acd19",
-    "humanmade/aws-ses-wp-mail": "dev-master",
-    "humanmade/s3-uploads": "dev-master",
-    "humanmade/tachyon-plugin": "*",
     "joshtronic/php-loremipsum": "dev-master",
-    "spiritedmedia/tablepress-responsive-tables": "dev-spiritedmedia",
-    "spiritedmedia/wordpress-enhanced-media-library-pro": "dev-master",
     "timber/timber": "~1.7.0",
-    "wpackagist-plugin/co-authors-plus": "~3.2.2",
-    "wpackagist-plugin/posts-to-posts": "~1.6.5",
-    "wpackagist-plugin/shortcode-ui": "^0.7.2",
-    "wpackagist-plugin/redirection": "~2.8.1",
-    "wpackagist-plugin/tablepress": "~1.8",
-    "wpackagist-plugin/user-switching": "~1.2.0",
-    "wpackagist-plugin/wp-redis": "~0.6.2",
-    "wpackagist-plugin/bwp-google-xml-sitemaps": "~1.4.1",
-    "wpackagist-plugin/wp-crontrol": "^1.5",
-    "wpackagist-plugin/compressed-emoji": "^1.1",
     "tijsverkoyen/css-to-inline-styles": "^2.2",
     "google/apiclient": "^2.0",
     "sunra/php-simple-html-dom-parser": "^1.5",
     "erusev/parsedown": "^1.6",
-    "aptoma/twig-markdown": "^3.0",
-    "kucrut/menu-item-custom-fields": "dev-master",
-    "wpackagist-plugin/documentcloud": "^0.4.3",
-    "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-    "squizlabs/php_codesniffer": "^3.0.2",
-    "wp-coding-standards/wpcs": "^2.0.0",
-    "spiritedmedia/redis-full-page-cache-purger": "dev-master"
+    "aptoma/twig-markdown": "^3.0"
   },
   "require-dev": {
     "wpackagist-plugin/debug-bar": "~0.9",
@@ -117,11 +43,9 @@
   },
   "autoload": {
     "classmap": [
-      "wp-content/themes/pedestal/functions.php",
-      "wp-content/themes/pedestal/inc/",
-      "wp-content/themes/billy-penn/functions.php",
-      "wp-content/themes/the-incline/functions.php",
-      "wp-content/themes/denverite/functions.php"
+      "themes/pedestal/functions.php",
+      "themes/pedestal/inc/",
+      "themes/denverite/functions.php"
     ]
   },
   "scripts": {
@@ -134,9 +58,9 @@
   },
   "extra": {
     "installer-paths": {
-      "wp-content/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
-      "wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
-      "wp-content/themes/{$name}/": ["type:wordpress-theme"]
+      "mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+      "plugins/{$name}/": ["type:wordpress-plugin"],
+      "themes/{$name}/": ["type:wordpress-theme"]
     }
   }
 }
