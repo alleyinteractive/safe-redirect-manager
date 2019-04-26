@@ -10,7 +10,7 @@ namespace CPR;
 /**
  * Disable gutenberg block for external links
  *
- * @param string $current_status The status of the post. 
+ * @param string $current_status The status of the post.
  * @param string $post_type      The post type.
  * @return string $current_status The status of the post.
  */
