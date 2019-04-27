@@ -7,7 +7,7 @@ wp search-replace new.denverite.com denverite.cpr.alley.test wp_blogs wp_site $(
 
 # Update home.
 wp option update home 'https://localhost:3001' --url=cpr.alley.test
-wp option update home 'https://localhost:3001' --url=denverite.cpr.alley.test
+wp option update home 'https://denverite.cpr.alley.test' --url=denverite.cpr.alley.test
 
 # Update the alley user.
 wp user update alley --user_pass=interactive --user_email=admin@local.test
