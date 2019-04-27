@@ -1,10 +1,15 @@
 <?php
 /**
- * Plugin Name: MU Loader
+ * Plugin Name: CPR MU Loader
  * Description: Wrapper plugin to manually require non-mu compatible plugins
  * Author: Alley Interactive
  * Version: 1.0
  */
+
+// CPR is blog #1.
+if ( 1 !== get_current_blog_id() ) {
+	return;
+}
 
 $plugins = [
 	'/ad-layers/ad-layers.php',
