@@ -1,0 +1,66 @@
+{
+  "name": "spiritedmedia/spiritedmedia",
+  "license": "GPLv3",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Russell Heimlich",
+      "email": "russell@spiritedmedia.com"
+    },
+    {
+      "name": "Chris Montgomery",
+      "email": "montchr@spiritedmedia.com"
+    },
+    {
+      "name": "Daniel Bachhuber",
+      "email": "daniel@handbuilt.co"
+    }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "composer/installers": "~1.0.12",
+    "joshtronic/php-loremipsum": "dev-master",
+    "timber/timber": "~1.7.0",
+    "tijsverkoyen/css-to-inline-styles": "^2.2",
+    "google/apiclient": "^2.0",
+    "sunra/php-simple-html-dom-parser": "^1.5",
+    "erusev/parsedown": "^1.6",
+    "aptoma/twig-markdown": "^3.0"
+  },
+  "require-dev": {
+    "wpackagist-plugin/debug-bar": "~0.9",
+    "wpackagist-plugin/debug-bar-actions-and-filters-addon": "~1.5.2",
+    "wpackagist-plugin/query-monitor": "~2.15.0",
+    "bueltge/wordpress-admin-style": "^1.5",
+    "phpunit/phpunit": "6.5.11"
+  },
+  "autoload": {
+    "classmap": [
+      "themes/pedestal/functions.php",
+      "themes/pedestal/inc/",
+      "themes/denverite/functions.php"
+    ]
+  },
+  "scripts": {
+    "install-codestandards": [
+      "Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin::run"
+    ],
+    "post-install-cmd": [
+        "@install-codestandards"
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+      "mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+      "plugins/{$name}/": ["type:wordpress-plugin"],
+      "themes/{$name}/": ["type:wordpress-theme"]
+    }
+  }
+}

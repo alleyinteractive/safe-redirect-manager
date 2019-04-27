@@ -1,0 +1,22 @@
+{% spaceless %}
+<ol start="{{ num }}" class="c-footnotes">
+    {% for item in items %}
+        {% set id = post_id ~ '-' ~ num %}
+
+        <li id="footnote-{{ id }}" class="c-footnotes__item">
+            {{ item }}
+            <a
+                href="#fnref-{{ id }}"
+                class="c-footnotes__return  js-footnote-link"
+                data-ga-category="post-content"
+                data-ga-action="fnref-{{ id|esc_attr }}"
+                data-ga-label="footnote-return"
+            >
+                {{ ped_icon( 'level-down', 'c-footnotes__return__icon' ) }}
+            </a>
+        </li>
+
+        {% set num = num + 1 %}
+    {% endfor %}
+</ol>
+{% endspaceless %}

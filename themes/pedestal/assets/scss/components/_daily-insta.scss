@@ -1,0 +1,80 @@
+$daily-insta-header-padding-v: rem( 8px );
+
+
+.c-daily-insta {
+  background-color: $truth-serum;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: rem( 32px );
+  display: table;
+
+  &__header {
+    padding-top: $daily-insta-header-padding-v;
+    padding-bottom: $daily-insta-header-padding-v;
+  }
+
+  &__title {
+    @include h-size( 5 );
+
+    font-weight: 300;
+    text-align: center;
+    margin-bottom: 0;
+
+    &__link {
+      @include link-dark;
+    }
+  }
+
+  &__body {
+    margin: 0;
+
+    &__text {
+      font-size: $paragraph-font-size;
+      display: inline-block;
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  &__img {
+    padding-bottom: 0;
+
+    // stylelint-disable-next-line selector-max-type
+    img {
+      width: 100%;
+    }
+  }
+
+  &__caption {
+    background-color: $truth-serum;
+    padding: rem( 8px );
+    text-align: left;
+
+    // Override .c-panel__inner
+    min-height: 0;
+
+    &__text {
+      margin-top: 0;
+      text-transform: none;
+    }
+  }
+
+  &__date,
+  &__author {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  &__author {
+    display: block;
+  }
+
+  //
+  // Context: Widget
+  //
+  &--widget {
+    .c-daily-insta__body__text {
+      font-size: $small-font-size;
+    }
+  }
+}

@@ -1,0 +1,97 @@
+$share-button-gutter: rem( 4px );
+$share-button-margin-y: rem( 32px );
+$share-button-link-height: rem( 44px );
+$share-button-height: $share-button-margin-y + $share-button-link-height;
+
+
+@mixin _share-button-background( $color ) {
+  background-color: $color;
+
+  &:hover,
+  &:active {
+    background-color: rgba( $color, 0.8 );
+  }
+}
+
+
+.share-buttons {
+  width: 100%; // Width should be equal to the main content
+  bottom: 0;
+  overflow: auto;
+  background-color: $white;
+  margin-top: $share-button-margin-y;
+  margin-bottom: $share-button-margin-y;
+  font-family: $font-family-sans-serif;
+}
+
+.share-buttons__inner {
+  @include clearfix;
+
+  margin: 0 auto;
+  max-width: $row-width;
+}
+
+.share-buttons__item {
+  list-style: none;
+  float: left;
+  width: 33.3333%;
+}
+
+.share-buttons__link {
+  display: block;
+  min-height: $share-button-link-height;
+  padding: rem( 12px ) 0;
+  text-align: center;
+  font-size: rem( 15px );
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: em( 1px );
+
+  &,
+  &:hover,
+  &:active,
+  &:focus {
+    color: $white;
+  }
+}
+
+.share-buttons__link--facebook {
+  @include _share-button-background( $facebook-blue );
+}
+
+.share-buttons__link--twitter {
+  @include _share-button-background( $twitter-blue );
+
+  margin-left: $share-button-gutter;
+  margin-right: $share-button-gutter;
+}
+
+.share-buttons__link--email {
+  @include _share-button-background( $gray-62 );
+}
+
+.share-buttons__icon {
+  font-size: rem( 18px );
+  margin-right: rem( 4px );
+  position: relative;
+  vertical-align: sub;
+}
+
+
+.share-buttons--bottom {
+  display: none;
+  position: sticky;
+  z-index: $z-index-3;
+  bottom: 0;
+  margin-bottom: 0;
+  border-top: rem( 3px ) solid $white;
+}
+
+
+@media print {
+  .share-buttons {
+    display: none;
+    // display property gets changed inline by JavaScript
+    visibility: hidden;
+  }
+}

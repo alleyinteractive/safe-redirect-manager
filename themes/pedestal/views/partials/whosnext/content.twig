@@ -1,0 +1,37 @@
+<div class="s-content">
+    {{ item.get_the_content }}
+</div>
+
+{% if item.get_items %}
+<section class="c-whos-next__items">
+    {% set stream = true %}
+
+    {% for item in item.get_items %}
+        {% set data_count = 'data-whos-next-people-single' %}
+        {% if item.people|length > 1 %}
+            {% set data_count = 'data-whos-next-people-multiple' %}
+        {% endif %}
+
+        <section class="c-whos-next-item" {{ data_count }}>
+            {% if item.img %}
+            <div class="c-whos-next-item__img">{{ item.img }}</div>
+            {% endif %}
+
+            <header class="c-whos-next-item__people">
+                {% for person in item.people %}
+                    {% if is_feed %}
+                        {% include 'partials/whosnext/person-feed.twig' %}
+                    {% else %}
+                        {% include 'partials/whosnext/person.twig' %}
+                    {% endif %}
+                {% endfor %}
+            </header>
+
+            <div class="c-whos-next-item__description  s-content">
+                {{ item.description }}
+            </div>
+        </section>
+
+    {% endfor %}
+</section>
+{% endif %}

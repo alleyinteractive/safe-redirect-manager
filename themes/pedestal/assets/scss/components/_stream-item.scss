@@ -1,0 +1,250 @@
+.stream-item {
+  @include clearfix;
+
+  margin-bottom: $stream-item-spacing;
+
+  .c-figure--embed {
+    margin-top: rem( 16px );
+    margin-bottom: rem( 8px );
+  }
+}
+
+.stream-item__featured-container {
+  display: none;
+  float: left;
+  margin-right: rem( 16px );
+  margin-bottom: rem( 16px );
+
+  // stylelint-disable selector-max-type
+  img {
+    max-height: rem( 150px );
+    width: auto;
+  }
+  // stylelint-enable selector-max-type
+}
+
+.stream-item__thumbnail-container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: rem( 150px );
+  text-align: center;
+}
+
+.stream-item__body {
+  overflow: hidden;
+}
+
+.stream-item__overline {
+  $_font-size: rem( 14px );
+
+  font-size: $_font-size;
+  font-weight: 700;
+  line-height: $overline-line-height-unit / $_font-size;
+}
+
+.stream-item__title,
+.stream-item__title-link {
+  color: $body-font-color;
+
+  .stream--list & {
+    color: $brand-1-color;
+  }
+}
+
+.stream-item__title {
+  font-size: $stream-item-title-font-size;
+  font-weight: 600;
+  letter-spacing: $stream-item-title-letter-spacing;
+  line-height: $stream-item-title-line-height;
+
+  .stream--list & {
+    font-size: $h5-font-size;
+  }
+}
+
+.stream-item__title-link {
+  &:hover {
+    color: $stream-item-title-link-text-color-hover;
+    text-decoration: $stream-item-title-link-text-decoration-hover;
+  }
+}
+
+.stream-item__description {
+  // stylelint-disable selector-max-type
+  p {
+    margin-bottom: 0;
+  }
+  // stylelint-enable selector-max-type
+}
+
+
+@media #{$screen} and ( min-width: $stream-item-breakpoint ) {
+  .stream-item {
+    .embed {
+      margin-left: 0;
+    }
+  }
+
+  .stream-item__thumbnail-container {
+    float: left;
+    margin-right: rem( 16px );
+  }
+
+  .stream-item__featured-container {
+    display: block;
+  }
+
+  .stream-item__title {
+    font-size: $stream-item-title-font-size--lg;
+    letter-spacing: $stream-item-title-letter-spacing--lg;
+  }
+}
+
+
+//
+// Stream Item Footer
+// ==========================================================================
+
+.stream-item__footer {
+  @include link-dark;
+
+  margin-top: rem( 4px );
+  margin-bottom: rem( 8px );
+  font-weight: normal;
+  line-height: 1;
+}
+
+.stream-item__footer__image {
+  $_img-size: rem( 28px );
+
+  float: left;
+  line-height: 0;
+  margin-left: 0;
+  margin-right: rem( 4px );
+
+  &,
+  .o-icon,
+  .logo--icon {
+    font-size: $_img-size;
+  }
+
+  .o-icon,
+  .logo--icon,
+  .c-avatar,
+  .c-avatar__img {
+    display: block;
+    height: $_img-size;
+    width: $_img-size;
+  }
+
+  // stylelint-disable selector-max-type, selector-max-compound-selectors
+  &,
+  a {
+    color: $gray-62;
+  }
+  // stylelint-enable selector-max-type, selector-max-compound-selectors
+}
+
+.stream-item__footer__text {
+  font-size: rem( 14px );
+}
+
+
+//
+// Types
+// ==========================================================================
+
+// Pretty sure this type of stream item doesn't exist
+// Can't find any markup with the class containing '--sponsored' -- RH
+.stream-item--sponsored {
+  border: rem( 1px ) solid $accent-1-color;
+  border-radius: rem( 6px );
+
+  .stream-item__inner {
+    padding: rem( 16px );
+  }
+
+  .stream-item__thumbnail-container {
+    display: none;
+  }
+
+  .stream-item__overline {
+    font-size: rem( 12px );
+    font-weight: 400;
+  }
+
+  .stream-item__footer__text {
+    padding-top: rem( 8px );
+    padding-bottom: rem( 8px );
+  }
+
+  .stream-item__source-name {
+    font-weight: 700;
+  }
+}
+
+.stream-item--dfp {
+  // Vertical spacing is handled on the .dfp elements so these stream items
+  // disappear gracefully
+  margin-bottom: 0;
+
+  .dfp {
+    margin-bottom: $stream-item-spacing;
+  }
+}
+
+.stream-item--article,
+.stream-item--whosnext,
+.stream-item--factcheck,
+.stream-item--link {
+  .stream-item__footer {
+    align-items: center;
+    display: flex;
+  }
+
+  .stream-item__footer__text {
+    flex: 1;
+  }
+}
+
+.stream-item--article,
+.stream-item--whosnext,
+.stream-item--factcheck {
+  .stream-item__footer__text > * {
+    display: inline;
+  }
+}
+
+.stream-item--embed {
+  .stream-item__footer {
+    text-align: center;
+  }
+}
+
+.stream-item--link {
+  .stream-item__footer__image {
+    .o-icon {
+      height: rem( 30px );
+    }
+  }
+
+  .stream-item__datetime,
+  .stream-item__source-name {
+    display: block;
+  }
+
+  .stream-item__datetime-separator {
+    display: none;
+  }
+}
+
+
+@media #{$screen} and ( min-width: em( 510px ) ) {
+  .stream-item--sponsored {
+    border-color: $light-gray-color;
+
+    .stream-item__thumbnail-container {
+      display: block;
+    }
+  }
+}

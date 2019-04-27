@@ -1,0 +1,26 @@
+.input-group {
+  display: inline-block;
+  position: relative;
+}
+
+.input-group__input {
+  padding-left: rem( 40px );
+}
+
+.input-group__addon {
+  color: $input-group-addon-color;
+  font-size: rem( 24px );
+
+  position: absolute;
+  z-index: $z-index-1;
+  left: rem( 8px );
+  top: rem( 10px );
+
+  margin-bottom: 0;
+  width: rem( 24px );
+  height: rem( 24px );
+
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+}
