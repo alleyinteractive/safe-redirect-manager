@@ -1,0 +1,13 @@
+{% if site.analytics.ga.js_data %}
+    <script>var PedestalGAData = {{ site.analytics.ga.js_data }}</script>
+    <script>
+        // Disable tracking for staff
+        if (document.cookie.indexOf('is_staff=')>=0){window['ga-disable-'+PedestalGAData.id]=true;}
+        // Set up the `ga()` function
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        // Queue GA commands
+        {{ site.analytics.ga.inline_script }}
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+    <script>if(typeof ga!=='function'){ga=false;}</script>
+{% endif %}

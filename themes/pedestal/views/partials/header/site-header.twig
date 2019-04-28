@@ -1,0 +1,146 @@
+{% import _self as nav_macros %}
+
+{% macro secondary_nav_list( data ) %}
+    <ul class="site-nav__list">
+        {% for class, item in data %}
+            <li class="site-nav__item site-nav__item--{{ class|esc_attr }}">
+                <a
+                    href="{{ item.url|esc_url }}"
+                    class="site-nav__link"
+                    data-ga-category="navigation"
+                    data-ga-label="header"
+                >
+                    <div class="site-nav__link__inner">
+                        {% if item.icon %}
+                            {{ ped_icon( item.icon, 'site-nav__icon' ) }}
+                        {% endif %}
+                        <span class="site-nav__text">{{ item.title }}</span>
+                    </div>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+<header class="site-header" role="banner">
+    <div class="site-header__inner">
+        <a
+            href="{{ site_url|esc_url }}"
+            class="site-header__logo-link"
+            rel="home"
+            data-ga-category="navigation"
+            data-ga-label="header"
+        >
+            {{ ped_logo( 'logo', 'site-header__logo' ) }}
+            <span class="invisible">Home</span>
+        </a>
+
+        <a
+            href="{{ site_url|esc_url }}/navigation/"
+            class="site-header__menu-trigger js-modal-trigger"
+            data-modal-id="site-header-nav"
+            data-ga-category="navigation"
+            data-ga-label="header"
+            data-ga-action="/virtual/internal/menu-modal"
+        >
+            {{ ped_icon( 'bars', 'site-header__hamburger' ) }}
+            <span class="invisible">Menu</span>
+        </a>
+
+        {% include 'partials/modals/search.twig' %}
+
+        <section
+            id="site-header-nav"
+            class="site-header__nav"
+            data-modal-class="modal--header-nav"
+        >
+            <div class="site-nav--primary__outer">
+                <nav class="site-nav--primary">
+                    <ul class="site-nav__list">
+                        {% for item in primary_nav %}
+
+                            {% if item.slug == 'search' %}
+                                {% set additional_classes = 'js-modal-trigger' %}
+                                {% set additional_attributes = 'data-modal-id="search-modal" data-ga-action="/virtual/internal/search-modal"' %}
+                            {% endif %}
+
+                            <li class="site-nav__item site-nav__item--{{ item.slug|esc_attr }}">
+                                <a
+                                    href="{{ item.url|esc_url }}"
+                                    class="site-nav__link {{ additional_classes|esc_attr }}"
+                                    {{ additional_attributes }}
+                                    data-ga-category="navigation"
+                                    data-ga-label="header"
+                                >
+                                    <div class="site-nav__link__inner">
+                                        {% if item.icon %}
+                                            {{ ped_icon( item.icon, 'site-nav__icon' ) }}
+                                        {% endif %}
+                                        <span class="site-nav__text">
+                                            {{ item.title }}
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+
+            {% if secondary_nav_mobile %}
+                {% set secondary_nav_desktop_class = 'site-nav--desktop' %}
+                <nav class="site-nav--secondary site-nav--mobile" aria-hidden="true">
+                    {{ nav_macros.secondary_nav_list( secondary_nav_mobile ) }}
+                </nav>
+            {% endif %}
+
+            <nav class="site-nav--secondary {{ secondary_nav_desktop_class|esc_attr }}">
+                {{ nav_macros.secondary_nav_list( secondary_nav ) }}
+            </nav>
+
+            <div class="site-header__marketing">
+                <ul class="site-header__social">
+                    {% set socialIconClass = 'site-header__social-icon' %}
+
+                    <li class="site-header__social-item">
+                        <a
+                            href="{{ twitter_url|esc_url }}"
+                            target="_blank"
+                            class="site-header__social-link"
+                            data-ga-category="navigation"
+                            data-ga-label="header"
+                        >
+                            {{ ped_icon('twitter', socialIconClass) }}
+                        </a>
+                    </li>
+                    <li class="site-header__social-item">
+                        <a
+                            href="{{ facebook_url|esc_url }}"
+                            target="_blank"
+                            class="site-header__social-link"
+                            data-ga-category="navigation"
+                            data-ga-label="header"
+                        >
+                            {{ ped_icon('facebook', socialIconClass) }}
+                        </a>
+                    </li>
+                    <li class="site-header__social-item">
+                        <a
+                            href="{{ instagram_url|esc_url }}"
+                            target="_blank"
+                            class="site-header__social-link"
+                            data-ga-category="navigation"
+                            data-ga-label="header"
+                        >
+                            {{ ped_icon('instagram', socialIconClass) }}
+                        </a>
+                    </li>
+                </ul>
+
+                {% if tagline %}
+                <p class="site-header__tagline">{{ tagline }}</p>
+                {% endif %}
+            </div>
+        </section>
+    </div>
+</header>

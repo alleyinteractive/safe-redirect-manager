@@ -1,0 +1,38 @@
+.logo {
+  display: inline-block;
+  height: auto;
+  stroke-width: 0;
+  stroke: currentColor;
+  width: auto;
+}
+
+
+.logo__group--light {
+  opacity: 0.5;
+}
+
+
+.logo--icon {
+  // Constrain the logo to its container
+  // stylelint-disable-next-line unit-blacklist
+  height: 1em;
+
+  .logo__group--fill {
+    fill: $brand-1-color;
+  }
+
+  .logo__group--cutout {
+    fill: $white;
+  }
+}
+
+/// A light logo icon for use on dark background
+.logo--icon--light {
+  .logo__group--fill {
+    fill: $white;
+  }
+
+  .logo__group--cutout {
+    fill: $brand-1-color;
+  }
+}

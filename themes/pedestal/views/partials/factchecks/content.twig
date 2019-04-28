@@ -1,0 +1,20 @@
+{% if item.get_statement_full %}
+<section class="c-factcheck__full-statement">
+    <h1>Full Statement</h1>
+    <blockquote>{{ item.get_the_statement_full }}</blockquote>
+</section>
+{% endif %}
+
+<section class="c-factcheck__analysis">
+    {% if item.get_statement_full %}
+    <h1>Our Analysis</h1>
+    {% endif %}
+    {{ item.get_the_analysis }}
+</section>
+
+{% if item.get_ruling %}
+<section class="c-factcheck__ruling">
+    <h1>Our Ruling</h1>
+    {{ item.get_the_ruling }}
+</section>
+{% endif %}

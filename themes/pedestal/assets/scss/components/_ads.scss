@@ -1,0 +1,91 @@
+// Amount to offset 300x50 DFP ad on mobile
+$dfp-mobile-ad-offset           : -( $column-gutter / 4 );
+// Same as above, but for ads within panels
+$dfp-mobile-ad-offset--panelled : -( $column-gutter );
+
+%adinfo-text {
+  text-align: center;
+  color: $dark-gray-color;
+  font-size: rem( 10px );
+  font-family: Arial, sans-serif;
+  letter-spacing: em( 1px, 10px );
+  line-height: (12px / 10px);
+  margin-bottom: 0;
+}
+
+// We need to use a class name that won't be blocked by an ad blocker
+.abd-debug {
+  /* stylelint-disable selector-max-type */
+  display: none;
+
+  &,
+  p {
+    @extend %adinfo-text;
+    color: $accent-2-color;
+  }
+
+  p {
+    margin-bottom: rem( 8px );
+  }
+
+  margin: rem( 36px ) auto;
+  /* stylelint-enable selector-max-type */
+}
+
+.dfp {
+  text-align: center;
+
+  // stylelint-disable selector-max-type
+  iframe {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.dfp--inline {
+  margin: rem( 36px ) auto;
+}
+
+.dfp-disclaimer {
+  @extend %adinfo-text;
+}
+
+.rail {
+  // Prevent rail ad units from firing when .rail is hidden
+  .dfp {
+    display: none;
+  }
+  .widget_pedestal_dfp_rail_right {
+    // Override default widget padding for BP-RailRight
+    padding: 0;
+
+    // Ad divs will not display if ad unit is empty, so hide it from the
+    // rail. These will be enabled after the ad has successfully loaded.
+    border-bottom: 0;
+    margin-top: 0;
+  }
+}
+
+@media #{$small-only} {
+  .stream-item--dfp .dfp {
+    margin-left: $dfp-mobile-ad-offset;
+    margin-right: $dfp-mobile-ad-offset;
+  }
+}
+
+@media #{$large-up} {
+  // When the rail is visible show the ad units so ads fire
+  .rail .dfp {
+    display: block;
+  }
+
+  .dfp--inline-stream {
+    display: none;
+  }
+}
+
+@media print {
+  .dfp {
+    display: none;
+  }
+}

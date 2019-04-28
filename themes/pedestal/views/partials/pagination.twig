@@ -1,0 +1,10 @@
+<div class="pagination">
+    {% if show_text %}
+        <p class="pagination__text">
+            Page
+            <strong class="pagination__text__paged">{{ current_page }}</strong>
+            of
+            <strong class="pagination__text__total">{{ total_pages }}</strong>
+        </p>
+    {% endif %}
+</div>

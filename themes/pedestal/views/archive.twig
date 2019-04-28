@@ -1,0 +1,27 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block content %}
+
+    {% if archive_title or archive_description %}
+    <header class="c-main__header js-main-header">
+        {% if archive_title %}
+            <h1 class="c-main__title">{{ archive_title }}</h1>
+        {% endif %}
+        {% if archive_description %}
+            <h2 class="c-main__description">{{ archive_description }}</h2>
+        {% endif %}
+    </header>
+    {% endif %}
+
+    {% if stream %}
+        <section class="stream {{ extra_stream_container_classes }}">
+            <div class="stream__items">
+                {{ stream }}
+            </div>
+        </section>
+
+        {{ pagination }}
+
+    {% endif %}
+
+{% endblock %}

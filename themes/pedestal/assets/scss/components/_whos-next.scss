@@ -1,0 +1,61 @@
+.c-whos-next__logo__img {
+  background: no-repeat top left;
+  background-image: url( $site-theme-abspath + '/assets/images/whos-next-partner.svg' );
+  background-size: contain;
+  display: block;
+  height: rem( 48px );
+}
+
+.c-whos-next__items {
+  border-top: $border-standard;
+}
+
+.c-whos-next-item {
+  padding-top: rem( 24px );
+}
+
+.c-whos-next-item__img {
+  .c-figure {
+    margin-top: 0;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.c-whos-next-item__person {
+  margin-bottom: rem( 24px );
+}
+
+.c-whos-next-item__person__icon {
+  color: $dimmed-text-color;
+  width: rem( 16px );
+  text-align: center;
+  margin-right: rem( 4px );
+}
+
+.c-whos-next-item__person__name {
+  @extend %c-heading--minor;
+
+  margin-bottom: 0;
+}
+
+@media #{$medium-up} {
+  [data-whos-next-people-multiple] .c-whos-next-item__people {
+    @include block-grid(
+      $per-row: 2,
+      $spacing: rem( 24px )
+    );
+  }
+
+  .c-whos-next-item__person {
+    margin-bottom: rem( 32px );
+
+    [data-whos-next-people-single] & {
+      max-width: 100%;
+    }
+  }
+
+  .c-whos-next-item__person__name {
+    margin-bottom: rem( 8px );
+  }
+}

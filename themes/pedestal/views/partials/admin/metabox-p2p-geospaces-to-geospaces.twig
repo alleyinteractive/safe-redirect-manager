@@ -1,0 +1,32 @@
+<table class="p2p-connections">
+    <tbody>
+        {% if connected %}
+            {% for item in connected %}
+            <tr>
+                <td>
+                    {% if item.get_connection_rel_label %}
+                        The {{ item.get_type_name }} <em>&ldquo;<a href="{{ item.get_edit_link }}" target="_blank">{{ item.get_title }}</a>&rdquo;</em>
+                        is <strong>{{ item.get_connection_rel_label }}</strong>
+                        this {{ geospace.get_type_name }}
+                        <em>&ldquo;{{ geospace.get_title }}&rdquo;</em>
+                    {% else %}
+                        The {{ item.get_type_name }} <em>&ldquo;<a href="{{ item.get_edit_link }}" target="_blank">{{ item.get_title }}</a>&rdquo;</em>
+                        is connected to this {{ geospace.get_type_name }}
+                        <em>&ldquo;{{ geospace.get_title }}&rdquo;</em>,
+                        but the relationship between the two is undefined!
+                        <strong>Please set the relationship in the Relation column on the connected
+                        {{ item.get_type_name }}
+                        <em>&ldquo;<a href="{{ item.get_edit_link }}" target="_blank">{{ item.get_title }}</a>&rdquo;!</em></strong>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td>
+                    <strong>This {{ geospace.get_type }} is not passively connected to any other {{ geospace.get_type }}.</strong>
+                </td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>

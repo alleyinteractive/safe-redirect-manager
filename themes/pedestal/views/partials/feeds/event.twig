@@ -1,0 +1,53 @@
+<title>{{ item.get_title }}</title>
+<link>{{ item.get_permalink|e }}</link>
+<pubDate>{{ item.get_post_date_gmt('r') }}</pubDate>
+<dc:creator><![CDATA[{{ item.get_author_names_rss }}]]></dc:creator>
+<guid isPermaLink="false">{{ item.get_guid }}</guid>
+
+<description><![CDATA[{{ item.get_excerpt }}]]></description>
+
+{% if item.get_the_content_rss %}
+<content:encoded><![CDATA[
+    <table>
+        {% if item.get_what %}
+        <tr>
+            <th scope="row">What</th>
+            <td>{{ item.get_what }}</td>
+        </tr>
+        {% endif %}
+
+        <tr>
+            <th scope="row">Where</th>
+            <td>
+                {{ item.get_where }}
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="row">When</th>
+            <td>{{ item.get_when }}</td>
+        </tr>
+
+        <tr>
+            {% if item.get_cost %}
+            <th scope="row">How much</th>
+            <td>{{ item.get_cost }}</td>
+            {% endif %}
+        </tr>
+
+    </table>
+
+    {% if item.get_details_link_url and item.get_details_link_text %}
+    <p><a href="{{ item.get_details_link_url|esc_url }}">
+        {{ item.get_details_link_text }}
+    </a></p>
+    {% endif %}
+    {{ item.get_the_content_rss }}
+]]></content:encoded>
+{% else %}
+<content:encoded><![CDATA[{{ item.get_excerpt }}]]></content:encoded>
+{% endif %}
+
+{% if item.get_featured_image_enclosure %}
+{{ item.get_featured_image_enclosure }}
+{% endif %}

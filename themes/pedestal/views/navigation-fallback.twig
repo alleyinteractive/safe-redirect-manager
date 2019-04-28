@@ -1,0 +1,44 @@
+{% extends 'layouts/layout--content.twig' %}
+
+{% import _self as nav_macros %}
+
+{% macro li( items ) %}
+    {% for class, item in items %}
+    <li class="navigation-fallback__item">
+        <a href="{{ item.url|esc_url }}" class="navigation-fallback__link {{ class|esc_attr }}">
+            {% if item.icon %}
+                {{ ped_icon( item.icon, 'navigation-fallback__icon' ) }}
+            {% endif %}
+
+            {{ item.title }}
+        </a>
+    </li>
+    {% endfor %}
+{% endmacro %}
+
+{% block content %}
+
+{% if primary_nav %}
+<ul>
+    {{ nav_macros.li( primary_nav ) }}
+</ul>
+{% endif %}
+
+{% if secondary_nav_mobile %}
+    {% set secondary_nav_desktop_class = 'site-nav--desktop' %}
+    <div class="site-nav--mobile" aria-hidden="true">
+        <ul>
+            {{ nav_macros.li( secondary_nav_mobile ) }}
+        </ul>
+    </div>
+{% endif %}
+
+{% if secondary_nav %}
+    <div class="{{ secondary_nav_desktop_class|esc_attr }}">
+        <ul>
+            {{ nav_macros.li( secondary_nav ) }}
+        </ul>
+    </div>
+{% endif %}
+
+{% endblock %}

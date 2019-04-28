@@ -1,0 +1,10 @@
+.c-footnotes {
+  &__item { @include de-emphasized; }
+
+  &__return {
+    &__icon {
+      transform: rotate( 90deg );
+      margin-left: rem( 8px );
+    }
+  }
+}
