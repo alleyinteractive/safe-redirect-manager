@@ -61,6 +61,9 @@ require_once CPR_PATH . '/inc/cache.php';
 // This site's RSS, Atom, JSON, etc. feeds.
 require_once CPR_PATH . '/inc/feeds.php';
 
+// Gutenberg.
+require_once CPR_PATH . '/inc/gutenberg.php';
+
 // Helpers.
 require_once CPR_PATH . '/inc/helpers/terms.php';
 
@@ -69,6 +72,9 @@ require_once CPR_PATH . '/inc/landing-pages.php';
 
 // Media includes.
 require_once CPR_PATH . '/inc/media.php';
+
+// Permalink.
+require_once CPR_PATH . '/inc/permalink.php';
 
 // Query modifications and manipulations.
 require_once CPR_PATH . '/inc/query.php';
@@ -142,5 +148,8 @@ require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-artist.php';
 
 // Underwriters Post Type (cpt:underwriter).
 require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-underwriter.php';
+
+// External Links Post Type (cpt:external-link).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-external-link.php';
 
 /* End Data Structures */
