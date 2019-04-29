@@ -69,6 +69,14 @@ function cpr_fm_submenu_settings() {
 						],
 					]
 				),
+				'careers' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Careers', 'cpr' ),
+						'children' => [
+							'footer_content' => new Fieldmanager_RichTextArea( __( 'Job Listings Footer', 'cpr' ) ),
+						],
+					]
+				),
 			],
 		]
 	);
@@ -391,3 +399,4 @@ function cpr_fm_post_underwriter_settings() {
 }
 add_action( 'fm_post_underwriter', 'cpr_fm_post_underwriter_settings' );
 /* end fm:post-underwriter-settings */
+

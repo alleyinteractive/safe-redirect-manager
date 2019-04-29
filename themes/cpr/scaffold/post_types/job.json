@@ -1,0 +1,11 @@
+{
+	"public": true,
+	"has_archive": true,
+	"show_in_rest": true,
+	"menu_icon": "dashicons-portfolio",
+	"supports": [
+		"title",
+		"editor",
+		"revisions"
+	]
+}

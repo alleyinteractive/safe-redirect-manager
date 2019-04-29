@@ -60,6 +60,19 @@
 					"children": "`( new \\CPR\\Components\\Social_Links() )->get_fm_fields()`"
 				}
 			}
+		},
+		"careers": {
+			"label": {
+				"__": "Careers"
+			},
+			"children": {
+				"footer_content": {
+					"label": {
+						"__": "Job Listings Footer"
+					},
+					"type": "richtextarea"
+				}
+			}
 		}
 	}
 }
