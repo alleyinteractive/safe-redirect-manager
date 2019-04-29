@@ -7,7 +7,7 @@
  */
 
 // Denverite is blog #2.
-if ( 2 !== get_current_blog_id() ) {
+if ( 4 !== get_current_blog_id() ) {
 	return;
 }
 
