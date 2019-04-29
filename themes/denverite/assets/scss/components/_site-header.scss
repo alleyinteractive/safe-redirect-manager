@@ -1,0 +1,37 @@
+// Handle the flag appearance of the logo wrapper
+.site-header {
+  margin-bottom: rem( 8px );
+}
+
+.site-header__logo-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  top: -( $site-header-padding-y );
+  height: rem( 60px );
+  width: rem( 125px );
+  padding: 0;
+
+  line-height: 1;
+  letter-spacing: em( 0.4px, 14px );
+}
+
+.site-header__logo {
+  position: relative;
+  left: rem( 0.5px );
+  height: rem( 30px );
+  width: auto;
+}
+
+
+@media #{$site-header-breakpoint} {
+  .site-header {
+    margin-bottom: 0;
+  }
+
+  .site-header__logo {
+    height: $site-header-logo-height--bp-up;
+  }
+}

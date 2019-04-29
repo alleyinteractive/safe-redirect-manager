@@ -221,7 +221,7 @@ class Homepage extends \WP_Components\Component {
 										'label' => __( 'Featured Story', 'cpr' ),
 										'post_limit'     => 1,
 										'query_args'     => [
-											'post_type' => [ 'post', 'podcast-episode' ],
+											'post_type' => [ 'post', 'podcast-episode', 'external-link' ],
 										],
 									]
 								),

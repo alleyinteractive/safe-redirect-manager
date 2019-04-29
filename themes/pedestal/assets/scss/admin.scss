@@ -1,0 +1,35 @@
+@charset 'UTF-8';
+/*!*
+ * Version: 7.15.4
+ *
+ * Copyright ( c ) 2019 Spirited Media
+ *
+ * Some icons by Font Awesome, used under a CC BY 4.0 license.
+ * https://fontawesome.com/license
+ */
+
+@import 'helpers/colors';
+@import 'helpers/global-settings';
+@import 'helpers/theme-settings';
+@import 'helpers/functions';
+@import 'helpers/mixins';
+
+// Defined here because the original is defined within Foundation
+@mixin clearfix {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+
+.clearfix {
+  @include clearfix;
+}
+
+@import 'components/icons';
+
+// Admin-specific components
+@import 'components/admin/admin';
+@import 'components/admin/fieldmanager-group-tabs';
+@import 'components/admin/messages-conversions';

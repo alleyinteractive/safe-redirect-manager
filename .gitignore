@@ -24,5 +24,21 @@ plugins/*
 !plugins/npr-story-api
 !plugins/pym-shortcode
 
+!plugins/compressed-emoji
+!plugins/documentcloud
+!plugins/image-shortcake
+!plugins/menu-item-custom-fields
+!plugins/posts-to-posts
+!plugins/redirection
+!plugins/S3-Uploads
+
+!plugins/shortcake-bakery
+!plugins/shortcode-ui
+!plugins/tablepress
+!plugins/tablepress-responsive-tables
+!plugins/user-switching
+!plugins/wordpress-enhanced-media-library-pro
+
+
 /themes/cpr/migration/data/
 /themes/cpr/migration/test-data/

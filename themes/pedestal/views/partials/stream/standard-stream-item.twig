@@ -1,0 +1,235 @@
+{#
+Available variables
+
+__context          - Where is this stream item being shown?
+ga_category_stream - What category to use for Google Analytics event tracking
+type               - What type of stream item are we dealing with?
+permalink_target   - Are links opening in a new window/tab?
+stream_index       - The position of this stream item in the loop
+featured_image     - Large image associated with this stream item
+thumbnail_image    - Smaller image associated with this stream item
+permalink          - URL where this stream item is linking to
+title              - Headline of this stream item
+overline           - Text that appears above the title
+overline_link      - URL to link the overline to
+description        - Blurb/excerpt associated with this stream item
+embed_html         - Embed HTML
+author_names       - List of one or more author names for this stream item
+author_image       - Image associated with the author(s) of this stream item
+author_link        - URL associated with the author(s)
+source_name        - The name of a source
+source_image       - Image associated with a source (usually an icon)
+source_link        - URL associated with the source
+date_time          - Human readable date time format for the stream item
+machine_time       - Machine readable verison (ISO 8601 format usually) of the date time
+#}
+
+
+{% set ga_category_stream = 'stream-item' %}
+{% set ga_label = 'post' %}
+{% if __context == 'featured' %}
+    {% set ga_category_stream = 'homepage-featured' %}
+{% endif %}
+
+{% if type == 'link' %}
+    {% set permalink_target = 'target="_blank"' %}
+    {% set ga_label = 'source' %}
+{% endif %}
+
+{% if stream_index %}
+    {% set stream_index = 'data-stream-index="' ~ stream_index|esc_attr ~ '"' %}
+{% endif %}
+
+{% if thumbnail_image %}
+    {% set thumbnail_image_html %}
+    <figure class="stream-item__thumbnail-container">
+        {% if permalink %}
+            <a
+                href="{{ permalink|esc_url }}"
+                {{ permalink_target }}
+                class="stream-item__thumbnail-image-link"
+                data-ga-category="{{ ga_category_stream|esc_attr }}"
+                data-ga-label="{{ ga_label|esc_attr }}"
+            >{{ thumbnail_image }}</a>
+        {% else %}
+            {{ thumbnail_image }}
+        {% endif %}
+    </figure>
+    {% endset %}
+{% endif %}
+
+{% if featured_image %}
+    {% set featured_image_class = 'has-featured-image' %}
+    {% set featured_image_html %}
+    <figure class="stream-item__featured-container">
+        {% if permalink %}
+            <a
+                href="{{ permalink|esc_url }}"
+                {{ permalink_target }}
+                class="stream-item__featured-image-link"
+                data-ga-category="{{ ga_category_stream|esc_attr }}"
+                data-ga-label="{{ ga_label|esc_attr }}"
+            >{{ featured_image }}</a>
+        {% else %}
+            {{ featured_image }}
+        {% endif %}
+    </figure>
+    {% endset %}
+{% endif %}
+
+{% if overline %}
+    {% set overline_class = 'has-overline' %}
+    {% set overline_html %}
+    <p class="stream-item__overline c-heading--overline">
+        {% if overline_url %}
+            <a
+                href="{{ overline_url|esc_url }}"
+                class="stream-item__overline-link"
+                data-ga-category="{{ ga_category_stream|esc_attr }}"
+                data-ga-label="cluster-story"
+            >
+                {{ overline }}
+            </a>
+        {% else %}
+            {{ overline }}
+        {% endif %}
+    </p>
+    {% endset %}
+{% endif %}
+
+
+{% set title_html %}
+    {% if permalink %}
+        <a
+            href="{{ permalink|esc_url }}"
+            {{ permalink_target }}
+            class="stream-item__title-link"
+            data-ga-category="{{ ga_category_stream|esc_attr }}"
+            data-ga-label="{{ ga_label|esc_attr }}"
+        >
+            {{ title }}
+        </a>
+    {% else %}
+        {{ title }}
+    {% endif %}
+{% endset %}
+
+<article
+    class="stream-item stream-item--{{ type|esc_attr }} {{ overline_class }} {{ featured_image_class }}"
+    {{ stream_index }}
+>
+    {% if primary_item %}
+    <h1 class="stream-item__title--pre-image stream-item__title" aria-hidden="true">
+        {{ title_html }}
+    </h1>
+    {% endif %}
+
+    {% if __context == 'featured' %}
+        {{ overline_html }}
+    {% endif %}
+
+    {{ thumbnail_image_html }}
+    {{ featured_image_html }}
+
+    <div class="stream-item__body">
+
+        {% if __context != 'featured' %}
+        {{ overline_html }}
+        {% endif %}
+
+        <h1 class="stream-item__title--post-image stream-item__title">
+            {{ title_html }}
+        </h1>
+
+        {% if description %}
+        <div class="stream-item__description">
+            {{ description }}
+        </div>
+        {% endif %}
+
+        {% if embed_html %}
+        <div class="stream-item__content">
+            {{ embed_html }}
+        </div>
+        {% endif %}
+
+        {% if show_meta_info and ( source_image or source_name or author_image or author_names or date_time ) %}
+        <footer class="stream-item__footer">
+
+            {# Setup some attributes #}
+            {% if source_link %}
+                {% set source_link_href = 'href="' ~ source_link|esc_url ~ '"' %}
+            {% endif %}
+
+            {% if author_link %}
+                {% set author_link_href = 'href="' ~ author_link|esc_url ~ '"' %}
+            {% endif %}
+
+            {% if machine_time %}
+                {% set datetime_attr %}
+                    datetime="{{ machine_time|esc_attr }}"
+                {% endset %}
+            {% endif %}
+
+            {% set time_html %}
+                <time
+                    {{ datetime_attr }}
+                    class="stream-item__datetime"
+                >
+                    {{ date_time }}
+                </time>
+            {% endset %}
+
+            {# Display stuff #}
+            {% if source_image %}
+                <a
+                    {{ source_link_href }}
+                    class="stream-item__footer__image"
+                    data-ga-category="{{ ga_category_stream|esc_attr }}"
+                    data-ga-label="source"
+                >
+                    {{ source_image }}
+                </a>
+            {% endif %}
+
+            {% if author_image %}
+                <a
+                    {{ author_link_href }}
+                    class="stream-item__footer__image"
+                    data-ga-category="{{ ga_category_stream|esc_attr }}"
+                    data-ga-label="author"
+                >
+                    {{ author_image }}
+                </a>
+            {% endif %}
+
+            <div class="stream-item__footer__text">
+                {% if source_name %}
+                    {{ time_html }}
+
+                    <span class="stream-item__datetime-separator">&nbsp;&middot;&nbsp;</span>
+
+                    <a
+                        {{ source_link_href }}
+                        class="stream-item__source-name"
+                        data-ga-category="{{ ga_category_stream|esc_attr }}"
+                        data-ga-label="source"
+                    >
+                        on <strong>{{ source_name }}</strong>
+                    </a>
+                {% endif %}
+
+                {% if author_names %}
+                    <div class="stream-item__author-names">By <strong>{{ author_names }}</strong></div>
+
+                    {% if date_time %}
+                    <span class="stream-item__datetime-separator">&nbsp;&middot;&nbsp;</span>
+                    {{ time_html }}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </footer>
+        {% endif %}
+
+    </div>
+</article>

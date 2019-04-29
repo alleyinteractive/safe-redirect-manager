@@ -1,0 +1,23 @@
+.signup-email__button {
+  @include button( 'oval', $include-base-styles: false );
+}
+
+//
+// Follow Cluster Signup
+// ==========================================================================
+
+.signup-email--cluster {
+  background-color: $brand-1-color;
+
+  // stylelint-disable selector-max-type
+  .signup-email__title,
+  .signup-email__success-message p {
+    color: $white;
+  }
+  // stylelint-enable selector-max-type
+
+  .signup-email__button {
+    font-weight: 600;
+    @include button-color-variant( $white );
+  }
+}

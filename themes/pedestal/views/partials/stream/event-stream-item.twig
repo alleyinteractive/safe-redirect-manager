@@ -1,0 +1,7 @@
+{% if stream_index %}
+    {% set stream_index = 'data-stream-index="' ~ stream_index|esc_attr ~ '"' %}
+{% endif %}
+
+<article class="stream-item stream-item--{{ type|esc_attr }}" {{ stream_index }}>
+    {% include 'partials/event.twig' %}
+</article>

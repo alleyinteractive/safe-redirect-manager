@@ -1,0 +1,134 @@
+.no-js,
+.has-closed-modal {
+  .modal {
+    display: none;
+    z-index: -1;
+  }
+}
+
+.has-open-modal {
+  // Prevent body from scrolling underneath the open modal
+  overflow: hidden;
+
+  // The admin bar should display fixed alongside the modal so it doesn't
+  // awkwardly disappear when scrolling
+  // stylelint-disable-next-line selector-max-id
+  #wpadminbar {
+    position: fixed;
+  }
+}
+
+.modal__overlay,
+.modal__frame {
+  position: fixed;
+  z-index: $z-index-3;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.modal__overlay {
+  background-color: rgba( $black, 0.4 );
+}
+
+.modal__frame,
+.modal__content {
+  background-color: $white;
+}
+
+.modal__frame {
+  overflow-y: auto;
+
+  // Place on top of the overlay
+  z-index: $z-index-3 + 1;
+
+  .admin-bar & {
+    top: rem( 60px );
+  }
+}
+
+.modal__content {
+  padding: $modal-close-button-height rem( 16px ) rem( 16px );
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.modal__close-button {
+  position: absolute;
+  z-index: $z-index-1;
+  right: 0;
+  top: 0;
+
+  height: $modal-close-button-height; // For IE11 alignment
+  border: 0;
+  background-color: transparent;
+
+  color: $white;
+  font-size: rem( 30px );
+}
+
+
+@media #{$site-header-breakpoint} {
+  .modal__frame {
+    margin: 0 auto;
+    max-width: rem( 700px );
+    max-height: rem( 400px );
+    top: rem( 32px );
+    width: 100%; // IE 10 needs this set to center the frame
+  }
+
+  .modal__content {
+    border-radius: rem( 4px );
+    min-height: rem( 400px );
+    position: relative;
+  }
+}
+
+@media ( max-width: em( 782px ) ) {
+  .admin-bar .modal__frame {
+    top: $wp-admin-bar-height-mobile;
+  }
+}
+
+
+//
+// Search Modal
+// ==========================================================================
+
+.modal--search {
+
+  .modal__overlay {
+    background-color: $modal-overlay-background-color-light;
+  }
+
+  .modal__frame,
+  .modal__content {
+    background-color: $modal-search-background-color;
+  }
+
+}
+
+
+//
+// Mobile Header Nav Modal
+// ==========================================================================
+
+.modal--header-nav {
+
+  .modal__overlay {
+    background-color: $modal-overlay-background-color-light;
+  }
+
+  .modal__frame,
+  .modal__content {
+    background-color: $modal-header-nav-background-color;
+  }
+
+  .modal__content {
+    padding-bottom: 0;
+  }
+
+}

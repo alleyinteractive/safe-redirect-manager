@@ -1,0 +1,13 @@
+{
+  "public": true,
+  "publicly_queryable": false,
+    "has_archive": false,
+    "has_single": false,
+  "show_in_rest": true,
+  "menu_icon": "dashicons-admin-links",
+  "supports": [
+    "title",
+    "editor",
+    "thumbnail"
+  ]
+}

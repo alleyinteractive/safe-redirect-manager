@@ -1,0 +1,84 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block content %}
+
+    <article class="c-newsletter  c-main__content  {{ item.css_classes|esc_attr }}"
+        {{ item.get_the_data_atts }} >
+
+
+        <header class="single-header  c-main__header js-main-header">
+            <div class="single-header__sponsorship">
+                {{ ped_slot( 'single_lead' ) }}
+            </div>
+
+            <div class="single-header__overline  c-heading--overline">
+                <h2 class="c-heading__title">Newsletter</h2>
+            </div>
+
+            <h1 class="single-header__title">
+                {{ title }}
+            </h1>
+
+            <h2 class="single-header__description">
+                {{ item.get_newsletter_subtitle }}
+            </h2>
+        </header>
+
+        {% if item.get_instagram_of_the_day %}
+        <section class="c-main__lead-img">
+            {{ item.get_instagram_of_the_day }}
+        </section>
+        {% endif %}
+
+        {% if item.get_items %}
+
+        <section class="c-main__entities">
+            {% set stream = true %}
+
+            <div class="newsletter-items">
+
+            {% set first_heading = true %}
+            {% for item in item.get_items %}
+
+                {% if 'post' == item.type %}
+                    {% if 'event' == item.post.get_type %}
+                        {% include 'partials/stream/newsletter/event.twig' with item.post.get_context only %}
+                    {% else %}
+                        {% include 'partials/stream/newsletter/entity.twig' with {
+                            'item': item.post,
+                            'newsletter_item': item
+                        } %}
+                    {% endif %}
+                {% elseif 'heading' == item.type %}
+                    {% if first_heading %}
+                        {% if ped_slot( 'newsletter_promoted_event' ) %}
+                            <h2 class="c-heading--overline">Sponsored Event</h2>
+                            {{ ped_slot( 'newsletter_promoted_event' ) }}
+                        {% endif %}
+                        {% set first_heading = false %}
+                    {% endif %}
+
+                    <h2 class="c-heading--overline">{{ item.title }}</h2>
+                {% endif %}
+
+            {% endfor %}
+
+            </div>
+
+        </section>
+
+        {% else %}
+
+        <section class="c-main__body  s-content">
+            {{ item.get_the_content }}
+        </section>
+
+        {% endif %}
+
+        <footer class="c-main__footer js-main-footer"></footer>
+
+    </article>
+
+{% endblock %}
+
+{# Uses the default sidebar #}

@@ -1,0 +1,69 @@
+{% if item.get_authors_count >= 3 or narrow %}
+    {% set meta_info_classes = meta_info_classes ~ '  single-entity-meta--always-stacked' %}
+{% endif %}
+
+{% set img_link_url = item.get_the_permalink %}
+
+{% set source_name %}
+    {% if is_cluster %}
+        {{ item.get_the_authors_truncated( {
+            'ga_category': 'post-header',
+            'ga_label': 'author',
+        } ) }}
+    {% else %}
+        {{ item.get_the_authors( {
+            'ga_category': 'post-header',
+            'ga_label': 'author',
+        } ) }}
+    {% endif %}
+{% endset %}
+
+{% set timestamp %}
+    <time class="single-entity-meta__timestamp__inner" datetime="{{ item.get_post_date( 'c' ) }}">
+        {{ item.get_the_relative_datetime }}
+    </time>
+{% endset %}
+
+{% if item.get_type == 'embed' %}
+
+    {% set img_link_url = item.get_embed_url %}
+    {% set img_ga_label = 'source' %}
+    {% set source_name %}
+        <a href="{{ item.get_embed_url }}" data-ga-category="post-header" data-ga-label="source">
+            {{ item.get_source }}
+        </a>
+    {% endset %}
+
+{% endif %}
+
+<div class="{{ meta_info_classes }} single-header__meta single-entity-meta--{{ item.get_type }} single-entity-meta">
+
+    <div class="single-entity-meta__img--standalone  single-entity-meta__img  single-entity-meta__item">
+        {% if img_ga_label %}
+            <a href="{{ img_link_url }}"
+                data-ga-category="post-header"
+                data-ga-label="{{ img_ga_label|esc_attr }}">
+
+                {{ ped_icon( item.get_source_icon_name, 'single-entity-meta__img__icon', icon_color ) }}
+
+            </a>
+        {% else %}
+            {{ item.get_meta_info_img }}
+        {% endif %}
+    </div>
+
+    <div class="single-entity-meta__stack  single-entity-meta__item">
+            <div class="single-entity-meta__name single-entity-meta__stack__item">
+                {{ source_name }}
+            </div>
+
+            <div class="single-entity-meta__timestamp single-entity-meta__stack__item single-entity-meta__stack__mover">
+                {{ timestamp }}
+            </div>
+    </div>
+
+    <div class="single-entity-meta__timestamp  single-entity-meta__item  single-entity-meta__mover">
+        {{ timestamp }}
+    </div>
+
+</div>

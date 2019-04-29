@@ -1,0 +1,13 @@
+.c-spinner {
+  width: 100%;
+  clear: both;
+  display: none;
+
+  .is-loading & {
+    display: block;
+  }
+}
+
+.c-spinner__inner {
+  margin: 0 auto;
+}

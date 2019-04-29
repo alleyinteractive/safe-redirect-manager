@@ -1,0 +1,140 @@
+.c-figure {
+  margin-bottom: rem( 16px );
+
+  &,
+  &__content-wrap {
+    position: relative;
+    overflow: auto;
+  }
+}
+
+.c-figure__link {
+  display: block;
+}
+
+.c-figure__content {
+  display: block;
+  height: auto;
+  padding-bottom: rem( 4px );
+
+  .c-figure--img & {
+    padding-bottom: 0;
+  }
+}
+
+.c-figure__text {
+  margin-top: rem( 8px );
+  text-align: $figure-text-align;
+
+  // Forego the default emboldened link styles because the text here is too dense
+  @if $enable-emboldened-link-underlines {
+    // stylelint-disable selector-max-type
+    a {
+      text-decoration: underline;
+
+      &:focus,
+      &:hover,
+      &:active {
+        transition: background-color 300ms ease;
+        background: $accent-1-color;
+      }
+    }
+    // stylelint-enable selector-max-type
+  }
+}
+
+.c-figure__text,
+.c-figure__text__caption,
+.c-figure__text__credit {
+  // Override `.s-content` heading sizes
+  &,
+  .s-content & {
+    font-size: $small-font-size;
+    line-height: 1.25;
+  }
+}
+
+.c-figure__text__caption,
+.c-figure__text__credit {
+  display: inline;
+  // stylelint-disable-next-line unit-blacklist
+  letter-spacing: 0.02em;
+  color: $figure-caption-color;
+  font-style: normal; // Overrides user agent stylesheet behavior
+}
+
+.c-figure__text__caption {
+  padding-right: rem( 4px );
+  font-weight: 400;
+}
+
+.c-figure__text__credit {
+  @if $enable-figure-credit-distinction {
+    color: $dimmed-text-color;
+    font-weight: 300;
+    text-transform: uppercase;
+
+    // stylelint-disable-next-line selector-max-type
+    a {
+      @include link-light;
+    }
+  }
+}
+
+@media print {
+  // stylelint-disable-next-line selector-max-type
+  .c-main__lead-img a[href]::after {
+    line-height: 1.333;
+  }
+
+  .c-figure__link[href]::after {
+    content: "";
+  }
+}
+
+
+/**
+ * Figure for images
+ */
+
+.c-figure--img {
+  @include subtle-image-shadow;
+
+  // Image figures must display as table so caption matches the width of non-
+  // full-width images
+  display: table;
+
+  // stylelint-disable-next-line selector-max-type
+  img {
+    display: block;
+    // For IE compatability
+    width: 100%;
+
+    // Remove effects of `subtle-image-shadow` because it's applied on the
+    // figure element
+    box-shadow: none;
+  }
+
+  .c-figure__text {
+    display: table-caption;
+    caption-side: bottom;
+  }
+}
+
+/**
+ * Figure for responsive iframes
+ *
+ * See https://www.smashingmagazine.com/2014/02/making-embedded-content-work-in-responsive-design/
+ */
+
+.c-figure--responsive-iframe {
+  // stylelint-disable-next-line selector-max-type
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+}

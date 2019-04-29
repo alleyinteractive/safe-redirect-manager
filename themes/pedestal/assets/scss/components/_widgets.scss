@@ -1,0 +1,58 @@
+// stylelint-disable selector-max-type
+
+.widget {
+  margin-bottom: rem( 16px );
+  border-bottom: $border-standard;
+  padding: rem( 4px );
+  padding-bottom: rem( 16px );
+  list-style-type: none;
+
+  &:last-child {
+    border: 0;
+  }
+
+  &.widget_search {
+    .screen-reader-text {
+      display: none;
+    }
+  }
+
+  li {
+    list-style: initial;
+    margin-bottom: rem( 12px );
+
+    // stylelint-disable selector-max-compound-selectors
+    &.active {
+      &,
+      a {
+        color: $black;
+      }
+    }
+    // stylelint-enable selector-max-compound-selectors
+  }
+}
+
+.widget_pedestal_explainer {
+  color: $dimmed-text-color;
+  font-style: italic;
+}
+
+.widget_pedestal_whosnext_archive {
+  ul {
+    list-style-type: none;
+  }
+}
+
+.widget.tips-feedback {
+  background-color: $another-lightish-color;
+  padding: rem( 16px ) rem( 48px );
+  text-align: center;
+
+  a {
+    font-weight: 700;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}

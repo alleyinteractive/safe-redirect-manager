@@ -400,3 +400,22 @@ function cpr_fm_post_underwriter_settings() {
 add_action( 'fm_post_underwriter', 'cpr_fm_post_underwriter_settings' );
 /* end fm:post-underwriter-settings */
 
+/* begin fm:post-external-link-settings */
+/**
+ * `post-external-link-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_external_link_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-external-link-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'children' => [
+				'link' => new Fieldmanager_Link( __( 'Link to External Content', 'cpr' ) ),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'external-link' ] );
+}
+add_action( 'fm_post_external-link', 'cpr_fm_post_external_link_settings' );
+/* end fm:post-external-link-settings */

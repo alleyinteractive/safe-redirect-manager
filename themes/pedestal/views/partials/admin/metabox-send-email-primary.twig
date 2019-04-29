@@ -1,0 +1,6 @@
+{% include 'partials/admin/test-email-input.twig' with { btn_send_test: btn_send_test } %}
+
+{% if message %}
+    <hr />
+    <p>{{ message }}</p>
+{% endif %}

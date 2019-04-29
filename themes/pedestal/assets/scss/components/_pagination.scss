@@ -1,0 +1,32 @@
+$pagination-button-bg: $gray-80;
+
+
+.pagination {
+  padding-bottom: 0;
+  text-align: center;
+
+  .pedestal-stream & {
+    margin-top: $stream-item-spacing;
+  }
+}
+
+.pagination__text {
+  font-weight: 300;
+  font-size: $h5-font-size;
+  text-transform: uppercase;
+  padding-bottom: rem( 8px );
+  margin-bottom: 0; // Needed on single cluster pages
+  color: $dimmed-text-color;
+  font-style: italic;
+}
+
+.pagination__text__paged,
+.pagination__text__total {
+  font-weight: 700;
+}
+
+@media print {
+  .pagination {
+    display: none;
+  }
+}

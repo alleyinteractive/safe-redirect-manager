@@ -1,0 +1,68 @@
+{% extends 'layouts/layout--content-sidebar.twig' %}
+
+{% block content %}
+
+    <section class="c-main__content  {{ item.css_classes|esc_attr }}"
+        {{ item.get_the_data_atts }} >
+
+        <header class="c-main__header js-main-header  single-header">
+
+            <h1 class="single-header__title  c-heading--archive">
+                {% if heading_prefix %}
+                    <span class="c-heading__prefix">{{ heading_prefix }}</span>
+                {% endif %}
+                <span class="c-heading__title">{{ title }}</span>
+            </h1>
+
+            {% if headline %}
+                <h2 class="single-header__description">{{ headline }}</h2>
+            {% endif %}
+
+            {% if content %}
+                <div class="single-header__lead-text  s-content">
+                    {{ content }}
+                </div>
+            {% endif %}
+
+            <p class="single-header__meta">
+                <strong>Last Updated:</strong>
+                <time datetime="{{ item.get_modified_date( 'c' ) }}">
+                    {{ item.get_modified_date( site.date_format ) }}
+                    &nbsp;&middot;&nbsp;
+                    {{ item.get_modified_date( site.time_format ) }}
+                </time>
+            </p>
+
+            {% if cluster_prompt %}
+                <div class="signup-email--cluster signup-email">
+                    {{ cluster_prompt }}
+                </div>
+            {% endif %}
+
+        </header>
+
+        {% if stream %}
+            {{ upper_pagination }}
+
+            <section class="stream js-stream">
+                <div class="stream__items">
+                    {{ stream }}
+                </div>
+            </section>
+
+            {{ pagination }}
+
+        {% endif %}
+
+    </section>
+
+{% endblock %}
+
+{% block sidebar %}
+    {% if slug == 'whos-next' %}
+        {% include 'partials/whosnext/sponsor-logo.twig' ignore missing %}
+        {% include 'partials/whosnext/description-widget.twig' %}
+    {% endif %}
+
+    {{ sidebar }}
+{% endblock %}
