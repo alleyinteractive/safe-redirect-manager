@@ -149,6 +149,9 @@ require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-artist.php';
 // Underwriters Post Type (cpt:underwriter).
 require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-underwriter.php';
 
+// Jobs Post Type (cpt:job).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-job.php';
+
 // External Links Post Type (cpt:external-link).
 require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-external-link.php';
 
