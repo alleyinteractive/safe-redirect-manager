@@ -419,3 +419,39 @@ function cpr_fm_post_external_link_settings() {
 }
 add_action( 'fm_post_external-link', 'cpr_fm_post_external_link_settings' );
 /* end fm:post-external-link-settings */
+
+/* begin fm:post-alert-settings */
+/**
+ * `post-alert-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_alert_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-alert-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'children' => [
+				'link' => new Fieldmanager_Link( __( 'Link', 'cpr' ) ),
+				'section' => new Fieldmanager_Checkboxes(
+					[
+						'label' => __( 'Section', 'cpr' ),
+						'datasource' => new Fieldmanager_Datasource_Term(
+							[
+								'taxonomy' => 'section',
+								'taxonomy_args' => [
+									'hide_empty' => false,
+								],
+							]
+						),
+					]
+				),
+				'text' => new Fieldmanager_RichTextArea( __( 'Alert Text', 'cpr' ) ),
+				'eyebrow' => new Fieldmanager_TextField( __( 'Eyebrow', 'cpr' ) ),
+				'start_date' => new Fieldmanager_Datepicker( __( 'Start Date', 'cpr' ) ),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'alert' ] );
+}
+add_action( 'fm_post_alert', 'cpr_fm_post_alert_settings' );
+/* end fm:post-alert-settings */

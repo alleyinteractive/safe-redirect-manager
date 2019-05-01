@@ -17,5 +17,7 @@
   "fm:post-underwriter-settings": "badaad2d4dd52fd541fc70a610b1de9c",
   "cpt:job": "7849f71c17a6e344cbb6b519987448d1",
   "fm:post-external-link-settings": "e151c27044cf3b5744364cd4e1f2ce42",
-  "cpt:external-link": "9336b6a90506af3fe1d19f8234a9b22c"
+  "cpt:external-link": "9336b6a90506af3fe1d19f8234a9b22c",
+  "cpt:alert": "9d0fe7264321beab0d45ff24dc2eb457",
+  "fm:post-alert-settings": "03ac083a3a7549195933c59aa28f2dcd"
 }

@@ -155,4 +155,7 @@ require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-job.php';
 // External Links Post Type (cpt:external-link).
 require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-external-link.php';
 
+// Alerts Post Type (cpt:alert).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-alert.php';
+
 /* End Data Structures */
