@@ -1,0 +1,39 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "alert" ],
+			"title": { "__": "Settings" }
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"children": {
+		"link": {
+			"label": { "__": "Link" },
+			"type": "link"
+		},
+		"section": {
+			"label": { "__": "Section" },
+			"type": "checkboxes",
+			"datasource": {
+				"type": "term",
+				"taxonomy": "section",
+				"taxonomy_args": {
+					"hide_empty": false
+				}
+			}
+		},
+		"text": {
+			"label": { "__": "Alert Text" },
+			"type": "richtextarea"
+		},
+		"eyebrow": {
+			"label": { "__": "Eyebrow" }
+		},
+		"start_date": {
+			"label": { "__": "Start Date"},
+			"type": "datepicker"
+		}
+	}
+}
