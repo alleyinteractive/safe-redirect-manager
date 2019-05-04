@@ -148,6 +148,11 @@ class Migration {
 		require_once CPR_PATH . '/migration/feeds/underwriter/class-feed-item.php';
 		\Alleypack\Sync_Script\register_feed( '\CPR\Migration\Underwriter\Feed' );
 
+		// Pages.
+		require_once CPR_PATH . '/migration/feeds/page/class-feed.php';
+		require_once CPR_PATH . '/migration/feeds/page/class-feed-item.php';
+		\Alleypack\Sync_Script\register_feed( '\CPR\Migration\Page\Feed' );
+
 		// Story Migration.
 		// require_once CPR_PATH . '/migration/story/class-feed.php';
 		// require_once CPR_PATH . '/migration/story/class-feed-item.php';
