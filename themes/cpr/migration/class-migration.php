@@ -35,6 +35,7 @@ class Migration {
 	 */
 	public $feeds = [
 		'user',
+		'guest-author',
 		'job',
 		'underwriter',
 		'page',
