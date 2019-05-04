@@ -29,6 +29,18 @@ class Migration {
 	public $migration_scope = 'partial';
 
 	/**
+	 * Array of feed slugs we want to load and register.
+	 *
+	 * @var array
+	 */
+	public $feeds = [
+		'user',
+		'job',
+		'underwriter',
+		'page',
+	];
+
+	/**
 	 * Constructor.
 	 */
 	public function setup() {
@@ -138,30 +150,16 @@ class Migration {
 		// Generic feed since all our data is structured the same way.
 		require_once CPR_PATH . '/migration/feeds/class-feed.php';
 
-		// Jobs.
-		require_once CPR_PATH . '/migration/feeds/job/class-feed.php';
-		require_once CPR_PATH . '/migration/feeds/job/class-feed-item.php';
-		\Alleypack\Sync_Script\register_feed( '\CPR\Migration\Job\Feed' );
+		foreach ( $this->feeds as $feed_slug ) {
 
-		// Underwriters.
-		require_once CPR_PATH . '/migration/feeds/underwriter/class-feed.php';
-		require_once CPR_PATH . '/migration/feeds/underwriter/class-feed-item.php';
-		\Alleypack\Sync_Script\register_feed( '\CPR\Migration\Underwriter\Feed' );
+			require_once CPR_PATH . "/migration/feeds/{$feed_slug}/class-feed.php";
+			require_once CPR_PATH . "/migration/feeds/{$feed_slug}/class-feed-item.php";
 
-		// Pages.
-		require_once CPR_PATH . '/migration/feeds/page/class-feed.php';
-		require_once CPR_PATH . '/migration/feeds/page/class-feed-item.php';
-		\Alleypack\Sync_Script\register_feed( '\CPR\Migration\Page\Feed' );
-
-		// Story Migration.
-		// require_once CPR_PATH . '/migration/story/class-feed.php';
-		// require_once CPR_PATH . '/migration/story/class-feed-item.php';
-		// \Alleypack\Sync_Script\register_feed( '\CPR\Migration\Story\Feed' );
-
-		// Person Migration.
-		// require_once CPR_PATH . '/migration/person/class-feed.php';
-		// require_once CPR_PATH . '/migration/person/class-feed-item.php';
-		// \Alleypack\Sync_Script\register_feed( '\CPR\Migration\Person\Feed' );
+			$feed_parts = explode( '-', $feed_slug );
+			$feed_parts = array_map( 'ucfirst', $feed_parts );
+			$feed_class = implode( '_', $feed_parts );
+			\Alleypack\Sync_Script\register_feed( "\CPR\Migration\\{$feed_class}\Feed" );
+		}
 	}
 }
 
