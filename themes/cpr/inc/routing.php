@@ -138,7 +138,7 @@ function build_components_endpoint(
 		 * Page.
 		 */
 		case $wp_query->is_page():
-		case $wp_query->is_singular( 'job'):
+		case $wp_query->is_singular( 'job' ):
 			$head->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
 			break;
