@@ -74,7 +74,8 @@ class Migration {
 		$file_path .= "{$slug}/";
 
 		if ( ! is_dir( $file_path ) ) {
-			wp_die( esc_html__( "No migration data found for {$slug}.", 'cpr' ) );
+			// phpcs:ignore
+			wp_die( "No migration data found for {$slug}." );
 		}
 
 		return $file_path;
