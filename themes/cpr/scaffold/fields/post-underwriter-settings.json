@@ -1,29 +1,29 @@
 {
-	"contexts": [
-		{
-			"type": "post",
-			"post_types": [ "underwriter" ],
-			"title": { "__": "Settings" }
-		}
-	],
-	"serialize_data": false,
-	"add_to_prefix": false,
-    	"children": {
-      		"link": {
-        		"label": { "__": "Website" },
-        		"type": "link"
-      		},
-      		"address": {
-        		"label": { "__": "Address" },
-        		"type": "textarea"
-      		},
-      		"phone_number": {
-        		"label": { "__": "Phone Number" },
-        		"type": "textfield"
-      		},
-      		"is_corporate_partner": {
-        		"label": { "__": "Corporate Partner" },
-        		"type": "checkbox"
-              	} 
-    	}
+  "contexts": [
+    {
+      "type": "post",
+      "post_types": [ "underwriter" ],
+      "title": { "__": "Settings" }
+    }
+  ],
+  "serialize_data": false,
+  "add_to_prefix": false,
+  "children": {
+    "link": {
+      "label": { "__": "Website" },
+      "type": "link"
+    },
+    "address": {
+      "label": { "__": "Address" },
+      "type": "textarea"
+    },
+    "phone_number": {
+      "label": { "__": "Phone Number" },
+      "type": "textfield"
+    },
+    "is_corporate_partner": {
+      "label": { "__": "Corporate Partner" },
+      "type": "checkbox"
+    }
+  }
 }
