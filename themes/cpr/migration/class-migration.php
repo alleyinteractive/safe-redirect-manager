@@ -34,11 +34,13 @@ class Migration {
 	 * @var array
 	 */
 	public $feeds = [
-		'user',
+		'document',
+		'image',
 		'guest-author',
 		'job',
-		'underwriter',
 		'page',
+		'underwriter',
+		'user',
 	];
 
 	/**
