@@ -117,6 +117,14 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Jobs archive.
+		 */
+		case $wp_query->is_post_type_archive( 'job' ):
+			$head->set_query( $wp_query );
+			$template = ( new Components\Templates\Job_Archive() )->set_query( $wp_query );
+			break;
+
+		/**
 		 * Term archives.
 		 */
 		case $wp_query->is_tax():
@@ -127,19 +135,20 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Page.
+		 */
+		case $wp_query->is_page():
+		case $wp_query->is_singular( 'job' ):
+			$head->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
+			break;
+
+		/**
 		 * Article.
 		 */
 		case $wp_query->is_single():
 			$head->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Article() )->set_post( $wp_query->post );
-			break;
-
-		/**
-		 * Page.
-		 */
-		case $wp_query->is_page():
-			$head->set_post( $wp_query->post );
-			$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
 			break;
 
 		/**
