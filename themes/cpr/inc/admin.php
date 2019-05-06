@@ -38,3 +38,12 @@ function allow_searching_post_types_in_admin() {
 	}
 }
 add_action( 'init', __NAMESPACE__ . '\allow_searching_post_types_in_admin', 15 );
+
+/**
+ * Remove unused menu items.
+ */
+function remove_menu_pages() {
+	remove_menu_page( 'edit.php?post_type=feedback' );
+	remove_menu_page( 'edit-comments.php' );
+}
+add_action( 'admin_menu', __NAMESPACE__ . '\remove_menu_pages' );
