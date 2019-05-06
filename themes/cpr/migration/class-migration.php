@@ -54,15 +54,12 @@ class Migration {
 		\Alleypack\load_module( 'sync-script', '1.2' );
 
 		$this->load_and_register_feeds();
-
-		if ( defined( 'WP_CLI' ) && WP_CLI ) {
-			// require_once CPR_Path . '/migration/cli/class-cli.php';
-		}
 	}
 
 	/**
 	 * Get the path to the data.
 	 *
+	 * @param string $slug Slug for directory to data.
 	 * @return string
 	 */
 	public function get_data_directory( $slug ) {
@@ -86,6 +83,7 @@ class Migration {
 	/**
 	 * Helper to get a source data file by the directory offset.
 	 *
+	 * @param string $slug Slug for directory to data.
 	 * @param int $offset File offset.
 	 * @return array
 	 */
@@ -103,6 +101,7 @@ class Migration {
 	/**
 	 * Helper to get a source data file by the file id.
 	 *
+	 * @param string $slug Slug for directory to data.
 	 * @param int $id Legacy ID.
 	 * @return array
 	 */
@@ -120,6 +119,8 @@ class Migration {
 
 	/**
 	 * Build the file position to legacy id mapping.
+	 *
+	 * @param string $slug Slug for directory to data.
 	 */
 	public function build_mapping( $slug ) {
 
