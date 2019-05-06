@@ -74,7 +74,7 @@ class Migration {
 		$file_path .= "{$slug}/";
 
 		if ( ! is_dir( $file_path ) ) {
-			wp_die( "No migration data found for {$slug}." );
+			wp_die( esc_html__( "No migration data found for {$slug}.", 'cpr' ) );
 		}
 
 		return $file_path;
@@ -83,8 +83,8 @@ class Migration {
 	/**
 	 * Helper to get a source data file by the directory offset.
 	 *
-	 * @param string $slug Slug for directory to data.
-	 * @param int $offset File offset.
+	 * @param string $slug   Slug for directory to data.
+	 * @param int    $offset File offset.
 	 * @return array
 	 */
 	public function get_source_data_by_offset( string $slug, int $offset ) : array {
@@ -102,7 +102,7 @@ class Migration {
 	 * Helper to get a source data file by the file id.
 	 *
 	 * @param string $slug Slug for directory to data.
-	 * @param int $id Legacy ID.
+	 * @param int    $id   Legacy ID.
 	 * @return array
 	 */
 	public function get_source_data_by_id( string $slug, int $id ) : array {
