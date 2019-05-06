@@ -13,6 +13,7 @@
 
 # Project Overview
 
+## CPR
 cpr.org is a headless [Irving](https://github.com/alleyinteractive/irving) project.
 
 **Local**
@@ -21,18 +22,21 @@ cpr.org is a headless [Irving](https://github.com/alleyinteractive/irving) proje
 
 **Staging**
 * [Frontend Irving](https://cpr-staging.herokuapp.com)
-* [WP Admin](https://staging-coloradopublicradio.alleydev.com/wp-admin/) - Creds in 1pass
-* [Pantheon Dashboard](https://dashboard.pantheon.io/sites/abd2856d-7c34-4a5b-88be-f30ce0274247#staging)
+* [WP Admin](http://content-staging.cpr.org/wp-admin/) - Creds in 1pass
+* [Pantheon Dashboard](https://dashboard.pantheon.io/sites/1913fdde-ecec-4383-8147-3dce456d5a21#staging/)
 
 **Production (in development)**
 * [Frontend Irving](https://cpr-production.herokuapp.com/)
-* [WP Admin](https://live-coloradopublicradio.alleydev.com/wp-admin/) - Creds in 1pass
-* [Pantheon Dashboard](https://dashboard.pantheon.io/sites/abd2856d-7c34-4a5b-88be-f30ce0274247#production)
+* [WP Admin](https://content.cpr.org/wp-admin/) - Creds in 1pass
+* [Pantheon Dashboard](https://dashboard.pantheon.io/sites/1913fdde-ecec-4383-8147-3dce456d5a21#live/)
 
 **Others**
 * [DeployBot](https://alleyinteractive.deploybot.com/127908--CPR-Colorado-Public-Radio)
 * [Frontend Repo](https://github.com/alleyinteractive/cpr-irving)
 * [Backend Repo](https://github.com/alleyinteractive/cpr-wp) (this repo)
+
+## Denverite
+Denverite is not headless; it's a traditional WordPress site. Additional info to come.
 
 # New Environment Setup
 
@@ -79,8 +83,8 @@ The backend is WordPress, and this repo lives in /wp-content/. It is hosted on P
 1. Branch off of `production` (let's call the new branch `feature`)
 1. Develop `feature`
 1. Create a pull request to merge `feature` into `staging` and merge at will into `staging` (if desired)
-1. `staging` auto-deploys to https://staging-coloradopublicradio.alleydev.com/wp-admin/
+1. `staging` auto-deploys to http://content-staging.cpr.org/wp-admin/
 1. Verify your changes there ^
 1. Pull request `feature` into `production` and code review :horse:
 1. Merge `feature` into `production`
-1. `production` auto-deploys to https://live-coloradopublicradio.alleydev.com/wp-admin/
+1. `production` auto-deploys to https://content.cpr.org/wp-admin/
