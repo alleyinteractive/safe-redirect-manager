@@ -49,7 +49,7 @@ class Feed extends \CPR\Migration\Feed {
 		global $coauthors_plus;
 
 		$coauthor_slugs = array_filter( array_map(
-			function( $unique_author_id ) {
+			function( $unique_author_id ) use ( $post_id ) {
 
 				// Get or create author.
 				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'person', $unique_author_id );

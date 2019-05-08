@@ -39,7 +39,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Guest_Author_Feed_Item {
 	 */
 	public function map_source_to_object() {
 		$this->object['display_name'] = $this->source['title'];
-		$this->object['user_login']   = sanitize_title_with_dashes( $this->source['title'] );
+		$this->object['user_login']   = sanitize_title( $this->source['title'] );
 	}
 
 	/**
