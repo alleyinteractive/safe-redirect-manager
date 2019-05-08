@@ -1,6 +1,6 @@
 <?php
 /**
- * Feed for migrating Categories.
+ * Feed for migrating Tags.
  *
  * @package CPR
  */
