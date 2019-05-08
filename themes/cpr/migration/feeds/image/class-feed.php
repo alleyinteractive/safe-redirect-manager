@@ -40,11 +40,11 @@ class Feed extends \CPR\Migration\Feed {
 	/**
 	 * Helper to set the section for a given post.
 	 *
-	 * @param int        $post_id.        Post id.
+	 * @param int        $post_id         Post id.
 	 * @param string|int $unique_image_id Unique (legacy) id for this
 	 *                                    service/section.
 	 */
-	public static function set_featured_image( $post_id, $unique_image_id ) {
+	public static function set_featured_image( int $post_id, $unique_image_id ) {
 
 		// Attempt to retreieve the section term.
 		$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $unique_image_id );

@@ -40,11 +40,11 @@ class Feed extends \CPR\Migration\Feed {
 	/**
 	 * Helper to set the section for a given post.
 	 *
-	 * @param int        $post_id.          Post id.
+	 * @param int        $post_id           Post id.
 	 * @param string|int $section_unique_id Unique (legacy) id for this
 	 *                                      service/section.
 	 */
-	public static function set_section( $post_id, $section_unique_id ) {
+	public static function set_section( int $post_id, $section_unique_id ) {
 
 		// Attempt to retreieve the section term.
 		$section_term = \CPR\Migration\Service\Feed_Item::get_object_by_unique_id( $section_unique_id );

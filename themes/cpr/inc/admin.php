@@ -7,6 +7,9 @@
 
 namespace CPR;
 
+// Force CAP to use only guest authors.
+add_filter( 'coauthors_guest_authors_force', '__return_true' );
+
 /**
  * Remove the "Custom Fields" meta box.
  *

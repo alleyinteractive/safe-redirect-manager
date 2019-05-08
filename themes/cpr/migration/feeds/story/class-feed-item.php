@@ -83,6 +83,17 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	public function post_object_save() {
 
+		// Setup bylines.
+		if ( is_array( $this->source['field_author']['und'] ) ) {
+			$legacy_guest_author_ids = wp_list_pluck( $this->source['field_author']['und'], 'target_id' );
+
+			// Set the byline.
+			\CPR\Migration\Guest_Author\Feed::set_bylines(
+				$this->get_object_id(),
+				$legacy_guest_author_ids
+			);
+		}
+
 		// Set the featured image.
 		\CPR\Migration\Image\Feed::set_featured_image(
 			$this->get_object_id(),
@@ -94,5 +105,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			$this->get_object_id(),
 			( $this->source['field_primary_service']['und'][0]['target_id'] ?? 0 )
 		);
+
+		return true;
 	}
 }
