@@ -50,7 +50,7 @@ class Feed extends \CPR\Migration\Feed {
 		$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $unique_image_id );
 		$attachment = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
 
-		// Validate attachment
+		// Validate attachment.
 		if ( $attachment instanceof \WP_Post ) {
 			update_post_meta( $post_id, '_thumbnail_id', $attachment->ID );
 		}

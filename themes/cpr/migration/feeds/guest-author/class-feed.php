@@ -40,7 +40,7 @@ class Feed extends \CPR\Migration\Feed {
 	/**
 	 * Helper to set the byline for a given post.
 	 *
-	 * @param int   $post_id.          Post id.
+	 * @param int   $post_id           Post id.
 	 * @param array $unique_author_ids Array of unique (legacy) guest author
 	 *                                 ids.
 	 */
