@@ -26,7 +26,7 @@ class Migration {
 	 *
 	 * @var string
 	 */
-	public $migration_scope = 'partial';
+	public $migration_scope = '';
 
 	/**
 	 * Array of feed slugs we want to load and register.
@@ -51,6 +51,13 @@ class Migration {
 	 * Constructor.
 	 */
 	public function setup() {
+
+		if (
+			isset( $_SERVER['HTTP_HOST'] )
+			&& 'cpr.alley.test' === $_SERVER['HTTP_HOST']
+		) {
+			$this->migration_scope = 'partial';
+		}
 
 		// Load some AlleyPack modules.
 		\Alleypack\load_module( 'attachments', '1.0' );
@@ -170,52 +177,6 @@ class Migration {
 			\Alleypack\Sync_Script\register_feed( "\CPR\Migration\\{$feed_class}\Feed" );
 		}
 	}
-
-	public function get_or_migrate_object( $feed_item_class, $slug, $id ) {
-
-
-		$source = $this->get_source_data_by_id( $slug, $id );
-		print_r($source); die();
-
-	}
-
-	// public function get_or_migate_image( $legacy_id ) {
-
-
-	// 	$thing = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_featured_image );
-	// 	print_r($thing); die();
-
-	// 	// echo $legacy_featured_image;
-	// 	// echo 'here';
-	// 	// echo legacy_featured_image;
-	// 	$object = \CPR\Migration\Image\Feed_Item::get_object_by_unique_id( $legacy_featured_image );
-	// 	if ( empty( $object ) ) {
-	// 		$image = new \CPR\Migration\Image\Feed_Item();
-	// 		$image->load_object();
-
-	// 		// load_source
-	// 		//
-	// 		//
-	// 	}
-	// 	echo 'yo';
-	// 	print_r($object);
-	// 	echo 'yo2';
-	// 	die();
-
-	// 	// if ( ! has_post_thumbnail )
-
-	// 	// Set the featured image.
-	// 	// \CPR\Migration\Image\Feed::set_featured_image(
-	// 	// 	$this->get_object_id(),
-	// 	// 	( $this->source['field_feature_image']['und'][0]['target_id'] ?? 0 )
-	// 	// );
-	// 	//
-	// 	// get the attachment by image
-	// 	// if it exists, save as featured
-	// 	// 	if not, create, migrate, and move on
-
-
-	// }
 }
 
 // Initalize class.
