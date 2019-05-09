@@ -38,7 +38,7 @@ class Feed extends \CPR\Migration\Feed {
 	protected $feed_item_class = '\CPR\Migration\Image\Feed_Item';
 
 	/**
-	 * Helper to set the section for a given post.
+	 * Helper to set the featured image for a given post.
 	 *
 	 * @param int        $post_id         Post id.
 	 * @param string|int $unique_image_id Unique (legacy) id for this
