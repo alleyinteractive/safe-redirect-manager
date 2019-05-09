@@ -79,25 +79,25 @@ function build_components_endpoint(
 			switch ( $wp_query->get( 'landing-page-type' ) ) {
 				case 'homepage':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'fortune' ) );
+					$head->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'cpr' ) );
 					$template = ( new Components\Templates\Homepage() )->set_post( $wp_query->post );
 					break;
 
 				case 'news':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'Colorado Public Radio News | CPR', 'fortune' ) );
+					$head->set_title( __( 'Colorado Public Radio News | CPR', 'cpr' ) );
 					$template = ( new Components\Templates\News() )->set_post( $wp_query->post );
 					break;
 
 				case 'classical':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'Colorado Public Radio Classical | CPR', 'fortune' ) );
+					$head->set_title( __( 'Colorado Public Radio Classical | CPR', 'cpr' ) );
 					$template = ( new Components\Templates\Classical() )->set_post( $wp_query->post );
 					break;
 
 				case 'openair':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'CPR\'s OpenAir - New and Independent Music | CPR', 'fortune' ) );
+					$head->set_title( __( 'CPR\'s OpenAir - New and Independent Music | CPR', 'cpr' ) );
 					$template = ( new Components\Templates\Openair() )->set_post( $wp_query->post );
 					break;
 			}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class for parsing a story.
+ * Class for parsing a story item.
  *
  * @package CPR
  */
@@ -10,7 +10,7 @@ namespace CPR\Migration\Story;
 use function Alleypack\Sync_Script\alleypack_log;
 
 /**
- * Feed Item.
+ * CPR Feed Item.
  */
 class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 
@@ -77,14 +77,35 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	}
 
 	/**
-	 * Override method so that post statuses are left alone during sync.
+	 * Modify object after it's been saved.
+	 *
+	 * @return bool
 	 */
-	public static function mark_existing_content_as_syncing() {
-	}
+	public function post_object_save() {
 
-	/**
-	 * Override method so that post statuses are left alone during sync.
-	 */
-	public static function unpublish_unsynced_content() {
+		// Setup bylines.
+		if ( is_array( $this->source['field_author']['und'] ) ) {
+			$legacy_guest_author_ids = wp_list_pluck( $this->source['field_author']['und'], 'target_id' );
+
+			// Set the byline.
+			\CPR\Migration\Guest_Author\Feed::set_bylines(
+				$this->get_object_id(),
+				$legacy_guest_author_ids
+			);
+		}
+
+		// Set the featured image.
+		\CPR\Migration\Image\Feed::set_featured_image(
+			$this->get_object_id(),
+			( $this->source['field_feature_image']['und'][0]['target_id'] ?? 0 )
+		);
+
+		// Set the section.
+		\CPR\Migration\Service\Feed::set_section(
+			$this->get_object_id(),
+			( $this->source['field_primary_service']['und'][0]['target_id'] ?? 0 )
+		);
+
+		return true;
 	}
 }

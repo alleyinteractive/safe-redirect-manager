@@ -36,4 +36,23 @@ class Feed extends \CPR\Migration\Feed {
 	 * @var string
 	 */
 	protected $feed_item_class = '\CPR\Migration\Image\Feed_Item';
+
+	/**
+	 * Helper to set the featured image for a given post.
+	 *
+	 * @param int        $post_id         Post id.
+	 * @param string|int $unique_image_id Unique (legacy) id for this
+	 *                                    service/section.
+	 */
+	public static function set_featured_image( int $post_id, $unique_image_id ) {
+
+		// Attempt to retrieve the image.
+		$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $unique_image_id );
+		$attachment = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
+
+		// Validate attachment.
+		if ( $attachment instanceof \WP_Post ) {
+			update_post_meta( $post_id, '_thumbnail_id', $attachment->ID );
+		}
+	}
 }
