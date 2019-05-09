@@ -46,7 +46,7 @@ class Feed extends \CPR\Migration\Feed {
 	 */
 	public static function set_featured_image( int $post_id, $unique_image_id ) {
 
-		// Attempt to retreieve the section term.
+		// Attempt to retrieve the image.
 		$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $unique_image_id );
 		$attachment = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
 
