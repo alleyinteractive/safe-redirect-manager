@@ -26,7 +26,7 @@ class Migration {
 	 *
 	 * @var string
 	 */
-	public $migration_scope = 'partial';
+	public $migration_scope = '';
 
 	/**
 	 * Array of feed slugs we want to load and register.
@@ -34,11 +34,15 @@ class Migration {
 	 * @var array
 	 */
 	public $feeds = [
+		'category',
 		'document',
-		'image',
 		'guest-author',
+		'image',
 		'job',
 		'page',
+		'post-tag',
+		'service',
+		'story',
 		'underwriter',
 		'user',
 	];
@@ -47,6 +51,13 @@ class Migration {
 	 * Constructor.
 	 */
 	public function setup() {
+
+		if (
+			isset( $_SERVER['HTTP_HOST'] )
+			&& 'cpr.alley.test' === $_SERVER['HTTP_HOST']
+		) {
+			$this->migration_scope = 'partial';
+		}
 
 		// Load some AlleyPack modules.
 		\Alleypack\load_module( 'attachments', '1.0' );
