@@ -106,6 +106,22 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			( $this->source['field_primary_service']['und'][0]['target_id'] ?? 0 )
 		);
 
+		// Set the tags.
+		if ( ! empty( $this->source['field_tags']['und'] ?? [] ) ) {
+			\CPR\Migration\Post_Tag\Feed::set_tags(
+				$this->get_object_id(),
+				wp_list_pluck( $this->source['field_tags']['und'], 'tid' )
+			);
+		}
+
+		// Set the categories.
+		if ( ! empty( $this->source['field_topics']['und'] ?? [] ) ) {
+			\CPR\Migration\Category\Feed::set_categories(
+				$this->get_object_id(),
+				wp_list_pluck( $this->source['field_topics']['und'], 'target_id' )
+			);
+		}
+
 		return true;
 	}
 }
