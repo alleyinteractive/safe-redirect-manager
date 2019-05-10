@@ -70,7 +70,7 @@ You will need to FTP into Pantheon and upload these files manually, same as if i
 `terminus wp cpr-mu.live -- alleypack sync category --url=content.cpr.org`
 
 # Protip
-While the feeds should be intellegent enough to create stubs, you'll probaly want to run the migration in a specific order.
+While the feeds should be intelligent enough to create stubs, you'll probably want to run the migration in a specific order.
 
 Users
 * `wp alleypack sync user`
