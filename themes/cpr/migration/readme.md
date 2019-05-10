@@ -48,7 +48,7 @@ Move the exported folder (which should contain subfolders for each content type)
 ```
 
 # Getting data on production
-You will need to FTP into Pantheon and upload these files manually, same as if it were local.
+You will need to FTP into Pantheon and upload these files manually, same as if it were local. Do not commit them to the repo.
 
 # Available Feeds
 * `category` - Migrate `topics` to categories.
