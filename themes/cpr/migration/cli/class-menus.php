@@ -107,7 +107,7 @@ class Menus extends \CLI_Command {
 	 * Helper to get the array shape needed to insert nav menu items.
 	 *
 	 * @param mixed $object Object.
-	 * @return array
+	 * @return array|null
 	 */
 	protected function get_menu_item_array_by_object( $object ) {
 
