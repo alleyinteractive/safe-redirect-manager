@@ -58,7 +58,7 @@ class Cpr_Post_Type_Underwriter extends Cpr_Post_Type {
 				],
 				'public' => true,
 				'publicly_queryable' => false,
-				'has_archive' => true,
+				'has_archive' => 'underwriters',
 				'has_single' => false,
 				'show_in_rest' => true,
 				'menu_icon' => 'dashicons-money',
