@@ -121,6 +121,14 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Underwriters archive
+		 */
+		case $wp_query->is_post_type_archive( 'underwriter' ):
+			$head->set_query( $wp_query );
+			$template = ( new Components\Templates\Underwriter_Archive() )->set_query( $wp_query );
+			break;
+
+		/**
 		 * Jobs archive.
 		 */
 		case $wp_query->is_post_type_archive( 'job' ):
