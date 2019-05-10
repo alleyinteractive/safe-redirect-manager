@@ -49,9 +49,11 @@ class Feed extends \CPR\Migration\Feed {
 			array_map(
 				function( $unique_category_id ) {
 
-					// Attempt to get the post_category term.
-					$source             = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'topics', $unique_category_id );
-					$post_category_term = \CPR\Migration\Post_Tag\Feed_Item::get_or_create_object_from_source( $source );
+					// Get category source.
+					$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'topics', $unique_category_id );
+
+					// Get or create category.
+					$post_category_term = \CPR\Migration\Category\Feed_Item::get_or_create_object_from_source( $source );
 
 					if ( $post_category_term instanceof \WP_Term ) {
 						return absint( $post_category_term->term_id );
@@ -63,10 +65,10 @@ class Feed extends \CPR\Migration\Feed {
 
 		// Validate and set.
 		if ( ! empty( $post_category_ids ) ) {
-			wp_set_object_terms(
+			wp_set_post_categories(
 				$post_id,
 				$post_category_ids,
-				'category'
+				false
 			);
 		}
 	}

@@ -84,15 +84,16 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	public function post_object_save() {
 
 		// Setup bylines.
-		if ( is_array( $this->source['field_author']['und'] ) ) {
+		$legacy_guest_author_ids = [ 0 ]; // This will fallback to the default user.
+		if ( ! empty( $this->source['field_author']['und'] ?? [] ) ) {
 			$legacy_guest_author_ids = wp_list_pluck( $this->source['field_author']['und'], 'target_id' );
-
-			// Set the byline.
-			\CPR\Migration\Guest_Author\Feed::set_bylines(
-				$this->get_object_id(),
-				$legacy_guest_author_ids
-			);
 		}
+
+		// Set the byline.
+		\CPR\Migration\Guest_Author\Feed::set_bylines(
+			$this->get_object_id(),
+			$legacy_guest_author_ids
+		);
 
 		// Set the featured image.
 		\CPR\Migration\Image\Feed::set_featured_image(
@@ -120,6 +121,15 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 				$this->get_object_id(),
 				wp_list_pluck( $this->source['field_topics']['und'], 'target_id' )
 			);
+		} else {
+			$categories = get_the_category( $this->get_object_id() );
+			if ( ! empty( $categories ) ) {
+				wp_remove_object_terms(
+					$this->get_object_id(),
+					wp_list_pluck( $categories, 'term_id' ),
+					'category'
+				);
+			}
 		}
 
 		return true;
