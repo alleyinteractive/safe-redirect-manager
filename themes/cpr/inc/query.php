@@ -18,5 +18,5 @@ add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Term_Archive', 'pr
 // Modify author archive results.
 add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Author_Archive', 'pre_get_posts' ] );
 
-// Get all underwriters
+// Get all underwriters.
 add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Underwriter_Archive', 'pre_get_posts' ] );
