@@ -35,7 +35,7 @@ Extension        :  ai_migrator
  Configure        :  None
 ```
 
-Move the exported folder (which should contain subfolders for each content type), and drop it `/cpr/migration/data/` resulting in the following structure,
+Move the exported folder (which should contain subfolders for each content type), and drop it in `/cpr/migration/data/` resulting in the following structure,
 ```
 +--- cpr
 |   +--- migration
