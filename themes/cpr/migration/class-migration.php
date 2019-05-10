@@ -65,6 +65,11 @@ class Migration {
 		\Alleypack\load_module( 'sync-script', '1.2' );
 
 		$this->load_and_register_feeds();
+
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			require_once CPR_PATH . '/migration/cli/class-cleanup.php';
+			require_once CPR_PATH . '/migration/cli/class-menus.php';
+		}
 	}
 
 	/**
