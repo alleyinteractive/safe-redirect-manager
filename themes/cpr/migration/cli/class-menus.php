@@ -89,7 +89,7 @@ class Menus extends \CLI_Command {
 				$this->get_classical_navigation(),
 				$this->get_indie_navigation(),
 
-				// Footers
+				// Footers.
 				$this->get_first_footer(),
 				$this->get_second_footer(),
 				$this->get_third_footer(),
@@ -148,13 +148,13 @@ class Menus extends \CLI_Command {
 			'position' => 'header-navigation',
 			'items'    => array_filter(
 				[
-					// News
-					// Government & Politics
-					// Money
-					// Arts
-					// Culture
-					// Environment
-					// Support CPR
+					// News.
+					// Government & Politics.
+					// Money.
+					// Arts.
+					// Culture.
+					// Environment.
+					// Support CPR.
 					$this->get_menu_item_array_by_object( get_term_by( 'slug', 'news', 'category' ) ),
 					$this->get_menu_item_array_by_object( get_term_by( 'slug', 'governance', 'category' ) ),
 					$this->get_menu_item_array_by_object( get_term_by( 'slug', 'money', 'category' ) ),
@@ -177,20 +177,20 @@ class Menus extends \CLI_Command {
 			'position' => 'primary-navigation',
 			'items'    => array_filter(
 				[
-					// News
-					// Government & Politics
-					// Money
-					// Arts
-					// Culture
-					// Environment
-					// Education
-					// Health
-					// Justice
-					// Shows & Podcasts
-					// Classical
-					// OpenAir
-					// Support CPR
-					// About
+					// News.
+					// Government & Politics.
+					// Money.
+					// Arts.
+					// Culture.
+					// Environment.
+					// Education.
+					// Health.
+					// Justice.
+					// Shows & Podcasts.
+					// Classical.
+					// OpenAir.
+					// Support CPR.
+					// About.
 					[
 						'menu-item-title'  => 'News',
 						'menu-item-url'    => '/news/',

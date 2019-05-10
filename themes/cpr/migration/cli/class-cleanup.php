@@ -44,14 +44,14 @@ class Cleanup extends \CLI_Command {
 		// Todo: Add Parsely shortname.
 		$settings['analytics']['parsely_site'] = '';
 
-		// Giving
+		// Giving.
 		$settings['giving'] = [
 			'cta' => [
 				'donate_cta' => [
 					'heading'      => 'Donate to CPR',
 					'description'  => '<p>Support impartial journalism, music exploration, and discovery with your monthly gift today.</p>',
 					'button_label' => 'Donate Now',
-				]
+				],
 			],
 			'button' => [
 				'donate_button' => [
@@ -73,11 +73,11 @@ class Cleanup extends \CLI_Command {
 
 		// Add newsletter settings.
 		$settings['engagement']['newsletter'] = [
-			"heading"     => "News That Matters, Delivered To Your Inbox",
-			"tagline"     => "Sign up for a smart, compelling, and sometimes funny take on your daily news briefing.",
-			"account_id"  => "",
-			"public_key"  => "",
-			"private_key" => "",
+			'heading'     => 'News That Matters, Delivered To Your Inbox',
+			'tagline'     => 'Sign up for a smart, compelling, and sometimes funny take on your daily news briefing.',
+			'account_id'  => '',
+			'public_key'  => '',
+			'private_key' => '',
 		];
 
 		// Todo: Add footer content.
