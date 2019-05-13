@@ -13,7 +13,6 @@ namespace CPR\Data;
 class Underwriters {
 
 	use \Alleypack\Singleton;
-	use \WP_Components\WP_Query;
 
 	/**
 	 * The underwriter data for async loading.
