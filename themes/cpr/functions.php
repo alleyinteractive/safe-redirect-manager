@@ -13,9 +13,10 @@ define( 'CPR_URL', get_template_directory_uri() );
 /**
  * Aleypack modules.
  */
-\Alleypack\load_module( 'term-post-link', '1.0' );
+\Alleypack\load_module( 'cli-helpers', '1.1' );
 \Alleypack\load_module( 'fm-modules', '1.0' );
 \Alleypack\load_module( 'singleton', '1.0' );
+\Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );
 
 // WordPress utilities.

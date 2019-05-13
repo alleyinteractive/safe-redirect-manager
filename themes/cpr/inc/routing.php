@@ -52,7 +52,7 @@ function build_components_endpoint(
 			( new \WP_Components\Head() )->set_query( $wp_query ),
 			new Components\Slim_Navigation\Slim_Navigation(),
 			new Components\Primary_Navigation\Primary_Navigation(),
-			( new Components\Header\Header() )->set_query( $wp_query ),
+			( new Components\Header\Header() ),
 			new \WP_Components\Body(),
 			new Components\Footer\Footer(),
 		];
@@ -181,6 +181,8 @@ function build_components_endpoint(
 		$data['page'],
 		apply_filters( 'cpr_head', $head )
 	);
+
+	$data['page'][] = ( new Components\Header\Header() )->set_query( $wp_query );
 
 	return $data;
 }
