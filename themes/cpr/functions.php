@@ -42,6 +42,9 @@ require_once CPR_PATH . '/migration/class-migration.php';
 require_once CPR_PATH . '/inc/traits/trait-backfill.php';
 require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
 
+// Data endpoints.
+require_once CPR_PATH . '/data/class-underwriters.php';
+
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';
 
