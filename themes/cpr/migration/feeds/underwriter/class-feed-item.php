@@ -76,9 +76,10 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			return;
 		}
 
-		$attachment = \Alleypack\create_attachment_from_url( $this->get_logo_url() );
-		if ( $attachment instanceof \WP_Post ) {
-			update_post_meta( $this->get_object_id(), '_thumbnail_id', $attachment->ID );
+
+		$attachment_id = \Alleypack\create_attachment_from_url( $this->get_logo_url() );
+		if ( ! $attachment_id instanceof \WP_Post ) {
+			update_post_meta( $this->get_object_id(), '_thumbnail_id', $attachment_id );
 		}
 	}
 
