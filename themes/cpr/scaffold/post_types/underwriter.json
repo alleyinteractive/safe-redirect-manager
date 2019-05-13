@@ -7,7 +7,6 @@
   "menu_icon": "dashicons-money",
   "supports": [
     "title",
-    "editor",
     "thumbnail"
   ]
 }

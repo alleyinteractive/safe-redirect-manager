@@ -19,6 +19,7 @@ function wp_seo_single_post_types( $post_types ) {
 	$post_types_to_remove = array(
 		'post',
 		'landing-page',
+		'underwriter',
 	);
 
 	// Remove post types.
