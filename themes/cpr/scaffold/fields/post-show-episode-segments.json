@@ -1,0 +1,17 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "show-episode" ],
+			"title": { "__": "Show Segments" },
+			"priority": "high"
+		}
+	],
+	"name": "segment_ids",
+	"description": { "__": "Select the segments for this show." },
+	"description_after_element": false,
+ 	"type": "`Fieldmanager_Zone_Field`",
+ 	"query_args": {
+		"post_type": [ "show-segment" ]
+	}
+}

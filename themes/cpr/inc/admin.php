@@ -50,3 +50,101 @@ function remove_menu_pages() {
 	remove_menu_page( 'edit-comments.php' );
 }
 add_action( 'admin_menu', __NAMESPACE__ . '\remove_menu_pages' );
+
+/**
+ * Add menu items.
+ */
+function add_menu_pages() {
+
+	// Add top-level menu item for shows and podcasts.
+	add_menu_page(
+		__( 'Shows & Podcasts', 'cpr' ),
+		__( 'Shows & Podcasts', 'cpr' ),
+		'edit_posts',
+		'shows-podcasts',
+		null,
+		'dashicons-format-audio',
+		6
+	);
+
+	// Add podcast taxonomy to the menu.
+	add_submenu_page(
+		'shows-podcasts',
+		__( 'Podcasts', 'cpr' ),
+		__( 'Podcasts', 'cpr' ),
+		'edit_posts',
+		'edit-tags.php?taxonomy=podcast&post_type=podcast-episode',
+		null
+	);
+
+	// Add show-episode CPT to the menu.
+	add_submenu_page(
+		'shows-podcasts',
+		__( 'Show Episodes', 'cpr' ),
+		__( 'Show Episodes', 'cpr' ),
+		'edit_posts',
+		'edit.php?post_type=show-episode',
+		null
+	);
+
+	// Add show-segment CPT to the menu.
+	add_submenu_page(
+		'shows-podcasts',
+		__( 'Show Segments', 'cpr' ),
+		__( 'Show Segments', 'cpr' ),
+		'edit_posts',
+		'edit.php?post_type=show-segment',
+		null
+	);
+
+	// Add show taxonomy to the menu.
+	add_submenu_page(
+		'shows-podcasts',
+		__( 'Shows', 'cpr' ),
+		__( 'Shows', 'cpr' ),
+		'edit_posts',
+		'edit-tags.php?taxonomy=show&post_type=show-episode',
+		null
+	);
+}
+add_action( 'admin_menu', __NAMESPACE__ . '\add_menu_pages' );
+
+/**
+ * Set the correct menu and submenu items as active.
+ * 
+ * @param string $parent_file The top level menu item.
+ * @return string
+ */
+function set_current_menu( $parent_file ) {
+	// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+	global $submenu_file, $current_screen;
+
+	switch ( $current_screen->id ?? '' ) {
+		case 'edit-podcast':
+		case 'podcast-post':
+			$parent_file  = 'shows-podcasts';
+			$submenu_file = 'edit-tags.php?taxonomy=podcast&post_type=podcast-episode';
+			break;
+		case 'edit-show':
+		case 'show-post':
+			$parent_file  = 'shows-podcasts';
+			$submenu_file = 'edit-tags.php?taxonomy=show&post_type=show-episode';
+			break;
+		case 'show-segment':
+			$parent_file  = 'shows-podcasts';
+			$submenu_file = 'edit.php?post_type=show-segment';
+			break;
+		case 'podcast-episode':
+			$parent_file  = 'shows-podcasts';
+			$submenu_file = 'edit.php?post_type=podcast-episode';
+			break;
+		case 'show-episode':
+			$parent_file  = 'shows-podcasts';
+			$submenu_file = 'edit.php?post_type=show-episode';
+			break;
+	}
+	// phpcs:enable
+
+	return $parent_file;
+}
+add_filter( 'parent_file', __NAMESPACE__ . '\set_current_menu' );

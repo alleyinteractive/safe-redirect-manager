@@ -37,7 +37,7 @@ class Cpr_Post_Type_Podcast_Episode extends Cpr_Post_Type {
 					'not_found'                => __( 'No podcast episodes found', 'cpr' ),
 					'not_found_in_trash'       => __( 'No podcast episodes found in Trash', 'cpr' ),
 					'parent_item_colon'        => __( 'Parent Podcast Episode:', 'cpr' ),
-					'all_items'                => __( 'All Podcast Episodes', 'cpr' ),
+					'all_items'                => __( 'Podcast Episodes', 'cpr' ),
 					'archives'                 => __( 'Podcast Episode Archives', 'cpr' ),
 					'attributes'               => __( 'Podcast Episode Attributes', 'cpr' ),
 					'insert_into_item'         => __( 'Insert into podcast episode', 'cpr' ),
@@ -58,7 +58,7 @@ class Cpr_Post_Type_Podcast_Episode extends Cpr_Post_Type {
 				],
 				'public' => true,
 				'show_in_rest' => true,
-				'menu_icon' => 'dashicons-format-audio',
+				'show_in_menu' => 'shows-podcasts',
 				'supports' => [ 'title', 'thumbnail', 'author', 'editor', 'revisions', 'excerpt', 'custom-fields' ],
 				'taxonomies' => [ 'category', 'post_tag', 'podcast', 'section' ],
 			]

@@ -455,3 +455,77 @@ function cpr_fm_post_alert_settings() {
 }
 add_action( 'fm_post_alert', 'cpr_fm_post_alert_settings' );
 /* end fm:post-alert-settings */
+
+/* begin fm:post-show-episode-segments */
+/**
+ * `segment_ids` Fieldmanager fields.
+ */
+function cpr_fm_post_show_episode_segments() {
+	$fm = new Fieldmanager_Zone_Field(
+		[
+			'name' => 'segment_ids',
+			'description' => __( 'Select the segments for this show.', 'cpr' ),
+			'description_after_element' => false,
+			'query_args' => [
+				'post_type' => [ 'show-segment' ],
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Show Segments', 'cpr' ), [ 'show-episode' ], 'normal', 'high' );
+}
+add_action( 'fm_post_show-episode', 'cpr_fm_post_show_episode_segments' );
+/* end fm:post-show-episode-segments */
+
+/* begin fm:post-mixed-featured-audio */
+/**
+ * `audio_id` Fieldmanager fields.
+ */
+function cpr_fm_post_mixed_featured_audio() {
+	$fm = new Fieldmanager_Media(
+		[
+			'name' => 'audio_id',
+		]
+	);
+	$fm->add_meta_box( __( 'Featured Audio', 'cpr' ), [ 'podcast-episode', 'show-segment' ], 'normal', 'high' );
+}
+add_action( 'fm_post_podcast-episode', 'cpr_fm_post_mixed_featured_audio' );
+add_action( 'fm_post_show-segment', 'cpr_fm_post_mixed_featured_audio' );
+/* end fm:post-mixed-featured-audio */
+
+/* begin fm:post-show-post-settings */
+/**
+ * `post-show-post-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_show_post_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-show-post-settings',
+			'tabbed' => 'vertical',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'children' => [
+				'highlighted_content' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Highlighted Content', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
+							'content_item_ids' => new Fieldmanager_Zone_Field(
+								[
+									'label' => __( 'Highlighted Content', 'cpr' ),
+									'post_limit' => 4,
+									'query_args' => [
+										'post_type' => 'show-episode',
+									],
+								]
+							),
+						],
+					]
+				),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'show-post' ] );
+}
+add_action( 'fm_post_show-post', 'cpr_fm_post_show_post_settings' );
+/* end fm:post-show-post-settings */
