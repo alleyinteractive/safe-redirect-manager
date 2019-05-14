@@ -10,6 +10,9 @@ namespace CPR;
 // Link podcast taxonomy to its post editorial interface.
 \Alleypack\create_term_post_link( 'podcast', 'podcast-post' );
 
+// Link show taxonomy to its post editorial interface.
+\Alleypack\create_term_post_link( 'show', 'show-post' );
+
 /**
  * Modify podcast term permalinks to include its section.
  *

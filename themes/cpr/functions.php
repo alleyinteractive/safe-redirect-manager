@@ -177,4 +177,16 @@ require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-external-link.php';
 // Alerts Post Type (cpt:alert).
 require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-alert.php';
 
+// Show Segments Post Type (cpt:show-segment).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-show-segment.php';
+
+// Show Episodes Post Type (cpt:show-episode).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-show-episode.php';
+
+// Shows Taxonomy (tax:show).
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-show.php';
+
+// Show Posts Post Type (cpt:show-post).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-show-post.php';
+
 /* End Data Structures */
