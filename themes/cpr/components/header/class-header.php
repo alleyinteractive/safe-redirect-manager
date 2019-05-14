@@ -82,9 +82,9 @@ class Header extends \WP_Components\Component {
 			case $this->query->is_post_type_archive( 'top-30' ):
 				$this->children = [
 					( new \CPR\Components\Logo() )
-						->set_config( 'type', 'openair' )
+						->set_config( 'type', 'indie' )
 						->set_theme( 'primary' ),
-					( new \WP_Components\Menu() )->set_menu( 'openair' ),
+					( new \WP_Components\Menu() )->set_menu( 'indie' ),
 				];
 				return $this;
 		}
