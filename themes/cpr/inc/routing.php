@@ -49,7 +49,9 @@ function build_components_endpoint(
 	// Build defaults.
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
-			( new \WP_Components\Head() )->set_query( $wp_query ),
+			( new \WP_Components\Head() )
+				->set_query( $wp_query )
+				->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'cpr' ) ),
 			new Components\Slim_Navigation\Slim_Navigation(),
 			new Components\Primary_Navigation\Primary_Navigation(),
 			( new Components\Header\Header() ),
