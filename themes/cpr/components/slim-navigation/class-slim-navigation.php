@@ -49,8 +49,8 @@ class Slim_Navigation extends \WP_Components\Component {
 							->merge_config(
 								[
 									'id'    => 2,
-									'label' => __( 'OpenAir', 'cpr' ),
-									'url'   => home_url( '/openair/' ),
+									'label' => __( 'Indie 102.3', 'cpr' ),
+									'url'   => home_url( '/indie/' ),
 								]
 							),
 					]
