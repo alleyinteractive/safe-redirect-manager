@@ -22,7 +22,7 @@ class Corporate_Partner_Item extends \WP_Components\Component {
 	public $name = 'underwriter-corporate-partner-item';
 
 	/**
-	 * nderwriter Corporate Partner Item default config.
+	 * Underwriter Corporate Partner Item default config.
 	 *
 	 * @return array
 	 */
@@ -33,13 +33,18 @@ class Corporate_Partner_Item extends \WP_Components\Component {
 		];
 	}
 
+	/**
+	 * Fires after the post object has been set on this class.
+	 *
+	 * @return self
+	 */
 	public function post_has_set() : self {
 		$this->set_config(
 			'url',
 			get_post_meta( $this->get_post_id(), 'link', true )
 		);
 
-		if( has_post_thumbnail( $this->get_post_id() ) ) {
+		if ( has_post_thumbnail( $this->get_post_id() ) ) {
 			$this->wp_post_set_featured_image( 'underwriter' );
 		}
 
