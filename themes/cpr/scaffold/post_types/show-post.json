@@ -1,0 +1,16 @@
+{
+	"public": false,
+	"show_ui": true,
+	"show_in_nav_menus": false,
+	"show_in_menu": false,
+	"labels": {
+		"add_new": { "__": "Add New Show" },
+		"edit_item": { "__": "Edit Show" }
+	},
+	"supports": [
+		"title",
+		"thumbnail",
+		"editor",
+		"revisions"
+	]
+}

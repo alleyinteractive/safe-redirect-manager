@@ -1,9 +1,10 @@
 {
 	"public": true,
 	"show_in_rest": true,
-	"show_in_menu": "shows-podcasts",
+	"show_in_menu": false,
+	"show_in_admin_bar": true,
 	"labels": {
-		"all_items": { "__": "Podcast Episodes" }
+		"all_items": { "__": "Show Episodes" }
 	},
 	"supports": [
 		"title",
@@ -11,13 +12,12 @@
 		"author",
 		"editor",
 		"revisions",
-		"excerpt",
-		"custom-fields"
+		"excerpt"
 	],
 	"taxonomies": [
 		"category",
 		"post_tag",
-		"podcast",
+		"show",
 		"section"
 	]
 }
