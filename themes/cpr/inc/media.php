@@ -153,5 +153,17 @@ namespace CPR;
 			'retina' => true,
 			'aspect_ratio' => 1,
 		],
+		'underwriter' => [
+			'sources' => [
+				[
+					'default'    => true,
+					'transforms' => [
+						'fit' => [ 250, 250 ],
+					],
+				],
+			],
+			'aspect_ratio' => false,
+			'retina'       => true,
+		],
 	]
 );
