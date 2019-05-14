@@ -62,7 +62,6 @@ function add_menu_pages() {
 		__( 'Shows & Podcasts', 'cpr' ),
 		'edit_posts',
 		'shows-podcasts',
-		// 'edit.php?page=shows-podcasts',
 		null,
 		'dashicons-format-audio',
 		6
