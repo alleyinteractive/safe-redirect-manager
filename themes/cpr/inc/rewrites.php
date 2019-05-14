@@ -12,7 +12,7 @@ namespace CPR;
  */
 function podcast_rewrites() {
 	add_rewrite_rule(
-		'^(news|classical|openair)/podcast/([^/]+)/?$',
+		'^(news|classical|indie)/podcast/([^/]+)/?$',
 		'index.php?podcast=$matches[2]&podcast-episode-post=$matches[2]',
 		'top'
 	);

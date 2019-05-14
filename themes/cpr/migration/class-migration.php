@@ -26,7 +26,7 @@ class Migration {
 	 *
 	 * @var string
 	 */
-	public $migration_scope = 'partial';
+	public $migration_scope = '';
 
 	/**
 	 * Array of feed slugs we want to load and register.
@@ -34,11 +34,15 @@ class Migration {
 	 * @var array
 	 */
 	public $feeds = [
+		'category',
 		'document',
-		'image',
 		'guest-author',
+		'image',
 		'job',
 		'page',
+		'post-tag',
+		'service',
+		'story',
 		'underwriter',
 		'user',
 	];
@@ -48,12 +52,24 @@ class Migration {
 	 */
 	public function setup() {
 
+		if (
+			isset( $_SERVER['HTTP_HOST'] )
+			&& 'cpr.alley.test' === $_SERVER['HTTP_HOST']
+		) {
+			$this->migration_scope = 'partial';
+		}
+
 		// Load some AlleyPack modules.
 		\Alleypack\load_module( 'attachments', '1.0' );
 		\Alleypack\load_module( 'block-converter', '1.0' );
 		\Alleypack\load_module( 'sync-script', '1.2' );
 
 		$this->load_and_register_feeds();
+
+		if ( defined( 'WP_CLI' ) && WP_CLI ) {
+			require_once CPR_PATH . '/migration/cli/class-cleanup.php';
+			require_once CPR_PATH . '/migration/cli/class-menus.php';
+		}
 	}
 
 	/**

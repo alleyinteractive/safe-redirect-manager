@@ -49,17 +49,14 @@ class Slim_Navigation extends \WP_Components\Component {
 							->merge_config(
 								[
 									'id'    => 2,
-									'label' => __( 'OpenAir', 'cpr' ),
-									'url'   => home_url( '/openair/' ),
+									'label' => __( 'Indie 102.3', 'cpr' ),
+									'url'   => home_url( '/indie/' ),
 								]
 							),
 					]
 				)
 				->set_theme( 'slimNav' )
 				->set_child_themes( [ 'menu-item' => 'slimNav' ] ),
-			new Listen_Live(),
-			( new \CPR\Components\Social_Links() )
-				->parse_from_fm_data(),
 			new Search(),
 			new \CPR\Components\Donate\Donate_Button(),
 		];

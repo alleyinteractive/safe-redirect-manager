@@ -49,10 +49,12 @@ function build_components_endpoint(
 	// Build defaults.
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
-			( new \WP_Components\Head() )->set_query( $wp_query ),
+			( new \WP_Components\Head() )
+				->set_query( $wp_query )
+				->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'cpr' ) ),
 			new Components\Slim_Navigation\Slim_Navigation(),
 			new Components\Primary_Navigation\Primary_Navigation(),
-			( new Components\Header\Header() )->set_query( $wp_query ),
+			( new Components\Header\Header() ),
 			new \WP_Components\Body(),
 			new Components\Footer\Footer(),
 		];
@@ -79,26 +81,26 @@ function build_components_endpoint(
 			switch ( $wp_query->get( 'landing-page-type' ) ) {
 				case 'homepage':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'fortune' ) );
+					$head->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'cpr' ) );
 					$template = ( new Components\Templates\Homepage() )->set_post( $wp_query->post );
 					break;
 
 				case 'news':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'Colorado Public Radio News | CPR', 'fortune' ) );
+					$head->set_title( __( 'Colorado Public Radio News | CPR', 'cpr' ) );
 					$template = ( new Components\Templates\News() )->set_post( $wp_query->post );
 					break;
 
 				case 'classical':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'Colorado Public Radio Classical | CPR', 'fortune' ) );
+					$head->set_title( __( 'Colorado Public Radio Classical | CPR', 'cpr' ) );
 					$template = ( new Components\Templates\Classical() )->set_post( $wp_query->post );
 					break;
 
-				case 'openair':
+				case 'indie':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'CPR\'s OpenAir - New and Independent Music | CPR', 'fortune' ) );
-					$template = ( new Components\Templates\Openair() )->set_post( $wp_query->post );
+					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music | CPR', 'cpr' ) );
+					$template = ( new Components\Templates\Indie() )->set_post( $wp_query->post );
 					break;
 			}
 			break;
@@ -118,6 +120,14 @@ function build_components_endpoint(
 		case $wp_query->is_post_type_archive( 'top-30' ):
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Top_30_Archive() )->set_query( $wp_query );
+			break;
+
+		/**
+		 * Underwriters archive
+		 */
+		case $wp_query->is_post_type_archive( 'underwriter' ):
+			$head->set_query( $wp_query );
+			$template = ( new Components\Templates\Underwriter_Archive() )->set_query( $wp_query );
 			break;
 
 		/**
@@ -173,6 +183,8 @@ function build_components_endpoint(
 		$data['page'],
 		apply_filters( 'cpr_head', $head )
 	);
+
+	$data['page'][] = ( new Components\Header\Header() )->set_query( $wp_query );
 
 	return $data;
 }

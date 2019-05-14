@@ -13,9 +13,10 @@ define( 'CPR_URL', get_template_directory_uri() );
 /**
  * Aleypack modules.
  */
-\Alleypack\load_module( 'term-post-link', '1.0' );
+\Alleypack\load_module( 'cli-helpers', '1.1' );
 \Alleypack\load_module( 'fm-modules', '1.0' );
 \Alleypack\load_module( 'singleton', '1.0' );
+\Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );
 
 // WordPress utilities.
@@ -40,6 +41,9 @@ require_once CPR_PATH . '/migration/class-migration.php';
 // Traits.
 require_once CPR_PATH . '/inc/traits/trait-backfill.php';
 require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
+
+// Data endpoints.
+require_once CPR_PATH . '/data/class-underwriters.php';
 
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';

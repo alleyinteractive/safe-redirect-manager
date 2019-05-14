@@ -57,7 +57,7 @@ class Cpr_Post_Type_Job extends Cpr_Post_Type {
 					'menu_name'                => __( 'Jobs', 'cpr' ),
 				],
 				'public' => true,
-				'has_archive' => true,
+				'has_archive' => 'jobs',
 				'has_single' => true,
 				'show_in_rest' => true,
 				'menu_icon' => 'dashicons-portfolio',
