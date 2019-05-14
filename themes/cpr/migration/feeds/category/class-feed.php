@@ -65,11 +65,16 @@ class Feed extends \CPR\Migration\Feed {
 
 		// Validate and set.
 		if ( ! empty( $post_category_ids ) ) {
+
+			// Set terms.
 			wp_set_post_categories(
 				$post_id,
 				$post_category_ids,
 				false
 			);
+
+			// Set primary.
+			update_post_meta( $post_id, 'primary_category_id', $post_category_ids[0] );
 		}
 	}
 }

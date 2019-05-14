@@ -30,6 +30,7 @@ trait WP_Post {
 
 		switch ( $this->post->post_type ?? '' ) {
 			case 'post':
+
 				// Use primary category as the eyebrow.
 				$primary_category_component = $this->get_primary_category_component();
 				if ( $primary_category_component->is_valid_term() ) {
@@ -40,12 +41,17 @@ trait WP_Post {
 						]
 					);
 				} else {
-					$eyebrow->merge_config(
-						[
-							'eyebrow_label' => __( 'No Primary Category Found', 'cpr' ),
-							'eyebrow_link'  => home_url( '/placeholder/' ),
-						]
-					);
+
+					// Use section as the eyebrow.
+					$section_component = $this->get_section_component();
+					if ( $section_component->is_valid_term() ) {
+						$eyebrow->merge_config(
+							[
+								'eyebrow_label' => $section_component->get_config( 'name' ),
+								'eyebrow_link'  => $section_component->get_config( 'link' ),
+							]
+						);
+					}
 				}
 
 				$this->append_child( $eyebrow );
@@ -95,5 +101,15 @@ trait WP_Post {
 	public function get_primary_category_component() {
 		$category_id = get_post_meta( $this->get_post_id(), 'primary_category_id', true );
 		return ( new \WP_Components\Term() )->set_term( $category_id );
+	}
+
+	/**
+	 * Get the section component.
+	 *
+	 * @return null|\WP_Components\Term
+	 */
+	public function get_section_component() {
+		$sections = wp_get_post_terms( $this->get_post_id(), 'section' );
+		return ( new \WP_Components\Term() )->set_term( $sections[0] ?? null );
 	}
 }

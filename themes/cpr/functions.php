@@ -45,6 +45,23 @@ require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
 // Data endpoints.
 require_once CPR_PATH . '/data/class-underwriters.php';
 
+// Landing pages.
+require_once CPR_PATH . '/inc/class-landing-pages.php';
+
+// Page templates.
+require_once CPR_PATH . '/inc/classes/class-fm-page-templates.php';
+
+FM_Page_Templates::instance()->add_template(
+	[
+		'name'   => __( 'Shows and Podcasts', 'cpr' ),
+		'fields' => new \Fieldmanager_Group(
+			[
+				'label' => __( 'Shows and Podcasts', 'cpr' ),
+			]
+		),
+	]
+);
+
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';
 
@@ -110,9 +127,6 @@ require_once CPR_PATH . '/inc/users.php';
 
 // Loader for partials.
 require_once CPR_PATH . '/inc/partials/partials.php';
-
-// Landing pages.
-require_once CPR_PATH . '/inc/class-landing-pages.php';
 
 // Content types and taxonomies should be included below. In order to scaffold
 // them, leave the Begin and End comments in place.
