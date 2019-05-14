@@ -116,6 +116,7 @@ add_action( 'admin_menu', __NAMESPACE__ . '\add_menu_pages' );
  * @return string
  */
 function set_current_menu( $parent_file ) {
+	// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
 	global $submenu_file, $current_screen;
 
 	switch ( $current_screen->id ?? '' ) {
@@ -142,6 +143,7 @@ function set_current_menu( $parent_file ) {
 			$submenu_file = 'edit.php?post_type=show-episode';
 			break;
 	}
+	// phpcs:enable
 
 	return $parent_file;
 }
