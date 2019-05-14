@@ -1,0 +1,12 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "podcast-episode", "show-segment" ],
+			"title": { "__": "Featured Audio" },
+			"priority": "high"
+		}
+	],
+	"name": "audio_id",
+ 	"type": "Media"
+}
