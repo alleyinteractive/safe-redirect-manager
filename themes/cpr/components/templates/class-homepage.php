@@ -143,7 +143,7 @@ class Homepage extends \WP_Components\Component {
 			new \CPR\Components\Modules\Newsletter(),
 
 			/**
-			 * Playlists for Classical and OpenAir.
+			 * Playlists for Classical and Indie.
 			 *
 			 * @todo Build this component. Determine if we can reuse another component.
 			 */

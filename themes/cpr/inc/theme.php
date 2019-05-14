@@ -49,10 +49,10 @@ function theme_setup() {
 		'footer-2'           => __( 'Footer 2', 'cpr' ),
 		'footer-3'           => __( 'Footer 3', 'cpr' ),
 		'footer-4'           => __( 'Footer 4', 'cpr' ),
-		'header'             => __( 'Homepage', 'cpr' ),
-		'news'               => __( 'News', 'cpr' ),
-		'classical'          => __( 'Classical', 'cpr' ),
-		'indie'              => __( 'Indie', 'cpr' ),
+		'header'             => __( 'CPR Header', 'cpr' ),
+		'news'               => __( 'News Header', 'cpr' ),
+		'classical'          => __( 'Classical Header', 'cpr' ),
+		'indie'              => __( 'Indie Header', 'cpr' ),
 		'primary-navigation' => __( 'Slideout Navigation', 'cpr' ),
 	) );
 
@@ -125,7 +125,7 @@ function get_site_color( string $section = 'main' ) {
 		case 'classical':
 			return '#7F386C';
 
-		case 'openair':
+		case 'indie':
 			return '#296795';
 
 		case 'news':

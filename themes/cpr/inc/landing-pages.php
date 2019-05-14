@@ -42,10 +42,10 @@ function landing_page_options( $options ) {
 				'classical',
 			],
 		],
-		'openair'   => [
-			'label' => __( 'OpenAir', 'cpr' ),
+		'indie'   => [
+			'label' => __( 'Indie', 'cpr' ),
 			'slugs' => [
-				'openair',
+				'indie',
 			],
 		],
 	];

@@ -49,7 +49,9 @@ function build_components_endpoint(
 	// Build defaults.
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
-			( new \WP_Components\Head() )->set_query( $wp_query ),
+			( new \WP_Components\Head() )
+				->set_query( $wp_query )
+				->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'cpr' ) ),
 			new Components\Slim_Navigation\Slim_Navigation(),
 			new Components\Primary_Navigation\Primary_Navigation(),
 			( new Components\Header\Header() ),
@@ -95,10 +97,10 @@ function build_components_endpoint(
 					$template = ( new Components\Templates\Classical() )->set_post( $wp_query->post );
 					break;
 
-				case 'openair':
+				case 'indie':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'CPR\'s OpenAir - New and Independent Music | CPR', 'cpr' ) );
-					$template = ( new Components\Templates\Openair() )->set_post( $wp_query->post );
+					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music | CPR', 'cpr' ) );
+					$template = ( new Components\Templates\Indie() )->set_post( $wp_query->post );
 					break;
 			}
 			break;

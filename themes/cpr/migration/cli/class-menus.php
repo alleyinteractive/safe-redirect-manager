@@ -81,10 +81,10 @@ class Menus extends \CLI_Command {
 				$menu_position_assignments[ $new_menu['position'] ] = $menu_id;
 			},
 			[
-				$this->get_header_navigation(),
 				$this->get_primary_navigation(),
 
-				// Landing pages.
+				// Sections.
+				$this->get_header_navigation(),
 				$this->get_news_navigation(),
 				$this->get_classical_navigation(),
 				$this->get_indie_navigation(),
@@ -145,7 +145,7 @@ class Menus extends \CLI_Command {
 	protected function get_header_navigation() {
 		return [
 			'name'     => 'Header Navigation',
-			'position' => 'header-navigation',
+			'position' => 'header',
 			'items'    => array_filter(
 				[
 					// News.
@@ -313,7 +313,7 @@ class Menus extends \CLI_Command {
 	 */
 	protected function get_first_footer() {
 		return [
-			'name'     => 'CPR',
+			'name'     => 'Footer - CPR',
 			'position' => 'footer-1',
 			'items'    => array_filter(
 				[
@@ -336,7 +336,7 @@ class Menus extends \CLI_Command {
 	 */
 	protected function get_second_footer() {
 		return [
-			'name'     => 'News',
+			'name'     => 'Footer - News',
 			'position' => 'footer-2',
 			'items'    => array_filter(
 				[
@@ -359,7 +359,7 @@ class Menus extends \CLI_Command {
 	 */
 	protected function get_third_footer() {
 		return [
-			'name'     => 'Classical',
+			'name'     => 'Footer - Classical',
 			'position' => 'footer-3',
 			'items'    => array_filter(
 				[
@@ -382,7 +382,7 @@ class Menus extends \CLI_Command {
 	 */
 	protected function get_fourth_footer() {
 		return [
-			'name'     => 'Indie',
+			'name'     => 'Footer - Indie',
 			'position' => 'footer-4',
 			'items'    => array_filter(
 				[

@@ -65,7 +65,7 @@ class Station_Playlist extends \WP_Components\Component {
 						]
 					);
 
-			case 'openair':
+			case 'indie':
 			default:
 				return ( new \CPR\Components\Audio\Playlist_Item() )
 					->merge_config(

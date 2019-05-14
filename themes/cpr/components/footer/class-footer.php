@@ -51,7 +51,7 @@ class Footer extends \WP_Components\Component {
 				home_url(),
 				home_url( '/news/' ),
 				home_url( '/classical/' ),
-				home_url( '/openair/' ),
+				home_url( '/indie/' ),
 			]
 		);
 

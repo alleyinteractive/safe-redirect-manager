@@ -1,6 +1,6 @@
 <?php
 /**
- * OpenAir Landing Page Template Component.
+ * Indie Landing Page Template Component.
  *
  * @package CPR
  */
@@ -8,9 +8,9 @@
 namespace CPR\Components\Templates;
 
 /**
- * OpenAir Landing Page template.
+ * Indie Landing Page template.
  */
-class Openair extends \WP_Components\Component {
+class Indie extends \WP_Components\Component {
 
 	use \WP_Components\WP_Post;
 
@@ -19,7 +19,7 @@ class Openair extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'openair-template';
+	public $name = 'indie-template';
 
 	/**
 	 * Hook into post being set.
@@ -43,55 +43,55 @@ class Openair extends \WP_Components\Component {
 			'post_type' => [ 'post', 'podcast-episode' ],
 			'tax_query' => [
 				'relation' => 'OR',
-				// OpenAir posts.
+				// Indie posts.
 				[
 					'taxonomy' => 'section',
 					'field'    => 'slug',
-					'terms'    => 'openair',
+					'terms'    => 'indie',
 				],
-				// OpenAir podcast episodes.
+				// Indie podcast episodes.
 				[
 					'taxonomy' => 'podcast',
 					'field'    => 'term_id',
-					'terms'    => \CPR\get_podcast_term_ids_by_section( 'openair' ),
+					'terms'    => \CPR\get_podcast_term_ids_by_section( 'indie' ),
 				],
 			],
 		];
 	}
 
 	/**
-	 * Get the backfill arguments for posts in the OpenAir section.
+	 * Get the backfill arguments for posts in the Indie section.
 	 * Used in the Articles component of this page.
 	 *
 	 * @return array
 	 */
-	public static function get_openair_posts_backfill_args() : array {
+	public static function get_indie_posts_backfill_args() : array {
 		return [
 			'post_type' => [ 'post' ],
 			'tax_query' => [
 				[
 					'taxonomy' => 'section',
 					'field'    => 'slug',
-					'terms'    => 'openair',
+					'terms'    => 'indie',
 				],
 			],
 		];
 	}
 
 	/**
-	 * Get the backfill arguments for podcast episodes in the OpenAir section.
+	 * Get the backfill arguments for podcast episodes in the Indie section.
 	 * Used in the Podcast Episodes component of this page.
 	 *
 	 * @return array
 	 */
-	public static function get_openair_episodes_backfill_args() : array {
+	public static function get_indie_episodes_backfill_args() : array {
 		return [
 			'post_type' => [ 'podcast-episode' ],
 			'tax_query' => [
 				[
 					'taxonomy' => 'podcast',
 					'field'    => 'term_id',
-					'terms'    => \CPR\get_podcast_term_ids_by_section( 'openair' ),
+					'terms'    => \CPR\get_podcast_term_ids_by_section( 'indie' ),
 				],
 			],
 		];
@@ -103,7 +103,7 @@ class Openair extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
-		$data = (array) get_post_meta( $this->get_post_id(), 'openair', true );
+		$data = (array) get_post_meta( $this->get_post_id(), 'indie', true );
 		return [
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'threeColumn' )
@@ -134,7 +134,7 @@ class Openair extends \WP_Components\Component {
 								 * Station Playlist.
 								 */
 								( new \CPR\Components\Audio\Station_Playlist() )
-									->set_playlist_item_components( 4, 'openair' )
+									->set_playlist_item_components( 4, 'indie' )
 							),
 
 						/**
@@ -166,7 +166,7 @@ class Openair extends \WP_Components\Component {
 												[
 													'taxonomy' => 'section',
 													'field'    => 'slug',
-													'terms'    => 'openair',
+													'terms'    => 'indie',
 												],
 											],
 										]
@@ -181,9 +181,9 @@ class Openair extends \WP_Components\Component {
 			( new \CPR\Components\Modules\Newsletter() )
 				->merge_config(
 					[
-						'background_color' => \CPR\get_site_color( 'openair' ),
+						'background_color' => \CPR\get_site_color( 'indie' ),
 						'subscribe_group'  => 'spinsider',
-						'heading'          => __( 'Sign Up For Spinsider From CPR\'s OpenAir', 'cpr' ),
+						'heading'          => __( 'Sign Up For Spinsider From CPR\'s Indie', 'cpr' ),
 						'tagline'          => __( 'To sign up to receive our emails, fill in the following field and hit submit. Thanks, and welcome!', 'cpr' ),
 					]
 				),
@@ -213,7 +213,7 @@ class Openair extends \WP_Components\Component {
 						->add_video_items(
 							$data['videos']['content_item_ids'] ?? [],
 							2,
-							self::get_openair_posts_backfill_args() // @todo Determine actual backfill args.
+							self::get_indie_posts_backfill_args() // @todo Determine actual backfill args.
 						)
 						->set_theme( 'gridHalf' )
 						->set_child_themes(
@@ -245,7 +245,7 @@ class Openair extends \WP_Components\Component {
 				->parse_from_fm_data(
 					$data['podcast_episodes'] ?? [],
 					4,
-					self::get_openair_episodes_backfill_args()
+					self::get_indie_episodes_backfill_args()
 				)
 				->set_child_themes(
 					[
@@ -277,8 +277,8 @@ class Openair extends \WP_Components\Component {
 					[
 						'heading'           => $data['articles']['heading'] ?? '',
 						'heading_cta_label' => __( 'All Stories', 'cpr' ),
-						'heading_cta_link'  => get_term_link( 'openair', 'section' ),
-						'heading_link'      => get_term_link( 'openair', 'section' ),
+						'heading_cta_link'  => get_term_link( 'indie', 'section' ),
+						'heading_link'      => get_term_link( 'indie', 'section' ),
 					]
 				)
 				->append_children(
@@ -294,7 +294,7 @@ class Openair extends \WP_Components\Component {
 							->parse_from_ids(
 								array_slice( $data['articles']['content_item_ids'] ?? [], 0, 1 ),
 								1,
-								self::get_openair_posts_backfill_args()
+								self::get_indie_posts_backfill_args()
 							)
 							->set_theme( 'feature' )
 							->set_child_themes(
@@ -318,7 +318,7 @@ class Openair extends \WP_Components\Component {
 									->parse_from_ids(
 										array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
 										4,
-										self::get_openair_posts_backfill_args()
+										self::get_indie_posts_backfill_args()
 									)
 							)
 							->set_child_themes(
@@ -341,13 +341,13 @@ class Openair extends \WP_Components\Component {
 	 * @return array
 	 */
 	public static function landing_page_fields( $fields ) : array {
-		$fields['openair'] = new \Fieldmanager_Group(
+		$fields['indie'] = new \Fieldmanager_Group(
 			[
-				'label'      => __( 'OpenAir', 'cpr' ),
+				'label'      => __( 'Indie', 'cpr' ),
 				'tabbed'     => 'vertical',
 				'display_if' => [
 					'src'   => 'landing_page_type',
-					'value' => 'openair',
+					'value' => 'indie',
 				],
 				'children' => [
 					'featured_content' => new \Fieldmanager_Group(
@@ -406,7 +406,7 @@ class Openair extends \WP_Components\Component {
 									[
 										'label'      => __( 'Podcast Episodes', 'cpr' ),
 										'post_limit' => 4,
-										'query_args' => self::get_openair_episodes_backfill_args(),
+										'query_args' => self::get_indie_episodes_backfill_args(),
 									]
 								),
 							],
@@ -426,7 +426,7 @@ class Openair extends \WP_Components\Component {
 									[
 										'label'      => __( 'Articles', 'cpr' ),
 										'post_limit' => 5,
-										'query_args' => self::get_openair_posts_backfill_args(),
+										'query_args' => self::get_indie_posts_backfill_args(),
 									]
 								),
 							],
