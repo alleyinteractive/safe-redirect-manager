@@ -44,10 +44,10 @@ class Underwriter_Archive extends \WP_Components\Component {
 				->set_theme( 'twoColumn' )
 				->append_children(
 					[
-						( new \CPR\Components\Underwriter\Partners() ),
-
-						( new \CPR\Components\Underwriter\Directory() )
+						( new \CPR\Components\Underwriter\Corporate_Partners() )
 							->set_query( $this->query ),
+
+						( new \CPR\Components\Underwriter\Directory() ),
 					]
 				),
 		];
@@ -60,7 +60,9 @@ class Underwriter_Archive extends \WP_Components\Component {
 	 */
 	public static function pre_get_posts( $wp_query ) {
 		if ( $wp_query->is_post_type_archive( 'underwriter' ) && ! empty( $wp_query->get( 'irving-path' ) ) ) {
-			$wp_query->set( 'posts_per_page', -1 );
+			$wp_query->set( 'posts_per_page', 30 );
+			$wp_query->set( 'meta_key', 'is_corporate_partner' );
+			$wp_query->set( 'meta_value', true );
 		}
 	}
 }
