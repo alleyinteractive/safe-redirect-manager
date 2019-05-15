@@ -24,6 +24,8 @@
 	<exclude-pattern>*/vendor/</exclude-pattern>
 	<exclude-pattern>inc/cli.php</exclude-pattern>
 	<exclude-pattern>tests/</exclude-pattern>
+	<exclude-pattern>migration/data/*</exclude-pattern>
+	<exclude-pattern>migration/test-data/*</exclude-pattern>
 
 	<rule ref="WordPress" />
 	<rule ref="WordPressVIPMinimum" />

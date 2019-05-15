@@ -154,7 +154,18 @@ function build_components_endpoint(
 		case $wp_query->is_page():
 		case $wp_query->is_singular( 'job' ):
 			$head->set_post( $wp_query->post );
-			$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
+
+			// Decide on a page template.
+			$template = (string) get_post_meta( $wp_query->post->ID, '_wp_page_template', true );
+			switch ( $template ) {
+				case 'grid-group':
+					$template = ( new Components\Templates\Grid_Group_Page() )->set_post( $wp_query->post );
+					break;
+
+				default:
+					$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
+					break;
+			}
 			break;
 
 		/**

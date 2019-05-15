@@ -42,13 +42,25 @@ class Job_Archive extends \WP_Components\Component {
 		return [
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'twoColumn' )
+				->set_config( 'heading', __( 'Employment Opportunities', 'cpr' ) )
 				->append_children(
 					[
 						/**
 						 * Job archive.
 						 */
 						( new \CPR\Components\Modules\Content_List() )
-							->parse_from_wp_query( $this->query ),
+							->set_theme( 'riverFull' )
+							->set_config( 'show_excerpt', true )
+							->parse_from_wp_query( $this->query )
+							->set_child_themes(
+								[
+									'content-item' => 'river',
+									'title'        => 'feature',
+									'eyebrow'      => 'small',
+								]
+							),
+
+						$this->get_footer_disclaimer(),
 
 						/**
 						 * Sidebar.
@@ -58,5 +70,22 @@ class Job_Archive extends \WP_Components\Component {
 					]
 				),
 		];
+	}
+
+	/**
+	 * Get the job archive footer component.
+	 *
+	 * @return null|\WP_Components\HTML
+	 */
+	public function get_footer_disclaimer() : ?\WP_Components\HTML {
+
+		$footer_content = get_option( 'cpr-settings' )['careers']['footer_content'] ?? '';
+
+		if ( empty( $footer_content ) ) {
+			return null;
+		}
+
+		return ( new \WP_Components\HTML() )
+			->set_config( 'content', $footer_content );
 	}
 }

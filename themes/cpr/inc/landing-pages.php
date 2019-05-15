@@ -14,7 +14,7 @@ add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Landing_Pages', 'instance' 
 add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Homepage', 'landing_page_fields' ] );
 add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\News', 'landing_page_fields' ] );
 add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Classical', 'landing_page_fields' ] );
-add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Openair', 'landing_page_fields' ] );
+add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Indie', 'landing_page_fields' ] );
 
 /**
  * Setup landing page options.

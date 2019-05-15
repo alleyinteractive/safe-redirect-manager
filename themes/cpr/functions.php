@@ -15,6 +15,7 @@ define( 'CPR_URL', get_template_directory_uri() );
  */
 \Alleypack\load_module( 'cli-helpers', '1.1' );
 \Alleypack\load_module( 'fm-modules', '1.0' );
+\Alleypack\load_module( 'page-templates', '1.0' );
 \Alleypack\load_module( 'singleton', '1.0' );
 \Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );
@@ -44,6 +45,9 @@ require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
 
 // Data endpoints.
 require_once CPR_PATH . '/data/class-underwriters.php';
+
+// Landing pages.
+require_once CPR_PATH . '/inc/class-landing-pages.php';
 
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';
@@ -78,6 +82,9 @@ require_once CPR_PATH . '/inc/landing-pages.php';
 // Media includes.
 require_once CPR_PATH . '/inc/media.php';
 
+// Page Templates.
+require_once CPR_PATH . '/inc/page-templates.php';
+
 // Permalink.
 require_once CPR_PATH . '/inc/permalink.php';
 
@@ -110,9 +117,6 @@ require_once CPR_PATH . '/inc/users.php';
 
 // Loader for partials.
 require_once CPR_PATH . '/inc/partials/partials.php';
-
-// Landing pages.
-require_once CPR_PATH . '/inc/class-landing-pages.php';
 
 // Content types and taxonomies should be included below. In order to scaffold
 // them, leave the Begin and End comments in place.

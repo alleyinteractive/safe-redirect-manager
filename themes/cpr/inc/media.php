@@ -153,6 +153,19 @@ namespace CPR;
 			'retina' => true,
 			'aspect_ratio' => 1,
 		],
+		// @todo add proper sizing
+		'grid-group-item' => [
+			'sources' => [
+				[
+					'default' => true,
+					'transforms' => [
+						'resize' => [ 300, 300 ],
+					],
+				],
+			],
+			'retina' => true,
+			'aspect_ratio' => 1,
+		],
 		'underwriter' => [
 			'sources' => [
 				[
