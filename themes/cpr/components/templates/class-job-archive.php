@@ -77,7 +77,7 @@ class Job_Archive extends \WP_Components\Component {
 	 *
 	 * @return null|\WP_Components\HTML
 	 */
-	public function get_footer_disclaimer() : \WP_Components\HTML {
+	public function get_footer_disclaimer() : ?\WP_Components\HTML {
 
 		$footer_content = get_option( 'cpr-settings' )['careers']['footer_content'] ?? '';
 
