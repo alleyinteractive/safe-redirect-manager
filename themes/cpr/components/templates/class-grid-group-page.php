@@ -58,7 +58,7 @@ class Grid_Group_Page extends \WP_Components\Component {
 				'groups' => new \Fieldmanager_Group(
 					[
 						'label'          => __( 'Groups', 'cpr' ),
-						// Translators; $s - Group name.
+						// Translators: %s - Group name.
 						'label_macro'    => [ __( 'Group: %s', 'cpr' ), 'name' ],
 						'add_more_label' => __( 'Add Group', 'cpr' ),
 						'limit'          => 0,

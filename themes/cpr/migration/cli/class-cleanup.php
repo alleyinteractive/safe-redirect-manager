@@ -26,6 +26,7 @@ class Cleanup extends \CLI_Command {
 	 */
 	public function run_all() {
 		WP_CLI::runcommand( 'cpr-cleanup set_site_settings' );
+		WP_CLI::runcommand( 'cpr-cleanup create_redirects' );
 	}
 
 	/**
@@ -86,6 +87,21 @@ class Cleanup extends \CLI_Command {
 		update_option( 'cpr-settings', $settings );
 
 		WP_CLI::success( 'Settings created.' );
+	}
+
+	/**
+	 * Generate redirects as part of the migration process.
+	 *
+	 * ## EXAMPLES
+	 *
+	 * wp cpr-cleanup create_redirects
+	 */
+	public function create_redirects() {
+
+		srm_create_redirect( '/underwrite/', '/underwriters/' );
+		srm_create_redirect( '/about/employment-opportunities/', '/jobs/' );
+
+		\WP_CLI::success( 'Redirects created.' );
 	}
 }
 WP_CLI::add_command( 'cpr-cleanup', __NAMESPACE__ . '\Cleanup' );
