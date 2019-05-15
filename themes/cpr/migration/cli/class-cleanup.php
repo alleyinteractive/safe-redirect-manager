@@ -98,8 +98,8 @@ class Cleanup extends \CLI_Command {
 	 */
 	public function create_redirects() {
 
-		srm_create_redirect( '/underwrite/', '/underwriters/' );
-		srm_create_redirect( '/about/employment-opportunities/', '/jobs/' );
+		srm_create_redirect( '/underwrite/', '/underwriters/', 301 );
+		srm_create_redirect( '/about/employment-opportunities/', '/jobs/', 301 );
 
 		\WP_CLI::success( 'Redirects created.' );
 	}
