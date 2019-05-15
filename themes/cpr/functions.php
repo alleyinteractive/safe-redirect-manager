@@ -15,6 +15,7 @@ define( 'CPR_URL', get_template_directory_uri() );
  */
 \Alleypack\load_module( 'cli-helpers', '1.1' );
 \Alleypack\load_module( 'fm-modules', '1.0' );
+\Alleypack\load_module( 'page-templates', '1.0' );
 \Alleypack\load_module( 'singleton', '1.0' );
 \Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );
@@ -48,20 +49,6 @@ require_once CPR_PATH . '/data/class-underwriters.php';
 // Landing pages.
 require_once CPR_PATH . '/inc/class-landing-pages.php';
 
-// Page templates.
-require_once CPR_PATH . '/inc/classes/class-fm-page-templates.php';
-
-FM_Page_Templates::instance()->add_template(
-	[
-		'name'   => __( 'Shows and Podcasts', 'cpr' ),
-		'fields' => new \Fieldmanager_Group(
-			[
-				'label' => __( 'Shows and Podcasts', 'cpr' ),
-			]
-		),
-	]
-);
-
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';
 
@@ -94,6 +81,9 @@ require_once CPR_PATH . '/inc/landing-pages.php';
 
 // Media includes.
 require_once CPR_PATH . '/inc/media.php';
+
+// Page Templates.
+require_once CPR_PATH . '/inc/page-templates.php';
 
 // Permalink.
 require_once CPR_PATH . '/inc/permalink.php';

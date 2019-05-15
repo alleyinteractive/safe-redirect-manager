@@ -30,7 +30,6 @@ trait WP_Post {
 
 		switch ( $this->post->post_type ?? '' ) {
 			case 'post':
-
 				// Use primary category as the eyebrow.
 				$primary_category_component = $this->get_primary_category_component();
 				if ( $primary_category_component->is_valid_term() ) {
@@ -65,6 +64,22 @@ trait WP_Post {
 						[
 							'eyebrow_label' => $podcast_terms[0]->name,
 							'eyebrow_link'  => get_term_link( $podcast_terms[0], $podcast_terms[0]->taxonomy ),
+						]
+					);
+				}
+
+				$this->append_child( $eyebrow );
+				break;
+
+			case 'podcast-post':
+			case 'show-post':
+				// Use section as the eyebrow.
+				$section_component = $this->get_section_component();
+				if ( $section_component->is_valid_term() ) {
+					$eyebrow->merge_config(
+						[
+							'eyebrow_label' => $section_component->get_config( 'name' ),
+							'eyebrow_link'  => $section_component->get_config( 'link' ),
 						]
 					);
 				}

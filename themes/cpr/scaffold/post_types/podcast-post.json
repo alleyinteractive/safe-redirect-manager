@@ -12,5 +12,8 @@
 		"thumbnail",
 		"editor",
 		"revisions"
+	],
+	"taxonomies": [
+		"section"
 	]
 }

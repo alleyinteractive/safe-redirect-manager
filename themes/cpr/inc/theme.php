@@ -103,7 +103,7 @@ function body_classes( $classes ) {
 add_filter( 'body_class', __NAMESPACE__ . '\body_classes' );
 
 /**
- * Return an array of content post types.
+ * Return an array of post types that could be used in content areas.
  *
  * @return array
  */
@@ -111,6 +111,23 @@ function get_content_post_types() {
 	return [
 		'post',
 		'podcast-episode',
+		'show-episode',
+	];
+}
+
+/**
+ * Return an array of post types that can be inserted into curatable areas.
+ *
+ * @return array
+ */
+function get_curatable_post_types() {
+	return [
+		'post',
+		'podcast-post',
+		'podcast-episode',
+		'show-post',
+		'show-episode',
+		'external-link',
 	];
 }
 
