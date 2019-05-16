@@ -22,7 +22,7 @@ class Author_Header extends \WP_Components\Component {
 	 * @var string
 	 */
 	public $name = 'author-header';
-	
+
 	/**
 	 * Define a default config.
 	 *
@@ -34,6 +34,8 @@ class Author_Header extends \WP_Components\Component {
 			'link'        => '',
 			'name'        => '',
 			'twitter'     => '',
+			'shortBio'    => '',
+			'title'       => '',
 		];
 	}
 
