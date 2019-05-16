@@ -42,7 +42,7 @@ class Feed extends \CPR\Migration\Feed {
 	 *
 	 * @var array
 	 */
-	public $unique_taxonomy_ids_for_podcasts = [
+	public static $unique_taxonomy_ids_for_podcasts = [
 		9557, // Purplish
 		9620, // The Playlist League
 		8666, // Centennial Sounds
@@ -63,6 +63,28 @@ class Feed extends \CPR\Migration\Feed {
 	 * @return array
 	 */
 	public function mapping_filter( array $mapping ) : array {
-		return $this->unique_taxonomy_ids_for_podcasts;
+		return self::$unique_taxonomy_ids_for_podcasts;
+	}
+
+	/**
+	 * Helper to set the podcast for a given post.
+	 *
+	 * @param int        $post_id           Post id.
+	 * @param string|int $podcast_unique_id Unique (legacy) id for this
+	 *                                      service/podcast.
+	 */
+	public static function set_podcast( int $post_id, $podcast_unique_id ) {
+
+		// Attempt to retreieve the podcast term.
+		$podcast_term = \CPR\Migration\Podcast\Feed_Item::get_object_by_unique_id( $podcast_unique_id );
+
+		// Validate and set.
+		if ( $podcast_term instanceof \WP_Term ) {
+			wp_set_object_terms(
+				$post_id,
+				$podcast_term->term_id,
+				'podcast'
+			);
+		}
 	}
 }
