@@ -40,8 +40,10 @@ class Migration {
 		'image',
 		'job',
 		'page',
+		'podcast',
 		'post-tag',
 		'service',
+		'show',
 		'story',
 		'underwriter',
 		'user',
@@ -104,10 +106,10 @@ class Migration {
 	 * @param int    $offset File offset.
 	 * @return array
 	 */
-	public function get_source_data_by_offset( string $slug, int $offset ) : array {
+	public function get_source_data_by_offset( string $slug, int $offset, $mapping_filter = null ) : array {
 
 		if ( empty( $this->data_mapping[ $slug ] ) ) {
-			$this->build_mapping( $slug );
+			$this->build_mapping( $slug, $mapping_filter );
 		}
 
 		$id = absint( $this->data_mapping[ $offset ] ?? 0 );
@@ -139,7 +141,7 @@ class Migration {
 	 *
 	 * @param string $slug Slug for directory to data.
 	 */
-	public function build_mapping( $slug ) {
+	public function build_mapping( $slug, $mapping_filter = null ) {
 
 		// Scan data directory for files.
 		$files = scandir( $this->get_data_directory( $slug ) );
@@ -158,6 +160,10 @@ class Migration {
 					)
 				)
 			);
+
+			if ( is_callable( $mapping_filter ) ) {
+				$files = call_user_func( $mapping_filter, $files );
+			}
 
 			$this->data_mapping = $files;
 		}
