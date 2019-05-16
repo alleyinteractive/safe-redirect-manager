@@ -75,7 +75,13 @@ class Author_Archive extends \WP_Components\Component {
 						->guest_author_set_avatar( 'avatar' )
 						->append_child(
 							( new \WP_Components\HTML() )
-								->set_config( 'content', get_post_meta( $this->guest_author->ID, 'description', true ) )
+								->set_config(
+									'content',
+									apply_filters(
+										'the_content',
+										get_post_meta( $this->guest_author->ID, 'description', true )
+									)
+								)
 						)
 				),
 
