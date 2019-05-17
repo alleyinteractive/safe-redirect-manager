@@ -15,13 +15,20 @@
 			"type": "text",
 			"label": { "__": "Email" }
 		},
+		"title": {
+			"type": "text",
+			"label": { "__": "Title" }
+		},
 		"twitter": {
 			"type": "text",
 			"label": { "__": "Twitter" },
 			"sanitize": "`function( $value ) { return str_replace( '@', '', $value ); }`"
 		},
+		"short_bio": {
+			"type": "text",
+			"label": { "__": "Short Bio" }
+		},
 		"description": {
-			"type": "richtext",
 			"label": { "__": "Guest Author Bio" },
 			"type": "richtextarea",
 			"buttons_1": [ "bold", "italic", "link" ],
