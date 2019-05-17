@@ -80,12 +80,15 @@ Terms
 * `wp alleypack sync category`
 * `wp alleypack sync post-tag`
 * `wp alleypack sync service`
+* `wp alleypack sync podcast`
+* `wp alleypack sync show`
 
 Attachments
 * `wp alleypack sync document`
 * `wp alleypack sync image`
 
 Posts
+* `wp alleypack sync podcast-episode`
 * `wp alleypack sync story`
 * `wp alleypack sync page`
 * `wp alleypack sync job`
