@@ -65,11 +65,11 @@ class Underwriters {
 	 */
 	public function get_data_from_post( \WP_Post $post ) : array {
 		return [
-			'id'           => $post->ID,
-			'name'         => get_the_title( $post ),
-			'link'         => (string) esc_url( get_post_meta( $post->ID, 'link', true ) ),
-			'phone_number' => (string) get_post_meta( $post->ID, 'phone_number', true ),
-			'address'      => (string) get_post_meta( $post->ID, 'address', true ),
+			'id'      => $post->ID,
+			'name'    => get_the_title( $post ),
+			'link'    => (string) esc_url( get_post_meta( $post->ID, 'link', true ) ),
+			'phone'   => (string) get_post_meta( $post->ID, 'phone_number', true ),
+			'address' => (string) get_post_meta( $post->ID, 'address', true ),
 		];
 	}
 }
