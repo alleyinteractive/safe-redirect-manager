@@ -68,6 +68,8 @@ class Migration {
 		\Alleypack\load_module( 'block-converter', '1.0' );
 		\Alleypack\load_module( 'sync-script', '1.2' );
 
+		require_once CPR_PATH . '/migration/traits/trait-story.php';
+
 		$this->load_and_register_feeds();
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {

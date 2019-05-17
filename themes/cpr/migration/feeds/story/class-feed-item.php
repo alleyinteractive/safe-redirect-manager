@@ -14,6 +14,8 @@ use function Alleypack\Sync_Script\alleypack_log;
  */
 class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 
+	use \CPR\Migration\Traits\Story;
+
 	/**
 	 * This object should always sync.
 	 *
@@ -30,7 +32,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 
 				// Migrate that instead and skip over the object.
 				$podcast_episode = \CPR\Migration\Podcast_Episode\Feed_Item::get_or_create_object_from_source( $this->source );
-				print_r($podcast_episode);
 				return false;
 			}
 		}
@@ -53,26 +54,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	public function map_source_to_object() {
 
-		// Map fields.
-		$title                        = sanitize_title( $this->source['title'] ?? '' );
-		$this->object['post_name']    = $title;
-		$this->object['post_title']   = wp_strip_all_tags( $this->source['title'] ?? '' );
-		$this->object['post_content'] = $this->source['body']['und'][0]['value'] ?? '';
-		$this->object['post_status']  = 'publish';
-
-		// Object date.
-		$date = $this->source['created'] ?? '';
-		if ( empty( $date ) ) {
-			$date = time();
-		}
-		$this->object['post_date'] = date( 'Y-m-d H:i:s', $date );
-
-		// Object Modified date.
-		$modified_date = $this->source['changed'] ?? '';
-		if ( empty( $modified_date ) ) {
-			$date = time();
-		}
-		$this->object['post_modified'] = date( 'Y-m-d H:i:s', $modified_date );
+		$this->set_basics();
 
 		// Map meta.
 		$this->object['meta_input'] = [
@@ -97,56 +79,12 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function post_object_save() {
-
-		// Setup bylines.
-		$legacy_guest_author_ids = [ 0 ]; // This will fallback to the default user.
-		if ( ! empty( $this->source['field_author']['und'] ?? [] ) ) {
-			$legacy_guest_author_ids = wp_list_pluck( $this->source['field_author']['und'], 'target_id' );
-		}
-
-		// Set the byline.
-		\CPR\Migration\Guest_Author\Feed::set_bylines(
-			$this->get_object_id(),
-			$legacy_guest_author_ids
-		);
-
-		// Set the featured image.
-		\CPR\Migration\Image\Feed::set_featured_image(
-			$this->get_object_id(),
-			( $this->source['field_feature_image']['und'][0]['target_id'] ?? 0 )
-		);
-
-		// Set the section.
-		\CPR\Migration\Service\Feed::set_section(
-			$this->get_object_id(),
-			( $this->source['field_primary_service']['und'][0]['target_id'] ?? 0 )
-		);
-
-		// Set the tags.
-		if ( ! empty( $this->source['field_tags']['und'] ?? [] ) ) {
-			\CPR\Migration\Post_Tag\Feed::set_tags(
-				$this->get_object_id(),
-				wp_list_pluck( $this->source['field_tags']['und'], 'tid' )
-			);
-		}
-
-		// Set the categories.
-		if ( ! empty( $this->source['field_topics']['und'] ?? [] ) ) {
-			\CPR\Migration\Category\Feed::set_categories(
-				$this->get_object_id(),
-				wp_list_pluck( $this->source['field_topics']['und'], 'target_id' )
-			);
-		} else {
-			$categories = get_the_category( $this->get_object_id() );
-			if ( ! empty( $categories ) ) {
-				wp_remove_object_terms(
-					$this->get_object_id(),
-					wp_list_pluck( $categories, 'term_id' ),
-					'category'
-				);
-			}
-		}
-
+		$this->migrate_bylines();
+		$this->migrate_featured_image();
+		$this->set_section();
+		$this->set_podcast();
+		$this->set_tags();
+		$this->set_categories();
 		return true;
 	}
 }
