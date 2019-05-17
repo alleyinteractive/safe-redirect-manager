@@ -22,6 +22,16 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	protected $data_slug = '';
 
 	/**
+	 * Callback used to modify the mapping built being loaded.
+	 *
+	 * @param array $mapping Mapping.
+	 * @return array
+	 */
+	public function mapping_filter( array $mapping ) : array {
+		return $mapping;
+	}
+
+	/**
 	 * Load source data using a limit and offset.
 	 *
 	 * @param int $limit  Feed limit.
@@ -35,7 +45,7 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 
 		// Loop through limit.
 		while ( $limit > 0 ) {
-			$data[] = Migration::instance()->get_source_data_by_offset( $this->data_slug, $offset );
+			$data[] = Migration::instance()->get_source_data_by_offset( $this->data_slug, $offset, [ $this, 'mapping_filter' ] );
 
 			// Increase offset and decrease limit to count up.
 			$offset++;

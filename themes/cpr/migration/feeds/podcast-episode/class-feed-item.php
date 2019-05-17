@@ -1,11 +1,11 @@
 <?php
 /**
- * Class for parsing a story item.
+ * Class for parsing a Podcast Episode.
  *
  * @package CPR
  */
 
-namespace CPR\Migration\Story;
+namespace CPR\Migration\Podcast_Episode;
 
 use function Alleypack\Sync_Script\alleypack_log;
 
@@ -17,23 +17,29 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	use \CPR\Migration\Traits\Story;
 
 	/**
+	 * Post type.
+	 *
+	 * @var string
+	 */
+	public static $post_type = 'podcast-episode';
+
+	/**
 	 * This object should always sync.
 	 *
 	 * @return bool
 	 */
 	public function should_object_sync() : bool {
 
+		// Get this object's story type id.
 		$story_type_id = absint( $this->source['field_story_type']['und'][0]['tid'] ?? 0 );
-		if ( 0 !== $story_type_id ) {
+		if ( 0 === $story_type_id ) {
+			return false;
+		}
 
-			// Is this source actually a podcast episode?
-			$podcast_unique_ids = \CPR\Migration\Podcast\Feed::$unique_taxonomy_ids_for_podcasts;
-			if ( in_array( $story_type_id, $podcast_unique_ids, true ) ) {
-
-				// Migrate that instead and skip over the object.
-				$podcast_episode = \CPR\Migration\Podcast_Episode\Feed_Item::get_or_create_object_from_source( $this->source );
-				return false;
-			}
+		// Is this a podcast episode?
+		$podcast_unique_ids = \CPR\Migration\Podcast\Feed::$unique_taxonomy_ids_for_podcasts;
+		if ( ! in_array( $story_type_id, $podcast_unique_ids, true ) ) {
+			return false;
 		}
 
 		return true;
@@ -59,7 +65,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		// Map meta.
 		$this->object['meta_input'] = [
 			'legacy_id'      => $this->source['nid'],
-			'template'       => $title,
+			'template'       => sanitize_title( $this->source['title'] ?? '' ),
 			'legacy_type'    => $this->source['type'] ?? '',
 			'legacy_created' => $this->source['created'] ?? '',
 			'legacy_changed' => $this->source['changed'] ?? '',

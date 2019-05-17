@@ -40,8 +40,12 @@ class Migration {
 		'image',
 		'job',
 		'page',
+		'podcast',
+		'podcast-episode',
 		'post-tag',
 		'service',
+		'show',
+		// 'show-episode',
 		'story',
 		'underwriter',
 		'user',
@@ -63,6 +67,8 @@ class Migration {
 		\Alleypack\load_module( 'attachments', '1.0' );
 		\Alleypack\load_module( 'block-converter', '1.0' );
 		\Alleypack\load_module( 'sync-script', '1.2' );
+
+		require_once CPR_PATH . '/migration/traits/trait-story.php';
 
 		$this->load_and_register_feeds();
 
@@ -100,14 +106,16 @@ class Migration {
 	/**
 	 * Helper to get a source data file by the directory offset.
 	 *
-	 * @param string $slug   Slug for directory to data.
-	 * @param int    $offset File offset.
+	 * @param string    $slug           Slug for directory to data.
+	 * @param int       $offset         File offset.
+	 * @param callaable $mapping_filter Callback used to modify the mapping
+	 *                                  built being loaded.
 	 * @return array
 	 */
-	public function get_source_data_by_offset( string $slug, int $offset ) : array {
+	public function get_source_data_by_offset( string $slug, int $offset, $mapping_filter = null ) : array {
 
 		if ( empty( $this->data_mapping[ $slug ] ) ) {
-			$this->build_mapping( $slug );
+			$this->build_mapping( $slug, $mapping_filter );
 		}
 
 		$id = absint( $this->data_mapping[ $offset ] ?? 0 );
@@ -137,9 +145,11 @@ class Migration {
 	/**
 	 * Build the file position to legacy id mapping.
 	 *
-	 * @param string $slug Slug for directory to data.
+	 * @param string    $slug           Slug for directory to data.
+	 * @param callaable $mapping_filter Callback used to modify the mapping
+	 *                                  built being loaded.
 	 */
-	public function build_mapping( $slug ) {
+	public function build_mapping( $slug, $mapping_filter = null ) {
 
 		// Scan data directory for files.
 		$files = scandir( $this->get_data_directory( $slug ) );
@@ -158,6 +168,10 @@ class Migration {
 					)
 				)
 			);
+
+			if ( is_callable( $mapping_filter ) ) {
+				$files = call_user_func( $mapping_filter, $files );
+			}
 
 			$this->data_mapping = $files;
 		}
