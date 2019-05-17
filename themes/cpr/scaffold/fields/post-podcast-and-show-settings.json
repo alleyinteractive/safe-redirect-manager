@@ -2,7 +2,7 @@
 	"contexts": [
 		{
 			"type": "post",
-			"post_types": [ "podcast-post", "show-post" ],
+			"post_types": [ "post" ],
 			"title": { "__": "Settings" }
 		}
 	],
@@ -26,68 +26,41 @@
 						"only_save_to_taxonomy": true
 					}
 				},
-				"description": {
-					"type": "richtext",
-					"label": { "__": "Podcast/Show Description" },
-					"type": "richtextarea",
-					"buttons_1": [ "bold", "italic", "link" ],
-					"buttons_2": [],
-					"sanitize": "wp_filter_post_kses",
-					"editor_settings": {
-						"media_buttons": false
-					},
-					"attributes": {
-						"style": "width: 100%",
-						"rows": 4
+				"primary_category_id": {
+					"label": { "__": "Primary Category" },
+					"type": "select",
+					"description": { "__": "Select a primary category to be used as the eyebrow site-wide." },
+					"datasource": {
+						"type": "term",
+						"taxonomy": "category",
+						"taxonomy_save_to_terms": false,
+						"only_save_to_taxonomy": false
 					}
 				},
-				"times": {
-					"label": { "__": "Podcast/Show Times" }
-				}
-			}
-		},
-		"subscribe": {
-			"label": { "__": "Subscribe" },
-			"children": {
-				"buttons": {
-					"label": { "__": "Subscribe Buttons" },
-					"limit": 0,
-					"add_more_label": { "__": "Add Button" },
-					"one_label_per_item": false,
-					"extra_elements": 0,
-					"sortable": true,
-					"children": {
-						"label": {
-							"label": { "__": "Label" }
-						},
-						"link": {
-							"label": { "__": "Link" },
-							"type": "link"
-						}
-					}
-				}
-			}
-		},
-		"highlighted_episodes": {
-			"label": { "__": "Highlighted Episodes" },
-			"serialize_data": false,
-			"add_to_prefix": false,
-			"children": {
-				"content_item_ids": {
-					"label": { "__": "Highlighted Episodes" },
+				"keep_reading_ids": {
+					"label": { "__": "Keep Reading" },
 					"type": "`Fieldmanager_Zone_Field`",
-					"post_limit": 4,
 					"query_args": {
-						"post_type": [ "show-episode", "podcast-episode" ]
+						"post_type": "`\\CPR\\get_content_post_types()`"
 					}
 				}
 			}
 		},
-		"hosts": {
-			"label": { "__": "Hosts" },
+		"featured_media": {
+			"label": { "__": "Featured Media" },
 			"serialize_data": false,
 			"add_to_prefix": false,
-			"children": "`\\CPR\\Components\\Modules\\Grid_Group::get_fm_fields()`"
+			"children": {
+				"disable_image": {
+					"label": { "__": "Hide Featured Image" },
+					"type": "checkbox"
+				},
+				"youtube_url": {
+					"label": { "__": "YouTube URL" },
+					"description": { "__": "Display this video at the top of the page." },
+					"type": "link"
+				}
+			}
 		},
 		"social_and_seo": {
 			"label": { "__": "SEO and Social" },
@@ -141,6 +114,23 @@
 						"social_image_id": {
 							"label": { "__": "Social Image" },
 							"type": "media"
+						}
+					}
+				},
+				"advanced_settings": {
+					"label": { "__": "Advanced Settings" },
+					"serialize_data": false,
+					"add_to_prefix": false,
+					"collapsed": true,
+					"children": {
+						"canonical_url": {
+							"label": { "__": "Canonical Url" },
+							"description": { "__": "This is the original URL of syndicated content." }
+						},
+						"de_index_google": {
+							"label": { "__": "De-index in search engines" },
+							"description": { "__": "This will prevent search engines from indexing this content." },
+							"type": "checkbox"
 						}
 					}
 				}

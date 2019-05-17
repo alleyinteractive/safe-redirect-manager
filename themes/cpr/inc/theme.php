@@ -122,6 +122,7 @@ function get_content_post_types() {
  */
 function get_curatable_post_types() {
 	return [
+		'guest-author',
 		'post',
 		'podcast-post',
 		'podcast-episode',

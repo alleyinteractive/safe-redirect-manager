@@ -119,44 +119,70 @@ function cpr_fm_post_article_post_types_settings() {
 									),
 								]
 							),
-							'primary_category_id' => new Fieldmanager_Select(
+							'description' => new Fieldmanager_RichTextArea(
 								[
-									'label' => __( 'Primary Category', 'cpr' ),
-									'description' => __( 'Select a primary category to be used as the eyebrow site-wide.', 'cpr' ),
-									'datasource' => new Fieldmanager_Datasource_Term(
-										[
-											'taxonomy' => 'category',
-											'taxonomy_save_to_terms' => false,
-											'only_save_to_taxonomy' => false,
-										]
-									),
+									'label' => __( 'Podcast/Show Description', 'cpr' ),
+									'buttons_1' => [ 'bold', 'italic', 'link' ],
+									'buttons_2' => [],
+									'sanitize' => 'wp_filter_post_kses',
+									'editor_settings' => [
+										'media_buttons' => false,
+									],
+									'attributes' => [
+										'style' => 'width: 100%',
+										'rows' => 4,
+									],
 								]
 							),
-							'keep_reading_ids' => new Fieldmanager_Zone_Field(
+							'times' => new Fieldmanager_TextField( __( 'Podcast/Show Times', 'cpr' ) ),
+						],
+					]
+				),
+				'subscribe' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Subscribe', 'cpr' ),
+						'children' => [
+							'buttons' => new Fieldmanager_Group(
 								[
-									'label' => __( 'Keep Reading', 'cpr' ),
-									'query_args' => [
-										'post_type' => \CPR\get_content_post_types(),
+									'label' => __( 'Subscribe Buttons', 'cpr' ),
+									'limit' => 0,
+									'add_more_label' => __( 'Add Button', 'cpr' ),
+									'one_label_per_item' => false,
+									'extra_elements' => 0,
+									'sortable' => true,
+									'children' => [
+										'label' => new Fieldmanager_TextField( __( 'Label', 'cpr' ) ),
+										'link' => new Fieldmanager_Link( __( 'Link', 'cpr' ) ),
 									],
 								]
 							),
 						],
 					]
 				),
-				'featured_media' => new Fieldmanager_Group(
+				'highlighted_content' => new Fieldmanager_Group(
 					[
-						'label' => __( 'Featured Media', 'cpr' ),
+						'label' => __( 'Highlighted Content', 'cpr' ),
 						'serialize_data' => false,
 						'add_to_prefix' => false,
 						'children' => [
-							'disable_image' => new Fieldmanager_Checkbox( __( 'Hide Featured Image', 'cpr' ) ),
-							'youtube_url' => new Fieldmanager_Link(
+							'content_item_ids' => new Fieldmanager_Zone_Field(
 								[
-									'label' => __( 'YouTube URL', 'cpr' ),
-									'description' => __( 'Display this video at the top of the page.', 'cpr' ),
+									'label' => __( 'Highlighted Content', 'cpr' ),
+									'post_limit' => 4,
+									'query_args' => [
+										'post_type' => 'show-episode',
+									],
 								]
 							),
 						],
+					]
+				),
+				'hosts' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Hosts', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => \CPR\Components\Modules\Grid_Group::get_fm_fields(),
 					]
 				),
 				'social_and_seo' => new Fieldmanager_Group(
@@ -243,10 +269,10 @@ function cpr_fm_post_article_post_types_settings() {
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'post', 'podcast-post' ] );
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'podcast-post', 'show-post' ] );
 }
-add_action( 'fm_post_post', 'cpr_fm_post_article_post_types_settings' );
 add_action( 'fm_post_podcast-post', 'cpr_fm_post_article_post_types_settings' );
+add_action( 'fm_post_show-post', 'cpr_fm_post_article_post_types_settings' );
 /* end fm:post-article-post-types-settings */
 
 /* begin fm:post-guest-author-settings */
@@ -529,3 +555,163 @@ function cpr_fm_post_show_post_settings() {
 }
 add_action( 'fm_post_show-post', 'cpr_fm_post_show_post_settings' );
 /* end fm:post-show-post-settings */
+
+/* begin fm:post-podcast-and-show-settings */
+/**
+ * `post-podcast-and-show-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_podcast_and_show_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-podcast-and-show-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'tabbed' => 'vertical',
+			'children' => [
+				'settings' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Settings', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
+							'section_id' => new Fieldmanager_Select(
+								[
+									'label' => __( 'Section', 'cpr' ),
+									'description' => __( 'Select a section.', 'cpr' ),
+									'datasource' => new Fieldmanager_Datasource_Term(
+										[
+											'taxonomy' => 'section',
+											'taxonomy_save_to_terms' => true,
+											'only_save_to_taxonomy' => true,
+										]
+									),
+								]
+							),
+							'primary_category_id' => new Fieldmanager_Select(
+								[
+									'label' => __( 'Primary Category', 'cpr' ),
+									'description' => __( 'Select a primary category to be used as the eyebrow site-wide.', 'cpr' ),
+									'datasource' => new Fieldmanager_Datasource_Term(
+										[
+											'taxonomy' => 'category',
+											'taxonomy_save_to_terms' => false,
+											'only_save_to_taxonomy' => false,
+										]
+									),
+								]
+							),
+							'keep_reading_ids' => new Fieldmanager_Zone_Field(
+								[
+									'label' => __( 'Keep Reading', 'cpr' ),
+									'query_args' => [
+										'post_type' => \CPR\get_content_post_types(),
+									],
+								]
+							),
+						],
+					]
+				),
+				'featured_media' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Featured Media', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
+							'disable_image' => new Fieldmanager_Checkbox( __( 'Hide Featured Image', 'cpr' ) ),
+							'youtube_url' => new Fieldmanager_Link(
+								[
+									'label' => __( 'YouTube URL', 'cpr' ),
+									'description' => __( 'Display this video at the top of the page.', 'cpr' ),
+								]
+							),
+						],
+					]
+				),
+				'social_and_seo' => new Fieldmanager_Group(
+					[
+						'label' => __( 'SEO and Social', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
+							'seo' => new Fieldmanager_Group(
+								[
+									'label' => __( 'SEO Settings', 'cpr' ),
+									'serialize_data' => false,
+									'add_to_prefix' => false,
+									'collapsed' => true,
+									'children' => [
+										'_meta_title' => new Fieldmanager_TextField( __( 'Title Tag', 'cpr' ) ),
+										'_meta_description' => new Fieldmanager_TextArea(
+											[
+												'label' => __( 'Meta Description', 'cpr' ),
+												'attributes' => [
+													'style' => 'width: 100%;',
+													'rows' => 5,
+												],
+											]
+										),
+										'_meta_keywords' => new Fieldmanager_TextArea(
+											[
+												'label' => __( 'Meta Keywords', 'cpr' ),
+												'attributes' => [
+													'style' => 'width: 100%;',
+													'rows' => 5,
+												],
+											]
+										),
+									],
+								]
+							),
+							'social' => new Fieldmanager_Group(
+								[
+									'label' => __( 'Social Media Settings', 'cpr' ),
+									'serialize_data' => false,
+									'add_to_prefix' => false,
+									'collapsed' => true,
+									'children' => [
+										'social_title' => new Fieldmanager_TextField( __( 'Social Title', 'cpr' ) ),
+										'social_description' => new Fieldmanager_TextArea(
+											[
+												'label' => __( 'Social Description', 'cpr' ),
+												'attributes' => [
+													'style' => 'width: 100%;',
+													'rows' => 5,
+												],
+											]
+										),
+										'social_image_id' => new Fieldmanager_Media( __( 'Social Image', 'cpr' ) ),
+									],
+								]
+							),
+							'advanced_settings' => new Fieldmanager_Group(
+								[
+									'label' => __( 'Advanced Settings', 'cpr' ),
+									'serialize_data' => false,
+									'add_to_prefix' => false,
+									'collapsed' => true,
+									'children' => [
+										'canonical_url' => new Fieldmanager_TextField(
+											[
+												'label' => __( 'Canonical Url', 'cpr' ),
+												'description' => __( 'This is the original URL of syndicated content.', 'cpr' ),
+											]
+										),
+										'de_index_google' => new Fieldmanager_Checkbox(
+											[
+												'label' => __( 'De-index in search engines', 'cpr' ),
+												'description' => __( 'This will prevent search engines from indexing this content.', 'cpr' ),
+											]
+										),
+									],
+								]
+							),
+						],
+					]
+				),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'post' ] );
+}
+add_action( 'fm_post_post', 'cpr_fm_post_podcast_and_show_settings' );
+/* end fm:post-podcast-and-show-settings */

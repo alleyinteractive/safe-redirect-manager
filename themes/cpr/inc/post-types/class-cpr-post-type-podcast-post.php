@@ -58,7 +58,7 @@ class Cpr_Post_Type_Podcast_Post extends Cpr_Post_Type {
 				],
 				'show_ui' => true,
 				'show_in_menu' => false,
-				'supports' => [ 'title', 'thumbnail', 'editor', 'revisions' ],
+				'supports' => [ 'title', 'thumbnail' ],
 				'taxonomies' => [ 'section' ],
 			]
 		);
