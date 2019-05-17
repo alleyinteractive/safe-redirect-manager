@@ -67,13 +67,21 @@ class Author_Archive extends \WP_Components\Component {
 								'email'       => $this->guest_author->user_email ?? '',
 								'name'        => $this->guest_author->display_name ?? '',
 								'link'        => get_author_posts_url( $this->guest_author->ID, $this->guest_author->user_nicename ),
+								'short_bio'    => get_post_meta( $this->guest_author->ID, 'short_bio', true ),
+								'title'       => get_post_meta( $this->guest_author->ID, 'title', true ),
 								'twitter'     => get_post_meta( $this->guest_author->ID, 'twitter', true ),
 							]
 						)
 						->guest_author_set_avatar( 'avatar' )
 						->append_child(
 							( new \WP_Components\HTML() )
-								->set_config( 'content', get_post_meta( $this->guest_author->ID, 'description', true ) )
+								->set_config(
+									'content',
+									apply_filters(
+										'the_content',
+										get_post_meta( $this->guest_author->ID, 'description', true )
+									)
+								)
 						)
 				),
 

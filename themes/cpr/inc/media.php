@@ -152,6 +152,7 @@ namespace CPR;
 			],
 			'retina' => true,
 			'aspect_ratio' => 1,
+			'fallback_image_url' => get_template_directory_uri() . '/images/default-avatar.png',
 		],
 		// @todo add proper sizing
 		'grid-group-item' => [
