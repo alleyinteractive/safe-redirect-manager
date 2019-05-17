@@ -1,27 +1,29 @@
 {
-  "contexts": [{
-    "type": "post",
-    "post_types": [ "show-post" ],
-    "title": { "__": "Settings" }
-  }],
-  "tabbed": "vertical",
-  "serialize_data": false,
-  "add_to_prefix": false,
-  "children": {
-    "highlighted_content": {
-      "label": { "__": "Highlighted Content" },
-      "serialize_data": false,
-      "add_to_prefix": false,
-      "children": {
-        "content_item_ids": {
-          "label": { "__": "Highlighted Content" },
-          "type": "`Fieldmanager_Zone_Field`",
-          "post_limit": 4,
-          "query_args": {
-            "post_type": "show-episode"
-          }
-        }
-      }
-    }
-  }
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "show-post" ],
+			"title": { "__": "Settings" }
+		}
+	],
+	"tabbed": "vertical",
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"children": {
+		"highlighted_content": {
+			"label": { "__": "Highlighted Content" },
+			"serialize_data": false,
+			"add_to_prefix": false,
+			"children": {
+				"content_item_ids": {
+					"label": { "__": "Highlighted Content" },
+					"type": "`Fieldmanager_Zone_Field`",
+					"post_limit": 4,
+					"query_args": {
+						"post_type": "show-episode"
+					}
+				}
+			}
+		}
+	}
 }

@@ -5,7 +5,7 @@
   "tax:podcast": "1813c5937d2e5de34af6bebd0c7fc5e6",
   "tax:section": "aaba5d88237cf3c230a5c2ae35de1f2d",
   "fm:submenu-settings": "051a30696f28221122b02ad2434cfd3a",
-  "fm:post-article-post-types-settings": "06026234f9eabcacc5de042596be2859",
+  "fm:post-article-post-types-settings": "a14e34dab22d25e8dd42e19b812ed40f",
   "fm:post-guest-author-settings": "94c304a94b993bbf4b75c93bb24e4b0c",
   "cpt:top-30": "372082c18175649508d55a44d4b1b254",
   "cpt:album": "16494c3751238f24f1efe630b2822f88",
@@ -27,5 +27,5 @@
   "fm:post-show-episode-segments": "98b2a4c492be23dccfeaac45bd1dbba8",
   "fm:post-mixed-featured-audio": "ca27603c734b7d165ede8847bd06adde",
   "fm:post-show-post-settings": "8b00e11c43d986a8970a2fee1a20a762",
-  "fm:post-podcast-and-show-settings": "2a7ec9cb85c4fb064c71b24567797863"
+  "fm:post-podcast-and-show-settings": "ffc4d6c6c83537d64bdfe6e7b7d554bd"
 }

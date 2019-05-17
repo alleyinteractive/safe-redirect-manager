@@ -10,9 +10,9 @@
 	"name": "album_ids",
 	"description": { "__": "Select the top 30 albums for this week." },
 	"description_after_element": false,
- 	"type": "`Fieldmanager_Zone_Field`",
- 	"post_limit": 30,
- 	"query_args": {
+	"type": "`Fieldmanager_Zone_Field`",
+	"post_limit": 30,
+	"query_args": {
 		"post_type": [ "album" ]
 	}
 }
