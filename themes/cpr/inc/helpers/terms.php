@@ -97,3 +97,44 @@ function get_podcast_ids_cache_key( $section_slugs ) {
 
 	return 'cpr_podcast_term_ids_' . md5( $section_slugs );
 }
+
+/**
+ * Add fake permalinks to some post types for usability.
+ *
+ * @param \WP_Post $post \WP_Post object.
+ */
+function add_permalink_to_post_types( \WP_Post $post ) {
+
+	$permalink = '';
+
+	// Output a permalink.
+	switch ( $post->post_type ?? '' ) {
+		case 'podcast-post':
+		case 'show-post':
+			// Get the term link to use for the permalink.
+			$term_id = \Alleypack\Term_Post_Link::get_term_from_post( $post->ID );
+			$term    = get_term_by( 'id', $term_id, str_replace( '-post', '', $post->post_type ) );
+			if ( $term instanceof \WP_Term ) {
+				$permalink = (string) get_term_link( $term );
+			}
+			break;
+
+		case 'underwriter':
+			$permalink = get_post_type_archive_link( $post->post_type );
+			break;
+	}
+
+	// Output standard permalink format.
+	if ( ! empty( $permalink ) ) {
+		printf(
+			'<div class="inside">
+				<div id="edit-slug-box" class="hide-if-no-js">
+					<strong>Permalink:</strong>
+					<a id="sample-permalink" href="%1$s">%1$s</a>
+				</div>
+			</div>',
+			esc_url( $permalink )
+		);
+	}
+}
+add_action( 'edit_form_after_title', __NAMESPACE__ . '\add_permalink_to_post_types' );
