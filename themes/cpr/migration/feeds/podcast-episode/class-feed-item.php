@@ -32,7 +32,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 
 		// Get this object's story type id.
 		$story_type_id = absint( $this->source['field_story_type']['und'][0]['tid'] ?? 0 );
-		if ( 0 === $story_type_id) {
+		if ( 0 === $story_type_id ) {
 			return false;
 		}
 

@@ -43,8 +43,8 @@ class Feed extends \CPR\Migration\Feed {
 	 * @var array
 	 */
 	public $unique_taxonomy_ids_for_shows = [
-		70,   // Colorado Matters
-		6345, // OpenAir Live & Local
+		70,   // Colorado Matters.
+		6345, // OpenAir Live & Local.
 	];
 
 	/**

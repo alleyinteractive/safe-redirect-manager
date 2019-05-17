@@ -106,8 +106,10 @@ class Migration {
 	/**
 	 * Helper to get a source data file by the directory offset.
 	 *
-	 * @param string $slug   Slug for directory to data.
-	 * @param int    $offset File offset.
+	 * @param string    $slug           Slug for directory to data.
+	 * @param int       $offset         File offset.
+	 * @param callaable $mapping_filter Callback used to modify the mapping
+	 *                                  built being loaded.
 	 * @return array
 	 */
 	public function get_source_data_by_offset( string $slug, int $offset, $mapping_filter = null ) : array {
@@ -143,7 +145,9 @@ class Migration {
 	/**
 	 * Build the file position to legacy id mapping.
 	 *
-	 * @param string $slug Slug for directory to data.
+	 * @param string    $slug           Slug for directory to data.
+	 * @param callaable $mapping_filter Callback used to modify the mapping
+	 *                                  built being loaded.
 	 */
 	public function build_mapping( $slug, $mapping_filter = null ) {
 

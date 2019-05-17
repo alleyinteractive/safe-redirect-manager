@@ -43,17 +43,17 @@ class Feed extends \CPR\Migration\Feed {
 	 * @var array
 	 */
 	public static $unique_taxonomy_ids_for_podcasts = [
-		9557, // Purplish
-		9620, // The Playlist League
-		8666, // Centennial Sounds
-		7862, // Inside Track
-		7790, // OpenAir Sessions Podcast
-		9084, // The Taxman
-		8934, // The Great Composers
-		6532, // The Beethoven 9
-		7524, // -The Beethoven 9 Podcast
-		7564, // -Colorado Matters Podcast
-		9410, // -Who's Gonna Govern
+		9557, // Purplish.
+		9620, // The Playlist League.
+		8666, // Centennial Sounds.
+		7862, // Inside Track.
+		7790, // OpenAir Sessions Podcast.
+		9084, // The Taxman.
+		8934, // The Great Composers.
+		6532, // The Beethoven 9.
+		7524, // -The Beethoven 9 Podcast.
+		7564, // -Colorado Matters Podcast.
+		9410, // -Who's Gonna Govern.
 	];
 
 	/**
