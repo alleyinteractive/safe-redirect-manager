@@ -59,7 +59,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		// Map meta.
 		$this->object['meta_input'] = [
 			'legacy_id'      => $this->source['nid'],
-			'template'       => $title,
+			'template'       => sanitize_title( $this->source['title'] ?? '' ),
 			'legacy_type'    => $this->source['type'] ?? '',
 			'legacy_created' => $this->source['created'] ?? '',
 			'legacy_changed' => $this->source['changed'] ?? '',

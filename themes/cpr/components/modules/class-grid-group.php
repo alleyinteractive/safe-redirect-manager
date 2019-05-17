@@ -22,14 +22,45 @@ class Grid_Group extends \WP_Components\Component {
 	public $name = 'grid-group';
 
 	/**
+	 * Define a default config.
+	 *
+	 * @return array Default config.
+	 */
+	public function default_config() : array {
+		return [
+			'call_to_action_label' => '',
+			'call_to_action_link'  => '',
+		];
+	}
+
+	/**
 	 * Component Fieldmanager fields.
 	 *
 	 * @return array Fieldmanager fields.
 	 */
 	public static function get_fm_fields() : array {
 		return [
-			'name'     => new \Fieldmanager_TextField( __( 'Group Name', 'cpr' ) ),
-			'post_ids' => new \Fieldmanager_Zone_Field(
+			'name'                  => new \Fieldmanager_TextField( __( 'Group Name', 'cpr' ) ),
+			'enable_call_to_action' => new \Fieldmanager_Checkbox( __( 'Display Call To Action?', 'cpr' ) ),
+			'call_to_action_label'  => new \Fieldmanager_TextField(
+				[
+					'label'      => __( 'Call to Action Label', 'cpr' ),
+					'display_if' => [
+						'src'   => 'enable_call_to_action',
+						'value' => true,
+					],
+				]
+			),
+			'call_to_action_link'   => new \Fieldmanager_TextField(
+				[
+					'label'      => __( 'Call to Action Link', 'cpr' ),
+					'display_if' => [
+						'src'   => 'enable_call_to_action',
+						'value' => true,
+					],
+				]
+			),
+			'post_ids'              => new \Fieldmanager_Zone_Field(
 				[
 					'description' => __( 'Select items for this group.', 'cpr' ),
 					'query_args' => [

@@ -9,9 +9,7 @@
 	},
 	"supports": [
 		"title",
-		"thumbnail",
-		"editor",
-		"revisions"
+		"thumbnail"
 	],
 	"taxonomies": [
 		"section"
