@@ -37,6 +37,11 @@ class Author_Header extends \WP_Components\Component {
 		];
 	}
 
+	/**
+	 * Hook into author being set.
+	 *
+	 * @return self
+	 */
 	public function author_has_set() : self {
 		$this->set_config( 'name', $this->get_author_display_name() );
 
@@ -52,10 +57,10 @@ class Author_Header extends \WP_Components\Component {
 			$this->guest_author_set_avatar( 'avatar' );
 
 			$description = get_post_meta( $this->get_author_id(), 'description', true );
-			if ( ! empty( $description)) {
+			if ( ! empty( $description ) ) {
 				$this->append_child(
-					 ( new \WP_Components\HTML() )
-						 ->set_config( 'content', apply_filters( 'the_content', $description ) )
+					( new \WP_Components\HTML() )
+						->set_config( 'content', apply_filters( 'the_content', $description ) )
 				 );
 			}
 		}
