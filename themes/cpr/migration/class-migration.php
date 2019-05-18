@@ -34,6 +34,7 @@ class Migration {
 	 * @var array
 	 */
 	public $feeds = [
+		'blog-post',
 		'category',
 		'document',
 		'guest-author',

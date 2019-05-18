@@ -69,6 +69,10 @@ You will need to FTP into Pantheon and upload these files manually, same as if i
 # Sync Pantheon Example
 `terminus wp cpr-mu.live -- alleypack sync category --url=content.cpr.org`
 
+# Redirects
+You can automatically setup redirects in wpcom-legacy-redirector.
+`wp wpcom-legacy-redirector import-from-meta --meta_key=legacy_path`
+
 # Protip
 While the feeds should be intelligent enough to create stubs, you'll probably want to run the migration in a specific order.
 

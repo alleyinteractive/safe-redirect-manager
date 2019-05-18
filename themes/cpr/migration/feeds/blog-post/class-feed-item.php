@@ -1,11 +1,11 @@
 <?php
 /**
- * Class for parsing a Podcast Episode.
+ * Class for parsing a blog post item.
  *
  * @package CPR
  */
 
-namespace CPR\Migration\Podcast_Episode;
+namespace CPR\Migration\Blog_Post;
 
 use function Alleypack\Sync_Script\alleypack_log;
 
@@ -17,31 +17,11 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	use \CPR\Migration\Traits\Story;
 
 	/**
-	 * Post type.
-	 *
-	 * @var string
-	 */
-	public static $post_type = 'podcast-episode';
-
-	/**
 	 * This object should always sync.
 	 *
 	 * @return bool
 	 */
 	public function should_object_sync() : bool {
-
-		// Get this object's story type id.
-		$story_type_id = absint( $this->source['field_story_type']['und'][0]['tid'] ?? 0 );
-		if ( 0 === $story_type_id ) {
-			return false;
-		}
-
-		// Is this a podcast episode?
-		$podcast_unique_ids = \CPR\Migration\Podcast\Feed::$unique_taxonomy_ids_for_podcasts;
-		if ( ! in_array( $story_type_id, $podcast_unique_ids, true ) ) {
-			return false;
-		}
-
 		return true;
 	}
 
@@ -74,7 +54,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function post_object_save() {
-		$this->migrate_meta();
 		$this->migrate_bylines();
 		$this->migrate_featured_image();
 		$this->set_section();

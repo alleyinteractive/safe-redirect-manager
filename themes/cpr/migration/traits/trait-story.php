@@ -39,6 +39,26 @@ trait Story {
 	}
 
 	/**
+	 * Map predictable meta for story types.
+	 */
+	public function migrate_meta() {
+
+		// Map meta.
+		$this->object['meta_input'] = [
+			'audio'          => $this->source['field_audio']['und'][0]['target_id'] ?? 0,
+			'author'         => $this->source['field_author']['und'][0]['target_id'] ?? 0,
+			'featured_image' => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
+			'legacy_changed' => $this->source['changed'] ?? '',
+			'legacy_created' => $this->source['created'] ?? '',
+			'legacy_id'      => $this->source['nid'],
+			'legacy_path'    => $this->source['path']['alias'] ?? '',
+			'legacy_type'    => $this->source['type'] ?? '',
+			'legacy_url'     => 'https://cpr.org/' . $this->source['path']['alias'],
+			'template'       => sanitize_title( $this->source['title'] ?? '' ),
+		];
+	}
+
+	/**
 	 * Migrate bylines from the field_author field.
 	 */
 	public function migrate_bylines() {

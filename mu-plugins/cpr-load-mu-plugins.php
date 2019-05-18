@@ -26,6 +26,7 @@ $plugins = [
 	'/wp-redis/wp-redis.php',
 	'/wp-seo/wp-seo.php',
 	'/wpcom-thumbnail-editor/wpcom-thumbnail-editor.php',
+	'/wpcom-legacy-redirector/wpcom-legacy-redirector.php',
 ];
 
 // Begin the process of loading the MU Plugins.

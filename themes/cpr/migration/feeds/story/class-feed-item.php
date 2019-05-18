@@ -55,18 +55,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	public function map_source_to_object() {
 
 		$this->set_basics();
-
-		// Map meta.
-		$this->object['meta_input'] = [
-			'legacy_id'      => $this->source['nid'],
-			'template'       => sanitize_title( $this->source['title'] ?? '' ),
-			'legacy_type'    => $this->source['type'] ?? '',
-			'legacy_created' => $this->source['created'] ?? '',
-			'legacy_changed' => $this->source['changed'] ?? '',
-			'audio'          => $this->source['field_audio']['und'][0]['target_id'] ?? 0,
-			'author'         => $this->source['field_author']['und'][0]['target_id'] ?? 0,
-			'featured_image' => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
-		];
+		$this->migrate_meta();
 
 		// Log debug data.
 		alleypack_log( 'Mapped source to object. Source:', $this->source );
