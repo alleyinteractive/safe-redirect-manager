@@ -12,9 +12,9 @@ namespace CPR\Components\Templates;
  */
 class Author_Archive extends \WP_Components\Component {
 
+	use \WP_Components\WP_Query;
 	use \WP_Components\Guest_Author;
 	use \WP_Components\Author;
-	use \WP_Components\WP_Query;
 	use \WP_Components\WP_User;
 	use \Alleypack\FM_Module;
 
@@ -31,17 +31,9 @@ class Author_Archive extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function query_has_set() : self {
+		// Set the author on this component so we can use it later.
 		$this->set_author( $this->query->get( 'author_name' ) );
-		$this->guest_author_has_set( $this->query->get( 'author_name' ) );
-		return $this;
-	}
 
-	/**
-	 * Hook into author being set.
-	 *
-	 * @return self
-	 */
-	public function author_has_set() : self {
 		$body           = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
@@ -62,27 +54,7 @@ class Author_Archive extends \WP_Components\Component {
 				->set_theme( 'oneColumn' )
 				->append_child(
 					( new \CPR\Components\Header\Author_Header() )
-						->merge_config(
-							[
-								'email'       => $this->guest_author->user_email ?? '',
-								'name'        => $this->guest_author->display_name ?? '',
-								'link'        => get_author_posts_url( $this->guest_author->ID, $this->guest_author->user_nicename ),
-								'short_bio'    => get_post_meta( $this->guest_author->ID, 'short_bio', true ),
-								'title'       => get_post_meta( $this->guest_author->ID, 'title', true ),
-								'twitter'     => get_post_meta( $this->guest_author->ID, 'twitter', true ),
-							]
-						)
-						->guest_author_set_avatar( 'avatar' )
-						->append_child(
-							( new \WP_Components\HTML() )
-								->set_config(
-									'content',
-									apply_filters(
-										'the_content',
-										get_post_meta( $this->guest_author->ID, 'description', true )
-									)
-								)
-						)
+						->set_author( $this->query->get( 'author_name' ) )
 				),
 
 			/**
