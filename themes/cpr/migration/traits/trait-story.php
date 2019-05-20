@@ -110,6 +110,17 @@ trait Story {
 	}
 
 	/**
+	 * Set the show term.
+	 */
+	public function set_show() {
+		\CPR\Migration\Show\Feed::set_show(
+			$this->get_object_id(),
+			( $this->source['field_story_type']['und'][0]['tid'] ?? 0 )
+		);
+
+	}
+
+	/**
 	 * Set the tags.
 	 */
 	public function set_tags() {
