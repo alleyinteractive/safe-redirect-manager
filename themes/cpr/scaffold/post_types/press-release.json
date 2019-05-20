@@ -1,0 +1,18 @@
+{
+	"public": true,
+	"has_archive": true,
+	"show_in_rest": true,
+	"supports": [
+		"title",
+		"editor",
+		"author",
+		"revisions",
+		"thumbnail",
+		"excerpt"
+	],
+	"taxonomies": [
+		"category",
+		"post_tag",
+		"section"
+	]
+}
