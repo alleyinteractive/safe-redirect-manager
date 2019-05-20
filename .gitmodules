@@ -40,3 +40,6 @@
 [submodule "plugins/aws-ses-wp-mail"]
 	path = plugins/aws-ses-wp-mail
 	url = https://github.com/humanmade/aws-ses-wp-mail
+[submodule "mu-plugins/wpcom-legacy-redirector"]
+	path = mu-plugins/wpcom-legacy-redirector
+	url = https://github.com/Automattic/WPCOM-Legacy-Redirector.git
