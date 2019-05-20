@@ -61,7 +61,7 @@ class Author_Header extends \WP_Components\Component {
 				$this->append_child(
 					( new \WP_Components\HTML() )
 						->set_config( 'content', apply_filters( 'the_content', $description ) )
-				 );
+				);
 			}
 		}
 

@@ -117,7 +117,6 @@ trait Story {
 			$this->get_object_id(),
 			( $this->source['field_story_type']['und'][0]['tid'] ?? 0 )
 		);
-
 	}
 
 	/**
