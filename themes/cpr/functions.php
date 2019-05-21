@@ -182,4 +182,7 @@ require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-show-post.php';
 // Press Releases Post Type (cpt:press-release).
 require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-press-release.php';
 
+// Underwriter Categories Taxonomy (tax:underwriter-category).
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-underwriter-category.php';
+
 /* End Data Structures */

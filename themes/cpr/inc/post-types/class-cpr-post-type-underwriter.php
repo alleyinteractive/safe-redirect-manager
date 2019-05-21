@@ -63,6 +63,7 @@ class Cpr_Post_Type_Underwriter extends Cpr_Post_Type {
 				'show_in_rest' => true,
 				'menu_icon' => 'dashicons-money',
 				'supports' => [ 'title', 'thumbnail' ],
+				'taxonomies' => [ 'underwriter-category' ],
 			]
 		);
 	}

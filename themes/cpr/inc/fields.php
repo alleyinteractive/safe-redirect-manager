@@ -267,10 +267,15 @@ function cpr_fm_post_guest_author_settings() {
 						'sanitize' => function( $value ) { return str_replace( '@', '', $value ); },
 					]
 				),
-				'short_bio' => new Fieldmanager_TextField( __( 'Short Bio', 'cpr' ) ),
+				'short_bio' => new Fieldmanager_TextField(
+					[
+						'label' => __( 'Short Bio', 'cpr' ),
+						'description' => __( 'This will be displayed on articles and the author archive.', 'cpr' ),
+					]
+				),
 				'description' => new Fieldmanager_RichTextArea(
 					[
-						'label' => __( 'Guest Author Bio', 'cpr' ),
+						'label' => __( 'Long Bio', 'cpr' ),
 						'buttons_1' => [ 'bold', 'italic', 'link' ],
 						'buttons_2' => [],
 						'sanitize' => 'wp_filter_post_kses',
