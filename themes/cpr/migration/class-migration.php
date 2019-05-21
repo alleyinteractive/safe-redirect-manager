@@ -202,7 +202,6 @@ class Migration {
 				$feed_class = implode( '_', $feed_parts );
 				\Alleypack\Sync_Script\register_feed( "\CPR\Migration\\{$feed_class}\Feed" );
 			}
-
 		}
 	}
 }
