@@ -164,7 +164,7 @@ class Attachment extends Post {
             }
         }
 
-        if ( ! function_exists( 'tachyon_url' ) || empty( $args['srcset'] ) ) {
+        if ( empty( $args['srcset'] ) ) {
             unset( $args['srcset'] );
         } else {
             if ( is_array( $args['srcset'] ) ) {
