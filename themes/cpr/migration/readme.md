@@ -2,6 +2,9 @@
 
 Or take a shortcut and download it from Drive, https://drive.google.com/open?id=1kEuBaL2ojIhjb3eapt-cGwEWOSX4RWfy
 
+Update: There are some additions to that file,
+Job titles: https://drive.google.com/open?id=1lArtFn4-LxkVTYnKAvHxRlrtbeCJNwGB
+
 Login to the migration server and execute the `node-to-json` command.
 * `ssh ec2-user@wp.cpr.alley.ws`
 * `cd /var/www/drupal/`
@@ -94,6 +97,11 @@ Attachments
 Posts
 * `wp alleypack sync podcast-episode`
 * `wp alleypack sync story`
+* `wp alleypack sync entry`
+* `wp alleypack sync press-release`
 * `wp alleypack sync page`
 * `wp alleypack sync job`
 * `wp alleypack sync underwriter`
+* `wp alleypack sync blog_post` (should also migrate top-30)
+* `wp alleypack sync top-30` (will also migrate album)
+* `wp alleypack sync album`
