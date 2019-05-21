@@ -61,6 +61,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	public function post_object_save() {
 		$this->migrate_logo();
+		$this->migrate_categories();
 	}
 
 	/**
@@ -97,5 +98,27 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		}
 
 		return 'https://www.cpr.org/sites/default/files/styles/underwriter_logo/public/' . $filename;
+	}
+
+	/**
+	 * Migrate underwriter categories.
+	 */
+	public function migrate_categories() {
+
+		// Extract legacy ids.
+		$tids = wp_list_pluck( ( $this->source['field_service_categories']['und'] ?? [] ), 'tid' );
+
+		// Create a term for each one.
+		$term_ids = array_filter( array_map(
+			function( $tid ) {
+				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'taxonomy', $tid );
+				return \CPR\Migration\Underwriter_Category\Feed_Item::get_or_create_object_from_source( $source )->term_id ?? 0;
+			},
+			$tids
+		) );
+
+		if ( ! empty( $term_ids ) ) {
+			wp_set_object_terms( $this->get_object_id(), $term_ids, 'underwriter-category' );
+		}
 	}
 }

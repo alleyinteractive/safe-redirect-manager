@@ -51,6 +51,7 @@ class Migration {
 		'show-episode',
 		'story',
 		'underwriter',
+		'underwriter-category',
 		'user',
 	];
 

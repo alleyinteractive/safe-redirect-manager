@@ -26,10 +26,11 @@
 		},
 		"short_bio": {
 			"type": "text",
-			"label": { "__": "Short Bio" }
+			"label": { "__": "Short Bio" },
+			"description": { "__": "This will be displayed on articles and the author archive." }
 		},
 		"description": {
-			"label": { "__": "Guest Author Bio" },
+			"label": { "__": "Long Bio" },
 			"type": "richtextarea",
 			"buttons_1": [ "bold", "italic", "link" ],
 			"buttons_2": [],
