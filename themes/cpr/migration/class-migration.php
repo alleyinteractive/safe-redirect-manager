@@ -34,25 +34,27 @@ class Migration {
 	 * @var array
 	 */
 	public $feeds = [
-		'blog-post',
-		'category',
-		'document',
-		'entry',
-		'guest-author',
-		'image',
-		'job',
-		'page',
-		'podcast',
-		'podcast-episode',
-		'post-tag',
-		'press-release',
-		'service',
-		'show',
-		'show-episode',
-		'story',
-		'underwriter',
-		'underwriter-category',
-		'user',
+		'album'                => true,
+		'blog-post'            => true,
+		'category'             => true,
+		'document'             => true,
+		'entry'                => true,
+		'guest-author'         => true,
+		'image'                => true,
+		'job'                  => true,
+		'page'                 => true,
+		'podcast'              => false,
+		'podcast-episode'      => false,
+		'post-tag'             => true,
+		'press-release'        => true,
+		'service'              => true,
+		'show'                 => false,
+		'show-episode'         => false,
+		'story'                => true,
+		'top-30'               => true,
+		'underwriter'          => true,
+		'underwriter-category' => false,
+		'user'                 => true,
 	];
 
 	/**
@@ -189,15 +191,18 @@ class Migration {
 		// Generic feed since all our data is structured the same way.
 		require_once CPR_PATH . '/migration/feeds/class-feed.php';
 
-		foreach ( $this->feeds as $feed_slug ) {
+		foreach ( $this->feeds as $feed_slug => $register ) {
 
 			require_once CPR_PATH . "/migration/feeds/{$feed_slug}/class-feed.php";
 			require_once CPR_PATH . "/migration/feeds/{$feed_slug}/class-feed-item.php";
 
-			$feed_parts = explode( '-', $feed_slug );
-			$feed_parts = array_map( 'ucfirst', $feed_parts );
-			$feed_class = implode( '_', $feed_parts );
-			\Alleypack\Sync_Script\register_feed( "\CPR\Migration\\{$feed_class}\Feed" );
+			if ( $register ) {
+				$feed_parts = explode( '-', $feed_slug );
+				$feed_parts = array_map( 'ucfirst', $feed_parts );
+				$feed_class = implode( '_', $feed_parts );
+				\Alleypack\Sync_Script\register_feed( "\CPR\Migration\\{$feed_class}\Feed" );
+			}
+
 		}
 	}
 }
