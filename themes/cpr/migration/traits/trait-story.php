@@ -53,7 +53,7 @@ trait Story {
 			'legacy_id'      => $this->source['nid'],
 			'legacy_path'    => $this->source['path']['alias'] ?? '',
 			'legacy_type'    => $this->source['type'] ?? '',
-			'legacy_url'     => 'https://cpr.org/' . $this->source['path']['alias'],
+			'legacy_url'     => empty( $this->source['path']['alias'] ) ? '' : 'https://cpr.org/' . $this->source['path']['alias'],
 			'template'       => sanitize_title( $this->source['title'] ?? '' ),
 		];
 	}

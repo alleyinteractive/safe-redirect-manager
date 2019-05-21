@@ -2,6 +2,9 @@
 
 Or take a shortcut and download it from Drive, https://drive.google.com/open?id=1kEuBaL2ojIhjb3eapt-cGwEWOSX4RWfy
 
+Update: There are some additions to that file,
+Job titles: https://drive.google.com/open?id=1lArtFn4-LxkVTYnKAvHxRlrtbeCJNwGB
+
 Login to the migration server and execute the `node-to-json` command.
 * `ssh ec2-user@wp.cpr.alley.ws`
 * `cd /var/www/drupal/`
@@ -51,15 +54,20 @@ Move the exported folder (which should contain subfolders for each content type)
 You will need to FTP into Pantheon and upload these files manually, same as if it were local. Do not commit them to the repo.
 
 # Available Feeds
+* `album` - Migrate `music` to albums.
+* `blog-post` - Migrate `blog_post` to articles and Top 30 posts.
 * `category` - Migrate `topics` to categories.
 * `document` - Migrate `document` to attachments.
+* `entry` - Migrate `entry` to articles.
 * `guest-author` - Migrate `person` to Guest Authors.
 * `image` - Migrate `image` to attachments.
 * `job` - Migrate `employment_opportunity` to job posts.
 * `page` - Migrate `page` to pages.
 * `post-tag` - Migrate `taxonomy` to tags.
+* `press-release` - Migrate `press_release` to press-release posts.
 * `service` - Migrate `service` to section terms.
 * `story` - Migrate `story` to posts.
+* `top-30` - Migrate `blog_post` that contain an album mapping to top-30 posts.
 * `underwriter` - Migrate `underwriter` to underwriter posts.
 * `user` - Migrate `users` to WP users.
 
@@ -94,6 +102,11 @@ Attachments
 Posts
 * `wp alleypack sync podcast-episode`
 * `wp alleypack sync story`
+* `wp alleypack sync entry`
+* `wp alleypack sync press-release`
 * `wp alleypack sync page`
 * `wp alleypack sync job`
 * `wp alleypack sync underwriter`
+* `wp alleypack sync blog_post` (should also migrate top-30)
+* `wp alleypack sync top-30` (will also migrate album)
+* `wp alleypack sync album`

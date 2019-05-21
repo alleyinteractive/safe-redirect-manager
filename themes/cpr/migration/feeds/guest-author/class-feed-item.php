@@ -15,6 +15,8 @@ use function Alleypack\Sync_Script\alleypack_log;
  */
 class Feed_Item extends \Alleypack\Sync_Script\Guest_Author_Feed_Item {
 
+	use \CPR\Migration\Traits\Story;
+
 	/**
 	 * This object should always sync.
 	 *
@@ -48,15 +50,75 @@ class Feed_Item extends \Alleypack\Sync_Script\Guest_Author_Feed_Item {
 	 * @return bool
 	 */
 	public function post_object_save() : bool {
-		$post_id = $this->get_object_id();
 
-		if ( is_null( $post_id ) ) {
-			return false;
+		update_post_meta( $this->get_object_id(), 'cap-first_name', $this->source['field_first_name']['und'][0]['value'] ?? '' );
+		update_post_meta( $this->get_object_id(), 'cap-last_name', $this->source['field_last_name']['und'][0]['value'] ?? '' );
+
+		// Twitter + sanitization.
+		update_post_meta(
+			$this->get_object_id(),
+			'twitter',
+			str_replace( '@', '', ( $this->source['field_twitter']['und'][0]['title'] ?? '' ) )
+		);
+
+		// Description/bio.
+		$description = $this->source['body']['und'][0]['value'] ?? '';
+		$q_a = $this->source['field_q_a_section']['und'][0]['value'] ?? '';
+		if ( ! empty( $q_a ) ) {
+			$description .= '<strong>Q & A</strong></br>';
 		}
+		update_post_meta( $this->get_object_id(), 'description', wp_kses_post( $description ) );
 
-		update_post_meta( $post_id, 'cap-first_name', $this->source['field_first_name']['und'][0]['value'] ?? '' );
-		update_post_meta( $post_id, 'cap-last_name', $this->source['field_last_name']['und'][0]['value'] ?? '' );
+		$this->set_section();
+		$this->migrate_avatar();
+		$this->migrate_title();
 
 		return true;
+	}
+
+	/**
+	 * Download and set the avatar as the featured image.
+	 */
+	public function migrate_avatar() {
+
+		// Avatar has already been migrated, or doesn't exist.
+		if (
+			has_post_thumbnail( $this->get_object_id() )
+			|| empty( $this->source['field_photo']['und'][0]['filename'] ?? '' )
+		) {
+			return;
+		}
+
+		$attachment_id = \Alleypack\create_attachment_from_url( $this->get_avatar_url() );
+		if ( ! $attachment_id instanceof \WP_Error ) {
+			update_post_meta( $this->get_object_id(), '_thumbnail_id', $attachment_id );
+		}
+	}
+
+	/**
+	 * Return the avatar url for this underwriter.
+	 *
+	 * @return string
+	 */
+	public function get_avatar_url() {
+
+		// Get filename.
+		$filename = $this->source['field_photo']['und'][0]['filename'] ?? '';
+		if ( empty( $filename ) ) {
+			return null;
+		}
+
+		return 'https://www.cpr.org/sites/default/files/styles/medium/public/' . $filename;
+	}
+
+	/**
+	 * Migrate the job title from another source.
+	 */
+	public function migrate_title() {
+		$title = \CPR\Migration\Migration::instance()->get_source_data_by_id(
+			'job_titles',
+			absint( $this->source['field_person_type']['und'][0]['value'] ?? 0 )
+		);
+		update_post_meta( $this->get_object_id(), 'title', $title['field_job_title_value'] ?? '' );
 	}
 }

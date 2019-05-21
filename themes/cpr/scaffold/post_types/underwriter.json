@@ -8,5 +8,8 @@
   "supports": [
     "title",
     "thumbnail"
+  ],
+  "taxonomies": [
+    "underwriter-category"
   ]
 }

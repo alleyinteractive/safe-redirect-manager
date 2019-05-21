@@ -63,7 +63,6 @@ class Cpr_Post_Type_Top_30 extends Cpr_Post_Type {
 				'rewrite' => [
 					'slug' => 'openair/top-30',
 				],
-				'supports' => [ 'title', 'custom-fields' ],
 			]
 		);
 	}
