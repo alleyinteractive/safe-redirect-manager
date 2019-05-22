@@ -30,7 +30,7 @@ class Header extends \WP_Components\Component {
 	public function post_has_set() : self {
 
 		$this->append_child(
-			( new \CPR\Components\Content\Title() )
+			( new \CPR\Components\Content\Heading() )
 				->merge_config(
 					[
 						'content' => $this->wp_post_get_title(),

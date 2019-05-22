@@ -29,13 +29,13 @@ class Content_Item extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'audio_url'     => '',
-			'audio_length'  => '',
-			'image_size'    => 'grid-item',
-			'permalink'     => '',
-			'show_excerpt'  => false,
-			'theme_name'    => 'grid',
-			'type'          => '',
+			'audio_url'    => '',
+			'audio_length' => '',
+			'image_size'   => 'grid-item',
+			'permalink'    => '',
+			'show_excerpt' => false,
+			'theme_name'   => 'grid',
+			'type'         => '',
 		];
 	}
 
@@ -46,7 +46,7 @@ class Content_Item extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 		$this->append_child(
-			( new \CPR\Components\Content\Title() )
+			( new \CPR\Components\Content\Heading() )
 				->merge_config(
 					[
 						'content' => $this->wp_post_get_title(),
