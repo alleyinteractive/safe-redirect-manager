@@ -42,7 +42,8 @@ class Keep_Reading extends \WP_Components\Component {
 
 		foreach ( $post_ids as $post_id ) {
 			$this->append_child(
-				( new \CPR\Components\Content\Title() )->set_post( $post_id )
+				( new \CPR\Components\Content\Content_Title() )
+					->set_post( $post_id )
 					->set_theme( 'related' )
 			);
 		}
