@@ -96,23 +96,33 @@ class Homepage extends \WP_Components\Component {
 							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) )
 							->set_theme( 'right' ),
 
-						/**
-						 * Highlighted Content.
-						 */
-						( new \CPR\Components\Modules\Content_List() )
-							->set_config( 'image_size', 'grid_item' )
-							->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
-							->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
-							->set_config( 'call_to_action_link', home_url( '/all/' ) )
-							->set_theme( 'gridLarge' )
-							->set_child_themes(
-								[
-									'content-item' => 'grid',
-									'title'        => 'grid',
-									'eyebrow'      => 'small',
-								]
-							),
 					]
+				),
+
+			/**
+			 * Newsletter CTA.
+			 */
+			new \CPR\Components\Modules\Newsletter(),
+
+			/**
+			 * Highlighted Content.
+			 */
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'oneColumn' )
+				->append_child(
+					( new \CPR\Components\Modules\Content_List() )
+						->set_config( 'image_size', 'grid_item' )
+						->parse_from_fm_data( $data['highlighted_content'] ?? [], 4 )
+						->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
+						->set_config( 'call_to_action_link', home_url( '/all/' ) )
+						->set_theme( 'gridLarge' )
+						->set_child_themes(
+							[
+								'content-item' => 'grid',
+								'title'        => 'grid',
+								'eyebrow'      => 'small',
+							]
+						)
 				),
 
 			/**
@@ -136,11 +146,6 @@ class Homepage extends \WP_Components\Component {
 						'eyebrow'      => 'large',
 					]
 				),
-
-			/**
-			 * Newsletter CTA.
-			 */
-			new \CPR\Components\Modules\Newsletter(),
 
 			/**
 			 * Playlists for Classical and Indie.
