@@ -85,4 +85,12 @@ class Header extends \WP_Components\Component {
 
 		return $this;
 	}
+
+	/**
+	 * Create byline components and add to children.
+	 */
+	public function set_byline() {
+		$bylines = Header_Byline::get_post_bylines( $this->get_post_id() );
+		$this->append_children( $bylines );
+	}
 }
