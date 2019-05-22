@@ -137,24 +137,7 @@ class News extends \WP_Components\Component {
 						( new \CPR\Components\Sidebar() )
 							->set_theme( 'right' )
 							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) ),
-						/**
-						 * Highlighted Content.
-						 */
-						( new \CPR\Components\Modules\Content_List() )
-							->set_config( 'image_size', 'grid_item' )
-							->parse_from_fm_data(
-								$data['highlighted_content'] ?? [],
-								4,
-								self::get_backfill_args()
-							)
-							->set_theme( 'gridLarge' )
-							->set_child_themes(
-								[
-									'content-item' => 'grid',
-									'title'        => 'grid',
-									'eyebrow'      => 'small',
-								]
-							),
+
 					]
 				),
 
@@ -162,6 +145,29 @@ class News extends \WP_Components\Component {
 			 * Newsletter CTA.
 			 */
 			new \CPR\Components\Modules\Newsletter(),
+
+			/**
+			 * Highlighted Content.
+			 */
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'oneColumn' )
+				->append_child(
+					( new \CPR\Components\Modules\Content_List() )
+						->set_config( 'image_size', 'grid_item' )
+						->parse_from_fm_data(
+							$data['highlighted_content'] ?? [],
+							4,
+							self::get_backfill_args()
+						)
+						->set_theme( 'gridLarge' )
+						->set_child_themes(
+							[
+								'content-item' => 'grid',
+								'title'        => 'grid',
+								'eyebrow'      => 'small',
+							]
+						)
+				),
 
 			/**
 			 * "Featured Topic"

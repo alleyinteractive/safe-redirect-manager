@@ -79,15 +79,14 @@ class Author_Archive extends \WP_Components\Component {
 					( new \CPR\Components\Modules\Content_List() )
 						->set_config( 'image_size', 'grid_item' )
 						->set_config( 'show_excerpt', true )
-
 						->parse_from_wp_query( $this->query )
 						->set_theme( 'river_full' )
-							->set_child_themes(
-								[
-									'content-item' => 'river',
-									'title'        => 'grid',
-								]
-							),
+						->set_child_themes(
+							[
+								'content-item' => 'river',
+								'title'        => 'grid',
+							]
+						),
 
 					/**
 					 * Content sidebar.
