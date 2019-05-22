@@ -134,7 +134,7 @@ class Homepage extends \WP_Components\Component {
 					$data['latest_podcast_episodes'] ?? [],
 					4,
 					[
-						'post_type' => 'podcast-episode',
+						'post_type' => [ 'podcast-episode', 'show-episode' ],
 					]
 				)
 				->set_heading_from_fm_data( $data['latest_podcast_episodes'] ?? [] )
