@@ -33,7 +33,7 @@ class Directory extends \WP_Components\Component {
 			[
 				'taxonomy' => 'underwriter-category',
 				'orderby'  => 'name',
-				'order'    => 'DESC',
+				'order'    => 'ASC',
 			]
 		);
 
