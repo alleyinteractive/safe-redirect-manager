@@ -1,6 +1,6 @@
 <?php
 /**
- * Heading component.
+ * Content_Title component.
  *
  * @package CPR
  */
@@ -8,9 +8,9 @@
 namespace CPR\Components\Content;
 
 /**
- * Heading.
+ * Content_Title.
  */
-class Heading extends \WP_Components\Component {
+class Content_Title extends \WP_Components\Component {
 
 	use \WP_Components\WP_Post;
 
@@ -19,7 +19,7 @@ class Heading extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'heading';
+	public $name = 'content-title';
 
 	/**
 	 * Define a default config.
