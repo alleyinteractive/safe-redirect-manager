@@ -12,6 +12,13 @@
 		"link": {
 			"label": { "__": "Link to External Content" },
 			"type": "link"
+		},
+		"eyebrow_label": {
+			"label": { "__": "Eyebrow Label" }
+		},
+		"eyebrow_link": {
+			"label": { "__": "Eyebrow Link" },
+			"type": "link"
 		}
 	}
 }

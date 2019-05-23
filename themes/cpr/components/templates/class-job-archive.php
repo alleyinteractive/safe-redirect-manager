@@ -62,18 +62,18 @@ class Job_Archive extends \WP_Components\Component {
 						$this->get_footer_disclaimer(),
 
 						/**
-						 * Sidebar.
-						 */
-						( new \CPR\Components\Sidebar() )
-							->set_theme( 'right' ),
-
-						/**
 						 * Pagination
 						 */
 						( new \WP_Components\Pagination() )
 							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
 							->set_config( 'base_url', '/jobs/' )
 							->set_query( $this->query ),
+
+						/**
+						 * Sidebar.
+						 */
+						( new \CPR\Components\Sidebar() )
+							->set_theme( 'right' ),
 					]
 				),
 		];
