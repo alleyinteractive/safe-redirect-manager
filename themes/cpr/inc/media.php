@@ -145,6 +145,7 @@ namespace CPR;
 			'sources' => [
 				[
 					'default' => true,
+					'descriptor' => 107,
 					'transforms' => [
 						'resize' => [ 107, 107 ],
 					],
@@ -159,6 +160,7 @@ namespace CPR;
 			'sources' => [
 				[
 					'default' => true,
+					'descriptor' => 300,
 					'transforms' => [
 						'resize' => [ 300, 300 ],
 					],
@@ -171,6 +173,7 @@ namespace CPR;
 			'sources' => [
 				[
 					'default'    => true,
+					'descriptor' => 250,
 					'transforms' => [
 						'fit' => [ 250, 250 ],
 					],
