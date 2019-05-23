@@ -12,8 +12,8 @@ namespace CPR\Components\Content;
  */
 class Header extends \WP_Components\Component {
 
-	use \WP_Components\WP_Post;
 	use \CPR\WP_Post;
+	use \WP_Components\WP_Post;
 
 	/**
 	 * Unique component slug.
