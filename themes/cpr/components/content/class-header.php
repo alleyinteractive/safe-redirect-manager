@@ -12,8 +12,8 @@ namespace CPR\Components\Content;
  */
 class Header extends \WP_Components\Component {
 
-	use \CPR\WP_Post;
 	use \WP_Components\WP_Post;
+	use \CPR\WP_Post;
 
 	/**
 	 * Unique component slug.
@@ -84,13 +84,5 @@ class Header extends \WP_Components\Component {
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Create byline components and add to children.
-	 */
-	public function set_byline() {
-		$bylines = Header_Byline::get_post_bylines( $this->get_post_id() );
-		$this->append_children( $bylines );
 	}
 }

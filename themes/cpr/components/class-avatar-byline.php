@@ -1,23 +1,23 @@
 <?php
 /**
- * Content Header Byline component.
+ * Byline with an Avatar component.
  *
  * @package CPR
  */
 
-namespace CPR\Components\Content;
+namespace CPR\Components;
 
 /**
- * Content Byline class.
+ * Avatar Byline class.
  */
-class Header_Byline extends \WP_Components\Byline {
+class Avatar_Byline extends \WP_Components\Byline {
 
 	/**
 	 * Unique component slug.
 	 *
 	 * @var string
 	 */
-	public $name = 'content-header-byline';
+	public $name = 'avatar-byline';
 
 	/**
 	 * Define a default config.
