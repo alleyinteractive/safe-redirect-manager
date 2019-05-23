@@ -8,9 +8,9 @@
 namespace CPR;
 
 /**
- * Custom rewrites for podcasts.
+ * Custom rewrites.
  */
-function podcast_rewrites() {
+function rewrites() {
 
 	// Podcasts.
 	add_rewrite_rule(
@@ -36,7 +36,7 @@ function podcast_rewrites() {
 		'top'
 	);
 }
-add_action( 'init', __NAMESPACE__ . '\podcast_rewrites', 11 );
+add_action( 'init', __NAMESPACE__ . '\rewrites', 11 );
 
 // Add search rewrites.
 add_action( 'init', [ '\\CPR\\Components\\Templates\\Search', 'rewrite_rules' ] );
