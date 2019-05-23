@@ -45,15 +45,15 @@ class Search extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'one-column' )
-				->append_children( [
-
-					/**
-					 * Content List
-					 */
-					( new \CPR\Components\Modules\Content_List() )
-							->set_config( 'heading', __( 'Search Results for:', 'cpr' ) )
-							->parse_from_wp_query( $this->query )
-							->set_theme( 'gridLarge' )
+				->append_children(
+					[
+						/**
+						 * Search results grid.
+						 */
+						( new \CPR\Components\Modules\Content_List() )
+								->set_config( 'heading', __( 'Search Results for:', 'cpr' ) )
+								->parse_from_wp_query( $this->query )
+								->set_theme( 'gridLarge' )
 								->set_child_themes(
 									[
 										'content-item' => 'grid',
@@ -61,15 +61,17 @@ class Search extends \WP_Components\Component {
 										'eyebrow'      => 'small',
 									]
 								),
-				] ),
 
-			/**
-			 * Pagination for results.
-			 */
-			( new \WP_Components\Pagination() )
-				->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-				->set_config( 'base_url', '/search/' )
-				->set_query( $this->query ),
+						/**
+						 * Pagination for results.
+						 */
+						( new \WP_Components\Pagination() )
+							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+							->set_config( 'base_url', '/search/' )
+							->set_query( $this->query ),
+					]
+				),
+
 		];
 	}
 
