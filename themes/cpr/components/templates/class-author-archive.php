@@ -89,6 +89,14 @@ class Author_Archive extends \WP_Components\Component {
 						),
 
 					/**
+					 * Pagination
+					 */
+					( new \WP_Components\Pagination() )
+						->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+						->set_config( 'base_url', "/author/{$this->query->get( 'author_name' )}/" )
+						->set_query( $this->query ),
+
+					/**
 					 * Content sidebar.
 					 */
 					( new \CPR\Components\Sidebar() )
@@ -124,14 +132,6 @@ class Author_Archive extends \WP_Components\Component {
 								new \CPR\Components\Ad(),
 							]
 						),
-
-					/**
-					 * Pagination
-					 */
-					( new \WP_Components\Pagination() )
-						->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-						->set_config( 'base_url', "/author/{$this->query->get( 'author_name' )}/" )
-						->set_query( $this->query ),
 				] ),
 		];
 	}
