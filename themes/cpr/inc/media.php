@@ -147,7 +147,7 @@ namespace CPR;
 					'transforms' => [
 						'resize' => [ 107, 107 ],
 					],
- 					'default'    => true,
+					'default'    => true,
 					'descriptor' => 107,
 					'media' => [ 'max' => 'sm' ],
 				],
