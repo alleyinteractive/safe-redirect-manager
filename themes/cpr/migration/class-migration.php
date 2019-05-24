@@ -35,6 +35,7 @@ class Migration {
 	 */
 	public $feeds = [
 		'album'                => true,
+		'artist'               => false, // Migrated with albums.
 		'blog-post'            => true,
 		'category'             => true,
 		'document'             => true,
@@ -42,18 +43,19 @@ class Migration {
 		'guest-author'         => true,
 		'image'                => true,
 		'job'                  => true,
+		'label'                => false, // Migrated with albums.
 		'page'                 => true,
 		'podcast'              => false,
-		'podcast-episode'      => false,
+		'podcast-episode'      => true,
 		'post-tag'             => true,
 		'press-release'        => true,
 		'service'              => true,
 		'show'                 => false,
-		'show-episode'         => false,
+		'show-episode'         => true,
 		'story'                => true,
 		'top-30'               => true,
 		'underwriter'          => true,
-		'underwriter-category' => false,
+		'underwriter-category' => false, // Migrated with underwriters.
 		'user'                 => true,
 	];
 

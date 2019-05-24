@@ -62,32 +62,36 @@ class Author_Archive extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'twoColumn' )
-				->merge_config(
-					[
-						'heading' => sprintf(
-							// Translators: %1$s, author archive heading name.
-							esc_html__( 'Stories by %1$s', 'cpr' ),
-							esc_html( $this->get_author_display_name() )
-						),
-					]
-				)
 				->append_children( [
 
 					/**
-					 * Content List
+					 * River of posts by this author.
 					 */
 					( new \CPR\Components\Modules\Content_List() )
-						->set_config( 'image_size', 'grid_item' )
-						->set_config( 'show_excerpt', true )
-
+						->merge_config(
+							[
+								'theme'                => 'riverFull',
+								'image_size'           => 'grid_item',
+								'show_excerpt'         => true,
+							]
+						)
 						->parse_from_wp_query( $this->query )
-						->set_theme( 'river_full' )
-							->set_child_themes(
-								[
-									'content-item' => 'river',
-									'title'        => 'grid',
-								]
-							),
+						->set_theme( 'riverFull' )
+						->set_child_themes(
+							[
+								'content-item'         => 'riverFull',
+								'title'                => 'featureSecondary',
+								'eyebrow'              => 'small',
+							]
+						),
+
+					/**
+					 * Pagination
+					 */
+					( new \WP_Components\Pagination() )
+						->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+						->set_config( 'base_url', "/author/{$this->query->get( 'author_name' )}/" )
+						->set_query( $this->query ),
 
 					/**
 					 * Content sidebar.
@@ -125,14 +129,6 @@ class Author_Archive extends \WP_Components\Component {
 								new \CPR\Components\Ad(),
 							]
 						),
-
-					/**
-					 * Pagination
-					 */
-					( new \WP_Components\Pagination() )
-						->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-						->set_config( 'base_url', "/author/{$this->query->get( 'author_name' )}/" )
-						->set_query( $this->query ),
 				] ),
 		];
 	}
