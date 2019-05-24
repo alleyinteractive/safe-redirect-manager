@@ -63,7 +63,7 @@ class Grid_Group extends \WP_Components\Component {
 			'post_ids'              => new \Fieldmanager_Zone_Field(
 				[
 					'description' => __( 'Select items for this group.', 'cpr' ),
-					'query_args' => [
+					'query_args'  => [
 						'post_type' => \CPR\get_curatable_post_types(),
 					],
 				]
@@ -104,8 +104,14 @@ class Grid_Group extends \WP_Components\Component {
 			]
 		);
 
-		// Set the name.
-		$this->set_config( 'name', $fm_data['name'] );
+		// Set the config values.
+		$this->merge_config(
+			[
+				'name'                 => $fm_data['name'],
+				'call_to_action_label' => $fm_data['call_to_action_label'] ?? '',
+				'call_to_action_link'  => $fm_data['call_to_action_link'] ?? '',
+			]
+		);
 
 		// Append the Grid_Group_items as children.
 		$this->append_children(
