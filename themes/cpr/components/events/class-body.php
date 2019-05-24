@@ -74,6 +74,7 @@ class Body extends \WP_Components\Component {
 											'twitter'  => true,
 											'email'    => true,
 										],
+										'text'     => __( 'Share: ', 'cpr' ),
 									]
 								)
 								->set_post( $this->post ),
