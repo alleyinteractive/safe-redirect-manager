@@ -39,12 +39,15 @@ class Feed_Item extends \Alleypack\Sync_Script\Attachment_Feed_Item {
 	public function get_source_url() : ?string {
 
 		// Get filename.
-		$filename = $this->source['field_photo']['und'][0]['filename'] ?? '';
+		$filename = $this->source['field_photo']['und'][0]['uri'] ?? '';
 		if ( empty( $filename ) ) {
 			return null;
 		}
 
-		return 'https://www.cpr.org/sites/default/files/images/' . $filename;
+		// Remove protocol.
+		$filename = str_replace( 'public://', '', $filename );
+
+		return 'https://www.cpr.org/sites/default/files/' . $filename;
 	}
 
 	/**
