@@ -59,6 +59,17 @@ class Header extends \WP_Components\Component {
 					return $this;
 				}
 				break;
+
+			case $this->query->is_post_type_archive( 'top-30' ):
+			case $this->query->is_singular( 'top-30' ):
+				$this->children = [
+					( new \CPR\Components\Logo() )
+						->set_config( 'type', 'indie' )
+						->set_theme( 'primary' ),
+					( new \WP_Components\Menu() )->set_menu( 'indie' ),
+				];
+				return $this;
+
 			case $this->query->is_single():
 				$sections = wp_get_post_terms( ( $this->query->post->ID ?? 0 ), 'section' );
 				if ( ! empty( $sections[0] ) && $sections[0] instanceof \WP_Term ) {
@@ -70,6 +81,7 @@ class Header extends \WP_Components\Component {
 					];
 				}
 				return $this;
+
 			case $this->query->is_tax( 'section' ):
 				$term = $this->query->get_queried_object();
 				$this->children = [
@@ -77,14 +89,6 @@ class Header extends \WP_Components\Component {
 						->set_config( 'type', $term->slug ?? '' )
 						->set_theme( 'primary' ),
 					( new \WP_Components\Menu() )->set_menu( $term->slug ?? '' ),
-				];
-				return $this;
-			case $this->query->is_post_type_archive( 'top-30' ):
-				$this->children = [
-					( new \CPR\Components\Logo() )
-						->set_config( 'type', 'indie' )
-						->set_theme( 'primary' ),
-					( new \WP_Components\Menu() )->set_menu( 'indie' ),
 				];
 				return $this;
 		}
