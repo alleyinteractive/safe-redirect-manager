@@ -59,7 +59,7 @@ class Event extends \WP_Components\Component {
 							->parse_from_wp_query(
 								new \WP_Query(
 									[
-										'post_type'      => [ 'post', 'podcast-episode', 'show-episode' ],
+										'post_type'      => [ 'post' ],
 										'posts_per_page' => 4,
 									]
 								)
