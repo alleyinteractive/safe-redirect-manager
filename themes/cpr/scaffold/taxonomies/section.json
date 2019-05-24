@@ -2,8 +2,7 @@
 	"object_types": [
 		"page",
 		"post",
-		"event",
-		"podcast-episode",
+		"tribe_events",
 		"podcast-post"
 	],
 	"hierarchical": false,

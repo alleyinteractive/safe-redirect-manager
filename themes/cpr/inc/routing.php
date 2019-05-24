@@ -182,6 +182,14 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Event.
+		 */
+		case $wp_query->is_singular( 'tribe_events' ):
+			$head->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
+			break;
+
+		/**
 		 * Article.
 		 */
 		case $wp_query->is_single():

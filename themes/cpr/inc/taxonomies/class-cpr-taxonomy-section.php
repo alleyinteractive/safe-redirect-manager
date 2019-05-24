@@ -29,7 +29,7 @@ class Cpr_Taxonomy_Section extends Cpr_Taxonomy {
 	 * Build the taxonomy object.
 	 */
 	public function __construct() {
-		$this->object_types = [ 'page', 'post', 'event', 'podcast-episode', 'podcast-post' ];
+		$this->object_types = [ 'page', 'post', 'tribe_events', 'podcast-post' ];
 
 		parent::__construct();
 	}

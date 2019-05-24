@@ -668,3 +668,25 @@ function cpr_fm_post_post_settings() {
 add_action( 'fm_post_post', 'cpr_fm_post_post_settings' );
 /* end fm:post-post-settings */
 
+/* begin fm:post-tribe_events_section */
+/**
+ * `section_id` Fieldmanager fields.
+ */
+function cpr_fm_post_tribe_events_section() {
+	$fm = new Fieldmanager_Select(
+		[
+			'name' => 'section_id',
+			'description' => __( 'Select a section.', 'cpr' ),
+			'datasource' => new Fieldmanager_Datasource_Term(
+				[
+					'taxonomy' => 'section',
+					'taxonomy_save_to_terms' => true,
+					'only_save_to_taxonomy' => true,
+				]
+			),
+		]
+	);
+	$fm->add_meta_box( __( 'Section', 'cpr' ), [ 'tribe_events' ], 'normal', 'high' );
+}
+add_action( 'fm_post_tribe_events', 'cpr_fm_post_tribe_events_section' );
+/* end fm:post-tribe_events_section */
