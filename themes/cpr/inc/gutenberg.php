@@ -17,7 +17,7 @@ namespace CPR;
  * @return string $current_status The status of the post.
  */
 function disable_gutenberg_for_selected_post_type( $current_status, $post_type ) {
-	if ( in_array( $post_type, [ 'external-link', 'show-episode', 'page' ], true ) ) {
+	if ( in_array( $post_type, [ 'external-link', 'show-episode' ], true ) ) {
 		return false;
 	}
 	return $current_status;
