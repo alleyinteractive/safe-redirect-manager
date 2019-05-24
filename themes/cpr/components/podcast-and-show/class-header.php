@@ -23,11 +23,33 @@ class Header extends \WP_Components\Component {
 	public $name = 'show-and-podcast-header';
 
 	/**
+	 * Show and Podcast Header default config.
+	 *
+	 * @return array
+	 */
+	public function default_config() : array {
+		return [
+			'times'     => '',
+			'buttons' => [],
+		];
+	}
+
+	/**
 	 * Hook into post being set.
 	 *
 	 * @return self
 	 */
 	public function post_has_set() : self {
+		$description = get_post_meta( $this->get_post_id(), 'description', true );
+		$subscribe   = get_post_meta( $this->get_post_id(), 'subscribe', true );
+		$times       = get_post_meta( $this->get_post_id(), 'times', true );
+
+		$this->merge_config(
+			[
+				'times'     => $times,
+				'buttons' => $subscribe['buttons'],
+			]
+		);
 
 		$this->append_child(
 			( new \CPR\Components\Content\Content_Title() )
@@ -42,7 +64,7 @@ class Header extends \WP_Components\Component {
 		$this->append_child(
 			( new \WP_Components\Component() )
 				->set_name( 'excerpt' )
-				->set_config( 'content', $this->wp_post_get_excerpt() )
+				->set_config( 'content', $description )
 		);
 
 		$this->set_eyebrow();
