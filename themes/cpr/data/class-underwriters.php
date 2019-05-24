@@ -39,12 +39,18 @@ class Underwriters {
 	 * @return array
 	 */
 	public function get_data() : array {
+
+		// Allow access from frontend.
+		header( 'Access-Control-Allow-Origin: ' . home_url() );
+
 		if ( ! empty( $this->data ) ) {
 			return $this->data;
 		}
 
 		$underwriter_query = new \WP_Query(
 			[
+				'order'          => 'ASC',
+				'orderby'        => 'title',
 				'post_type'      => 'underwriter',
 				'posts_per_page' => 1000,
 			]

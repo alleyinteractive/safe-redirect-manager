@@ -51,6 +51,13 @@ class Term_Archive extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
+
+		// Determine the base url for paginationn.
+		$base_url = "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/";
+		if ( 'section' === $this->wp_term_get_taxonomy() ) {
+			$base_url = "/{$this->wp_term_get_slug()}/all/";
+		}
+
 		return [
 			/**
 			 * Column Area
@@ -79,7 +86,7 @@ class Term_Archive extends \WP_Components\Component {
 						 */
 						( new \WP_Components\Pagination() )
 							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-							->set_config( 'base_url', "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/" )
+							->set_config( 'base_url', $base_url )
 							->set_query( $this->query ),
 					]
 				),

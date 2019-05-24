@@ -56,7 +56,20 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function post_object_save() {
+		$this->migrate_artists();
 		$this->migrate_artwork();
+		$this->migrate_labels();
+
+		// Album year.
+		if ( isset( $this->source['field_release_date']['und'][0]['value'] ) ) {
+			update_post_meta( $this->get_object_id(), 'year', $this->source['field_release_date']['und'][0]['value'] );
+		}
+
+		// Music type (these should all be `92` for the top-30).
+		if ( isset( $this->source['field_music_type']['und'][0]['target_id'] ) ) {
+			update_post_meta( $this->get_object_id(), 'type', $this->source['field_music_type']['und'][0]['target_id'] );
+		}
+
 		return true;
 	}
 
@@ -93,5 +106,49 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		}
 
 		return 'https://www.cpr.org/sites/default/files/styles/cover/public/album_art/' . $filename;
+	}
+
+	/**
+	 * Migrate album artists.
+	 */
+	public function migrate_artists() {
+
+		// Extract legacy ids.
+		$tids = wp_list_pluck( ( $this->source['field_music_artist']['und'] ?? [] ), 'tid' );
+
+		// Create a term for each one.
+		$term_ids = array_filter( array_map(
+			function( $tid ) {
+				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'taxonomy', $tid );
+				return \CPR\Migration\Artist\Feed_Item::get_or_create_object_from_source( $source )->term_id ?? 0;
+			},
+			$tids
+		) );
+
+		if ( ! empty( $term_ids ) ) {
+			wp_set_object_terms( $this->get_object_id(), $term_ids, 'artist' );
+		}
+	}
+
+	/**
+	 * Migrate album labels.
+	 */
+	public function migrate_labels() {
+
+		// Extract legacy ids.
+		$tids = wp_list_pluck( ( $this->source['field_music_label']['und'] ?? [] ), 'tid' );
+
+		// Create a term for each one.
+		$term_ids = array_filter( array_map(
+			function( $tid ) {
+				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'taxonomy', $tid );
+				return \CPR\Migration\Label\Feed_Item::get_or_create_object_from_source( $source )->term_id ?? 0;
+			},
+			$tids
+		) );
+
+		if ( ! empty( $term_ids ) ) {
+			wp_set_object_terms( $this->get_object_id(), $term_ids, 'label' );
+		}
 	}
 }
