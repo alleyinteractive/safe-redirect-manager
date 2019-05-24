@@ -51,37 +51,45 @@ class Term_Archive extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
+
+		// Determine the base url for paginationn.
+		$base_url = "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/";
+		if ( 'section' === $this->wp_term_get_taxonomy() ) {
+			$base_url = "/{$this->wp_term_get_slug()}/all/";
+		}
+
 		return [
 			/**
 			 * Column Area
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'one-column' )
-				->append_children( [
+				->append_children(
+					[
+						/**
+						 * Content List
+						 */
+						( new \CPR\Components\Modules\Content_List() )
+							->set_config( 'heading', $this->wp_term_get_name() )
+							->parse_from_wp_query( $this->query )
+							->set_theme( 'gridLarge' )
+								->set_child_themes(
+									[
+										'content-item' => 'grid',
+										'title'        => 'grid',
+										'eyebrow'      => 'small',
+									]
+								),
 
-					/**
-					 * Content List
-					 */
-					( new \CPR\Components\Modules\Content_List() )
-						->set_config( 'heading', $this->wp_term_get_name() )
-						->parse_from_wp_query( $this->query )
-						->set_theme( 'gridLarge' )
-							->set_child_themes(
-								[
-									'content-item' => 'grid',
-									'title'        => 'grid',
-									'eyebrow'      => 'small',
-								]
-							),
-				] ),
-
-			/**
-			 * Pagination.
-			 */
-			( new \WP_Components\Pagination() )
-				->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-				->set_config( 'base_url', "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/" )
-				->set_query( $this->query ),
+						/**
+						 * Pagination.
+						 */
+						( new \WP_Components\Pagination() )
+							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+							->set_config( 'base_url', $base_url )
+							->set_query( $this->query ),
+					]
+				),
 		];
 	}
 
@@ -94,6 +102,7 @@ class Term_Archive extends \WP_Components\Component {
 		if (
 			(
 				$wp_query->is_category()
+				|| $wp_query->is_tag()
 				|| $wp_query->is_tax()
 			) && ! empty( $wp_query->get( 'irving-path' ) )
 		) {

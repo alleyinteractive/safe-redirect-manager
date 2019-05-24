@@ -39,12 +39,18 @@ class Underwriters {
 	 * @return array
 	 */
 	public function get_data() : array {
+
+		// Allow access from frontend.
+		header( 'Access-Control-Allow-Origin: ' . home_url() );
+
 		if ( ! empty( $this->data ) ) {
 			return $this->data;
 		}
 
 		$underwriter_query = new \WP_Query(
 			[
+				'order'          => 'ASC',
+				'orderby'        => 'title',
 				'post_type'      => 'underwriter',
 				'posts_per_page' => 1000,
 			]
@@ -67,10 +73,10 @@ class Underwriters {
 		$categories = (array) wp_get_post_terms( $post->ID, 'underwriter-category' );
 		return [
 			'address'    => (string) get_post_meta( $post->ID, 'address', true ),
-			'categories' => empty( $categories ) ? [] : wp_list_pluck( $categories, 'name' ),
+			'categories' => empty( $categories ) ? [] : wp_list_pluck( $categories, 'slug' ),
 			'id'         => $post->ID,
 			'link'       => (string) esc_url( get_post_meta( $post->ID, 'link', true ) ),
-			'name'       => get_the_title( $post ),
+			'name'       => html_entity_decode( get_the_title( $post ) ),
 			'phone'      => (string) get_post_meta( $post->ID, 'phone_number', true ),
 		];
 	}

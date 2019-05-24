@@ -147,6 +147,7 @@ namespace CPR;
 					'transforms' => [
 						'resize' => [ 107, 107 ],
 					],
+ 					'default'    => true,
 					'descriptor' => 107,
 					'media' => [ 'max' => 'sm' ],
 				],
@@ -157,7 +158,7 @@ namespace CPR;
 					],
 				],
 			],
-			'retina' => true,
+			'retina'       => true,
 			'aspect_ratio' => 1,
 			'fallback_image_url' => get_template_directory_uri() . '/images/default-avatar.png',
 		],
@@ -166,6 +167,7 @@ namespace CPR;
 			'sources' => [
 				[
 					'default' => true,
+					'descriptor' => 300,
 					'transforms' => [
 						'resize' => [ 300, 300 ],
 					],
@@ -178,6 +180,7 @@ namespace CPR;
 			'sources' => [
 				[
 					'default'    => true,
+					'descriptor' => 250,
 					'transforms' => [
 						'fit' => [ 250, 250 ],
 					],
@@ -185,6 +188,20 @@ namespace CPR;
 			],
 			'aspect_ratio' => false,
 			'retina'       => true,
+		],
+		'show-and-podcast-header' => [
+			'sources' => [
+				[
+					'default'    => true,
+					'descriptor' => 500,
+					'transforms' => [
+						'resize' => [ 500, 500 ],
+					],
+				],
+			],
+			'retina'       => true,
+			'aspect_ratio' => 1,
+			'fallback_image_url' => get_template_directory_uri() . '/images/default-thumbnail.png',
 		],
 	]
 );

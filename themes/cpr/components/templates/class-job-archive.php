@@ -55,12 +55,19 @@ class Job_Archive extends \WP_Components\Component {
 							->set_child_themes(
 								[
 									'content-item' => 'river',
-									'title'        => 'feature',
-									'eyebrow'      => 'small',
+									'title'        => 'grid',
 								]
 							),
 
 						$this->get_footer_disclaimer(),
+
+						/**
+						 * Pagination
+						 */
+						( new \WP_Components\Pagination() )
+							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+							->set_config( 'base_url', '/jobs/' )
+							->set_query( $this->query ),
 
 						/**
 						 * Sidebar.

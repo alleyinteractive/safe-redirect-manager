@@ -86,6 +86,23 @@ trait WP_Post {
 
 				$this->append_child( $eyebrow );
 				break;
+
+			case 'external-link':
+				// Get a custom label and link from meta.
+				$label = (string) get_post_meta( $this->get_post_id(), 'eyebrow_label', true );
+				$link  = (string) get_post_meta( $this->get_post_id(), 'eyebrow_link', true );
+
+				// Validate the fields and append as an eyebrow.
+				if ( ! empty( $link ) && ! empty( $label ) ) {
+					$eyebrow->merge_config(
+						[
+							'eyebrow_label' => (string) get_post_meta( $this->get_post_id(), 'eyebrow_label', true ),
+							'eyebrow_link'  => (string) get_post_meta( $this->get_post_id(), 'eyebrow_link', true ),
+						]
+					);
+					$this->append_child( $eyebrow );
+				}
+				break;
 		}
 	}
 
