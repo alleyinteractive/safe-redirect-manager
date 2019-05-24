@@ -144,10 +144,17 @@ namespace CPR;
 		'avatar' => [
 			'sources' => [
 				[
-					'default'    => true,
-					'descriptor' => 107,
 					'transforms' => [
 						'resize' => [ 107, 107 ],
+					],
+ 					'default'    => true,
+					'descriptor' => 107,
+					'media' => [ 'max' => 'sm' ],
+				],
+				[
+					'default'    => true,
+					'transforms' => [
+						'resize' => [ 400, 400 ],
 					],
 				],
 			],
