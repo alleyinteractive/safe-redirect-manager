@@ -43,7 +43,7 @@ class Grid_Group_Item extends \WP_Components\Component {
 		$this->append_child(
 			( new \WP_Components\Component() )
 				->set_name( 'excerpt' )
-				->set_config( 'content', $this->wp_post_get_excerpt() )
+				->set_config( 'content', get_post_meta( $this->get_post_id(), 'description', true ) )
 		);
 
 		$this->set_eyebrow();
