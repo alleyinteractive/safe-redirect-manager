@@ -206,6 +206,24 @@ class Migration {
 			}
 		}
 	}
+
+	/**
+	 * Get the source URL for this attachment.
+	 *
+	 * @return null|string
+	 */
+	public static function get_url_from_uri( string $uri ) : ?string {
+
+		// Validate URI..
+		if ( empty( $uri ) ) {
+			return null;
+		}
+
+		// Remove protocol.
+		$uri = str_replace( 'public://', '', $uri );
+
+		return 'https://www.cpr.org/sites/default/files/' . $uri;
+	}
 }
 
 // Initalize class.
