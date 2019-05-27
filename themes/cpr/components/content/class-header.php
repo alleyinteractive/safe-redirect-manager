@@ -86,6 +86,11 @@ class Header extends \WP_Components\Component {
 
 			case 'page':
 				break;
+
+			case 'job':
+				$this->set_config( 'eyebrow_label', __( '‹‹ All Employment Opportunities', 'cpr' ) );
+				$this->set_config( 'eyebrow_link', home_url( '/jobs/' ) );
+				break;
 		}
 
 		return $this;
