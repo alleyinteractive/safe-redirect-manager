@@ -88,7 +88,6 @@ class Header extends \WP_Components\Component {
 				break;
 
 			case 'job':
-
 				$this->set_publish_date();
 
 				$this->set_config( 'eyebrow_label', __( '‹‹ All Employment Opportunities', 'cpr' ) );
@@ -96,7 +95,6 @@ class Header extends \WP_Components\Component {
 				break;
 
 			case 'press-release':
-
 				$this->set_publish_date();
 
 				$this->set_config( 'eyebrow_label', __( '‹‹ All Press Releases', 'cpr' ) );
