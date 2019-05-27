@@ -59,6 +59,10 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 
 		// Assemble full body content.
 		$job_description_parts = [
+			sprintf(
+				'<p><a href="%1$s">View Full Description (PDF)</a></p>',
+				esc_url( \CPR\Migration\Migration::get_url_from_uri( $this->source['field_file']['und'][0]['uri'] ?? '' ) )
+			),
 			$this->source['body']['und'][0]['value'] ?? '',
 		];
 
@@ -75,7 +79,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		}
 
 		$job_description = implode( '', array_filter( $job_description_parts ) );
-
 
 		return ( new \Alleypack\Block\Converter( $job_description ) )->convert_to_block();
 	}
@@ -97,11 +100,11 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 
 		// Get the pdf description url and create it.
 		$legacy_pdf_url = \CPR\Migration\Migration::get_url_from_uri( $this->source['field_file']['und'][0]['uri'] ?? '' );
-		$new_pdf_url = \Alleypack\create_or_get_attachment_from_url( $legacy_pdf_url );
+		$new_pdf_url    = \Alleypack\create_or_get_attachment_from_url( $legacy_pdf_url );
 
 		// If it went well, replace the original with the new one.
 		if ( ! empty( $new_pdf_url ) ) {
-			$this->object['post_content'] = str_replace( $legacy_pdf_url , $new_pdf_url, $this->object['post_content'] );
+			$this->object['post_content'] = str_replace( $legacy_pdf_url, $new_pdf_url, $this->object['post_content'] );
 			wp_update_post( $this->object );
 		}
 	}

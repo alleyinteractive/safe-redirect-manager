@@ -210,6 +210,7 @@ class Migration {
 	/**
 	 * Get the source URL for this attachment.
 	 *
+	 * @param string $uri URI for file.
 	 * @return null|string
 	 */
 	public static function get_url_from_uri( string $uri ) : ?string {
