@@ -8,7 +8,7 @@
 namespace CPR;
 
 /**
- * Replaces the permalink for external content posts with a post meta 
+ * Replaces the permalink for external content posts with a post meta
  * permalink.
  *
  * @param string   $url  The post url.
@@ -22,3 +22,21 @@ function replace_permalink_external_link( $url, $post ) {
 	return $url;
 }
 add_filter( 'post_type_link', __NAMESPACE__ . '\replace_permalink_external_link', 10, 2 );
+
+/**
+ * Modify the section term links.
+ *
+ * @param string   $url  Original url.
+ * @param \WP_Term $term Term object.
+ * @return string
+ */
+function term_link_filter( string $url, \WP_Term $term ) {
+
+	// Modify section term links.
+	if ( 'section' === $term->taxonomy ) {
+		$url = home_url( $term->slug . '/all/' );
+	}
+
+	return $url;
+}
+add_filter( 'term_link', __NAMESPACE__ . '\term_link_filter', 10, 2 );

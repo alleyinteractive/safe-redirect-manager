@@ -262,7 +262,7 @@ class News extends \WP_Components\Component {
 									'image_size'           => 'grid_item',
 									'show_excerpt'         => true,
 									'call_to_action_label' => __( 'More Stories', 'cpr' ),
-									'call_to_action_link'  => home_url( '/section/news/' ),
+									'call_to_action_link'  => home_url( '/news/all/' ),
 								]
 							)
 							->parse_from_ids(
