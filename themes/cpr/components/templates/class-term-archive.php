@@ -53,9 +53,18 @@ class Term_Archive extends \WP_Components\Component {
 	public function get_components() : array {
 
 		// Determine the base url for paginationn.
-		$base_url = "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/";
-		if ( 'section' === $this->wp_term_get_taxonomy() ) {
-			$base_url = "/{$this->wp_term_get_slug()}/all/";
+		switch( $this->wp_term_get_taxonomy() ) {
+			case 'section':
+				$base_url = "/{$this->wp_term_get_slug()}/all/";
+				break;
+
+			case 'post_tag':
+				$base_url = "/tag/{$this->wp_term_get_slug()}/";
+				break;
+
+			default:
+				$base_url = "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/";
+				break;
 		}
 
 		return [
