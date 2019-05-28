@@ -52,8 +52,9 @@ function populate_custom_underwriter_columns( string $column, int $post_id ) {
 			$fields = [
 				__( 'Corporate Partner', 'cpr' ) => absint( get_post_meta( $post_id, 'is_corporate_partner', true ) ) ? 'Yes' : '',
 				__( 'Website:', 'cpr' )          => sprintf(
-					'<a href="%1$s">Website</a>',
-					esc_url( get_post_meta( $post_id, 'link', true ) )
+					'<a href="%1$s">%2$s</a>',
+					esc_url( get_post_meta( $post_id, 'link', true ) ),
+					esc_html__( 'Website', 'cpr' )
 				),
 				__( 'Phone:', 'cpr' )            => get_post_meta( $post_id, 'phone_number', true ),
 				__( 'Address:', 'cpr' )          => wpautop( (string) get_post_meta( $post_id, 'address', true ) ),
