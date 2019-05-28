@@ -57,7 +57,7 @@ class Cpr_Post_Type_Press_Release extends Cpr_Post_Type {
 					'menu_name'                => __( 'Press Releases', 'cpr' ),
 				],
 				'public' => true,
-				'has_archive' => true,
+				'has_archive' => 'press-releases',
 				'show_in_rest' => true,
 				'supports' => [ 'title', 'editor', 'author', 'revisions', 'thumbnail', 'excerpt' ],
 				'taxonomies' => [ 'category', 'post_tag', 'section' ],
