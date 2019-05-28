@@ -30,6 +30,12 @@ class Grid_Group_Item extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 
+		if ( 'guest_authors' === $this->post->post_type ) {
+			$this->set_theme( 'hosts' );
+		} else {
+			$this->set_theme( 'testing' );
+		}
+
 		$this->append_child(
 			( new \CPR\Components\Content\Content_Title() )
 				->merge_config(

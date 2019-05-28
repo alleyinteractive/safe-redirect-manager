@@ -55,7 +55,7 @@ function end_excerpt_at_sentance_punctuation( $excerpt ) {
 	while ( ! $found && ! empty( $excerpt_parts ) ) {
 		$last  = array_pop( $excerpt_parts );
 		$end   = strrev( $last );
-		$found = in_array( $end{0}, $allowed_end, true );
+		$found = in_array( $end[0], $allowed_end, true );
 	}
 
 	if ( empty( $excerpt_parts ) ) {
@@ -64,4 +64,4 @@ function end_excerpt_at_sentance_punctuation( $excerpt ) {
 
 	return rtrim( implode( ' ', $excerpt_parts ) . ' ' . $last );
 }
-add_filter( 'get_the_excerpt', __NAMESPACE__ . '\end_excerpt_at_sentance_punctuation' );
+// add_filter( 'get_the_excerpt', __NAMESPACE__ . '\end_excerpt_at_sentance_punctuation' );
