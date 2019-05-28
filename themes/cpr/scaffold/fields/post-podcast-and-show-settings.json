@@ -84,8 +84,6 @@
 		},
 		"hosts": {
 			"label": { "__": "Hosts" },
-			"serialize_data": false,
-			"add_to_prefix": false,
 			"children": "`\\CPR\\Components\\Modules\\Grid_Group::get_fm_fields()`"
 		},
 		"social_and_seo": {

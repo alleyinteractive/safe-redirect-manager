@@ -61,6 +61,10 @@ class Podcast_And_Show extends \WP_Components\Component {
 						'eyebrow'      => 'small',
 					]
 				),
+
+			( new \CPR\Components\Modules\Grid_Group() )
+				->parse_from_fm_data( (array) get_post_meta( $this->get_post_id(), 'hosts', true ) ),
+
 		];
 	}
 }

@@ -30,9 +30,14 @@ class Grid_Group_Item extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 
-		if ( 'guest_authors' === $this->post->post_type ) {
+		if ( 'guest-author' === $this->post->post_type ) {
 			$this->set_theme( 'hosts' );
 		} else {
+			$this->append_child(
+				( new \WP_Components\Component() )
+					->set_name( 'excerpt' )
+					->set_config( 'content', get_post_meta( $this->get_post_id(), 'description', true ) )
+			);
 			$this->set_theme( 'testing' );
 		}
 
@@ -44,12 +49,6 @@ class Grid_Group_Item extends \WP_Components\Component {
 						'link'    => $this->wp_post_get_permalink(),
 					]
 				)
-		);
-
-		$this->append_child(
-			( new \WP_Components\Component() )
-				->set_name( 'excerpt' )
-				->set_config( 'content', get_post_meta( $this->get_post_id(), 'description', true ) )
 		);
 
 		$this->set_eyebrow();
