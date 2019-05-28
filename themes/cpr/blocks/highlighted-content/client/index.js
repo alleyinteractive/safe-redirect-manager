@@ -2,6 +2,9 @@
  *  FAQ Block.
  */
 
+import HighlightedEdit from './edit';
+import HighlightedSave from './save';
+
 const { registerBlockType, createBlock } = wp.blocks;
 const { __ } = wp.i18n;
 
@@ -10,6 +13,15 @@ registerBlockType('cpr/highlighted-content', {
   description: __('Block to format a something.', 'cpr'),
   icon: 'text',
   category: 'common',
+  keywords: [
+    __('section', 'cpr'),
+    __('header', 'cpr'),
+  ],
+  attributes: {
+    content: {
+      type: 'string',
+    },
+  },
   transforms: {
     from: [
       {
@@ -28,15 +40,6 @@ registerBlockType('cpr/highlighted-content', {
       },
     ],
   },
-  attributes: {
-    content: {
-      type: 'string',
-    },
-  },
-  edit: () => {
-    return null;
-  },
-  save: () => {
-    return null;
-  },
+  edit: HighlightedEdit,
+  save: HighlightedSave,
 });
