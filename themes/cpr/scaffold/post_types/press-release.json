@@ -1,6 +1,6 @@
 {
 	"public": true,
-	"has_archive": true,
+	"has_archive": "press-releases",
 	"show_in_rest": true,
 	"supports": [
 		"title",

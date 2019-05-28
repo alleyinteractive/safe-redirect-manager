@@ -86,6 +86,20 @@ class Header extends \WP_Components\Component {
 
 			case 'page':
 				break;
+
+			case 'job':
+				$this->set_publish_date();
+
+				$this->set_config( 'eyebrow_label', __( '‹‹ All Employment Opportunities', 'cpr' ) );
+				$this->set_config( 'eyebrow_link', home_url( '/jobs/' ) );
+				break;
+
+			case 'press-release':
+				$this->set_publish_date();
+
+				$this->set_config( 'eyebrow_label', __( '‹‹ All Press Releases', 'cpr' ) );
+				$this->set_config( 'eyebrow_link', home_url( '/press-releases/' ) );
+				break;
 		}
 
 		return $this;
