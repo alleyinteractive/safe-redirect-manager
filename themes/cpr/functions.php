@@ -29,6 +29,7 @@ require_once CPR_PATH . '/inc/plugins.php';
 // Admin customizations.
 if ( is_admin() ) {
 	require_once CPR_PATH . '/inc/admin.php';
+	require_once CPR_PATH . '/inc/admin-columns.php';
 }
 
 // wp-cli command.

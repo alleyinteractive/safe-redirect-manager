@@ -49,11 +49,35 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		$this->object['post_status'] = 'publish';
 		$this->object['post_title']  = esc_html( $this->source['title'] );
 		$this->object['meta_input']  = [
-			// 'address'              => $this->source['field_phone_number']['und'][0]['safe_value'] ?? '',
+			'address'              => $this->get_address(),
 			'is_corporate_partner' => $this->source['field_corporate_partner']['und'][0]['value'] ?? '0',
 			'link'                 => $this->source['field_website_url']['und'][0]['url'] ?? '',
 			'phone_number'         => $this->source['field_phone_number']['und'][0]['safe_value'] ?? '',
 		];
+	}
+
+	/**
+	 * Get the fully formed address.
+	 *
+	 * @return string
+	 */
+	public function get_address() {
+
+		// Ensure we have an address.
+		if ( empty( $this->source['field_address']['und'][0] ) ) {
+			return '';
+		}
+
+		$address = $this->source['field_address']['und'][0];
+
+		if ( empty( $address['thoroughfare'] ) ) {
+			return '';
+		}
+
+		return <<<EOT
+{$address['thoroughfare']}
+{$address['locality']} {$address['administrative_area']}, {$address['postal_code']}
+EOT;
 	}
 
 	/**
