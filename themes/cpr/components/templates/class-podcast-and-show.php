@@ -63,8 +63,12 @@ class Podcast_And_Show extends \WP_Components\Component {
 				),
 
 			( new \CPR\Components\Modules\Grid_Group() )
-				->parse_from_fm_data( (array) get_post_meta( $this->get_post_id(), 'hosts', true ) ),
-
+				->parse_from_fm_data( (array) get_post_meta( $this->get_post_id(), 'hosts', true ) )
+				->children_callback(
+					function( $child ) {
+						return $child->set_config( 'show_name', $this->wp_post_get_title() );
+					}
+				),
 		];
 	}
 }

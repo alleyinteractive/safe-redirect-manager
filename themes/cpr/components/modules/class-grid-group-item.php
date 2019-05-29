@@ -23,6 +23,8 @@ class Grid_Group_Item extends \WP_Components\Component {
 	 */
 	public $name = 'grid-group-item';
 
+		use \WP_Components\Guest_Author;
+
 	/**
 	 * Hook into post being set.
 	 *
@@ -32,13 +34,15 @@ class Grid_Group_Item extends \WP_Components\Component {
 
 		if ( 'guest-author' === $this->post->post_type ) {
 			$this->set_theme( 'hosts' );
+			$this->set_config( 'role', __( 'Host', 'cpr' ) );
+			$this->wp_post_set_featured_image( 'grid-group-host' );
 		} else {
+			$this->wp_post_set_featured_image( 'grid-group-item' );
 			$this->append_child(
 				( new \WP_Components\Component() )
 					->set_name( 'excerpt' )
 					->set_config( 'content', get_post_meta( $this->get_post_id(), 'description', true ) )
 			);
-			$this->set_theme( 'testing' );
 		}
 
 		$this->append_child(
@@ -52,8 +56,6 @@ class Grid_Group_Item extends \WP_Components\Component {
 		);
 
 		$this->set_eyebrow();
-
-		$this->wp_post_set_featured_image( 'grid-group-item' );
 
 		return $this;
 	}
