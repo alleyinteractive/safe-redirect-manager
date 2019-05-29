@@ -23,8 +23,6 @@ class Grid_Group_Item extends \WP_Components\Component {
 	 */
 	public $name = 'grid-group-item';
 
-		use \WP_Components\Guest_Author;
-
 	/**
 	 * Hook into post being set.
 	 *

@@ -64,4 +64,4 @@ function end_excerpt_at_sentance_punctuation( $excerpt ) {
 
 	return rtrim( implode( ' ', $excerpt_parts ) . ' ' . $last );
 }
-// add_filter( 'get_the_excerpt', __NAMESPACE__ . '\end_excerpt_at_sentance_punctuation' );
+add_filter( 'get_the_excerpt', __NAMESPACE__ . '\end_excerpt_at_sentance_punctuation' );
