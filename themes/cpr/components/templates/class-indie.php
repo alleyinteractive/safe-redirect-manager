@@ -114,7 +114,10 @@ class Indie extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'feature_item' )
-							->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+							->parse_from_fm_data(
+								$data['featured_content'] ?? [],
+								1,
+								self::get_indie_posts_backfill_args())
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
