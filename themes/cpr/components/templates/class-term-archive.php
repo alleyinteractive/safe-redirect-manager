@@ -80,15 +80,16 @@ class Term_Archive extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'heading', $this->wp_term_get_name() )
-							->parse_from_wp_query( $this->query )
+							->set_config( 'image_size', 'grid_item' )
 							->set_theme( 'gridLarge' )
-								->set_child_themes(
-									[
-										'content-item' => 'grid',
-										'title'        => 'grid',
-										'eyebrow'      => 'small',
-									]
-								),
+							->set_child_themes(
+								[
+									'content-item'  => 'grid_item',
+									'content-title' => 'grid',
+									'eyebrow'       => 'small',
+								]
+							)
+							->parse_from_wp_query( $this->query ),
 
 						/**
 						 * Pagination.

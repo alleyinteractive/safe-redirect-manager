@@ -54,7 +54,11 @@ class Header extends \WP_Components\Component {
 						( new \CPR\Components\Logo() )
 							->set_config( 'type', $type )
 							->set_theme( 'primary' ),
-						( new \WP_Components\Menu() )->set_menu( $type ),
+						( new \WP_Components\Menu() )
+							->set_menu( $type )
+							->parse_wp_menu()
+							->set_theme( 'header' )
+							->set_child_themes( [ 'menu-item' => 'header' ] ),
 					];
 					return $this;
 				}

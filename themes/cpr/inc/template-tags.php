@@ -55,7 +55,7 @@ function end_excerpt_at_sentance_punctuation( $excerpt ) {
 	while ( ! $found && ! empty( $excerpt_parts ) ) {
 		$last  = array_pop( $excerpt_parts );
 		$end   = strrev( $last );
-		$found = in_array( $end[0], $allowed_end, true );
+		$found = ! empty( $end ) ? in_array( $end{0}, $allowed_end, true ) : false;
 	}
 
 	if ( empty( $excerpt_parts ) ) {
