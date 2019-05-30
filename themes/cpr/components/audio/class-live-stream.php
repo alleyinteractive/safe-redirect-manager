@@ -70,7 +70,7 @@ class Live_Stream extends \WP_Components\Component {
 					'section' => $this->term->name,
 					'slug'  => $slug,
 				],
-				$stream_data,
+				$stream_data
 			)
 		);
 	}
