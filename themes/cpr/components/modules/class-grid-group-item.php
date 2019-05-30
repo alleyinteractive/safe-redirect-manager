@@ -30,6 +30,19 @@ class Grid_Group_Item extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 
+		if ( 'guest-author' === $this->post->post_type ) {
+			$this->set_theme( 'hosts' );
+			$this->set_config( 'role', __( 'Host', 'cpr' ) );
+			$this->wp_post_set_featured_image( 'grid-group-host' );
+		} else {
+			$this->wp_post_set_featured_image( 'grid-group-item' );
+			$this->append_child(
+				( new \WP_Components\Component() )
+					->set_name( 'excerpt' )
+					->set_config( 'content', get_post_meta( $this->get_post_id(), 'description', true ) )
+			);
+		}
+
 		$this->append_child(
 			( new \CPR\Components\Content\Content_Title() )
 				->merge_config(
@@ -40,15 +53,7 @@ class Grid_Group_Item extends \WP_Components\Component {
 				)
 		);
 
-		$this->append_child(
-			( new \WP_Components\Component() )
-				->set_name( 'excerpt' )
-				->set_config( 'content', get_post_meta( $this->get_post_id(), 'description', true ) )
-		);
-
 		$this->set_eyebrow();
-
-		$this->wp_post_set_featured_image( 'grid-group-item' );
 
 		return $this;
 	}

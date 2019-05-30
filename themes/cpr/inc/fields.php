@@ -435,8 +435,6 @@ function cpr_fm_post_podcast_and_show_settings() {
 				'hosts' => new Fieldmanager_Group(
 					[
 						'label' => __( 'Hosts', 'cpr' ),
-						'serialize_data' => false,
-						'add_to_prefix' => false,
 						'children' => \CPR\Components\Modules\Grid_Group::get_fm_fields(),
 					]
 				),
