@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Components\Slim_Navigation;
+namespace CPR\Components\Search;
 
 /**
  * Class for the Search Bar component.
@@ -17,7 +17,7 @@ class Search_Bar extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'slim-navigation-search-bar';
+	public $name = 'search-bar';
 
 	/**
 	 * Define the default config of a search bar.

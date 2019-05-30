@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Components\Slim_Navigation;
+namespace CPR\Components\Search;
 
 /**
  * Slim Navigation Search.
@@ -17,5 +17,5 @@ class Search_Button extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'slim-navigation-search-button';
+	public $name = 'search-button';
 }

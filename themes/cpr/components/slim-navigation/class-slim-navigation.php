@@ -57,9 +57,10 @@ class Slim_Navigation extends \WP_Components\Component {
 				)
 				->set_theme( 'slimNav' )
 				->set_child_themes( [ 'menu-item' => 'slimNav' ] ),
-			new Search(),
+			new \CPR\Components\Search\Search_Button(),
 			new \CPR\Components\Audio\Listen_Live(),
 			new \CPR\Components\Donate\Donate_Button(),
+			new \CPR\Components\Search\Search_Bar(),
 		];
 	}
 }
