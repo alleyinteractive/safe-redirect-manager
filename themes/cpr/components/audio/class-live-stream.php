@@ -29,15 +29,15 @@ class Live_Stream extends \WP_Components\Component {
 	public $stream_map = [
 		'news'      => [
 			'stream_src' => 'https://stream1.cprnetwork.org/cpr1_lo',
-			'endpoint'   => 'https://devpg.cpr.org/won_plus3/KCFR.json',
+			'endpoint'   => 'https://playlist.cprnetwork.org/won_plus3/KCFR.json',
 		],
 		'classical' => [
 			'stream_src' => 'https://stream1.cprnetwork.org/cpr2_lo',
-			'endpoint'   => 'https://devpg.cpr.org/won_plus3/KVOD.json',
+			'endpoint'   => 'https://playlist.cprnetwork.org/won_plus3/KVOD.json',
 		],
 		'indie'     => [
 			'stream_src' => 'https://stream1.cprnetwork.org/cpr3_lo',
-			'endpoint'   => 'https://devpg.cpr.org/won_plus3/KVOQ.json',
+			'endpoint'   => 'https://playlist.cprnetwork.org/won_plus3/KVOQ.json',
 		],
 	];
 
@@ -51,7 +51,7 @@ class Live_Stream extends \WP_Components\Component {
 			'endpoint'   => '',
 			'stream_src' => '',
 			'slug'       => '',
-			'title'      => '',
+			'section'      => '',
 		];
 	}
 
@@ -67,7 +67,7 @@ class Live_Stream extends \WP_Components\Component {
 		return $this->merge_config(
 			array_merge(
 				[
-					'title' => $this->term->name,
+					'section' => $this->term->name,
 					'slug'  => $slug,
 				],
 				$stream_data,
