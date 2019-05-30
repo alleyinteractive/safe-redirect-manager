@@ -11,7 +11,7 @@ namespace CPR;
  * Replaces the permalink for external content posts with a post meta
  * permalink.
  *
- * @param string.      $url  The post url.
+ * @param string       $url  The post url.
  * @param int|\WP_Post $post The post id or object.
  * @return string $url The new permalink for the post.
  */
