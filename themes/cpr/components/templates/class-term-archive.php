@@ -84,9 +84,9 @@ class Term_Archive extends \WP_Components\Component {
 							->set_theme( 'gridLarge' )
 							->set_child_themes(
 								[
-									'content-item' => 'grid_item',
-									'title'        => 'grid',
-									'eyebrow'      => 'small',
+									'content-item'  => 'grid_item',
+									'content-title' => 'grid',
+									'eyebrow'       => 'small',
 								]
 							)
 							->parse_from_wp_query( $this->query ),

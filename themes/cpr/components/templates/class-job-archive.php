@@ -54,8 +54,8 @@ class Job_Archive extends \WP_Components\Component {
 							->parse_from_wp_query( $this->query )
 							->set_child_themes(
 								[
-									'content-item' => 'river',
-									'title'        => 'grid',
+									'content-item'  => 'river',
+									'content-title' => 'grid',
 								]
 							),
 

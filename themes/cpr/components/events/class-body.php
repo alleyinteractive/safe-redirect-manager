@@ -141,7 +141,7 @@ class Body extends \WP_Components\Component {
 	 * `More Events`.
 	 *
 	 * @todo This is more or less a placeholder. Fix up later.
-	 * 
+	 *
 	 * @return \CPR\Components\Modules\Content_List
 	 */
 	public function get_more_events_component() {
@@ -158,10 +158,10 @@ class Body extends \WP_Components\Component {
 			->set_theme( 'river' )
 			->set_child_themes(
 				[
-					'content-list' => 'river',
-					'content-item' => 'river',
-					'eyebrow'      => 'small',
-					'title'        => 'grid',
+					'content-list'  => 'river',
+					'content-item'  => 'river',
+					'eyebrow'       => 'small',
+					'content-title' => 'grid',
 				]
 			);
 	}

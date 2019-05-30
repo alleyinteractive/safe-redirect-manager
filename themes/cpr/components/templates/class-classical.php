@@ -122,9 +122,9 @@ class Classical extends \WP_Components\Component {
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
-									'content-item' => 'featurePrimary',
-									'title'        => 'feature',
-									'eyebrow'      => 'small',
+									'content-item'  => 'featurePrimary',
+									'content-title' => 'feature',
+									'eyebrow'       => 'small',
 								]
 							),
 
@@ -203,7 +203,7 @@ class Classical extends \WP_Components\Component {
 						( new \CPR\Components\Modules\Content_List() )
 							->merge_config(
 								[
-									'image_size'        => 'feature_item_small',
+									'image_size'        => 'feature_item',
 									'show_excerpt'      => true,
 									'eyebrow_location'  => 'none',
 								]
@@ -216,9 +216,9 @@ class Classical extends \WP_Components\Component {
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
-									'content-item' => 'featureSecondary',
-									'eyebrow'      => 'small',
-									'title'        => 'featureSecondary',
+									'content-item'  => 'featureSecondary',
+									'eyebrow'       => 'small',
+									'content-title' => 'featureSecondary',
 								]
 							),
 
@@ -232,11 +232,7 @@ class Classical extends \WP_Components\Component {
 								 * Grid of additional items.
 								 */
 								( new \CPR\Components\Modules\Content_List() )
-									->merge_config(
-										[
-											'image_size' => 'grid_item',
-										]
-									)
+									->set_config( 'image_size', 'grid_item' )
 									->parse_from_ids(
 										array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
 										4,
@@ -245,10 +241,10 @@ class Classical extends \WP_Components\Component {
 							)
 							->set_child_themes(
 								[
-									'content-list' => 'gridHalf',
-									'content-item' => 'grid',
-									'eyebrow'      => 'small',
-									'title'        => 'grid',
+									'content-list'  => 'gridHalf',
+									'content-item'  => 'grid',
+									'eyebrow'       => 'small',
+									'content-title' => 'grid',
 								]
 							),
 					]
@@ -274,9 +270,9 @@ class Classical extends \WP_Components\Component {
 				)
 				->set_child_themes(
 					[
-						'content-item' => 'grid',
-						'eyebrow'      => 'small',
-						'title'        => 'grid',
+						'content-item'  => 'grid',
+						'eyebrow'       => 'small',
+						'content-title' => 'grid',
 					]
 				),
 
@@ -298,6 +294,7 @@ class Classical extends \WP_Components\Component {
 							[
 								'image_size'   => 'feature_item_small',
 								'show_excerpt' => true,
+								'theme'        => 'featureHalf',
 							]
 						)
 						->add_video_items(
@@ -308,8 +305,8 @@ class Classical extends \WP_Components\Component {
 						->set_theme( 'gridHalf' )
 						->set_child_themes(
 							[
-								'content-item' => 'featureSecondary',
-								'title'        => 'featureSecondary',
+								'content-item'  => 'featureSecondary',
+								'content-title' => 'featureSecondary',
 							]
 						)
 				),
