@@ -1,6 +1,6 @@
 <?php
 /**
- * Player component.
+ * Audio Element component.
  *
  * @package CPR
  */
@@ -8,9 +8,9 @@
 namespace CPR\Components\Audio;
 
 /**
- * Player.
+ * Audio Element.
  */
-class Player extends \WP_Components\Component {
+class Element extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.
