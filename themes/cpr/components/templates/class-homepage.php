@@ -68,10 +68,10 @@ class Homepage extends \WP_Components\Component {
 							->set_theme( 'left' )
 							->set_child_themes(
 								[
-									'content-list'         => 'river',
-									'content-item'         => 'river',
-									'eyebrow'              => 'small',
-									'title'                => 'grid',
+									'content-list'  => 'river',
+									'content-item'  => 'river',
+									'eyebrow'       => 'small',
+									'content-title' => 'grid',
 								]
 							),
 						/**
@@ -83,9 +83,9 @@ class Homepage extends \WP_Components\Component {
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
-									'content-item' => 'featurePrimary',
-									'title'        => 'feature',
-									'eyebrow'      => 'small',
+									'content-item'  => 'featurePrimary',
+									'content-title' => 'feature',
+									'eyebrow'       => 'small',
 								]
 							),
 
@@ -118,9 +118,9 @@ class Homepage extends \WP_Components\Component {
 						->set_theme( 'gridLarge' )
 						->set_child_themes(
 							[
-								'content-item' => 'grid',
-								'title'        => 'grid',
-								'eyebrow'      => 'small',
+								'content-item'  => 'grid',
+								'content-title' => 'grid',
+								'eyebrow'       => 'small',
 							]
 						)
 				),
@@ -141,9 +141,9 @@ class Homepage extends \WP_Components\Component {
 				->set_theme( 'gridCentered' )
 				->set_child_themes(
 					[
-						'content-item' => 'grid',
-						'title'        => 'grid',
-						'eyebrow'      => 'large',
+						'content-item'  => 'grid',
+						'content-title' => 'grid',
+						'eyebrow'       => 'large',
 					]
 				),
 

@@ -25,7 +25,7 @@ class Donate_Button extends \WP_Components\Component {
 	 * @return string
 	 */
 	public function get_default_label() : string {
-		return __( 'Donate to CPR', 'cpr' );
+		return __( 'Donate', 'cpr' );
 	}
 
 	/**

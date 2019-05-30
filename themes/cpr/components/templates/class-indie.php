@@ -114,13 +114,16 @@ class Indie extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'feature_item' )
-							->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+							->parse_from_fm_data(
+								$data['featured_content'] ?? [],
+								1,
+								self::get_indie_posts_backfill_args())
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
-									'content-item' => 'featurePrimary',
-									'title'        => 'feature',
-									'eyebrow'      => 'small',
+									'content-item'  => 'featurePrimary',
+									'content-title' => 'feature',
+									'eyebrow'       => 'small',
 								]
 							),
 
@@ -195,9 +198,9 @@ class Indie extends \WP_Components\Component {
 				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
-						'heading'           => $data['videos']['heading'] ?? '',
-						'heading_cta_label' => __( 'All Videos', 'cpr' ),
-						'heading_cta_link'  => home_url(), // @todo Update once known.
+						'heading'           => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
+						// 'heading_cta_label' => __( 'All Videos', 'cpr' ),
+						// 'heading_cta_link'  => home_url(), // @todo Update once known.
 
 					]
 				)
@@ -205,9 +208,9 @@ class Indie extends \WP_Components\Component {
 					( new \CPR\Components\Modules\Content_List() )
 						->merge_config(
 							[
-								'image_size'        => 'feature_item_small',
-								'theme'             => 'featureHalf',
-								'show_excerpt'      => true,
+								'image_size'   => 'feature_item_small',
+								'show_excerpt' => true,
+								'theme'        => 'featureHalf',
 							]
 						)
 						->add_video_items(
@@ -218,8 +221,8 @@ class Indie extends \WP_Components\Component {
 						->set_theme( 'gridHalf' )
 						->set_child_themes(
 							[
-								'content-item' => 'featureSecondary',
-								'title'        => 'featureSecondary',
+								'content-item'  => 'featureSecondary',
+								'content-title' => 'featureSecondary',
 							]
 						)
 				),
@@ -236,9 +239,10 @@ class Indie extends \WP_Components\Component {
 			( new \CPR\Components\Modules\Content_List() )
 				->merge_config(
 					[
-						'image_size'       => 'grid_item',
 						'background_color' => '#f8f9fa',
 						'eyebrow_location' => 'top',
+						'heading'          => __( 'Listen', 'cpr' ),
+						'image_size'       => 'grid_item',
 					]
 				)
 				->set_theme( 'gridCentered' )
@@ -249,9 +253,9 @@ class Indie extends \WP_Components\Component {
 				)
 				->set_child_themes(
 					[
-						'content-item' => 'grid',
-						'eyebrow'      => 'small',
-						'title'        => 'grid',
+						'content-item'  => 'grid',
+						'eyebrow'       => 'small',
+						'content-title' => 'grid',
 					]
 				),
 
@@ -275,7 +279,7 @@ class Indie extends \WP_Components\Component {
 				->set_theme( 'split' )
 				->merge_config(
 					[
-						'heading'           => $data['articles']['heading'] ?? '',
+						'heading'           => $data['articles']['heading'] ?? __( 'Read', 'cpr' ),
 						'heading_cta_label' => __( 'All Stories', 'cpr' ),
 						'heading_cta_link'  => get_term_link( 'indie', 'section' ),
 						'heading_link'      => get_term_link( 'indie', 'section' ),
@@ -286,7 +290,7 @@ class Indie extends \WP_Components\Component {
 						( new \CPR\Components\Modules\Content_List() )
 							->merge_config(
 								[
-									'image_size'       => 'feature_item_small',
+									'image_size'       => 'feature_item',
 									'show_excerpt'     => true,
 									'eyebrow_location' => 'none',
 								]
@@ -299,9 +303,9 @@ class Indie extends \WP_Components\Component {
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
-									'content-item' => 'featureSecondary',
-									'eyebrow'      => 'small',
-									'title'        => 'featureSecondary',
+									'content-item'  => 'featureSecondary',
+									'eyebrow'       => 'small',
+									'content-title' => 'featureSecondary',
 								]
 							),
 
@@ -315,6 +319,7 @@ class Indie extends \WP_Components\Component {
 								 * Grid of additional items.
 								 */
 								( new \CPR\Components\Modules\Content_List() )
+									->set_config( 'image_size', 'grid_item' )
 									->parse_from_ids(
 										array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
 										4,
@@ -323,10 +328,10 @@ class Indie extends \WP_Components\Component {
 							)
 							->set_child_themes(
 								[
-									'content-list' => 'gridHalf',
-									'content-item' => 'grid',
-									'eyebrow'      => 'small',
-									'title'        => 'grid',
+									'content-list'  => 'gridHalf',
+									'content-item'  => 'grid',
+									'eyebrow'       => 'small',
+									'content-title' => 'grid',
 								]
 							),
 					]

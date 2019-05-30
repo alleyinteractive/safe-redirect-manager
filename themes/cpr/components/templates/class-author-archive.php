@@ -79,9 +79,9 @@ class Author_Archive extends \WP_Components\Component {
 						->set_theme( 'riverFull' )
 						->set_child_themes(
 							[
-								'content-item'         => 'riverFull',
-								'title'                => 'featureSecondary',
-								'eyebrow'              => 'small',
+								'content-item'  => 'riverFull',
+								'content-title' => 'featureSecondary',
+								'eyebrow'       => 'small',
 							]
 						),
 
