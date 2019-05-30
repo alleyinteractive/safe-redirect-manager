@@ -114,7 +114,11 @@ class Classical extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'feature_item' )
-							->parse_from_fm_data( $data['featured_content'] ?? [], 1 )
+							->parse_from_fm_data(
+								$data['featured_content'] ?? [],
+								1,
+								self::get_classical_posts_backfill_args()
+							)
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
@@ -188,7 +192,7 @@ class Classical extends \WP_Components\Component {
 				->set_theme( 'split' )
 				->merge_config(
 					[
-						'heading'           => $data['articles']['heading'] ?? '',
+						'heading'           => $data['articles']['heading'] ?? __( 'Read', 'cpr' ),
 						'heading_cta_label' => __( 'All Stories', 'cpr' ),
 						'heading_cta_link'  => get_term_link( 'classical', 'section' ),
 						'heading_link'      => get_term_link( 'classical', 'section' ),
@@ -228,6 +232,11 @@ class Classical extends \WP_Components\Component {
 								 * Grid of additional items.
 								 */
 								( new \CPR\Components\Modules\Content_List() )
+									->merge_config(
+										[
+											'image_size' => 'grid_item',
+										]
+									)
 									->parse_from_ids(
 										array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
 										4,
@@ -251,9 +260,10 @@ class Classical extends \WP_Components\Component {
 			( new \CPR\Components\Modules\Content_List() )
 				->merge_config(
 					[
-						'image_size'       => 'grid_item',
 						'background_color' => '#f8f9fa',
 						'eyebrow_location' => 'top',
+						'heading'          => __( 'Listen', 'cpr' ),
+						'image_size'       => 'grid_item',
 					]
 				)
 				->set_theme( 'gridCentered' )
@@ -277,18 +287,17 @@ class Classical extends \WP_Components\Component {
 				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
-						'heading'           => $data['videos']['heading'] ?? '',
-						'heading_cta_label' => __( 'All Videos', 'cpr' ),
-						'heading_cta_link'  => home_url(), // @todo Update once known.
-
+						'heading'           => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
+						// 'heading_cta_label' => __( 'All Videos', 'cpr' ),
+						// 'heading_cta_link'  => home_url(), // @todo Update once known.
 					]
 				)
 				->append_child(
 					( new \CPR\Components\Modules\Content_List() )
 						->merge_config(
 							[
-								'image_size'        => 'feature_item_small',
-								'show_excerpt'      => true,
+								'image_size'   => 'feature_item_small',
+								'show_excerpt' => true,
 							]
 						)
 						->add_video_items(
@@ -319,20 +328,14 @@ class Classical extends \WP_Components\Component {
 				),
 
 			/**
-			 * People list.
+			 * Hosts.
 			 */
-			( new \CPR\Components\Column_Area() )
-				->set_theme( 'oneColumn' )
-				->merge_config(
-					[
-						'heading'           => $data['people']['heading'] ?? '',
-						'heading_cta_label' => get_the_title( $data['people']['heading_cta_id'] ?? 0 ),
-						'heading_cta_link'  => get_permalink( $data['people']['heading_cta_id'] ?? 0 ),
-
-					]
-				)
-				->append_child(
-					$this->get_people_list( $data['people'] ?? [] )
+			( new \CPR\Components\Modules\Grid_Group() )
+				->parse_from_fm_data( (array) $data['hosts'] )
+				->children_callback(
+					function( $child ) {
+						return $child->set_config( 'show_name', $this->wp_post_get_title() );
+					}
 				),
 		];
 	}
@@ -469,67 +472,10 @@ class Classical extends \WP_Components\Component {
 							],
 						]
 					),
-					'people' => new \Fieldmanager_Group(
+					'hosts' => new \Fieldmanager_Group(
 						[
-							'label'    => __( 'People', 'cpr' ),
-							'children' => [
-								'heading' => new \Fieldmanager_TextField(
-									[
-										'label'         => __( 'Heading', 'cpr' ),
-										'default_value' => __( 'Hosts', 'cpr' ),
-									]
-								),
-								'heading_cta_id' => new \Fieldmanager_Autocomplete(
-									[
-										'label'       => __( 'Call to Action button', 'cpr' ),
-										'description' => __( 'Select the page to link to in the CTA.', 'cpr' ),
-										'datasource'  => new \Fieldmanager_Datasource_Post(
-											[
-												'query_args' => [
-													'post_type' => 'page',
-												],
-											]
-										),
-									]
-								),
-								'content_items' => new \Fieldmanager_Group(
-									[
-										'add_more_label' => __( 'Add a host', 'cpr' ),
-										'label'          => __( 'Host', 'cpr' ),
-										'label_macro'    => [ 'Host: %s', 'guest_author' ],
-										'extra_elements' => 0,
-										'limit'          => 0,
-										'collapsed'      => true,
-										'sortable'       => true,
-										'children'       => [
-											'guest_author' => new \Fieldmanager_Autocomplete(
-												[
-													'label'       => __( 'Host', 'cpr' ),
-													'datasource'  => new \Fieldmanager_Datasource_Post(
-														[
-															'query_args' => [
-																'post_type'  => 'guest-author',
-																'meta_query' => [
-																	[
-																		'key'     => 'type',
-																		'value'   => 'host',
-																		'compare' => '=',
-																	],
-																],
-															],
-														]
-													),
-												]
-											),
-											'show' => new \Fieldmanager_TextField(
-												[
-													'label' => __( 'Show Title', 'cpr' ),
-												]
-											),
-										],
-									]
-								),
-							],
+							'label'    => __( 'Hosts', 'cpr' ),
+							'children' => \CPR\Components\Modules\Grid_Group::get_fm_fields(),
 						]
 					),
 				],
