@@ -97,10 +97,10 @@ class Body extends \WP_Components\Component {
 			->set_theme( 'river' )
 			->set_child_themes(
 				[
-					'content-list'         => 'river',
-					'content-item'         => 'river',
-					'eyebrow'              => 'small',
-					'title'                => 'grid',
+					'content-list'  => 'river',
+					'content-item'  => 'river',
+					'eyebrow'       => 'small',
+					'content-title' => 'grid',
 				]
 			);
 	}
@@ -124,10 +124,10 @@ class Body extends \WP_Components\Component {
 			->set_theme( 'river' )
 			->set_child_themes(
 				[
-					'content-list'         => 'river',
-					'content-item'         => 'river',
-					'eyebrow'              => 'small',
-					'title'                => 'grid',
+					'content-list'  => 'river',
+					'content-item'  => 'river',
+					'eyebrow'       => 'small',
+					'content-title' => 'grid',
 				]
 			);
 	}

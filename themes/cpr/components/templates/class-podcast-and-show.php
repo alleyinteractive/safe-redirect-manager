@@ -56,10 +56,18 @@ class Podcast_And_Show extends \WP_Components\Component {
 				->set_theme( 'gridLarge' )
 				->set_child_themes(
 					[
-						'content-item' => 'grid',
-						'title'        => 'grid',
-						'eyebrow'      => 'small',
+						'content-item'  => 'grid',
+						'content-title' => 'grid',
+						'eyebrow'       => 'small',
 					]
+				),
+
+			( new \CPR\Components\Modules\Grid_Group() )
+				->parse_from_fm_data( (array) get_post_meta( $this->get_post_id(), 'hosts', true ) )
+				->children_callback(
+					function( $child ) {
+						return $child->set_config( 'show_name', $this->wp_post_get_title() );
+					}
 				),
 		];
 	}
