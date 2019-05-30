@@ -690,3 +690,126 @@ function cpr_fm_post_tribe_events_section() {
 }
 add_action( 'fm_post_tribe_events', 'cpr_fm_post_tribe_events_section' );
 /* end fm:post-tribe_events_section */
+
+/* begin fm:post-page-settings */
+/**
+ * `post-page-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_page_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-page-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'tabbed' => 'vertical',
+			'children' => [
+				'settings' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Settings', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
+							'section_id' => new Fieldmanager_Select(
+								[
+									'label' => __( 'Section', 'cpr' ),
+									'description' => __( 'Select a section.', 'cpr' ),
+									'datasource' => new Fieldmanager_Datasource_Term(
+										[
+											'taxonomy' => 'section',
+											'taxonomy_save_to_terms' => true,
+											'only_save_to_taxonomy' => true,
+										]
+									),
+								]
+							),
+						],
+					]
+				),
+				'social_and_seo' => new Fieldmanager_Group(
+					[
+						'label' => __( 'SEO and Social', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
+							'seo' => new Fieldmanager_Group(
+								[
+									'label' => __( 'SEO Settings', 'cpr' ),
+									'serialize_data' => false,
+									'add_to_prefix' => false,
+									'collapsed' => true,
+									'children' => [
+										'_meta_title' => new Fieldmanager_TextField( __( 'Title Tag', 'cpr' ) ),
+										'_meta_description' => new Fieldmanager_TextArea(
+											[
+												'label' => __( 'Meta Description', 'cpr' ),
+												'attributes' => [
+													'style' => 'width: 100%;',
+													'rows' => 5,
+												],
+											]
+										),
+										'_meta_keywords' => new Fieldmanager_TextArea(
+											[
+												'label' => __( 'Meta Keywords', 'cpr' ),
+												'attributes' => [
+													'style' => 'width: 100%;',
+													'rows' => 5,
+												],
+											]
+										),
+									],
+								]
+							),
+							'social' => new Fieldmanager_Group(
+								[
+									'label' => __( 'Social Media Settings', 'cpr' ),
+									'serialize_data' => false,
+									'add_to_prefix' => false,
+									'collapsed' => true,
+									'children' => [
+										'social_title' => new Fieldmanager_TextField( __( 'Social Title', 'cpr' ) ),
+										'social_description' => new Fieldmanager_TextArea(
+											[
+												'label' => __( 'Social Description', 'cpr' ),
+												'attributes' => [
+													'style' => 'width: 100%;',
+													'rows' => 5,
+												],
+											]
+										),
+										'social_image_id' => new Fieldmanager_Media( __( 'Social Image', 'cpr' ) ),
+									],
+								]
+							),
+							'advanced_settings' => new Fieldmanager_Group(
+								[
+									'label' => __( 'Advanced Settings', 'cpr' ),
+									'serialize_data' => false,
+									'add_to_prefix' => false,
+									'collapsed' => true,
+									'children' => [
+										'canonical_url' => new Fieldmanager_TextField(
+											[
+												'label' => __( 'Canonical Url', 'cpr' ),
+												'description' => __( 'This is the original URL of syndicated content.', 'cpr' ),
+											]
+										),
+										'de_index_google' => new Fieldmanager_Checkbox(
+											[
+												'label' => __( 'De-index in search engines', 'cpr' ),
+												'description' => __( 'This will prevent search engines from indexing this content.', 'cpr' ),
+											]
+										),
+									],
+								]
+							),
+						],
+					]
+				),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'page' ] );
+}
+add_action( 'fm_post_page', 'cpr_fm_post_page_settings' );
+/* end fm:post-page-settings */
