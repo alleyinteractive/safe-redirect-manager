@@ -1,6 +1,6 @@
 <?php
 /**
- * Article Template Component.
+ * Event Template Component.
  *
  * @package CPR
  */
@@ -8,9 +8,9 @@
 namespace CPR\Components\Templates;
 
 /**
- * Article template.
+ * Event template.
  */
-class Article extends \WP_Components\Component {
+class Event extends \WP_Components\Component {
 
 	use \WP_Components\WP_Post;
 
@@ -19,7 +19,7 @@ class Article extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'article-template';
+	public $name = 'event-template';
 
 	/**
 	 * Hook into post being set.
@@ -41,21 +41,9 @@ class Article extends \WP_Components\Component {
 	public function get_components() : array {
 		return [
 			/**
-			 * Content Header.
+			 * Event Body.
 			 */
-			( new \CPR\Components\Content\Header() )
-				->set_post( $this->post ),
-
-			/**
-			 * Content Body.
-			 */
-			( new \CPR\Components\Content\Body() )
-				->set_post( $this->post ),
-
-			/**
-			 * Content Footer.
-			 */
-			( new \CPR\Components\Content\Footer() )
+			( new \CPR\Components\Events\Body() )
 				->set_post( $this->post ),
 
 			/**
@@ -63,12 +51,19 @@ class Article extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'oneColumn' )
-				->set_config( 'heading', __( 'Related Content', 'cpr' ) )
+				->set_config( 'heading', __( 'Latest Stories', 'cpr' ) )
 				->append_children(
 					[
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'grid_item' )
-							->parse_from_jetpack_related( $this->get_post_id(), 4, [] )
+							->parse_from_wp_query(
+								new \WP_Query(
+									[
+										'post_type'      => [ 'post' ],
+										'posts_per_page' => 4,
+									]
+								)
+							)
 							->set_theme( 'gridLarge' )
 							->set_child_themes(
 								[

@@ -53,9 +53,18 @@ class Term_Archive extends \WP_Components\Component {
 	public function get_components() : array {
 
 		// Determine the base url for paginationn.
-		$base_url = "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/";
-		if ( 'section' === $this->wp_term_get_taxonomy() ) {
-			$base_url = "/{$this->wp_term_get_slug()}/all/";
+		switch ( $this->wp_term_get_taxonomy() ) {
+			case 'section':
+				$base_url = "/{$this->wp_term_get_slug()}/all/";
+				break;
+
+			case 'post_tag':
+				$base_url = "/tag/{$this->wp_term_get_slug()}/";
+				break;
+
+			default:
+				$base_url = "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/";
+				break;
 		}
 
 		return [
@@ -71,15 +80,16 @@ class Term_Archive extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'heading', $this->wp_term_get_name() )
-							->parse_from_wp_query( $this->query )
+							->set_config( 'image_size', 'grid_item' )
 							->set_theme( 'gridLarge' )
-								->set_child_themes(
-									[
-										'content-item' => 'grid',
-										'title'        => 'grid',
-										'eyebrow'      => 'small',
-									]
-								),
+							->set_child_themes(
+								[
+									'content-item'  => 'grid_item',
+									'content-title' => 'grid',
+									'eyebrow'       => 'small',
+								]
+							)
+							->parse_from_wp_query( $this->query ),
 
 						/**
 						 * Pagination.

@@ -33,7 +33,7 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\remove_postcustom', 100 );
 function allow_searching_post_types_in_admin() {
 	if ( is_admin() ) {
 		global $wp_post_types;
-		foreach ( [ 'guest-author', 'external-link' ] as $post_type ) {
+		foreach ( [ 'guest-author', 'podcast-post', 'show-post', 'external-link' ] as $post_type ) {
 			if ( ! empty( $wp_post_types[ $post_type ] ) ) {
 				$wp_post_types[ $post_type ]->exclude_from_search = false;
 			}
@@ -111,7 +111,7 @@ add_action( 'admin_menu', __NAMESPACE__ . '\add_menu_pages' );
 
 /**
  * Set the correct menu and submenu items as active.
- * 
+ *
  * @param string $parent_file The top level menu item.
  * @return string
  */

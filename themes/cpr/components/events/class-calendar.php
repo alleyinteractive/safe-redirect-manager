@@ -80,7 +80,7 @@ class Calendar extends \WP_Components\Component {
 	 */
 	public function get_fm_fields() : array {
 		return [
-			'heading' => new \Fieldmanager_TextField(
+			'heading'          => new \Fieldmanager_TextField(
 				[
 					'label'         => __( 'Heading', 'cpr' ),
 					'default_value' => $this->get_config( 'heading' ),
@@ -88,9 +88,9 @@ class Calendar extends \WP_Components\Component {
 			),
 			'content_item_ids' => new \Fieldmanager_Zone_Field(
 				[
-					'label'          => __( 'Events', 'cpr' ),
-					'post_limit'     => 4,
-					'query_args'     => [
+					'label'      => __( 'Events', 'cpr' ),
+					'post_limit' => 4,
+					'query_args' => [
 						'post_type' => [ 'event' ],
 					],
 				]

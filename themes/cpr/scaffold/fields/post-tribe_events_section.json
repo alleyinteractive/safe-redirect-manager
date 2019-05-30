@@ -1,0 +1,19 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "tribe_events" ],
+			"title": { "__": "Section" },
+			"priority": "high"
+		}
+	],
+	"name": "section_id",
+	 "type": "select",
+		"description": { "__": "Select a section." },
+		"datasource": {
+			"type": "term",
+			"taxonomy": "section",
+			"taxonomy_save_to_terms": true,
+			"only_save_to_taxonomy": true
+		}
+}

@@ -9,7 +9,7 @@ namespace CPR;
 
 /**
  * Disable Gutenberg editor for certain post types.
- * 
+ *
  * @todo Remove 'show-episode' from the list once FM Zones is compatible with GB.
  *
  * @param string $current_status The status of the post.

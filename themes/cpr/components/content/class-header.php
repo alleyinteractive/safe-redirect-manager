@@ -77,6 +77,7 @@ class Header extends \WP_Components\Component {
 									'twitter'  => true,
 									'email'    => true,
 								],
+								'text'     => __( 'Share: ', 'cpr' ),
 							]
 						)
 						->set_post( $this->post )
@@ -84,6 +85,20 @@ class Header extends \WP_Components\Component {
 				break;
 
 			case 'page':
+				break;
+
+			case 'job':
+				$this->set_publish_date();
+
+				$this->set_config( 'eyebrow_label', __( '‹‹ All Employment Opportunities', 'cpr' ) );
+				$this->set_config( 'eyebrow_link', home_url( '/jobs/' ) );
+				break;
+
+			case 'press-release':
+				$this->set_publish_date();
+
+				$this->set_config( 'eyebrow_label', __( '‹‹ All Press Releases', 'cpr' ) );
+				$this->set_config( 'eyebrow_link', home_url( '/press-releases/' ) );
 				break;
 		}
 

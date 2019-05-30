@@ -144,10 +144,17 @@ namespace CPR;
 		'avatar' => [
 			'sources' => [
 				[
-					'default'    => true,
-					'descriptor' => 107,
 					'transforms' => [
 						'resize' => [ 107, 107 ],
+					],
+					'default'    => true,
+					'descriptor' => 107,
+					'media' => [ 'max' => 'sm' ],
+				],
+				[
+					'default'    => true,
+					'transforms' => [
+						'resize' => [ 400, 400 ],
 					],
 				],
 			],
@@ -195,6 +202,21 @@ namespace CPR;
 			'retina'       => true,
 			'aspect_ratio' => 1,
 			'fallback_image_url' => get_template_directory_uri() . '/images/default-thumbnail.png',
+		],
+		// @todo add proper sizing
+		'grid-group-host' => [
+			'sources' => [
+				[
+					'default' => true,
+					'descriptor' => 300,
+					'transforms' => [
+						'resize' => [ 300, 300 ],
+					],
+				],
+			],
+			'retina' => true,
+			'aspect_ratio' => 1,
+			'fallback_image_url' => get_template_directory_uri() . '/images/default-avatar.png',
 		],
 	]
 );

@@ -126,9 +126,9 @@ class News extends \WP_Components\Component {
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
-									'content-item' => 'featureSecondary',
-									'title'        => 'feature',
-									'eyebrow'      => 'small',
+									'content-item'  => 'featureSecondary',
+									'content-title' => 'feature',
+									'eyebrow'       => 'small',
 								]
 							),
 						/**
@@ -162,9 +162,9 @@ class News extends \WP_Components\Component {
 						->set_theme( 'gridLarge' )
 						->set_child_themes(
 							[
-								'content-item' => 'grid',
-								'title'        => 'grid',
-								'eyebrow'      => 'small',
+								'content-item'  => 'grid',
+								'content-title' => 'grid',
+								'eyebrow'       => 'small',
 							]
 						)
 				),
@@ -201,9 +201,9 @@ class News extends \WP_Components\Component {
 							->set_theme( 'featureTerm' )
 							->set_child_themes(
 								[
-									'content-item' => 'featureTerm',
-									'title'        => 'featureSecondary',
-									'eyebrow'      => 'small',
+									'content-item'  => 'featureTerm',
+									'content-title' => 'featureSecondary',
+									'eyebrow'       => 'small',
 								]
 							),
 						/**
@@ -225,10 +225,10 @@ class News extends \WP_Components\Component {
 							)
 							->set_child_themes(
 								[
-									'content-list'         => 'river',
-									'content-item'         => 'river',
-									'title'                => 'grid',
-									'eyebrow'              => 'small',
+									'content-list'  => 'river',
+									'content-item'  => 'river',
+									'content-title' => 'grid',
+									'eyebrow'       => 'small',
 								]
 							),
 					]
@@ -262,7 +262,7 @@ class News extends \WP_Components\Component {
 									'image_size'           => 'grid_item',
 									'show_excerpt'         => true,
 									'call_to_action_label' => __( 'More Stories', 'cpr' ),
-									'call_to_action_link'  => home_url( '/section/news/' ),
+									'call_to_action_link'  => home_url( '/news/all/' ),
 								]
 							)
 							->parse_from_ids(
@@ -273,9 +273,9 @@ class News extends \WP_Components\Component {
 							->set_theme( 'riverFull' )
 							->set_child_themes(
 								[
-									'content-item'         => 'riverFull',
-									'title'                => 'featureSecondary',
-									'eyebrow'              => 'small',
+									'content-item'  => 'riverFull',
+									'content-title' => 'featureSecondary',
+									'eyebrow'       => 'small',
 								]
 							),
 
@@ -299,9 +299,9 @@ class News extends \WP_Components\Component {
 										)
 										->set_child_themes(
 											[
-												'content-item' => 'river',
-												'title'        => 'grid',
-												'eyebrow'      => 'small',
+												'content-item'  => 'river',
+												'content-title' => 'grid',
+												'eyebrow'       => 'small',
 											]
 										),
 

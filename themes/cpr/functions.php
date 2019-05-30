@@ -13,6 +13,7 @@ define( 'CPR_URL', get_template_directory_uri() );
 /**
  * Aleypack modules.
  */
+\Alleypack\load_module( 'block-converter', '1.0' );
 \Alleypack\load_module( 'cli-helpers', '1.1' );
 \Alleypack\load_module( 'fm-modules', '1.0' );
 \Alleypack\load_module( 'page-templates', '1.0' );
@@ -29,6 +30,7 @@ require_once CPR_PATH . '/inc/plugins.php';
 // Admin customizations.
 if ( is_admin() ) {
 	require_once CPR_PATH . '/inc/admin.php';
+	require_once CPR_PATH . '/inc/admin-columns.php';
 }
 
 // wp-cli command.

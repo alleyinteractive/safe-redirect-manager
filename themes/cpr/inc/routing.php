@@ -57,6 +57,7 @@ function build_components_endpoint(
 			( new Components\Header\Header() ),
 			new \WP_Components\Body(),
 			new Components\Footer\Footer(),
+			new Components\Audio\Element(),
 		];
 	}
 
@@ -139,6 +140,13 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Press Releases archive.
+		 */
+		case $wp_query->is_post_type_archive( 'press-release' ):
+			$head->set_query( $wp_query );
+			$template = ( new Components\Templates\Press_Release_Archive() )->set_query( $wp_query );
+			break;
+		/**
 		 * Podcast/Show single.
 		 */
 		case $wp_query->is_tax( 'podcast' ):
@@ -162,10 +170,11 @@ function build_components_endpoint(
 			break;
 
 		/**
-		 * Page.
+		 * Pages and other simple content super page style singles.
 		 */
 		case $wp_query->is_page():
 		case $wp_query->is_singular( 'job' ):
+		case $wp_query->is_singular( 'press-release' ):
 			$head->set_post( $wp_query->post );
 
 			// Decide on a page template.
@@ -179,6 +188,14 @@ function build_components_endpoint(
 					$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
 					break;
 			}
+			break;
+
+		/**
+		 * Event.
+		 */
+		case $wp_query->is_singular( 'tribe_events' ):
+			$head->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
 			break;
 
 		/**

@@ -100,7 +100,14 @@ class Cleanup extends \CLI_Command {
 
 		srm_create_redirect( '/underwrite/', '/underwriters/', 301 );
 		srm_create_redirect( '/list-of-underwriters/', '/underwriters/', 301 );
+
+		// Jobs archive and singles.
 		srm_create_redirect( '/about/employment-opportunities/', '/jobs/', 301 );
+		srm_create_redirect( '/employment-opportunity/*', '/job/*', 301 );
+
+		// Press Release archive and singles.
+		srm_create_redirect( '/about/press-room/', '/press-releases/', 301 );
+		srm_create_redirect( '/about/press-room/*', '/press-release/*', 301 );
 
 		\WP_CLI::success( 'Redirects created.' );
 	}

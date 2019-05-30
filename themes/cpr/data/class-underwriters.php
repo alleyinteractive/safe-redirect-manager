@@ -76,7 +76,7 @@ class Underwriters {
 			'categories' => empty( $categories ) ? [] : wp_list_pluck( $categories, 'slug' ),
 			'id'         => $post->ID,
 			'link'       => (string) esc_url( get_post_meta( $post->ID, 'link', true ) ),
-			'name'       => get_the_title( $post ),
+			'name'       => html_entity_decode( get_the_title( $post ) ),
 			'phone'      => (string) get_post_meta( $post->ID, 'phone_number', true ),
 		];
 	}

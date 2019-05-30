@@ -51,14 +51,21 @@ class Search extends \WP_Components\Component {
 						 * Search results grid.
 						 */
 						( new \CPR\Components\Modules\Content_List() )
-								->set_config( 'heading', __( 'Search Results for:', 'cpr' ) )
+								->set_config(
+									'heading',
+									sprintf(
+										// Translators: %1$s - search query string.
+										__( 'Results For: %1$s', 'cpr' ),
+										$this->query->get( 's' )
+									)
+								)
 								->parse_from_wp_query( $this->query )
 								->set_theme( 'gridLarge' )
 								->set_child_themes(
 									[
-										'content-item' => 'grid',
-										'title'        => 'grid',
-										'eyebrow'      => 'small',
+										'content-item'  => 'grid',
+										'content-title' => 'grid',
+										'eyebrow'       => 'small',
 									]
 								),
 
@@ -76,6 +83,26 @@ class Search extends \WP_Components\Component {
 	}
 
 	/**
+	 * Return an array of post types that can be searched for.
+	 *
+	 * @return array
+	 */
+	public static function get_searchable_post_type() {
+		return [
+			'post',
+			'page',
+			'podcast-post',
+			'show-post',
+			'podcast-episode',
+			'show-episode',
+			'show-segment',
+			'job',
+			'press-release',
+			'guest-author',
+		];
+	}
+
+	/**
 	 * Modify results.
 	 *
 	 * @param object $wp_query wp_query object.
@@ -86,6 +113,7 @@ class Search extends \WP_Components\Component {
 			&& ! empty( $wp_query->get( 'irving-path' ) )
 		) {
 			$wp_query->set( 'posts_per_page', 16 );
+			$wp_query->set( 'post_type', self::get_searchable_post_type() );
 		}
 	}
 
