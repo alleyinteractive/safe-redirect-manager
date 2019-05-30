@@ -117,7 +117,7 @@ class Indie extends \WP_Components\Component {
 							->parse_from_fm_data(
 								$data['featured_content'] ?? [],
 								1,
-								self::get_indie_posts_backfill_args())
+							self::get_indie_posts_backfill_args())
 							->set_theme( 'feature' )
 							->set_child_themes(
 								[
@@ -201,7 +201,6 @@ class Indie extends \WP_Components\Component {
 						'heading'           => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
 						// 'heading_cta_label' => __( 'All Videos', 'cpr' ),
 						// 'heading_cta_link'  => home_url(), // @todo Update once known.
-
 					]
 				)
 				->append_child(
