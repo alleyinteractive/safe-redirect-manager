@@ -150,29 +150,19 @@ class Classical extends \WP_Components\Component {
 								/**
 								 * Concert Calendar.
 								 */
-								( new \CPR\Components\Events\Calendar() )
+								( new \CPR\Components\Widgets\Content_List() )
 									->parse_from_fm_data(
-										$data['calendar'] ?? [],
+										[],
 										4,
 										[
-											'post_type'  => 'event',
-											'order'      => 'ASC',
-											'orderby'    => 'meta_value_num',
-											'meta_key'   => 'start_datetime',
-											'meta_query' => [
-												[
-													'key'     => 'end_datetime',
-													'value'   => date( 'U' ),
-													'compare' => '>=',
-												],
-											],
-											'tax_query'  => [
-												[
-													'taxonomy' => 'section',
-													'field'    => 'slug',
-													'terms'    => 'classical',
-												],
-											],
+											'post_type'  => 'tribe_events',
+											// 'tax_query'  => [
+											// 	[
+											// 		'taxonomy' => 'section',
+											// 		'field'    => 'slug',
+											// 		'terms'    => 'classical',
+											// 	],
+											// ],
 										]
 									)
 							),
