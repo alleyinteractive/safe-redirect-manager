@@ -22,6 +22,16 @@ class Content_List extends \WP_Components\Component {
 	public $name = 'widget-content-list';
 
 	/**
+	 * Available themes for this component. If you attempt to set a theme that is
+	 * not in this array, it will fail (and fall back to 'default').
+	 *
+	 * @var array.
+	 */
+	public $themes = [
+		'default', // Used for a standard river of content.
+	];
+
+	/**
 	 * Define a default config.
 	 *
 	 * @return array Default config.

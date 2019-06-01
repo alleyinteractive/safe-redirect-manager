@@ -46,7 +46,6 @@ class Content_List_Item extends \WP_Components\Component {
 			'permalink'  => '',
 			'start_time' => '',
 			'title'      => '',
-			'type'       => '',
 		];
 	}
 
@@ -67,7 +66,10 @@ class Content_List_Item extends \WP_Components\Component {
 				// @todo Setup additional configs.
 				$this->merge_config(
 					[
-						'location'   => get_post_meta( $this->post->ID, 'location', true ),
+						'day'        => tribe_get_start_date( $this->get_post_id(), false, 'd' ),
+						'location'   => get_the_title( absint( get_post_meta( $this->post->ID, '_EventVenueID', true ) ) ),
+						'month'      => tribe_get_start_date( $this->get_post_id(), false, 'M' ),
+						'start_time' => tribe_get_start_date( $this->get_post_id(), false, 'ga' ),
 					]
 				);
 				break;

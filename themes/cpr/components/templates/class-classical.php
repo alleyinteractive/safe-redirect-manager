@@ -399,20 +399,20 @@ class Classical extends \WP_Components\Component {
 						[
 							'label'    => __( 'Concert Calendar', 'cpr' ),
 							'children' => [
-								'heading'          => new \Fieldmanager_TextField(
+								'heading'      => new \Fieldmanager_TextField(
 									[
 										'label'         => __( 'Heading', 'cpr' ),
 										'default_value' => 'Upcoming Events',
 									]
 								),
-								'heading_link'     => new \Fieldmanager_Textfield(
+								'heading_link' => new \Fieldmanager_Textfield(
 									[
 										'label'         => __( 'Heading Link', 'cpr' ),
 										'default_value' => '/classical/calendar/',
 
 									]
 								),
-								'event_ids' => new \Fieldmanager_Zone_Field(
+								'event_ids'    => new \Fieldmanager_Zone_Field(
 									[
 										'label'      => __( 'Events', 'cpr' ),
 										'post_limit' => 4,
