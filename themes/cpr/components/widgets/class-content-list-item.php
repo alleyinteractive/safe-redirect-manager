@@ -76,6 +76,29 @@ class Content_List_Item extends \WP_Components\Component {
 
 			case 'external-link':
 				$this->set_theme( 'external-link' );
+
+				// @todo Setup this media.
+				$this->wp_post_set_featured_image( 'external-link-widget' );
+
+				$this->append_children(
+					[
+						/**
+						 * External link description.
+						 */
+						( new \WP_Components\HTML() )
+							->set_config(
+								'content',
+								apply_filters( 'the_content', $this->post->post_content )
+							),
+
+						/**
+						 * External link cta.
+						 */
+						( new \WP_Components\Heplers\Button() )
+							->set_config( 'link', $this->wp_post_get_permalink() )
+							->set_children( __( 'Learn More', 'cpr' ) ),
+					]
+				);
 				break;
 		}
 
