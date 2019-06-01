@@ -27,7 +27,8 @@ class News extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
-		$body           = new \WP_Components\Body();
+		$body           = ( new \WP_Components\Body() )
+			->set_config( 'body_classes', 'news' );
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;
