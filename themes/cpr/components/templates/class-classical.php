@@ -147,12 +147,15 @@ class Classical extends \WP_Components\Component {
 						( new \CPR\Components\Sidebar() )
 							->set_theme( 'right' )
 							->append_child(
+
 								/**
-								 * Concert Calendar.
+								 * Upcoming events.
 								 */
 								( new \CPR\Components\Widgets\Content_List() )
-									->parse_from_fm_data(
-										[],
+									->set_config( 'header_text', $data['calendar']['header_text'] ?? __( 'Events Calendar' ) )
+									->set_config( 'header_link', $data['calendar']['header_link'] ?? site_url( 'classical/calendar/' ) )
+									->parse_from_post_ids(
+										$data['calendar']['event_ids'] ?? [],
 										4,
 										[
 											'post_type'  => 'tribe_events',
@@ -394,7 +397,30 @@ class Classical extends \WP_Components\Component {
 					'calendar' => new \Fieldmanager_Group(
 						[
 							'label'    => __( 'Concert Calendar', 'cpr' ),
-							'children' => ( new \CPR\Components\Events\Calendar() )->get_fm_fields(),
+							'children' => [
+								'heading'          => new \Fieldmanager_TextField(
+									[
+										'label'         => __( 'Heading', 'cpr' ),
+										'default_value' => 'Upcoming Events',
+									]
+								),
+								'heading_link'     => new \Fieldmanager_Textfield(
+									[
+										'label'         => __( 'Heading Link', 'cpr' ),
+										'default_value' => '/classical/calendar/',
+
+									]
+								),
+								'content_item_ids' => new \Fieldmanager_Zone_Field(
+									[
+										'label'      => __( 'Events', 'cpr' ),
+										'post_limit' => 4,
+										'query_args' => [
+											'post_type' => [ 'tribe_events' ],
+										],
+									]
+								)
+							],
 						]
 					),
 					'articles' => new \Fieldmanager_Group(

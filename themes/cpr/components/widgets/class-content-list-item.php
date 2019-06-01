@@ -31,8 +31,10 @@ class Content_List_Item extends \WP_Components\Component {
 			'day'        => '',
 			'location'   => '',
 			'month'      => '',
+			'permalink'  => '',
 			'start_time' => '',
 			'title'      => '',
+			'type'       => '',
 		];
 	}
 
@@ -46,22 +48,20 @@ class Content_List_Item extends \WP_Components\Component {
 		$this->wp_post_set_title();
 		$this->wp_post_set_permalink();
 
-		switch ( $post->post_type ) {
-			case 'tribe_event':
+		switch ( $this->post->post_type ) {
+			case 'tribe_events':
+
+				$this->set_theme( 'event' );
+
+				// @todo Setup additional configs.
+				$this->merge_config(
+					[
+						'location'   => get_post_meta( $this->post->ID, 'location', true ),
+					]
+				);
 				break;
 		}
 
-		$timestamp = get_post_meta( $this->post->ID, 'start_datetime', true );
-
-		$this->merge_config(
-			[
-				'type'       => $this->post->post_type,
-				'location'   => get_post_meta( $this->post->ID, 'location', true ),
-				'day'        => date( 'd', $timestamp ),
-				'month'      => date( 'M', $timestamp ),
-				'start_time' => date( 'g:i a', $timestamp ),
-			]
-		);
 		return $this;
 	}
 }
