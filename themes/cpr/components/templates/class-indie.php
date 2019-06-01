@@ -136,8 +136,9 @@ class Indie extends \WP_Components\Component {
 								/**
 								 * Station Playlist.
 								 */
-								( new \CPR\Components\Audio\Station_Playlist() )
-									->set_playlist_item_components( 4, 'indie' )
+								( new \CPR\Components\Audio\Live_Stream() )
+									->set_source( 'indie' )
+									->set_config( 'count', 4 ),
 							),
 
 						/**

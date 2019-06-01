@@ -137,8 +137,9 @@ class Classical extends \WP_Components\Component {
 								/**
 								 * Station Playlist.
 								 */
-								( new \CPR\Components\Audio\Station_Playlist() )
-									->set_playlist_item_components( 4, 'classical' )
+								( new \CPR\Components\Audio\Live_Stream() )
+									->set_source( 'classical' )
+									->set_config( 'count', 4 ),
 							),
 
 						/**

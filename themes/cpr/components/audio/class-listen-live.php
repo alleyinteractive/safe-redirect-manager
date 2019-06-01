@@ -27,12 +27,32 @@ class Listen_Live extends \WP_Components\Component {
 	public function default_children() : array {
 		return [
 			( new \CPR\Components\Audio\Live_Stream() )
-				// @todo should this be term meta perhaps?
-				->set_term( get_term_by( 'slug', 'news', 'section' ) ),
+				->set_source( 'indie' )
+				->set_theme( 'listenLive' )
+				->merge_config(
+					[
+						'title'  => __( 'Indie', 'cpr' ),
+						'count' => 1,
+					]
+				),
 			( new \CPR\Components\Audio\Live_Stream() )
-				->set_term( get_term_by( 'slug', 'classical', 'section' ) ),
+				->set_source( 'classical' )
+				->set_theme( 'listenLive' )
+				->merge_config(
+					[
+						'title'  => __( 'Classical', 'cpr' ),
+						'count' => 1,
+					]
+				),
 			( new \CPR\Components\Audio\Live_Stream() )
-				->set_term( get_term_by( 'slug', 'indie', 'section' ) ),
+				->set_source( 'news' )
+				->set_theme( 'listenLive' )
+				->merge_config(
+					[
+						'title'  => __( 'News', 'cpr' ),
+						'count' => 1,
+					]
+				),
 		];
 	}
 }
