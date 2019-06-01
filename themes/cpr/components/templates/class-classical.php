@@ -149,23 +149,24 @@ class Classical extends \WP_Components\Component {
 							->append_child(
 
 								/**
-								 * Upcoming events.
+								 * Concert calendar via a content list with a
+								 * river of events.
 								 */
 								( new \CPR\Components\Widgets\Content_List() )
-									->set_config( 'header_text', $data['calendar']['header_text'] ?? __( 'Events Calendar' ) )
+									->set_config( 'header_text', $data['calendar']['header_text'] ?? __( 'Concert Calendar', 'cpr' ) )
 									->set_config( 'header_link', $data['calendar']['header_link'] ?? site_url( 'classical/calendar/' ) )
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
 										4,
 										[
 											'post_type'  => 'tribe_events',
-											// 'tax_query'  => [
-											// 	[
-											// 		'taxonomy' => 'section',
-											// 		'field'    => 'slug',
-											// 		'terms'    => 'classical',
-											// 	],
-											// ],
+											'tax_query'  => [
+												[
+													'taxonomy' => 'section',
+													'field'    => 'slug',
+													'terms'    => 'classical',
+												],
+											],
 										]
 									)
 							),
@@ -411,15 +412,15 @@ class Classical extends \WP_Components\Component {
 
 									]
 								),
-								'content_item_ids' => new \Fieldmanager_Zone_Field(
+								'event_ids' => new \Fieldmanager_Zone_Field(
 									[
 										'label'      => __( 'Events', 'cpr' ),
 										'post_limit' => 4,
 										'query_args' => [
-											'post_type' => [ 'tribe_events' ],
+											'post_type' => [ 'tribe_events', 'post' ],
 										],
 									]
-								)
+								),
 							],
 						]
 					),

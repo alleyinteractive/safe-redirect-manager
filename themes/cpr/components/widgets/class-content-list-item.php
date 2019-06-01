@@ -22,6 +22,18 @@ class Content_List_Item extends \WP_Components\Component {
 	public $name = 'widget-content-list-item';
 
 	/**
+	 * Available themes for this component. If you attempt to set a theme that is
+	 * not in this array, it will fail (and fall back to 'default').
+	 *
+	 * @var array.
+	 */
+	public $themes = [
+		'default', // Used for a standard river of posts.
+		'event', // Used to display a river of upcoming events.
+		'external-link', // Use these as general-purpose advertisements.
+	];
+
+	/**
 	 * Define a default config.
 	 *
 	 * @return array Default config.
@@ -50,7 +62,6 @@ class Content_List_Item extends \WP_Components\Component {
 
 		switch ( $this->post->post_type ) {
 			case 'tribe_events':
-
 				$this->set_theme( 'event' );
 
 				// @todo Setup additional configs.
@@ -59,6 +70,10 @@ class Content_List_Item extends \WP_Components\Component {
 						'location'   => get_post_meta( $this->post->ID, 'location', true ),
 					]
 				);
+				break;
+
+			case 'external-link':
+				$this->set_theme( 'external-link' );
 				break;
 		}
 
