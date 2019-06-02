@@ -1,5 +1,3 @@
-// Internal Dependencies.
-import React from 'react';
 import PropTypes from 'prop-types';
 import RemoveButton from './remove';
 
@@ -7,6 +5,7 @@ const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const {
   Toolbar,
+  Dashicon,
 } = wp.components;
 const {
   BlockControls,
@@ -23,9 +22,7 @@ class AccordionItemEdit extends Component {
   }
 
   findParentAccordion(rootBlock) {
-    const {
-      block,
-    } = this.props;
+    const { block } = this.props;
 
     let result = false;
 
@@ -55,14 +52,16 @@ class AccordionItemEdit extends Component {
       active,
     } = attributes;
 
-    const className = active ? 'cpr-accordion-item cpr-accordion-item-active' : 'cpr-accordion-item';
+    let { className = '' } = this.props;
+
+    className = active ? 'cpr-accordion-item cpr-accordion-item-active' : 'cpr-accordion-item';
 
     return (
       <Fragment>
         <BlockControls>
           <Toolbar controls={[
             {
-              icon: 'icon-collapse', // getIcon('icon-collapse'),
+              icon: 'arrow-down-alt',
               title: __('Collapse', 'cpr'),
               // eslint-disable-next-line arrow-body-style
               onClick: () => setAttributes({ active: ! active }),
@@ -81,7 +80,6 @@ class AccordionItemEdit extends Component {
               onChange={(value) => {
                 setAttributes({ heading: value });
               }}
-              formattingControls={['bold', 'italic', 'strikethrough']}
               isSelected={isSelected}
               keepPlaceholderOnFocus
             />
@@ -90,12 +88,12 @@ class AccordionItemEdit extends Component {
               // eslint-disable-next-line arrow-body-style
               onClick={() => setAttributes({ active: ! active })}
             >
-              <span className="fas fa-angle-right" />
+              <Dashicon icon="arrow-down-alt" />
             </button>
 
             <RemoveButton
               show={isSelectedBlockInRoot}
-              tooltipText={__('Remove accordion item?', 'cpr')}
+              tooltipText={__('Remove content item?', 'cpr')}
               onRemove={() => {
                 // eslint-disable-next-line max-len
                 const parentAccordion = this.findParentAccordion(this.props.rootBlock);
@@ -128,6 +126,7 @@ AccordionItemEdit.propTypes = {
     heading: PropTypes.array.isRequired,
   }).isRequired,
   clientId: PropTypes.string.isRequired,
+  className: PropTypes.string.isRequired,
   setAttributes: PropTypes.func.isRequired,
   removeBlock: PropTypes.func.isRequired,
   isSelected: PropTypes.bool.isRequired,

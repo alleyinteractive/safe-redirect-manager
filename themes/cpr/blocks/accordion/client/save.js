@@ -5,9 +5,7 @@ import classnames from 'classnames/dedupe';
 import PropTypes from 'prop-types';
 
 const AccordionSave = (props) => {
-  const {
-    InnerBlocks,
-  } = wp.editor;
+  const { InnerBlocks } = wp.editor;
   const {
     itemsCount,
     collapseOne,

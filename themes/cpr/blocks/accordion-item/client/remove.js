@@ -1,15 +1,15 @@
-const {
-  Component,
-} = wp.element;
+import PropTypes from 'prop-types';
+import './editor.scss';
 
+const { Component } = wp.element;
 const { __ } = wp.i18n;
-
 const {
   Button,
   Popover,
+  Dashicon,
 } = wp.components;
 
-export default class RemoveButton extends Component {
+class RemoveButton extends Component {
   constructor() {
     // eslint-disable-next-line prefer-rest-params
     super(...arguments);
@@ -29,9 +29,7 @@ export default class RemoveButton extends Component {
       tooltipCancelText = __('Cancel', 'cpr'),
     } = this.props;
 
-    const {
-      confirmed,
-    } = this.state;
+    const { confirmed } = this.state;
 
     if (! show) {
       return '';
@@ -82,7 +80,19 @@ export default class RemoveButton extends Component {
             </Button>
           </Popover>
         ) : '' }
+        { <Dashicon icon="trash" /> }
       </Button>
     );
   }
 }
+
+RemoveButton.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  tooltipText: PropTypes.string.isRequired,
+  tooltipRemoveText: PropTypes.string.isRequired,
+  tooltipCancelText: PropTypes.string.isRequired,
+  style: PropTypes.string.isRequired,
+};
+
+export default RemoveButton;

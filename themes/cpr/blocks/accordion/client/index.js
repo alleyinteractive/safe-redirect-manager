@@ -13,15 +13,20 @@ const {
   withSelect,
   withDispatch,
 } = wp.data;
+
 const { registerBlockType } = wp.blocks;
 
 registerBlockType('cpr/accordion', {
-  title: __('CPR Accordion', 'cpr'),
-  description: __('Toggle the visibility of content.', 'cpr'),
-  icon: 'warning',
+  title: __('Highlighted Content', 'cpr'),
+  description: __('Toggle the visibility of a content.', 'cpr'),
+  icon: 'list-view',
   category: 'common',
   keywords: [
+    __('content'),
+    __('list'),
     __('accordion'),
+    __('collapsible'),
+    __('collapse'),
   ],
   supports: {
     html: false,
@@ -41,13 +46,12 @@ registerBlockType('cpr/accordion', {
   },
   edit: compose([
     withSelect((select, ownProps) => {
+      const { clientId } = ownProps;
       const {
         getBlock,
         isBlockSelected,
         hasSelectedInnerBlock,
       } = select('core/editor');
-
-      const { clientId } = ownProps;
 
       return {
         block: getBlock(clientId),
@@ -56,11 +60,8 @@ registerBlockType('cpr/accordion', {
       };
     }),
     withDispatch((dispatch, ownProps) => {
-      const {
-        insertBlock,
-      } = dispatch('core/editor');
-
       const { clientId } = ownProps;
+      const { insertBlock } = dispatch('core/editor');
 
       return {
         insertAccordionItem() {

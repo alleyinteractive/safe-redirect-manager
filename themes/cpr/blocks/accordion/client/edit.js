@@ -1,5 +1,8 @@
 const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
+const {
+  Component,
+  Fragment,
+} = wp.element;
 const {
   PanelBody,
   ToggleControl,
@@ -51,10 +54,7 @@ class AccordionEdit extends Component {
    * Update current items number.
    */
   maybeUpdateItemsCount() {
-    const {
-      itemsCount,
-    } = this.props.attributes;
-
+    const { itemsCount } = this.props.attributes;
     const {
       block,
       setAttributes,
@@ -74,9 +74,7 @@ class AccordionEdit extends Component {
       isSelectedBlockInRoot,
       insertAccordionItem,
     } = this.props;
-    const {
-      collapseOne,
-    } = attributes;
+    const { collapseOne } = attributes;
 
     return (
       <Fragment>
@@ -104,7 +102,7 @@ class AccordionEdit extends Component {
                 insertAccordionItem();
               }}
             >
-              { __('Add Accordion Item', 'cpr') }
+              { __('Add More Item', 'cpr') }
             </IconButton>
           </div>
         ) : '' }

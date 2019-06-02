@@ -1,20 +1,16 @@
-// Internal Dependencies.
 import AccordionItemEdit from './edit';
 import AccordionItemSave from './save';
 
 const { __ } = wp.i18n;
-const {
-  compose,
-} = wp.compose;
+const { compose } = wp.compose;
 const {
   withSelect,
   withDispatch,
 } = wp.data;
-
 const { registerBlockType } = wp.blocks;
 
 registerBlockType('cpr/accordion-item', {
-  title: __('Item', 'cpr'),
+  title: __('Content Item', 'cpr'),
   parent: ['cpr/accordion'],
   description: __('A single item within a accordion block.', 'cpr'),
   category: 'common',
@@ -31,7 +27,7 @@ registerBlockType('cpr/accordion-item', {
       type: 'array',
       source: 'children',
       selector: '.cpr-accordion-item-label',
-      default: __('Accordion Item', 'cpr'),
+      default: __('Content Item', 'cpr'),
     },
     active: {
       type: 'boolean',
@@ -41,17 +37,15 @@ registerBlockType('cpr/accordion-item', {
       type: 'number',
     },
   },
-
   edit: compose([
     withSelect((select, ownProps) => {
+      const { clientId } = ownProps;
       const {
         getBlockHierarchyRootClientId,
         getBlock,
         isBlockSelected,
         hasSelectedInnerBlock,
       } = select('core/editor');
-
-      const { clientId } = ownProps;
 
       return {
         block: getBlock(clientId),
@@ -73,6 +67,5 @@ registerBlockType('cpr/accordion-item', {
       };
     }),
   ])(AccordionItemEdit),
-
   save: AccordionItemSave,
 });
