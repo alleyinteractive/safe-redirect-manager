@@ -108,10 +108,20 @@ function cpr_fm_post_guest_author_settings() {
 						'sanitize' => function( $value ) { return str_replace( '@', '', $value ); },
 					]
 				),
-				'short_bio' => new Fieldmanager_TextField(
+				'short_bio' => new Fieldmanager_RichTextArea(
 					[
 						'label' => __( 'Short Bio', 'cpr' ),
 						'description' => __( 'This will be displayed on articles and the author archive.', 'cpr' ),
+						'buttons_1' => [ 'bold', 'italic', 'link' ],
+						'buttons_2' => [],
+						'sanitize' => 'wp_filter_post_kses',
+						'editor_settings' => [
+							'media_buttons' => false,
+						],
+						'attributes' => [
+							'style' => 'width: 100%',
+							'rows' => 4,
+						],
 					]
 				),
 				'description' => new Fieldmanager_RichTextArea(
@@ -141,7 +151,7 @@ function cpr_fm_post_guest_author_settings() {
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Info', 'cpr' ), [ 'guest-author' ], 'normal', 'high' );
+	$fm->add_meta_box( __( 'Info', 'cpr' ), [ 'guest-author' ], 'normal' );
 }
 add_action( 'fm_post_guest-author', 'cpr_fm_post_guest_author_settings' );
 /* end fm:post-guest-author-settings */

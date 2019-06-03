@@ -63,11 +63,14 @@ class Feed_Item extends \Alleypack\Sync_Script\Guest_Author_Feed_Item {
 
 		// Description/bio.
 		$description = $this->source['body']['und'][0]['value'] ?? '';
-		$q_a = $this->source['field_q_a_section']['und'][0]['value'] ?? '';
+		$q_a         = $this->source['field_q_a_section']['und'][0]['value'] ?? '';
 		if ( ! empty( $q_a ) ) {
-			$description .= '<strong>Q & A</strong></br>';
+			$description .= '<strong>Q & A</strong></br>' . $q_a;
 		}
-		update_post_meta( $this->get_object_id(), 'description', wp_kses_post( $description ) );
+		$description = str_replace( '&nbsp;', '', $description );
+		$description = wp_kses( $description, [ 'strong' => [] ] );
+		update_post_meta( $this->get_object_id(), 'description', $description );
+		update_post_meta( $this->get_object_id(), 'short_bio', esc_html( $this->source['body']['und'][0]['summary'] ?? '' ) );
 
 		$this->set_section();
 		$this->migrate_avatar();

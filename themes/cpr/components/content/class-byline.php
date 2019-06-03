@@ -50,7 +50,7 @@ class Byline extends \WP_Components\Byline {
 		$this->guest_author_set_avatar( 'avatar' );
 		$this->append_child(
 			( new \WP_Components\HTML() )
-				->set_config( 'content', get_post_meta( $this->guest_author->ID, 'description', true ) )
+				->set_config( 'content', get_post_meta( $this->guest_author->ID, 'short_bio', true ) )
 		);
 
 		return $this;

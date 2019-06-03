@@ -4,8 +4,7 @@
 			"type": "post",
 			"post_types": [ "guest-author" ],
 			"title": "Info",
-			"context": "normal",
-			"priority": "high"
+			"context": "normal"
 		}
 	],
 	"serialize_data": false,
@@ -25,9 +24,19 @@
 			"sanitize": "`function( $value ) { return str_replace( '@', '', $value ); }`"
 		},
 		"short_bio": {
-			"type": "text",
 			"label": { "__": "Short Bio" },
-			"description": { "__": "This will be displayed on articles and the author archive." }
+			"type": "richtextarea",
+			"description": { "__": "This will be displayed on articles and the author archive." },
+			"buttons_1": [ "bold", "italic", "link" ],
+			"buttons_2": [],
+			"sanitize": "wp_filter_post_kses",
+			"editor_settings": {
+				"media_buttons": false
+			},
+			"attributes": {
+				"style": "width: 100%",
+				"rows": 4
+			}
 		},
 		"description": {
 			"label": { "__": "Long Bio" },

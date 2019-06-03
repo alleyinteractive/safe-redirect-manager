@@ -59,6 +59,7 @@ class Search extends \WP_Components\Component {
 										$this->query->get( 's' )
 									)
 								)
+								->set_config( 'image_size', 'grid_item' )
 								->parse_from_wp_query( $this->query )
 								->set_theme( 'gridLarge' )
 								->set_child_themes(
