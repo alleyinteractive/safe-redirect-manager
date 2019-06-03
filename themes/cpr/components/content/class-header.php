@@ -59,7 +59,10 @@ class Header extends \WP_Components\Component {
 				$this->set_audio();
 
 				// Featured image.
-				if ( has_post_thumbnail( $this->get_post_id() ) ) {
+				if (
+					has_post_thumbnail( $this->get_post_id() )
+					&& 1 !== absint( get_post_meta( $this->get_post_id(), 'disable_image', true ) )
+				) {
 					$this->wp_post_set_featured_image(
 						$this->get_config( 'image_size' ),
 						[ 'show_caption' => true ]
