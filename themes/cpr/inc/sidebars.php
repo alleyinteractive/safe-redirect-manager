@@ -108,3 +108,16 @@ function unregister_widgets() {
 	unregister_widget( 'Jetpack_Subscriptions_Widget' );
 }
 add_action( 'widgets_init', __NAMESPACE__ . '\unregister_widgets' );
+
+/**
+ * Register widgets.
+ */
+function register_widgets() {
+	if ( ! class_exists( 'FM_Widget' ) ) {
+		return;
+	}
+
+	register_widget( __NAMESPACE__ . '\Events_Widget' );
+	register_widget( __NAMESPACE__ . '\External_Link_Widget' );
+}
+add_action( 'widgets_init', __NAMESPACE__ . '\register_widgets' );
