@@ -58,6 +58,24 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	}
 
 	/**
+	 * Modify object after it's been saved.
+	 *
+	 * @return bool
+	 */
+	public function post_object_save() {
+
+		// If the featured image is already displayed in the body, hide it from the CSP.
+		if ( has_post_thumbnail( $this->get_object_id() ) ) {
+			$featured_image_url = (string) get_the_post_thumbnail_url( $this->get_object_id() );
+			if ( false !== strpos( $this->object['post_content'], $featured_image_url ) ) {
+				update_post_meta( $this->get_object_id(), 'disable_image', true );
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Cache different values to track just the block conversion.
 	 */
 	public function update_object_cache() {
