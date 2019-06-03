@@ -7,6 +7,8 @@
 
 namespace CPR\Migration\Post_Blocks_Conversion;
 
+use Alleypack\Block\Converter;
+
 /**
  * Feed.
  */
@@ -30,9 +32,13 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	 */
 	protected $feed_item_class = '\CPR\Migration\Post_Blocks_Conversion\Feed_Item';
 
+	/**
+	 * Add some post content conversion methods.
+	 */
 	public function __construct() {
-		add_filter( 'cpr_block_converter_replace_media', [ $this, 'replace_media' ], 10, 2 );
-		add_filter( 'alleypack_block_converter_html_tag', [ $this, 'convert_blocks' ], 10, 2 );
+		add_filter( 'cpr_block_converter_replace_media', [ $this, 'remove_paragraph_dir' ] );
+		add_filter( 'cpr_block_converter_replace_media', [ $this, 'replace_media' ] );
+		add_filter( 'alleypack_block_converter_html_tag', [ $this, 'remove_unnecessary_paragraphs' ], 10, 2 );
 	}
 
 	/**
@@ -79,7 +85,26 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 		return $this->has_source_data();
 	}
 
-	public function replace_media( $post_content, $feed_item ) {
+	/**
+	 * Remove the extraneous 'dir' attribute.
+	 *
+	 * @param string $post_content Post content.
+	 * @return string
+	 */
+	public function remove_paragraph_dir( string $post_content ) : string {
+		$post_content = str_replace( ' dir="ltr"', '', $post_content );
+		return $post_content;
+	}
+
+	/**
+	 * Convert [[nid]] widgets into media.
+	 *
+	 * @todo Setup galleries.
+	 *
+	 * @param string $post_content Post content.
+	 * @return string
+	 */
+	public function replace_media( string $post_content ) : string {
 		$media_args = [
 			'field_align',
 			'field_format',
@@ -107,6 +132,7 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 				);
 			}
 
+			// @todo Setup galleries.
 			if ( empty( $source ) ) {
 				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'gallery', $legacy_nid );
 			}
@@ -122,8 +148,11 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	 * @param \DOMNode $node    The node.
 	 * @return string
 	 */
-	public function convert_blocks( $content, \DOMNode $node )  {
-		// echo $content; die();
+	public function remove_unnecessary_paragraphs( $content, \DOMNode $node )  {
+		if ( 'p' === $node->tagName && 'img' === ( $node->firstChild->tagName ?? '' ) ) {
+			$html = Converter::get_node_html( $node->firstChild );
+			return ( new Converter( $html ) )->convert_to_block();
+		}
 		return $content;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Calendar component.
+ * Widget Content List component.
  *
  * @package CPR
  */
@@ -8,7 +8,7 @@
 namespace CPR\Components\Widgets;
 
 /**
- * Calendar.
+ * Widget Content List.
  */
 class Content_List extends \WP_Components\Component {
 
