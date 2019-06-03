@@ -11,7 +11,7 @@ define( 'CPR_PATH', dirname( __FILE__ ) );
 define( 'CPR_URL', get_template_directory_uri() );
 
 /**
- * Aleypack modules.
+ * Alleypack modules.
  */
 \Alleypack\load_module( 'block-converter', '1.0' );
 \Alleypack\load_module( 'cli-helpers', '1.1' );
