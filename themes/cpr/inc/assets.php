@@ -43,7 +43,7 @@ function ai_get_versioned_asset_path( $asset_path ) {
 
 	// Create public path.
 	$base_path = is_dev() ?
-		'//8080-httpsproxy.alley.test/client/build/' :
+		'//localhost:8080/client/build/' :
 		CPR_URL . '/client/build/';
 
 	if ( ! isset( $asset_map ) ) {
@@ -75,18 +75,32 @@ function ai_get_versioned_asset_path( $asset_path ) {
 /**
  * Enqueues scripts and styles for admin screens
  */
-function enqueue_gutenberg() {
-	wp_enqueue_style( 'cpr-gutenberg-css', home_url( '/static/css/editor.css' ), [], '1.0' );
-}
-add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_gutenberg' );
-
-/**
- * Enqueues scripts and styles for admin screens
- */
 function enqueue_admin() {
+
+	// Front-end.
 	wp_enqueue_script( 'cpr-common-js', ai_get_versioned_asset_path( 'common.js' ), [ 'jquery' ], '1.0', true );
 	wp_enqueue_style( 'cpr-common-css', ai_get_versioned_asset_path( 'common.css' ), [], '1.0' );
-	wp_enqueue_script( 'cpr-admin-js', ai_get_versioned_asset_path( 'admin.js' ), [], '1.0', true );
+	
+	// Admins.
+	wp_enqueue_script(
+		'cpr-admin-js',
+		ai_get_versioned_asset_path( 'admin.js' ),
+		[
+			'jquery',
+			'wp-api-fetch',
+			'wp-blocks',
+			'wp-components',
+			'wp-data',
+			'wp-editor',
+			'wp-element',
+			'wp-i18n',
+			'wp-notices',
+			'wp-edit-post',
+		],
+		'1.0',
+		true
+	);
+
 	wp_enqueue_style( 'cpr-admin-css', ai_get_versioned_asset_path( 'admin.css' ), [], '1.0' );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin' );
