@@ -59,6 +59,7 @@ class Live_Stream extends \WP_Components\Component {
 	/**
 	 * Hook into term being set.
 	 *
+	 * @param string $source Source to be used for this stream's data.
 	 * @return self
 	 */
 	public function set_source( $source ) : self {
