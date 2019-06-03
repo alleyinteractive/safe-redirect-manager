@@ -12,7 +12,6 @@ if ( 1 !== get_current_blog_id() ) {
 }
 
 $plugins = [
-	'/ad-layers/ad-layers.php',
 	'/alleypack/alleypack.php',
 	'/amp/amp.php',
 	'/co-authors-plus/co-authors-plus.php',
