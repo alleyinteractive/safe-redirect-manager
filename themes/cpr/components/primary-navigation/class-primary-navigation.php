@@ -26,6 +26,8 @@ class Primary_Navigation extends \WP_Components\Component {
 	 */
 	public function default_children() : array {
 		return [
+			( new \CPR\Components\Search\Search_Bar() )
+				->set_theme( 'primaryNav' ),
 			( new Menu() )
 				->set_menu( 'primary-navigation' )
 				->children_callback( function ( $menu_item ) {
