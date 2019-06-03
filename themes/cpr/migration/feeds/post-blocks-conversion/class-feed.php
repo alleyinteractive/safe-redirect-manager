@@ -40,7 +40,7 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	public function __construct() {
 		add_filter( 'cpr_block_converter_replace_media', [ $this, 'remove_paragraph_dir' ] );
 		add_filter( 'cpr_block_converter_replace_media', [ $this, 'replace_media' ] );
-		add_filter( 'alleypack_block_converter_html_tag', [ $this, 'remove_unnecessary_paragraphs' ], 10, 2 );
+		add_filter( 'alleypack_block_converter_html_tag', [ $this, 'apply_custom_block_logic' ], 10, 2 );
 	}
 
 	/**
@@ -150,7 +150,7 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	 * @param \DOMNode $node    The node.
 	 * @return string
 	 */
-	public function remove_unnecessary_paragraphs( $content, \DOMNode $node ) {
+	public function apply_custom_block_logic( $content, \DOMNode $node ) {
 		if ( 'p' === $node->tagName && 'img' === ( $node->firstChild->tagName ?? '' ) ) {
 			$html = Converter::get_node_html( $node->firstChild );
 			return ( new Converter( $html ) )->convert_to_block();
