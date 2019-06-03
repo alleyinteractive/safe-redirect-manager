@@ -49,7 +49,7 @@ class Top_30 extends \WP_Components\Component {
 		if ( ! empty( $query->posts[0] ) ) {
 			$this->set_post( $query->posts[0] );
 		}
-		
+
 		return $this;
 	}
 

@@ -156,8 +156,8 @@ class Classical extends \WP_Components\Component {
 								 * river of events.
 								 */
 								( new \CPR\Components\Widgets\Content_List() )
-									->set_config( 'header_text', $data['calendar']['header_text'] ?? __( 'Concert Calendar', 'cpr' ) )
-									->set_config( 'header_link', $data['calendar']['header_link'] ?? site_url( 'classical/calendar/' ) )
+									->set_config( 'header_text', $data['calendar']['heading'] ?? __( 'Concert Calendar', 'cpr' ) )
+									->set_config( 'header_link', $data['calendar']['heading_link'] ?? site_url( 'classical/calendar/' ) )
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
 										4,

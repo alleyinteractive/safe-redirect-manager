@@ -11,7 +11,7 @@ define( 'CPR_PATH', dirname( __FILE__ ) );
 define( 'CPR_URL', get_template_directory_uri() );
 
 /**
- * Aleypack modules.
+ * Alleypack modules.
  */
 \Alleypack\load_module( 'block-converter', '1.0' );
 \Alleypack\load_module( 'cli-helpers', '1.1' );
@@ -108,6 +108,9 @@ require_once CPR_PATH . '/inc/search.php';
 // SEO.
 require_once CPR_PATH . '/inc/seo.php';
 
+// Sidebars.
+require_once CPR_PATH . '/inc/sidebars.php';
+
 // Helpers.
 require_once CPR_PATH . '/inc/template-tags.php';
 
@@ -119,6 +122,12 @@ require_once CPR_PATH . '/inc/users.php';
 
 // Loader for partials.
 require_once CPR_PATH . '/inc/partials/partials.php';
+
+/**
+ * Widgets.
+ */
+require_once CPR_PATH . '/inc/widgets/class-events-widget.php';
+require_once CPR_PATH . '/inc/widgets/class-external-link-widget.php';
 
 // Content types and taxonomies should be included below. In order to scaffold
 // them, leave the Begin and End comments in place.

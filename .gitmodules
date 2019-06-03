@@ -1,6 +1,3 @@
-[submodule "mu-plugins/ad-layers"]
-	path = mu-plugins/ad-layers
-	url = git@github.com:alleyinteractive/ad-layers.git
 [submodule "mu-plugins/fm-zones"]
 	path = mu-plugins/fm-zones
 	url = git@github.com:alleyinteractive/fm-zones.git
@@ -43,3 +40,6 @@
 [submodule "mu-plugins/wpcom-legacy-redirector"]
 	path = mu-plugins/wpcom-legacy-redirector
 	url = https://github.com/Automattic/WPCOM-Legacy-Redirector.git
+[submodule "mu-plugins/fm-widgets"]
+	path = mu-plugins/fm-widgets
+	url = git@github.com:alleyinteractive/fm-widgets.git
