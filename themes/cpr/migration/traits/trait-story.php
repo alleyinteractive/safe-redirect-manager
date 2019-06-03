@@ -20,7 +20,6 @@ trait Story {
 		// Map fields.
 		$this->object['post_name']    = sanitize_title( $this->source['title'] ?? '' );
 		$this->object['post_title']   = wp_strip_all_tags( $this->source['title'] ?? '' );
-		$this->object['post_content'] = $this->source['body']['und'][0]['value'] ?? '';
 		$this->object['post_status']  = 'publish';
 
 		// Object date.
@@ -43,18 +42,33 @@ trait Story {
 	 */
 	public function migrate_meta() {
 
+		$disable_image   = 0;
+		$legacy_image_id = $this->source['field_feature_image']['und'][0]['target_id'] ?? 0;
+		if (
+			! empty( $legacy_image_id )
+			&& false !== strpos(
+				( $this->source['body']['und'][0]['value'] ?? '' ),
+				"[[nid:{$legacy_image_id} "
+			)
+		) {
+			$disable_image = 1;
+			update_post_meta( $this->get_object_id(), 'disable_image', true );
+		}
+
 		// Map meta.
 		$this->object['meta_input'] = [
-			'audio'          => $this->source['field_audio']['und'][0]['target_id'] ?? 0,
-			'author'         => $this->source['field_author']['und'][0]['target_id'] ?? 0,
-			'featured_image' => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
-			'legacy_changed' => $this->source['changed'] ?? '',
-			'legacy_created' => $this->source['created'] ?? '',
-			'legacy_id'      => $this->source['nid'],
-			'legacy_path'    => $this->source['path']['alias'] ?? '',
-			'legacy_type'    => $this->source['type'] ?? '',
-			'legacy_url'     => empty( $this->source['path']['alias'] ) ? '' : 'https://cpr.org/' . $this->source['path']['alias'],
-			'template'       => sanitize_title( $this->source['title'] ?? '' ),
+			'_legacy_post_content' => $this->source['body']['und'][0]['value'] ?? '',
+			'audio'                => $this->source['field_audio']['und'][0]['target_id'] ?? 0,
+			'author'               => $this->source['field_author']['und'][0]['target_id'] ?? 0,
+			'disable_image'        => $disable_image,
+			'featured_image'       => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
+			'legacy_changed'       => $this->source['changed'] ?? '',
+			'legacy_created'       => $this->source['created'] ?? '',
+			'legacy_id'            => $this->source['nid'],
+			'legacy_path'          => $this->source['path']['alias'] ?? '',
+			'legacy_type'          => $this->source['type'] ?? '',
+			'legacy_url'           => empty( $this->source['path']['alias'] ) ? '' : 'https://cpr.org/' . $this->source['path']['alias'],
+			'template'             => sanitize_title( $this->source['title'] ?? '' ),
 		];
 	}
 
