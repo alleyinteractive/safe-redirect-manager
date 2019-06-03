@@ -127,6 +127,7 @@ namespace CPR;
 					'descriptor' => 195,
 				],
 			],
+			'aspect_ratio' => 184 / 195,
 			'retina'  => true,
 		],
 		'content_image' => [
