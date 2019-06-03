@@ -2,14 +2,26 @@
   "plugins": [
     "syntax-dynamic-import",
     "transform-object-assign",
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "lodash",
     ["module-resolver", {
-      "root": [
-        "./client/src/**",
-        "./client/src/js/**",
-      ],
+      "root": ["./"],
+      "alias": {
+        "admin": "./client/src/admin",
+        "images": "./client/src/images",
+        "components": "./client/src/components",
+        "scss": "./client/src/scss",
+        "js": "./client/src/js",
+        "blocks": "./blocks",
+      }
+    }],
+    ["transform-runtime", {
+      "regenerator": true,
     }]
   ],
   "presets": [
-    "env"
+    "env",
+    "react"
   ]
 }
