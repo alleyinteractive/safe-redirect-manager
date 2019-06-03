@@ -12,7 +12,6 @@ if ( 1 !== get_current_blog_id() ) {
 }
 
 $plugins = [
-	'/ad-layers/ad-layers.php',
 	'/alleypack/alleypack.php',
 	'/amp/amp.php',
 	'/co-authors-plus/co-authors-plus.php',
@@ -27,6 +26,7 @@ $plugins = [
 	'/wp-seo/wp-seo.php',
 	'/wpcom-thumbnail-editor/wpcom-thumbnail-editor.php',
 	'/wpcom-legacy-redirector/wpcom-legacy-redirector.php',
+	'/fm-widgets/fm-widgets.php', // Depends on FM.
 ];
 
 // Begin the process of loading the MU Plugins.

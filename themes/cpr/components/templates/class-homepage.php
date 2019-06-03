@@ -152,6 +152,7 @@ class Homepage extends \WP_Components\Component {
 			 *
 			 * @todo Build this component. Determine if we can reuse another component.
 			 */
+			new \CPR\Components\Audio\Homepage_Playlists(),
 
 			/**
 			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.

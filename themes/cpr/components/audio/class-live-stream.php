@@ -12,8 +12,6 @@ namespace CPR\Components\Audio;
  */
 class Live_Stream extends \WP_Components\Component {
 
-	use \WP_Components\WP_Term;
-
 	/**
 	 * Unique component slug.
 	 *
@@ -48,27 +46,29 @@ class Live_Stream extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'endpoint'   => '',
-			'stream_src' => '',
-			'slug'       => '',
-			'section'      => '',
+			'endpoint'       => '',
+			'count'          => 0, // Display all in feed.
+			'stream_src'     => '',
+			'source'         => '',
+			'title'          => '',
+			'title_link'     => home_url(),
+			'playlist_title' => __( 'Playlist', 'cpr' ),
 		];
 	}
 
 	/**
 	 * Hook into term being set.
 	 *
+	 * @param string $source Source to be used for this stream's data.
 	 * @return self
 	 */
-	public function term_has_set() : self {
-		$slug        = $this->term->slug;
-		$stream_data = $this->stream_map[ $slug ];
+	public function set_source( $source ) : self {
+		$stream_data = $this->stream_map[ $source ];
 
 		return $this->merge_config(
 			array_merge(
 				[
-					'section' => $this->term->name,
-					'slug'  => $slug,
+					'source' => $source,
 				],
 				$stream_data
 			)

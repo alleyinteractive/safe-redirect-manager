@@ -94,9 +94,9 @@ class Content_List_Item extends \WP_Components\Component {
 						/**
 						 * External link cta.
 						 */
-						( new \WP_Components\Heplers\Button() )
+						( new \WP_Components\Helpers\Button() )
 							->set_config( 'link', $this->wp_post_get_permalink() )
-							->set_children( __( 'Learn More', 'cpr' ) ),
+							->set_children( [ __( 'Learn More', 'cpr' ) ] ),
 					]
 				);
 				break;

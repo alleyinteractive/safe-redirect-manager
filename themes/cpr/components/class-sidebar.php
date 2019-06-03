@@ -12,6 +12,8 @@ namespace CPR\Components;
  */
 class Sidebar extends \WP_Components\Component {
 
+	use \WP_Components\WP_Widget_Sidebar;
+
 	/**
 	 * Unique component slug.
 	 *
