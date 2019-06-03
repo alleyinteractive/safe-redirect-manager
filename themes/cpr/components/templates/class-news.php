@@ -137,7 +137,18 @@ class News extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Sidebar() )
 							->set_theme( 'right' )
-							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) ),
+							->append_children(
+								[
+									/**
+									 * Station Playlist.
+									 */
+									( new \CPR\Components\Audio\Live_Stream() )
+										->set_source( 'news' )
+										->set_config( 'count', 1 )
+										->set_theme( 'sidebar' ),
+									( new \CPR\Components\Ad() )->set_config( 'height', 600 ),
+								]
+							),
 
 					]
 				),
