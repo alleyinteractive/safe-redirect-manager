@@ -27,6 +27,7 @@ $plugins = [
 	'/wp-seo/wp-seo.php',
 	'/wpcom-thumbnail-editor/wpcom-thumbnail-editor.php',
 	'/wpcom-legacy-redirector/wpcom-legacy-redirector.php',
+	'/fm-widgets/fm-widgets.php', // Depends on FM.
 ];
 
 // Begin the process of loading the MU Plugins.

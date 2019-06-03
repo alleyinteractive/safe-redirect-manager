@@ -43,3 +43,6 @@
 [submodule "mu-plugins/wpcom-legacy-redirector"]
 	path = mu-plugins/wpcom-legacy-redirector
 	url = https://github.com/Automattic/WPCOM-Legacy-Redirector.git
+[submodule "mu-plugins/fm-widgets"]
+	path = mu-plugins/fm-widgets
+	url = git@github.com:alleyinteractive/fm-widgets.git
