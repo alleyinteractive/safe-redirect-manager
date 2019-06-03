@@ -9,6 +9,8 @@ namespace CPR\Migration\Post_Blocks_Conversion;
 
 use Alleypack\Block\Converter;
 
+// phpcs:ignoreFile WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
+
 /**
  * Feed.
  */
@@ -148,7 +150,7 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	 * @param \DOMNode $node    The node.
 	 * @return string
 	 */
-	public function remove_unnecessary_paragraphs( $content, \DOMNode $node )  {
+	public function remove_unnecessary_paragraphs( $content, \DOMNode $node ) {
 		if ( 'p' === $node->tagName && 'img' === ( $node->firstChild->tagName ?? '' ) ) {
 			$html = Converter::get_node_html( $node->firstChild );
 			return ( new Converter( $html ) )->convert_to_block();

@@ -23,10 +23,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	protected static $mapping_version = '1.1';
 
-	public function should_object_sync() : bool {
-		return true;
-	}
-
 	/**
 	 * Meta key for storing mapping version key.
 	 *
