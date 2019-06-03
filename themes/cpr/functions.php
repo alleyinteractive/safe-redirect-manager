@@ -108,6 +108,9 @@ require_once CPR_PATH . '/inc/search.php';
 // SEO.
 require_once CPR_PATH . '/inc/seo.php';
 
+// Sidebars.
+require_once CPR_PATH . '/inc/sidebars.php';
+
 // Helpers.
 require_once CPR_PATH . '/inc/template-tags.php';
 
