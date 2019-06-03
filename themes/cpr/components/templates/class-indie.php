@@ -27,7 +27,8 @@ class Indie extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
-		$body = new \WP_Components\Body();
+		$body           = ( new \WP_Components\Body() )
+			->set_config( 'body_classes', 'indie' );
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;
@@ -136,8 +137,10 @@ class Indie extends \WP_Components\Component {
 								/**
 								 * Station Playlist.
 								 */
-								( new \CPR\Components\Audio\Station_Playlist() )
-									->set_playlist_item_components( 4, 'indie' )
+								( new \CPR\Components\Audio\Live_Stream() )
+									->set_source( 'indie' )
+									->set_config( 'count', 4 )
+									->set_theme( 'sidebar' )
 							),
 
 						/**

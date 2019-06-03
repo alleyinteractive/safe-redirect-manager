@@ -17,7 +17,7 @@ class Element extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'audio-player';
+	public $name = 'audio-element';
 
 	/**
 	 * Define a default config.
