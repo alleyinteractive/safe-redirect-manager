@@ -24,6 +24,19 @@ class Grid_Group_Item extends \WP_Components\Component {
 	public $name = 'grid-group-item';
 
 	/**
+	 * Define a default config.
+	 *
+	 * @return array Default config.
+	 */
+	public function default_config() : array {
+		return [
+			'permalink' => '',
+			'role'      => '',
+			'show_name' => '',
+		];
+	}
+
+	/**
 	 * Hook into post being set.
 	 *
 	 * @return self
@@ -54,6 +67,7 @@ class Grid_Group_Item extends \WP_Components\Component {
 		);
 
 		$this->set_eyebrow();
+		$this->wp_post_set_permalink();
 
 		return $this;
 	}
