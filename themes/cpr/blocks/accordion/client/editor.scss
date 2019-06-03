@@ -1,0 +1,86 @@
+/**
+ * Editor Styles
+ */
+
+.cpr-accordion {
+
+  .cpr-accordion-item {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .edit-post-visual-editor,
+  .edit-post-visual-editor p,
+  .editor-rich-text__tinymce.mce-content-body {
+    line-height: inherit;
+  }
+
+  .cpr-accordion-item-heading {
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    display: block;
+    font-weight: 500;
+    margin-bottom: -1px;
+    opacity: 0.6;
+    padding: 8px 20px;
+    position: relative;
+    transition: 0.15s border-color, 0.15s background-color, 0.15s opacity;
+    will-change: border-color, background-color, opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .cpr-accordion-item-collapse {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.7em;
+    height: 100%;
+    outline: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: 0.15s transform;
+    width: 46px;
+    will-change: trasnform;
+  }
+
+  .cpr-accordion-item-content {
+    display: none;
+  }
+
+  .cpr-accordion-item-active {
+
+    .cpr-accordion-item-heading {
+      border-color: #dee2e6;
+      opacity: 1;
+    }
+
+    .cpr-accordion-item-collapse {
+      transform: rotate(90deg);
+    }
+
+    .cpr-accordion-item-content {
+      display: block;
+    }
+  }
+}
+ 
+// Hide drag handler from accordion items.
+[data-type="cpr/accordion-item"] > .editor-block-mover > .editor-block-mover__control-drag-handle {
+  display: none;
+}
+ 
+.cpr-accordion-add-item {
+  padding-bottom: 20px;
+
+  .components-button {
+    margin: 0 auto;
+
+    svg {
+      margin-right: 10px;
+    }
+  }
+}

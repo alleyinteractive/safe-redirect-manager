@@ -26,6 +26,7 @@
   "globals": {
     "jQuery": true,
     "angular": false, // Enable if using Angular
+    "wp": true
   },
   "settings": {
     "import/resolver": {
@@ -38,6 +39,7 @@
     "max-len": [2, 80, 4, {
       "ignoreComments": true,
       "ignoreUrls": true,
+      "ignoreStrings": true,
     }],
     "quotes": [2, "single"], // Allows template literals if they have substitutions or line breaks
     "semi": [2, "always"],
@@ -64,6 +66,10 @@
     "spaced-comment": [2, "always"],
     "no-confusing-arrow": ["error", {"allowParens": true}], // See eslint config for reasons
     "no-constant-condition": ["error"],
-    "arrow-parens": ["error", "always"]
+    "arrow-parens": ["error", "always"],
+    "react/jsx-filename-extension": [0],
+    "react/react-in-jsx-scope": [0],
+    "react/prop-types": [1, {"skipUndeclared": true}],
+    "arrow-body-style": ["error", "always"]
   }
 }
