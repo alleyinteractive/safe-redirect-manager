@@ -38,6 +38,7 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	 * Add some post content conversion methods.
 	 */
 	public function __construct() {
+		parent::__construct();
 		add_filter( 'cpr_block_converter_replace_media', [ $this, 'remove_paragraph_dir' ] );
 		add_filter( 'cpr_block_converter_replace_media', [ $this, 'replace_media' ] );
 		add_filter( 'alleypack_block_converter_html_tag', [ $this, 'apply_custom_block_logic' ], 10, 2 );
