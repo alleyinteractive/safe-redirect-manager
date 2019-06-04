@@ -13,6 +13,7 @@ namespace CPR\Components\Modules;
 class Grid_Group extends \WP_Components\Component {
 
 	use \Alleypack\FM_Module;
+	use \WP_Components\Content_List;
 
 	/**
 	 * Unique component slug.
