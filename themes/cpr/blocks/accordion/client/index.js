@@ -18,7 +18,7 @@ const { registerBlockType } = wp.blocks;
 
 registerBlockType('cpr/accordion', {
   title: __('Highlighted Content', 'cpr'),
-  description: __('Toggle the visibility of a content.', 'cpr'),
+  description: __('Highlight, or not, the visibility of a content.', 'cpr'),
   icon: 'list-view',
   category: 'common',
   keywords: [

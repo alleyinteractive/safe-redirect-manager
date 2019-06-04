@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable react/jsx-closing-tag-location */
 /* eslint-disable max-len */
 /* eslint-disable react/prefer-stateless-function */
@@ -221,7 +222,23 @@ IconPicker.Preview = (props) => {
   ) : '');
 };
 
-// Render icon.
+// Render svg icon.
 IconPicker.Render = ({ name }) => {
-  return <span className={name} />;
+  let { data } = '';
+
+  eachIcons((iconsData) => {
+    iconsData.icons.forEach((iconData) => {
+      // eslint-disable-next-line max-len
+      if (! data && iconData.class && iconData.class === name && iconData.preview) {
+        data = iconData;
+      }
+    });
+  });
+
+  if (! data && ! data.preview) {
+    return;
+  }
+
+  // eslint-disable-next-line react/no-danger
+  return <span dangerouslySetInnerHTML={{ __html: data.preview }} />;
 };
