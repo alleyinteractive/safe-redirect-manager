@@ -39,7 +39,7 @@ registerBlockType('cpr/accordion', {
       type: 'number',
       default: 2,
     },
-    collapseOne: {
+    DisableToggle: {
       type: 'boolean',
       default: false,
     },
