@@ -151,12 +151,8 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_tax( 'podcast' ):
 		case $wp_query->is_tax( 'show' ):
-			// This is a Term_Post_Link, so get the linked post (since all the
-			// meta is there).
-			$post_id = \Alleypack\Term_Post_Link::get_post_from_term( $wp_query->get_queried_object_id() );
-
-			$head->set_post( $post_id );
-			$template = ( new Components\Templates\Podcast_And_Show() )->set_post( $post_id );
+			$head->set_query( $wp_query );
+			$template = ( new Components\Templates\Podcast_And_Show() )->set_term( $wp_query->get_queried_object_id() );
 			break;
 
 		/**

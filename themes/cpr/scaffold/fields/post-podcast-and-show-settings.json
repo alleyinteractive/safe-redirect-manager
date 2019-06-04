@@ -69,16 +69,12 @@
 		},
 		"highlighted_episodes": {
 			"label": { "__": "Highlighted Episodes" },
-			"serialize_data": false,
-			"add_to_prefix": false,
 			"children": {
 				"content_item_ids": {
 					"label": { "__": "Highlighted Episodes" },
 					"type": "`Fieldmanager_Zone_Field`",
 					"post_limit": 4,
-					"query_args": {
-						"post_type": [ "show-episode", "podcast-episode" ]
-					}
+					"query_args": "`\\CPR\\Components\\Templates\\Podcast_And_Show::get_highlighted_episodes_query_args()`"
 				}
 			}
 		},

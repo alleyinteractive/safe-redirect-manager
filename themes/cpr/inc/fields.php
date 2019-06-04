@@ -427,16 +427,12 @@ function cpr_fm_post_podcast_and_show_settings() {
 				'highlighted_episodes' => new Fieldmanager_Group(
 					[
 						'label' => __( 'Highlighted Episodes', 'cpr' ),
-						'serialize_data' => false,
-						'add_to_prefix' => false,
 						'children' => [
 							'content_item_ids' => new Fieldmanager_Zone_Field(
 								[
 									'label' => __( 'Highlighted Episodes', 'cpr' ),
 									'post_limit' => 4,
-									'query_args' => [
-										'post_type' => [ 'show-episode', 'podcast-episode' ],
-									],
+									'query_args' => \CPR\Components\Templates\Podcast_And_Show::get_highlighted_episodes_query_args(),
 								]
 							),
 						],

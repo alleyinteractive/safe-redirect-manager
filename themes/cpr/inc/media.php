@@ -116,6 +116,7 @@ namespace CPR;
 			],
 			'aspect_ratio' => 9 / 16,
 			'retina'       => true,
+			'fallback_image_url' => get_template_directory_uri() . '/images/logo.png',
 		],
 		'album_cover' => [
 			'sources' => [
