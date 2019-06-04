@@ -138,6 +138,7 @@ namespace CPR;
 					'transforms' => [
 						'resize' => [ 960, 540 ],
 					],
+					'descriptor' => 960,
 				],
 			],
 			'retina' => true,
@@ -158,6 +159,7 @@ namespace CPR;
 					'transforms' => [
 						'resize' => [ 400, 400 ],
 					],
+					'descriptor' => 400,
 				],
 			],
 			'retina'       => true,
