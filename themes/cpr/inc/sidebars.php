@@ -18,6 +18,18 @@ function register_sidebars() {
 
 	register_sidebar(
 		[
+			'name'          => __( 'Footer Sidebar', 'cpr' ),
+			'id'            => 'footer-sidebar',
+			'description'   => __( 'footer sidebar.', 'cpr' ),
+			'before_widget' => $before_widget,
+			'after_widget'  => $after_widget,
+			'before_title'  => $before_title,
+			'after_title'   => $after_title,
+		]
+	);
+
+	register_sidebar(
+		[
 			'name'          => __( 'News Sidebar', 'cpr' ),
 			'id'            => 'news-sidebar',
 			'description'   => __( 'News sidebar.', 'cpr' ),
@@ -77,7 +89,6 @@ function unregister_widgets() {
 	unregister_widget( 'WP_Widget_RSS' );
 	unregister_widget( 'WP_Widget_Search' );
 	unregister_widget( 'WP_Widget_Tag_Cloud' );
-	unregister_widget( 'WP_Widget_Custom_HTML' );
 	unregister_widget( 'WP_Nav_Menu_Widget' );
 	unregister_widget( 'WP_Widget_Media_Video' );
 
