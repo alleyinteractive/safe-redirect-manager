@@ -77,6 +77,14 @@ function cpr_fm_submenu_settings() {
 						],
 					]
 				),
+				'gtm' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Google Tag Manager Settings', 'cpr' ),
+						'children' => [
+							'container_id' => new Fieldmanager_TextField( __( 'Google Tag Manager Container ID', 'cpr' ) ),
+						],
+					]
+				),
 			],
 		]
 	);
