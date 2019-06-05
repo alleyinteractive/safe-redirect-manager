@@ -7,14 +7,14 @@
 
 namespace CPR;
 
-if ( ! class_exists( '\FM_Widget' ) ) {
+if ( ! class_exists( '\WP_Widget' ) ) {
 	return;
 }
 
 /**
  * Class for Colorado Wonders widget.
  */
-class Colorado_Wonders_Widget extends \FM_Widget {
+class Colorado_Wonders_Widget extends \WP_Widget {
 
 	/**
 	 * Constructor.
