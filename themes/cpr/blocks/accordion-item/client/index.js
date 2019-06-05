@@ -36,6 +36,10 @@ registerBlockType('cpr/accordion-item', {
     itemNumber: {
       type: 'number',
     },
+    icon: {
+      type: 'string',
+      default: 'fab fa-wordpress-simple',
+    },
   },
   edit: compose([
     withSelect((select, ownProps) => {

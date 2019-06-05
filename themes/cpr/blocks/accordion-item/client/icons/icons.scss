@@ -1,0 +1,81 @@
+
+.cpr-component-icon-picker-wrapper {
+  float: left;
+  position: relative;
+  width: 50px;
+
+  > .components-base-control__field {
+    margin-top: 2px;
+  }
+}
+
+.cpr-component-icon-picker-button {
+  align-items: center;
+  background: #f3f4f5;
+  border: 1px solid #f3f4f5;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  font-size: 15px;
+  height: 34px;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  top: -30px;
+  transition: 0.15s background-color, 0.15s box-shadow, 0.15s border-color;
+  width: 34px;
+  z-index: 999;
+
+  &:hover {
+    background-color: #fff;
+    border-color: #555d66;
+    box-shadow: 0 2px 7px 0 #555d66;
+  }
+
+  &.cpr-component-icon-picker-button-active {
+    background-color: #fff;
+    border-color: #0366d6;
+  }
+}
+
+.cpr-component-icon-picker {
+  padding: 15px;
+
+  .components-base-control + .components-base-control {
+    margin-top: 15px;
+  }
+
+  .cpr-component-icon-picker-list-wrap {
+    
+    > span {
+      background-color: #fff;
+      display: block;
+      font-weight: 500;
+      margin-left: -15px;
+      margin-right: -15px;
+      padding: 15px;
+      position: sticky;
+      top: 0;
+    }
+  }
+
+  .cpr-component-icon-picker-list {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -10px;
+    margin-left: -10px;
+
+    .cpr-component-icon-picker-button {
+      font-size: 20px;
+      height: 55px;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      max-width: calc(33.33% - 10px);
+      width: calc(33.33% - 10px);
+    }
+  }
+}
+
+.cpr-component-icon-picker-preview-clickable {
+  cursor: pointer;
+}
