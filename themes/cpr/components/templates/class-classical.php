@@ -325,7 +325,7 @@ class Classical extends \WP_Components\Component {
 			 * Hosts.
 			 */
 			( new \CPR\Components\Modules\Grid_Group() )
-				->parse_from_fm_data( (array) $data['hosts'] )
+				->parse_from_fm_data( (array) $data['hosts'] ?? [] )
 				->children_callback(
 					function( $child ) {
 						return $child->set_config( 'show_name', $this->wp_post_get_title() );
