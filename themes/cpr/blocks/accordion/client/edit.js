@@ -74,17 +74,19 @@ class AccordionEdit extends Component {
       isSelectedBlockInRoot,
       insertAccordionItem,
     } = this.props;
-    const { collapseOne } = attributes;
+    const { DisableToggle } = attributes;
 
     return (
       <Fragment>
         <InspectorControls>
           <PanelBody>
             <ToggleControl
-              label={__('Collapse one item only', 'cpr')}
-              checked={!! collapseOne}
+              label={__('Do not toggle content', 'cpr')}
+              checked={!! DisableToggle}
               // eslint-disable-next-line arrow-body-style
-              onChange={(val) => setAttributes({ collapseOne: val })}
+              onChange={(val) => {
+                setAttributes({ DisableToggle: val });
+              }}
             />
           </PanelBody>
         </InspectorControls>

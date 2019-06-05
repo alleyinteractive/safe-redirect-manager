@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import RemoveButton from './remove';
+import RemoveButton from './remove/index';
+import IconPicker from './icons/index';
 
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
@@ -50,6 +51,7 @@ class AccordionItemEdit extends Component {
     const {
       heading,
       active,
+      icon,
     } = attributes;
 
     let { className = '' } = this.props;
@@ -72,6 +74,13 @@ class AccordionItemEdit extends Component {
         </BlockControls>
         <div className={className}>
           <div className="cpr-accordion-item-heading">
+            <IconPicker
+              label={__('Icon', 'cpr')}
+              value={icon}
+              onChange={(value) => {
+                setAttributes({ icon: value });
+              }}
+            />
             <RichText
               tagName="div"
               className="cpr-accordion-item-label"
@@ -85,8 +94,9 @@ class AccordionItemEdit extends Component {
             />
             <button
               className="cpr-accordion-item-collapse"
-              // eslint-disable-next-line arrow-body-style
-              onClick={() => setAttributes({ active: ! active })}
+              onClick={() => {
+                setAttributes({ active: ! active });
+              }}
             >
               <Dashicon icon="arrow-down-alt" />
             </button>
@@ -123,6 +133,7 @@ class AccordionItemEdit extends Component {
 AccordionItemEdit.propTypes = {
   attributes: PropTypes.shape({
     active: PropTypes.bool.isRequired,
+    icon: PropTypes.string.isRequired,
     heading: PropTypes.array.isRequired,
   }).isRequired,
   clientId: PropTypes.string.isRequired,
