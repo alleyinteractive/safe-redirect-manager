@@ -189,7 +189,7 @@ IconPicker.Preview = (props) => {
     eachIcons((iconsData) => {
       iconsData.icons.forEach((iconData) => {
         // eslint-disable-next-line max-len
-        if (! data && iconData.class && iconData.class === name && iconData.preview) {
+        if (iconData.class && iconData.class === name && iconData.preview) {
           if (iconData.preview) {
             data = iconData;
           } else {
