@@ -37,6 +37,14 @@ class Error extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
-		return [];
+		return [
+			( new \CPR\Components\Error_404() )
+				->append_child(
+					[
+						( new \CPR\Components\Search\Search_Bar() )
+							->set_theme( 'error' ),
+					]
+				),
+		];
 	}
 }

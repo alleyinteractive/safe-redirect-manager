@@ -95,7 +95,12 @@ class Content_List_Item extends \WP_Components\Component {
 						 * External link cta.
 						 */
 						( new \WP_Components\Helpers\Button() )
-							->set_config( 'link', $this->wp_post_get_permalink() )
+							->set_config(
+								[
+									'link'       => $this->wp_post_get_permalink(),
+									'class_name' => 'learn-more',
+								]
+							)
 							->set_children( [ __( 'Learn More', 'cpr' ) ] ),
 					]
 				);
