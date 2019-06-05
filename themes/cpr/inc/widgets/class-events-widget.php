@@ -34,7 +34,7 @@ class Events_Widget extends \FM_Widget {
 	 *
 	 * @param array $args     Widget arguments.
 	 * @param array $instance Saved values from database.
-	 * @return null|\CPR\Components\Widgets\Content_List()
+	 * @return null|\CPR\Components\Widgets\Content_List
 	 */
 	public function create_component( $args, $instance ) : ?\CPR\Components\Widgets\Content_List {
 
@@ -57,7 +57,7 @@ class Events_Widget extends \FM_Widget {
 			->set_config( 'header_link', $instance['heading_link'] ?? '' )
 			->parse_from_post_ids(
 				$instance['event_ids'] ?? [],
-				4,
+				3,
 				$backfill_args
 			);
 	}
@@ -67,7 +67,7 @@ class Events_Widget extends \FM_Widget {
 	 *
 	 * @return array Fieldmanager fields.
 	 */
-	protected function fieldmanager_children() {
+	protected function fieldmanager_children() : array {
 		return [
 			'heading'         => new \Fieldmanager_TextField(
 				[
@@ -83,7 +83,7 @@ class Events_Widget extends \FM_Widget {
 			'event_ids'       => new \Fieldmanager_Zone_Field(
 				[
 					'label'      => __( 'Events', 'cpr' ),
-					'post_limit' => 4,
+					'post_limit' => 3,
 					'query_args' => [
 						'post_type' => [ 'tribe_events' ],
 					],

@@ -47,7 +47,7 @@ class Content_List extends \WP_Components\Component {
 	 * Create a widget content list item.
 	 *
 	 * @param int|\WP_Post $post_id Post ID or post object.
-	 * @return \CPR\Components\Content_Item
+	 * @return \CPR\Components\Content_List_Item
 	 */
 	public function get_content_list_item( $post_id ) {
 		return ( new \CPR\Components\Widgets\Content_List_Item() )->set_post( $post_id );
