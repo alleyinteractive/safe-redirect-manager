@@ -57,6 +57,8 @@ function build_components_endpoint(
 			new Components\Primary_Navigation\Primary_Navigation(),
 			( new Components\Header\Header() ),
 			new \WP_Components\Body(),
+			( new Components\Footer\Footer_Sidebar() )
+				->set_sidebar( 'footer-sidebar' ),
 			new Components\Footer\Footer(),
 			new Components\Audio\Element(),
 		];
