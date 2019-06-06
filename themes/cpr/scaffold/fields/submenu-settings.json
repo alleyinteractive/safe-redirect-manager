@@ -73,6 +73,14 @@
 					"type": "richtextarea"
 				}
 			}
-		}
-	}
+    },
+    "gtm": {
+      "label": { "__": "Google Tag Manager Settings" },
+      "children": {
+        "container_id": {
+          "label": { "__": "Google Tag Manager Container ID" }
+        }
+      }
+    }
+  }
 }
