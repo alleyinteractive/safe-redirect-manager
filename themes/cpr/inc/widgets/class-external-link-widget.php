@@ -24,7 +24,7 @@ class External_Link_Widget extends \FM_Widget {
 			'external_link_widget',
 			__( 'External Link Widget', 'cpr' ),
 			[
-				'description' => __( 'Display an external link', 'cpr' ),
+				'description' => __( 'Displays an external link', 'cpr' ),
 			]
 		);
 	}

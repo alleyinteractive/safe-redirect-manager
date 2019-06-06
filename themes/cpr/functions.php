@@ -128,6 +128,7 @@ require_once CPR_PATH . '/inc/partials/partials.php';
  */
 require_once CPR_PATH . '/inc/widgets/class-events-widget.php';
 require_once CPR_PATH . '/inc/widgets/class-external-link-widget.php';
+require_once CPR_PATH . '/inc/widgets/class-colorado-wonders-widget.php';
 
 // Content types and taxonomies should be included below. In order to scaffold
 // them, leave the Begin and End comments in place.
