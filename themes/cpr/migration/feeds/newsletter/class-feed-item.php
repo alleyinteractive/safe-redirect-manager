@@ -1,11 +1,11 @@
 <?php
 /**
- * Class for parsing a story item.
+ * Class for parsing a Newsletter.
  *
  * @package CPR
  */
 
-namespace CPR\Migration\Story;
+namespace CPR\Migration\Newsletter;
 
 use function Alleypack\Sync_Script\alleypack_log;
 
@@ -17,27 +17,18 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	use \CPR\Migration\Traits\Story;
 
 	/**
+	 * Post type.
+	 *
+	 * @var string
+	 */
+	public static $post_type = 'newsletter-single';
+
+	/**
 	 * This object should always sync.
 	 *
 	 * @return bool
 	 */
 	public function should_object_sync() : bool {
-
-		/**
-		 * Modify migration for story types.
-		 */
-		$story_type_id = absint( $this->source['field_story_type']['und'][0]['tid'] ?? 0 );
-		if ( 0 !== $story_type_id ) {
-
-			// Is this source actually a podcast episode?
-			$podcast_unique_ids = \CPR\Migration\Podcast\Feed::$unique_taxonomy_ids_for_podcasts;
-			if ( in_array( $story_type_id, $podcast_unique_ids, true ) ) {
-
-				// Migrate that instead and skip over the object.
-				$podcast_episode = \CPR\Migration\Podcast_Episode\Feed_Item::get_or_create_object_from_source( $this->source );
-				return false;
-			}
-		}
 
 		/**
 		 * Modify migrtaion for newsletters.
@@ -47,20 +38,11 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 				function( $und ) {
 					return absint( $und['tid'] ?? 0 );
 				},
-				$this->source['field_tags']['und']
+				$this->source['field_tags']['und'] ?? []
 			)
 		);
 
-		if ( in_array( 9727, $tag_ids, true ) ) {
-			$newsletter = \CPR\Migration\Newsletter\Feed_Item::get_or_create_object_from_source( $this->source );
-			if ( $newsletter instanceof \WP_Post ) {
-				wp_update_post(
-					[
-						'ID'        => $newsletter->ID,
-						'post_type' => 'newsletter-single',
-					]
-				);
-			}
+		if ( ! in_array( 9727, $tag_ids, true ) ) {
 			return false;
 		}
 
@@ -96,12 +78,8 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function post_object_save() {
-		$this->migrate_bylines();
-		$this->migrate_featured_image();
-		$this->set_section();
-		$this->set_podcast();
-		$this->set_tags();
-		$this->set_categories();
+		update_post_meta( $this->get_object_id(), 'newsletter_html', $this->source['body']['und'][0]['value'] ?? '' );
+		wp_set_object_terms( $this->get_object_id(), 'the-lookout', 'newsletter' );
 		return true;
 	}
 }

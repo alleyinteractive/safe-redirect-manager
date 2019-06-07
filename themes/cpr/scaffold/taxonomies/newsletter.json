@@ -1,0 +1,11 @@
+{
+	"object_types": [
+		"newsletter-single"
+	],
+	"labels": {
+		"menu_name": { "__": "Manage Newsletters" }
+	},
+	"show_admin_column": true,
+	"hierarchical": true,
+	"show_in_rest": true
+}
