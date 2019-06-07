@@ -218,7 +218,7 @@ function build_components_endpoint(
 	// Set up context providers.
 	$data['providers'] = [
 		( new Components\Google_Tag_Manager() )
-			->set_config( 'container_id', $settings['gtm']['container_id'] )
+			->set_config( 'container_id', $settings['gtm']['container_id'] ?? [] )
 			->set_data_layer_from_query( $wp_query ),
 	];
 
