@@ -135,7 +135,7 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 				);
 			}
 
-			// Migrate Youtube videos.
+			// Migrate videos.
 			$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'video', $legacy_nid );
 			if ( ! empty( $source ) ) {
 				$post_content = str_replace(
