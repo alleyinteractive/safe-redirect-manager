@@ -84,7 +84,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			return false;
 		}
 
-		/// Parse tag ids.
+		// Parse tag ids.
 		$story_type_ids = array_filter(
 			array_map(
 				function( $und ) {
@@ -175,7 +175,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	public function migrate_newsletters() : bool {
 
-		/// Parse tag ids.
+		// Parse tag ids.
 		$tag_ids = array_filter(
 			array_map(
 				function( $und ) {
