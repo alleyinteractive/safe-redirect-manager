@@ -40,17 +40,17 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		}
 
 		/**
-		 * Modify migrtaion for newsletters.
+		 * Modify migration for newsletters.
 		 */
 		$tag_ids = array_filter(
 			array_map(
 				function( $und ) {
 					return absint( $und['tid'] ?? 0 );
 				},
-				$this->source['field_tags']['und']
+				$this->source['field_tags']['und'] ?? []
 			)
 		);
-
+		
 		if ( in_array( 9727, $tag_ids, true ) ) {
 			$newsletter = \CPR\Migration\Newsletter\Feed_Item::get_or_create_object_from_source( $this->source );
 			if ( $newsletter instanceof \WP_Post ) {

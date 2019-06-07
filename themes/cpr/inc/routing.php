@@ -141,6 +141,14 @@ function build_components_endpoint(
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Job_Archive() )->set_query( $wp_query );
 			break;
+		
+		/**
+		 * Newsletter archive.
+		 */
+		case $wp_query->is_post_type_archive( 'newsletter' ):
+			$head->set_query( $wp_query );
+			$template = ( new Components\Templates\Newsletter_Archive() )->set_query( $wp_query );
+			break;
 
 		/**
 		 * Press Releases archive.
@@ -195,6 +203,14 @@ function build_components_endpoint(
 		case $wp_query->is_singular( 'tribe_events' ):
 			$head->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
+			break;
+
+		/**
+		 * Newsletter.
+		 */
+		case $wp_query->is_singular( 'newsletter-single' ):
+			$head->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Newsletter() )->set_post( $wp_query->post );
 			break;
 
 		/**
