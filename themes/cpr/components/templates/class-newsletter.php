@@ -27,10 +27,24 @@ class Newsletter extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
-		$this->append_child(
-			( new \CPR\Components\Content\Newsletter_Content() )
-				->set_post( $this->post )
-		);
+		$body           = new \WP_Components\Body();
+		$body->children = array_filter( $this->get_components() );
+		$this->append_child( $body );
 		return $this;
+	}
+
+	/**
+	 * Get an array of all components.
+	 *
+	 * @return array
+	 */
+	public function get_components() : array {
+		return [
+			/**
+			 * Content
+			 */
+			( new \CPR\Components\Content\Newsletter_Content() )
+				->set_post( $this->post ),
+		];
 	}
 }
