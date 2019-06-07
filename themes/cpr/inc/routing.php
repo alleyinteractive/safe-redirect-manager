@@ -67,6 +67,8 @@ function build_components_endpoint(
 	// Begin building a head instance for this page.
 	$head = new \WP_Components\Head();
 
+	error_log( print_r( $wp_query, true ) );
+
 	// Build page.
 	switch ( true ) {
 
@@ -169,6 +171,22 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Calendar.
+		 */
+		case ! empty( $wp_query->tribe_is_event_query ):
+			$head->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
+			break;
+
+		/**
+		 * Event.
+		 */
+		case $wp_query->is_singular( 'tribe_events' ):
+			$head->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
+			break;
+
+		/**
 		 * Pages and other simple content super page style singles.
 		 */
 		case $wp_query->is_page():
@@ -187,14 +205,6 @@ function build_components_endpoint(
 					$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
 					break;
 			}
-			break;
-
-		/**
-		 * Event.
-		 */
-		case $wp_query->is_singular( 'tribe_events' ):
-			$head->set_post( $wp_query->post );
-			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
 			break;
 
 		/**
