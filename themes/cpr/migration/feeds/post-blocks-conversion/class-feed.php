@@ -167,6 +167,18 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 			return ( new Converter( $html ) )->convert_to_block();
 		}
 
+		// Fix for nested images.
+		if ( 'p' === $node->tagName ) {
+			$img = Converter::get_nodes( $node, 'img' );
+
+			// Bail if there is no img tag.
+			if ( empty( $img->item( 0 ) ) ) {
+				return $content;
+			}
+
+			return ( new Converter( '' ) )->img( $img->item( 0 ) );
+		}
+
 		if ( 'iframe' === $node->tagName || ( 'div' === $node->tagName && 'embed' === $node->getAttribute( 'class' )  ) ) {
 			return $this->video_to_block( $content, $node );
 		}
