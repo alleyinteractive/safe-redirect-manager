@@ -825,3 +825,31 @@ function cpr_fm_post_page_settings() {
 }
 add_action( 'fm_post_page', 'cpr_fm_post_page_settings' );
 /* end fm:post-page-settings */
+
+/* begin fm:post-newsletter-settings */
+/**
+ * `post-newsletter-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_newsletter_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-newsletter-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'children' => [
+				'newsletter_html' => new Fieldmanager_TextArea(
+					[
+						'label' => __( 'Newsletter HTML', 'cpr' ),
+						'attributes' => [
+							'rows' => 40,
+							'style' => 'width: 100%',
+						],
+					]
+				),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'newsletter-single' ], 'normal', 'high' );
+}
+add_action( 'fm_post_newsletter-single', 'cpr_fm_post_newsletter_settings' );
+/* end fm:post-newsletter-settings */
