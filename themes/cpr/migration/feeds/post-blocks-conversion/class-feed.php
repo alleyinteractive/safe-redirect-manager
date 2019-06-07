@@ -113,7 +113,6 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 			'field_format',
 		];
 
-		// preg_match_all( '<p>\[\[nid:(\d+)(.+)\]\]<\/p>', $post_content, $matches );
 		preg_match_all( '/<p>\[\[nid:(\d+)(.+)\]\]<\/p>/', $post_content, $matches );
 
 		foreach ( $matches[0] as $key => $value ) {
