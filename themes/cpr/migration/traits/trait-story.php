@@ -20,6 +20,7 @@ trait Story {
 		// Map fields.
 		$this->object['post_name']    = sanitize_title( $this->source['title'] ?? '' );
 		$this->object['post_title']   = wp_strip_all_tags( $this->source['title'] ?? '' );
+		$this->object['post_excerpt'] = wp_strip_all_tags( $this->source['body']['und'][0]['summary'] ?? '' );
 		$this->object['post_status']  = 'publish';
 
 		// Object date.

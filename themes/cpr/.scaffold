@@ -30,5 +30,9 @@
   "tax:underwriter-category": "072af0a7a234fd9e1acc6770389678a4",
   "fm:post-post-settings": "fd907eabef788c3e10f44bc918eba38a",
   "fm:post-tribe_events_section": "90290608888446e92fb31b7e1d3a7e1b",
-  "fm:post-page-settings": "1617169642c9f8a1ae28b0c8fb09a46f"
+  "fm:post-page-settings": "1617169642c9f8a1ae28b0c8fb09a46f",
+  "cpt:newsletter-single": "bee6d31ecea99d3c3880ca9a44e921df",
+  "cpt:newsletter-post": "13d970f1868dcc7f778db1ff18e6a6a8",
+  "tax:newsletter": "2a77afdb06e90003d67e0c66af9d0699",
+  "fm:post-newsletter-settings": "a1215033095fd330dba802e71960d605"
 }
