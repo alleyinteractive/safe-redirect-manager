@@ -42,7 +42,7 @@ class Feed extends \CPR\Migration\Feed {
 	 *
 	 * @var array
 	 */
-	public $unique_taxonomy_ids_for_shows = [
+	public static $unique_taxonomy_ids_for_shows = [
 		70,   // Colorado Matters.
 		6345, // OpenAir Live & Local.
 	];
@@ -55,5 +55,27 @@ class Feed extends \CPR\Migration\Feed {
 	 */
 	public function mapping_filter( array $mapping ) : array {
 		return $this->unique_taxonomy_ids_for_shows;
+	}
+
+	/**
+	 * Helper to set the show for a given post.
+	 *
+	 * @param int        $post_id           Post id.
+	 * @param string|int $show_unique_id Unique (legacy) id for this
+	 *                                      service/show.
+	 */
+	public static function set_show( int $post_id, $show_unique_id ) {
+
+		// Attempt to retreieve the show term.
+		$show_term = \CPR\Migration\Show\Feed_Item::get_object_by_unique_id( $show_unique_id );
+
+		// Validate and set.
+		if ( $show_term instanceof \WP_Term ) {
+			wp_set_object_terms(
+				$post_id,
+				$show_term->term_id,
+				'show'
+			);
+		}
 	}
 }
