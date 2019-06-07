@@ -118,8 +118,8 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 		foreach ( $matches[0] as $key => $value ) {
 
 			// Extra fields and parse as needed.
-			$legacy_nid          = $matches[1][ $key ];
-			$attachment_settings = wp_parse_args( $matches[2][ $key ] );
+			$legacy_nid          = $matches[2][ $key ];
+			$attachment_settings = wp_parse_args( $matches[3][ $key ] );
 
 			// Migrate images.
 			$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_nid );
@@ -167,7 +167,7 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 			return ( new Converter( $html ) )->convert_to_block();
 		}
 
-		if ( 'iframe' === $node->tagName ) {
+		if ( 'iframe' === $node->tagName || ( 'div' === $node->tagName && 'embed' === $node->getAttribute( 'class' )  ) ) {
 			return $this->video_to_block( $content, $node );
 		}
 
@@ -195,11 +195,16 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 		$video_url = $iframe->item( 0 )->getAttribute( 'src' );
 
 		// Bail early.
-		if ( empty( $video_url ) || ( false === strpos( $video_url, 'youtube.com' ) && false === strpos( $video_url, 'vimeo.com' ) ) ) {
+		if ( empty( $video_url )
+			&& ! (
+			$this->is_video( $video_url, 'youtube.com' )
+			&& $this->is_video( $video_url, 'youtu.be' )
+			&& $this->is_video( $video_url, 'vimeo.com'
+			) ) ) {
 			return $content;
 		}
 
-		if ( false === strpos( $video_url, 'youtube.com' ) ) {
+		if ( $this->is_video( $video_url, 'vimeo.com' ) ) {
 			return '<!-- wp:core-embed/vimeo {"url":"' . esc_url( $video_url ) . '","type":"video","providerNameSlug":"vimeo","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->' . PHP_EOL .
 				'<figure class="wp-block-embed-vimeo wp-block-embed is-type-video is-provider-vimeo wp-embed-aspect-16-9 wp-has-aspect-ratio">' . PHP_EOL .
 					'<div class="wp-block-embed__wrapper">' . PHP_EOL .
@@ -231,5 +236,16 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 					'</div>' . PHP_EOL .
 				'</figure>' . PHP_EOL .
 		'<!-- /wp:core-embed/youtube -->';
+	}
+
+	/**
+	 * Check video url.
+	 *
+	 * @param string $url  Video url.
+	 * @param string $type Video type.
+	 * @return boolean
+	 */
+	private function is_video( $url, $type ) : bool {
+		return ( false !== strpos( $url, $type ) );
 	}
 }
