@@ -30,6 +30,14 @@ class Body extends \WP_Components\Component {
 		// Ensure this post isn't used in the backfill.
 		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $this->get_post_id() );
 
+		// Featured image.
+			if (
+				has_post_thumbnail( $this->get_post_id() )
+				&& 1 !== absint( get_post_meta( $this->get_post_id(), 'disable_image', true ) )
+			) {
+				$this->wp_post_set_featured_image( 'content_single', [ 'show_caption' => true ] );
+			}
+
 		return $this->append_children(
 			[
 				( new \WP_Components\Gutenberg_Content() )->set_post( $this->post ),
