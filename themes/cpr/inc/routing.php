@@ -58,6 +58,7 @@ function build_components_endpoint(
 			new \WP_Components\Body(),
 			new Components\Footer\Footer(),
 			new Components\Audio\Element(),
+			new Components\Audio\Player(),
 		];
 	}
 
