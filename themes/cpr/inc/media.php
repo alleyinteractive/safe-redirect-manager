@@ -64,6 +64,20 @@ namespace CPR;
 			'aspect_ratio' => 9 / 16,
 			'retina'       => true,
 		],
+		'external-link-widget' => [
+			'sources' => [
+				[
+					'default'    => true,
+					'descriptor' => 500,
+					'transforms' => [
+						'resize' => [ 500, 500 ],
+					],
+				],
+			],
+			'retina'       => true,
+			'aspect_ratio' => 1,
+			'fallback_image_url' => get_template_directory_uri() . '/images/default-thumbnail.png',
+		],
 		'feature_item' => [
 			'sources' => [
 				[

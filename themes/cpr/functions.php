@@ -21,6 +21,9 @@ define( 'CPR_URL', get_template_directory_uri() );
 \Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );
 
+// Create Term Post Link for Newsletter.
+\Alleypack\create_term_post_link( 'newsletter', 'newsletter-post' );
+
 // WordPress utilities.
 require_once CPR_PATH . '/inc/class-wp-utils.php';
 
@@ -128,6 +131,7 @@ require_once CPR_PATH . '/inc/partials/partials.php';
  */
 require_once CPR_PATH . '/inc/widgets/class-events-widget.php';
 require_once CPR_PATH . '/inc/widgets/class-external-link-widget.php';
+require_once CPR_PATH . '/inc/widgets/class-colorado-wonders-widget.php';
 
 // Content types and taxonomies should be included below. In order to scaffold
 // them, leave the Begin and End comments in place.
@@ -195,5 +199,14 @@ require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-press-release.php';
 
 // Underwriter Categories Taxonomy (tax:underwriter-category).
 require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-underwriter-category.php';
+
+// Newsletter Singles Post Type (cpt:newsletter-single).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-newsletter-single.php';
+
+// Newsletter Posts Post Type (cpt:newsletter-post).
+require_once CPR_PATH . '/inc/post-types/class-cpr-post-type-newsletter-post.php';
+
+// Newsletters Taxonomy (tax:newsletter).
+require_once CPR_PATH . '/inc/taxonomies/class-cpr-taxonomy-newsletter.php';
 
 /* End Data Structures */

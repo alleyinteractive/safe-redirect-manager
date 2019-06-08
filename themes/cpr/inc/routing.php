@@ -45,6 +45,7 @@ function build_components_endpoint(
 	string $path,
 	\WP_REST_Request $request
 ) : array {
+	$settings = get_option( 'cpr-settings' );
 
 	// Build defaults.
 	if ( 'site' === $context ) {
@@ -56,6 +57,8 @@ function build_components_endpoint(
 			new Components\Primary_Navigation\Primary_Navigation(),
 			( new Components\Header\Header() ),
 			new \WP_Components\Body(),
+			( new Components\Footer\Footer_Sidebar() )
+				->set_sidebar( 'footer-sidebar' ),
 			new Components\Footer\Footer(),
 			new Components\Audio\Element(),
 			new Components\Audio\Player(),
@@ -212,6 +215,13 @@ function build_components_endpoint(
 			$template = ( new Components\Templates\Error() )->set_query( $wp_query );
 			break;
 	}
+
+	// Set up context providers.
+	$data['providers'] = [
+		( new Components\Google_Tag_Manager() )
+			->set_config( 'container_id', $settings['gtm']['container_id'] ?? [] )
+			->set_data_layer_from_query( $wp_query ),
+	];
 
 	// Setup the page data based on routing.
 	$data['page'] = $template->to_array()['children'];

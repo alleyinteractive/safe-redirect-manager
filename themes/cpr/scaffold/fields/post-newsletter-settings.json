@@ -1,0 +1,22 @@
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "newsletter-single" ],
+			"title": { "__": "Settings" },
+			"priority": "high"
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"children": {
+		"newsletter_html": {
+			"label": { "__": "Newsletter HTML" },
+			"type": "textarea",
+			"attributes": {
+				"rows": 40,
+				"style": "width: 100%"
+			}
+		}
+	}
+}

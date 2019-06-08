@@ -21,6 +21,8 @@ function wp_seo_single_post_types( $post_types ) {
 		'external-link',
 		'guest-author',
 		'landing-page',
+		'newsletter-post',
+		'newsletter-single',
 		'post',
 		'top-30',
 		'underwriter',

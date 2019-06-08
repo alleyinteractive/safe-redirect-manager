@@ -4,7 +4,7 @@
   "cpt:podcast-episode": "3ea35a6b68d60b543b7305f779b552a8",
   "tax:podcast": "1813c5937d2e5de34af6bebd0c7fc5e6",
   "tax:section": "4f59fcd184d449c67615b8a6816d1f89",
-  "fm:submenu-settings": "051a30696f28221122b02ad2434cfd3a",
+  "fm:submenu-settings": "fc21e792700ad4d724d420b4ff093be8",
   "fm:post-guest-author-settings": "a319a766d4a05ce5030a5c899dcad0b4",
   "cpt:top-30": "1011ed494e4c087a535e16e15b7aed42",
   "cpt:album": "16494c3751238f24f1efe630b2822f88",
@@ -16,7 +16,7 @@
   "fm:post-underwriter-settings": "badaad2d4dd52fd541fc70a610b1de9c",
   "cpt:job": "a88e8d68eaa087b44eded228c02b66d8",
   "fm:post-external-link-settings": "c480da45b2d2d30ebaefb0f51eab9160",
-  "cpt:external-link": "9336b6a90506af3fe1d19f8234a9b22c",
+  "cpt:external-link": "174e91a3abb8eb237b8d9329f307a0a4",
   "cpt:alert": "9d0fe7264321beab0d45ff24dc2eb457",
   "fm:post-alert-settings": "03ac083a3a7549195933c59aa28f2dcd",
   "cpt:show-segment": "94c45055f5bee3cdb4159df328580dfa",
@@ -30,5 +30,9 @@
   "tax:underwriter-category": "072af0a7a234fd9e1acc6770389678a4",
   "fm:post-post-settings": "fd907eabef788c3e10f44bc918eba38a",
   "fm:post-tribe_events_section": "90290608888446e92fb31b7e1d3a7e1b",
-  "fm:post-page-settings": "1617169642c9f8a1ae28b0c8fb09a46f"
+  "fm:post-page-settings": "1617169642c9f8a1ae28b0c8fb09a46f",
+  "cpt:newsletter-single": "bee6d31ecea99d3c3880ca9a44e921df",
+  "cpt:newsletter-post": "13d970f1868dcc7f778db1ff18e6a6a8",
+  "tax:newsletter": "2a77afdb06e90003d67e0c66af9d0699",
+  "fm:post-newsletter-settings": "a1215033095fd330dba802e71960d605"
 }

@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
+import IconPicker from './icons/index';
 
 const AccordionItemSave = (props) => {
   const {
     heading,
     active,
     itemNumber,
+    icon,
   } = props.attributes;
   const {
     InnerBlocks,
@@ -15,6 +17,9 @@ const AccordionItemSave = (props) => {
   return (
     <div className={className}>
       <a href={`#accordion-${itemNumber}`} className="cpr-accordion-item-heading">
+        <div className="cpr-icon-box-icon">
+          <IconPicker.Render name={icon} />
+        </div>
         <RichText.Content
           className="cpr-accordion-item-label"
           tagName="span"
@@ -33,6 +38,7 @@ const AccordionItemSave = (props) => {
 
 AccordionItemSave.propTypes = {
   attributes: PropTypes.shape({
+    icon: PropTypes.string.isRequired,
     itemNumber: PropTypes.string.isRequired,
     active: PropTypes.bool.isRequired,
     heading: PropTypes.array.isRequired,
