@@ -28,12 +28,15 @@ class Newsletter_Content extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
-		$this->append_child(
-			( new \WP_Components\HTML() )
-				->set_config(
-					'content',
-					get_post_meta( $this->get_post_id(), 'newsletter_html', true )
+		$this->set_config(
+			'url',
+			esc_url(
+				str_replace(
+					home_url(),
+					site_url(),
+					$this->wp_post_get_permalink()
 				)
+			)
 		);
 
 		return $this;
