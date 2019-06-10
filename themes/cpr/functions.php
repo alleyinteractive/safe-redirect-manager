@@ -10,6 +10,11 @@ namespace CPR;
 define( 'CPR_PATH', dirname( __FILE__ ) );
 define( 'CPR_URL', get_template_directory_uri() );
 
+// Handle local dev port issues.
+if ( false !== strpos( site_url(), 'alley' ) ) {
+	remove_filter( 'template_redirect', 'redirect_canonical' );
+}
+
 /**
  * Alleypack modules.
  */
@@ -17,6 +22,7 @@ define( 'CPR_URL', get_template_directory_uri() );
 \Alleypack\load_module( 'cli-helpers', '1.1' );
 \Alleypack\load_module( 'fm-modules', '1.0' );
 \Alleypack\load_module( 'page-templates', '1.0' );
+\Alleypack\load_module( 'path-dispatch', '1.0' );
 \Alleypack\load_module( 'singleton', '1.0' );
 \Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );

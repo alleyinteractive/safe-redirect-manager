@@ -45,6 +45,7 @@ class Newsletter extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'oneColumn' )
+				->set_config( 'header', $this->wp_post_get_title() )
 				->append_children(
 					[
 						( new \CPR\Components\Content\Newsletter_Content() )
@@ -52,5 +53,20 @@ class Newsletter extends \WP_Components\Component {
 					]
 				),
 		];
+	}
+
+	/**
+	 * Modify rewrite rules.
+	 */
+	public static function dispatch_rewrites() {
+		\Alleypack\Path_Dispatch()->add_path(
+			[
+				'path'     => 'iframe-newsletter',
+				'rewrite'  => [
+					'rule'     => 'iframe/newsletter/(.*)/?',
+					'redirect' => 'index.php?post_type=newsletter-single&name=$matches[1]',
+				]
+			]
+		);
 	}
 }
