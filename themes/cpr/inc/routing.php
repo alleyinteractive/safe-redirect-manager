@@ -146,7 +146,7 @@ function build_components_endpoint(
 		/**
 		 * Newsletter archive.
 		 */
-		case $wp_query->is_post_type_archive( 'newsletter' ):
+		case $wp_query->is_post_type_archive( 'newsletter-single' ):
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Newsletter_Archive() )->set_query( $wp_query );
 			break;
