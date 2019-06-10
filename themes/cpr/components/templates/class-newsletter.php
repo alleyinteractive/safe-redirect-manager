@@ -45,7 +45,7 @@ class Newsletter extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'oneColumn' )
-				->set_config( 'header', $this->wp_post_get_title() )
+				->set_config( 'heading', $this->wp_post_get_title() )
 				->append_children(
 					[
 						( new \CPR\Components\Content\Newsletter_Content() )
