@@ -65,7 +65,7 @@ class Newsletter extends \WP_Components\Component {
 				'rewrite'  => [
 					'rule'     => 'iframe/newsletter/(.*)/?',
 					'redirect' => 'index.php?post_type=newsletter-single&name=$matches[1]',
-				]
+				],
 			]
 		);
 	}
