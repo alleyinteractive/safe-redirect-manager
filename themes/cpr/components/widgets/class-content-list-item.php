@@ -1,6 +1,6 @@
 <?php
 /**
- * Calendar Item component.
+ * Widget Content List Item component.
  *
  * @package CPR
  */
@@ -8,7 +8,7 @@
 namespace CPR\Components\Widgets;
 
 /**
- * Calendar Item.
+ * Widget Content List Item.
  */
 class Content_List_Item extends \WP_Components\Component {
 
@@ -95,7 +95,7 @@ class Content_List_Item extends \WP_Components\Component {
 						 * External link cta.
 						 */
 						( new \WP_Components\Helpers\Button() )
-							->set_config(
+							->merge_config(
 								[
 									'link'       => $this->wp_post_get_permalink(),
 									'class_name' => 'learn-more',
