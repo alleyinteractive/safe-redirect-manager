@@ -70,7 +70,11 @@ class Header extends \WP_Components\Component {
 					( new \CPR\Components\Logo() )
 						->set_config( 'type', 'indie' )
 						->set_theme( 'primary' ),
-					( new \WP_Components\Menu() )->set_menu( 'indie' ),
+					( new \WP_Components\Menu() )
+						->set_menu( 'indie' )
+						->parse_wp_menu()
+						->set_theme( 'header' )
+						->set_child_themes( [ 'menu-item' => 'header' ] ),
 				];
 				return $this;
 
@@ -81,7 +85,11 @@ class Header extends \WP_Components\Component {
 						( new \CPR\Components\Logo() )
 							->set_config( 'type', $sections[0]->slug ?? '' )
 							->set_theme( 'primary' ),
-						( new \WP_Components\Menu() )->set_menu( $sections[0]->slug ?? '' ),
+						( new \WP_Components\Menu() )
+							->set_menu( $sections[0]->slug ?? '' )
+							->parse_wp_menu()
+							->set_theme( 'header' )
+							->set_child_themes( [ 'menu-item' => 'header' ] ),
 					];
 				}
 				return $this;
@@ -92,7 +100,11 @@ class Header extends \WP_Components\Component {
 					( new \CPR\Components\Logo() )
 						->set_config( 'type', $term->slug ?? '' )
 						->set_theme( 'primary' ),
-					( new \WP_Components\Menu() )->set_menu( $term->slug ?? '' ),
+					( new \WP_Components\Menu() )
+						->set_menu( $term->slug ?? '' )
+						->parse_wp_menu()
+						->set_theme( 'header' )
+						->set_child_themes( [ 'menu-item' => 'header' ] ),
 				];
 				return $this;
 		}
