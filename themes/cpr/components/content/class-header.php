@@ -33,7 +33,6 @@ class Header extends \WP_Components\Component {
 			'audio_url'     => '',
 			'eyebrow_label' => '',
 			'eyebrow_link'  => '',
-			'image_size'    => 'content_single',
 			'publish_date'  => '',
 			'title'         => '',
 		];
@@ -57,17 +56,6 @@ class Header extends \WP_Components\Component {
 				$this->set_byline();
 				$this->set_publish_date();
 				$this->set_audio();
-
-				// Featured image.
-				if (
-					has_post_thumbnail( $this->get_post_id() )
-					&& 1 !== absint( get_post_meta( $this->get_post_id(), 'disable_image', true ) )
-				) {
-					$this->wp_post_set_featured_image(
-						$this->get_config( 'image_size' ),
-						[ 'show_caption' => true ]
-					);
-				}
 
 				// Children.
 				$this->append_child( new \CPR\Components\Ad() );
