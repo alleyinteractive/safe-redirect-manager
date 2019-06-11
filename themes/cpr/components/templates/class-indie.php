@@ -272,7 +272,7 @@ class Indie extends \WP_Components\Component {
 			 * Articles content list.
 			 */
 			( new \CPR\Components\Column_Area() )
-				->set_theme( 'split' )
+				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
 						'heading'           => $data['articles']['heading'] ?? __( 'Read', 'cpr' ),
@@ -281,56 +281,28 @@ class Indie extends \WP_Components\Component {
 						'heading_link'      => get_term_link( 'indie', 'section' ),
 					]
 				)
-				->append_children(
-					[
-						( new \CPR\Components\Modules\Content_List() )
-							->merge_config(
-								[
-									'image_size'       => 'feature_item',
-									'show_excerpt'     => true,
-									'eyebrow_location' => 'none',
-								]
-							)
-							->parse_from_ids(
-								array_slice( $data['articles']['content_item_ids'] ?? [], 0, 1 ),
-								1,
-								self::get_indie_posts_backfill_args()
-							)
-							->set_theme( 'feature' )
-							->set_child_themes(
-								[
-									'content-item'  => 'featureSecondary',
-									'eyebrow'       => 'small',
-									'content-title' => 'featureSecondary',
-								]
-							),
-
-						/**
-						 * Right sidebar.
-						 */
-						( new \CPR\Components\Sidebar() )
-							->set_theme( 'right' )
-							->append_child(
-								/**
-								 * Grid of additional items.
-								 */
-								( new \CPR\Components\Modules\Content_List() )
-									->set_config( 'image_size', 'grid_item' )
-									->parse_from_ids(
-										array_slice( $data['articles']['content_item_ids'] ?? [], 1 ),
-										4,
-										self::get_indie_posts_backfill_args()
-									)
-							)
-							->set_child_themes(
-								[
-									'content-list'  => 'gridHalf',
-									'content-item'  => 'grid',
-									'eyebrow'       => 'small',
-									'content-title' => 'grid',
-								]
-							),
-					]
+				->append_child(
+					( new \CPR\Components\Modules\Content_List() )
+						->merge_config(
+							[
+								'image_size'   => 'feature_item_small',
+								'show_excerpt' => true,
+								'theme'        => 'featureHalf',
+							]
+						)
+						->parse_from_ids(
+							array_slice( $data['articles']['content_item_ids'] ?? [], 0, 2 ),
+							2,
+							self::get_indie_posts_backfill_args()
+						)
+						->set_theme( 'gridHalf' )
+						->set_child_themes(
+							[
+								'content-item'  => 'featureSecondary',
+								'content-title' => 'featureSecondary',
+								'eyebrow'       => 'small',
+							]
+						)
 				),
 		];
 	}
