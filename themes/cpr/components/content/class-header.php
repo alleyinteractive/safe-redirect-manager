@@ -92,7 +92,7 @@ class Header extends \WP_Components\Component {
 								'text'     => __( 'Share: ', 'cpr' ),
 							]
 						)
-						->set_post( $this->post ),
+						->set_post( $this->post )
 				);
 				break;
 
