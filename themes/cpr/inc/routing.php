@@ -150,6 +150,7 @@ function build_components_endpoint(
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Press_Release_Archive() )->set_query( $wp_query );
 			break;
+
 		/**
 		 * Podcast/Show single.
 		 */

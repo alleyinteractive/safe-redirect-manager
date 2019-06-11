@@ -29,8 +29,6 @@ class Header extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'audio_length'  => '',
-			'audio_url'     => '',
 			'eyebrow_label' => '',
 			'eyebrow_link'  => '',
 			'image_size'    => 'content_single',
@@ -56,7 +54,6 @@ class Header extends \WP_Components\Component {
 				$this->set_eyebrow();
 				$this->set_byline();
 				$this->set_publish_date();
-				$this->set_audio();
 
 				// Featured image.
 				if (
@@ -87,6 +84,26 @@ class Header extends \WP_Components\Component {
 				);
 				break;
 
+			case 'podcast-episode':
+				$this->append_children(
+					[
+						( new \CPR\Components\Audio\Listen_Now() )->set_post( $this->post ),
+						( new \WP_Components\Social_Sharing() )
+							->merge_config(
+								[
+									'services' => [
+										'facebook' => true,
+										'twitter'  => true,
+										'email'    => true,
+									],
+									'text'     => __( 'Share: ', 'cpr' ),
+								]
+							)
+							->set_post( $this->post ),
+					]
+				);
+				break;
+
 			case 'page':
 				break;
 
@@ -106,5 +123,15 @@ class Header extends \WP_Components\Component {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Set audio.
+	 *
+	 * @todo Do real things.
+	 */
+	public function set_audio() {
+		$this->set_config( 'audio_url', 'http://google.com/test.mp3' );
+		$this->set_config( 'audio_length', 415 );
 	}
 }
