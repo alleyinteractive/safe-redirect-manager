@@ -32,8 +32,8 @@ class Newsletter_Content extends \WP_Components\Component {
 			'url',
 			esc_url(
 				str_replace(
-					home_url(),
-					site_url(),
+					home_url() . '/newsletter-single/',
+					'/iframe/newsletter/',
 					$this->wp_post_get_permalink()
 				)
 			)
