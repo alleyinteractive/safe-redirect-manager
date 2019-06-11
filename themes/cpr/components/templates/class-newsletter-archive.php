@@ -73,7 +73,8 @@ class Newsletter_Archive extends \WP_Components\Component {
 						 * Sidebar.
 						 */
 						( new \CPR\Components\Sidebar() )
-							->set_theme( 'right' ),
+							->set_theme( 'right' )
+							->set_sidebar( 'transitional-sidebar' ),
 					]
 				),
 		];

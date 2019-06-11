@@ -90,7 +90,6 @@ function build_components_endpoint(
 				case 'homepage':
 					$head->set_post( $wp_query->post );
 					$head->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'cpr' ) );
-					$header->set_cpr_header();
 					$template = ( new Components\Templates\Homepage() )->set_post( $wp_query->post );
 					break;
 
@@ -123,7 +122,6 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_author():
 			$head->set_query( $wp_query );
-			$header->set_cpr_header();
 			$template = ( new Components\Templates\Author_Archive() )->set_query( $wp_query );
 			break;
 
@@ -141,7 +139,6 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_post_type_archive( 'underwriter' ):
 			$head->set_query( $wp_query );
-			$header->set_cpr_header();
 			$template = ( new Components\Templates\Underwriter_Archive() )->set_query( $wp_query );
 			break;
 
@@ -150,7 +147,6 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_post_type_archive( 'job' ):
 			$head->set_query( $wp_query );
-			$header->set_cpr_header();
 			$template = ( new Components\Templates\Job_Archive() )->set_query( $wp_query );
 			break;
 
@@ -159,7 +155,6 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_post_type_archive( 'newsletter-single' ):
 			$head->set_query( $wp_query );
-			$header->set_cpr_header();
 			$template = ( new Components\Templates\Newsletter_Archive() )->set_query( $wp_query );
 			break;
 
@@ -168,7 +163,6 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_post_type_archive( 'press-release' ):
 			$head->set_query( $wp_query );
-			$header->set_cpr_header();
 			$template = ( new Components\Templates\Press_Release_Archive() )->set_query( $wp_query );
 			break;
 		/**
@@ -228,7 +222,6 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_singular( 'newsletter-single' ):
 			$head->set_post( $wp_query->post );
-			$header->set_cpr_header();
 			$template = ( new Components\Templates\Newsletter() )->set_post( $wp_query->post );
 			break;
 
@@ -247,7 +240,6 @@ function build_components_endpoint(
 		case $wp_query->is_404():
 		default:
 			$head->set_query( $wp_query );
-			$header->set_cpr_header();
 			$template = ( new Components\Templates\Error() )->set_query( $wp_query );
 			break;
 	}

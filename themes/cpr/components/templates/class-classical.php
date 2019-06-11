@@ -309,19 +309,6 @@ class Classical extends \WP_Components\Component {
 				),
 
 			/**
-			 * Banner Ad.
-			 */
-			( new \CPR\Components\Ad() )
-				->merge_config(
-					[
-						'background_color'   => '#f8f9fa',
-						'background_padding' => true,
-						'width'              => 468,
-						'height'             => 60,
-					]
-				),
-
-			/**
 			 * Hosts.
 			 */
 			( new \CPR\Components\Modules\Grid_Group() )
