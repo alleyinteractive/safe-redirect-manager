@@ -122,17 +122,34 @@ class Cleanup extends \CLI_Command {
 	 * default: post
 	 * ---
 	 *
+	 * [--post_id=<id>]
+	 * : Post ID to create redirect from.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
 	 * ## EXAMPLES
 	 *
 	 *   $ wp cpr-cleanup post_type_redirects
 	 *   $ wp cpr-cleanup post_type_redirects --post_type=another_post_type
+	 *
+	 * @param array $args       CLI args.
+	 * @param array $assoc_args CLI associate args.
 	 */
 	public function post_type_redirects( $args, $assoc_args ) {
+		// Default values.
+		$query_args = [
+			'post_type' => [ $assoc_args['post_type'] ],
+			'fields'    => 'ids',
+		];
+
+		// Unique post ID.
+		if ( ! empty( $assoc_args['post_id'] ) ) {
+			$query_args['p'] = absint( $assoc_args['post_id'] );
+		}
+
 		$this->bulk_task(
-			[
-				'post_type' => [ $assoc_args['post_type'] ],
-				'fields'    => 'ids',
-			],
+			$query_args,
 			function ( $post_id ) {
 				$legacy_path = get_post_meta( $post_id, 'legacy_path', true );
 				$new_path    = str_replace(
