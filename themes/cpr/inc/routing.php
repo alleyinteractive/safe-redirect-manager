@@ -68,6 +68,9 @@ function build_components_endpoint(
 	// Begin building a head instance for this page.
 	$head = new \WP_Components\Head();
 
+	// Begin building a new header instance for the request.
+	$header = ( new Components\Header\Header() )->set_cpr_header();
+
 	// Build page.
 	switch ( true ) {
 
@@ -87,24 +90,28 @@ function build_components_endpoint(
 				case 'homepage':
 					$head->set_post( $wp_query->post );
 					$head->set_title( __( 'Colorado Public Radio - In-Depth News and Streaming Music', 'cpr' ) );
+					$header->set_cpr_header();
 					$template = ( new Components\Templates\Homepage() )->set_post( $wp_query->post );
 					break;
 
 				case 'news':
 					$head->set_post( $wp_query->post );
 					$head->set_title( __( 'Colorado Public Radio News | CPR', 'cpr' ) );
+					$header->set_news_header();
 					$template = ( new Components\Templates\News() )->set_post( $wp_query->post );
 					break;
 
 				case 'classical':
 					$head->set_post( $wp_query->post );
 					$head->set_title( __( 'Colorado Public Radio Classical | CPR', 'cpr' ) );
+					$header->set_classical_header();
 					$template = ( new Components\Templates\Classical() )->set_post( $wp_query->post );
 					break;
 
 				case 'indie':
 					$head->set_post( $wp_query->post );
 					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music | CPR', 'cpr' ) );
+					$header->set_indie_header();
 					$template = ( new Components\Templates\Indie() )->set_post( $wp_query->post );
 					break;
 			}
@@ -116,6 +123,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_author():
 			$head->set_query( $wp_query );
+			$header->set_cpr_header();
 			$template = ( new Components\Templates\Author_Archive() )->set_query( $wp_query );
 			break;
 
@@ -124,6 +132,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_post_type_archive( 'top-30' ):
 			$head->set_query( $wp_query );
+			$header->set_indie_header();
 			$template = ( new Components\Templates\Top_30_Archive() )->set_query( $wp_query );
 			break;
 
@@ -132,6 +141,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_post_type_archive( 'underwriter' ):
 			$head->set_query( $wp_query );
+			$header->set_cpr_header();
 			$template = ( new Components\Templates\Underwriter_Archive() )->set_query( $wp_query );
 			break;
 
@@ -140,14 +150,16 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_post_type_archive( 'job' ):
 			$head->set_query( $wp_query );
+			$header->set_cpr_header();
 			$template = ( new Components\Templates\Job_Archive() )->set_query( $wp_query );
 			break;
-		
+
 		/**
 		 * Newsletter archive.
 		 */
 		case $wp_query->is_post_type_archive( 'newsletter-single' ):
 			$head->set_query( $wp_query );
+			$header->set_cpr_header();
 			$template = ( new Components\Templates\Newsletter_Archive() )->set_query( $wp_query );
 			break;
 
@@ -156,6 +168,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_post_type_archive( 'press-release' ):
 			$head->set_query( $wp_query );
+			$header->set_cpr_header();
 			$template = ( new Components\Templates\Press_Release_Archive() )->set_query( $wp_query );
 			break;
 		/**
@@ -164,6 +177,7 @@ function build_components_endpoint(
 		case $wp_query->is_tax( 'podcast' ):
 		case $wp_query->is_tax( 'show' ):
 			$head->set_query( $wp_query );
+			$header->set_term( $wp_query->get_queried_object_id() );
 			$template = ( new Components\Templates\Podcast_And_Show() )->set_term( $wp_query->get_queried_object_id() );
 			break;
 
@@ -174,6 +188,7 @@ function build_components_endpoint(
 		case $wp_query->is_tag():
 		case $wp_query->is_category():
 			$head->set_query( $wp_query );
+			$header->set_query( $wp_query );
 			$template = ( new Components\Templates\Term_Archive() )->set_query( $wp_query );
 			break;
 
@@ -184,6 +199,7 @@ function build_components_endpoint(
 		case $wp_query->is_singular( 'job' ):
 		case $wp_query->is_singular( 'press-release' ):
 			$head->set_post( $wp_query->post );
+			$header->set_post( $wp_query->post );
 
 			// Decide on a page template.
 			$template = (string) get_post_meta( $wp_query->post->ID, '_wp_page_template', true );
@@ -203,6 +219,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_singular( 'tribe_events' ):
 			$head->set_post( $wp_query->post );
+			$header->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
 			break;
 
@@ -211,6 +228,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_singular( 'newsletter-single' ):
 			$head->set_post( $wp_query->post );
+			$header->set_cpr_header();
 			$template = ( new Components\Templates\Newsletter() )->set_post( $wp_query->post );
 			break;
 
@@ -219,6 +237,7 @@ function build_components_endpoint(
 		 */
 		case $wp_query->is_single():
 			$head->set_post( $wp_query->post );
+			$header->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Article() )->set_post( $wp_query->post );
 			break;
 
@@ -228,6 +247,7 @@ function build_components_endpoint(
 		case $wp_query->is_404():
 		default:
 			$head->set_query( $wp_query );
+			$header->set_cpr_header();
 			$template = ( new Components\Templates\Error() )->set_query( $wp_query );
 			break;
 	}
@@ -235,7 +255,7 @@ function build_components_endpoint(
 	// Set up context providers.
 	$data['providers'] = [
 		( new Components\Google_Tag_Manager() )
-			->set_config( 'container_id', $settings['gtm']['container_id'] ?? [] )
+			->set_config( 'container_id', $settings['gtm']['container_id'] ?? '' )
 			->set_data_layer_from_query( $wp_query ),
 	];
 
@@ -248,7 +268,7 @@ function build_components_endpoint(
 		apply_filters( 'cpr_head', $head )
 	);
 
-	$data['page'][] = ( new Components\Header\Header() )->set_query( $wp_query );
+	$data['page'][] = $header;
 
 	return $data;
 }

@@ -12,6 +12,8 @@ namespace CPR\Components\Header;
  */
 class Header extends \WP_Components\Component {
 
+	use \WP_Components\WP_Post;
+	use \WP_Components\WP_Term;
 	use \WP_Components\WP_Query;
 
 	/**
@@ -39,76 +41,85 @@ class Header extends \WP_Components\Component {
 	}
 
 	/**
-	 * Hook into query being set.
+	 * Set the component to use the main logo and nav menu.
+	 */
+	public function set_cpr_header() : self {
+		return $this->set_header( 'main' );
+	}
+
+	/**
+	 * Set the component to use the news logo and nav menu.
+	 */
+	public function set_news_header() : self {
+		return $this->set_header( 'news' );
+	}
+
+	/**
+	 * Set the component to use the classical logo and nav menu.
+	 */
+	public function set_classical_header() : self {
+		return $this->set_header( 'classical' );
+	}
+
+	/**
+	 * Set the component to use the indie logo and nav menu.
+	 */
+	public function set_indie_header() : self {
+		return $this->set_header( 'indie' );
+	}
+
+	/**
+	 * Set the component to use the logo and nav menu.
+	 *
+	 * @param string $type Type to set.
+	 */
+	public function set_header( string $type ) : self {
+		$this->set_children(
+			[
+				/**
+				 * Logo.
+				 */
+				( new \CPR\Components\Logo() )
+					->set_config( 'type', $type )
+					->set_theme( 'primary' ),
+
+				/**
+				 * Menu.
+				 */
+				( new \WP_Components\Menu() )
+					->set_menu( $type )
+					->parse_wp_menu()
+					->set_theme( 'header' )
+					->set_child_themes( [ 'menu-item' => 'header' ] ),
+			]
+		);
+		return $this;
+	}
+
+	/**
+	 * Hook into post being set.
 	 *
 	 * @return self
 	 */
-	public function query_has_set() : self {
-
-		// Override with alternate children on certain pages.
-		switch ( true ) {
-			case 'landing-page' === $this->query->get( 'dispatch' ):
-				$type = $this->query->get( 'landing-page-type' );
-				if ( 'homepage' !== $type ) {
-					$this->children = [
-						( new \CPR\Components\Logo() )
-							->set_config( 'type', $type )
-							->set_theme( 'primary' ),
-						( new \WP_Components\Menu() )
-							->set_menu( $type )
-							->parse_wp_menu()
-							->set_theme( 'header' )
-							->set_child_themes( [ 'menu-item' => 'header' ] ),
-					];
-					return $this;
-				}
-				break;
-
-			case $this->query->is_post_type_archive( 'top-30' ):
-			case $this->query->is_singular( 'top-30' ):
-				$this->children = [
-					( new \CPR\Components\Logo() )
-						->set_config( 'type', 'indie' )
-						->set_theme( 'primary' ),
-					( new \WP_Components\Menu() )
-						->set_menu( 'indie' )
-						->parse_wp_menu()
-						->set_theme( 'header' )
-						->set_child_themes( [ 'menu-item' => 'header' ] ),
-				];
-				return $this;
-
-			case $this->query->is_single():
-				$sections = wp_get_post_terms( ( $this->query->post->ID ?? 0 ), 'section' );
-				if ( ! empty( $sections[0] ) && $sections[0] instanceof \WP_Term ) {
-					$this->children = [
-						( new \CPR\Components\Logo() )
-							->set_config( 'type', $sections[0]->slug ?? '' )
-							->set_theme( 'primary' ),
-						( new \WP_Components\Menu() )
-							->set_menu( $sections[0]->slug ?? '' )
-							->parse_wp_menu()
-							->set_theme( 'header' )
-							->set_child_themes( [ 'menu-item' => 'header' ] ),
-					];
-				}
-				return $this;
-
-			case $this->query->is_tax( 'section' ):
-				$term = $this->query->get_queried_object();
-				$this->children = [
-					( new \CPR\Components\Logo() )
-						->set_config( 'type', $term->slug ?? '' )
-						->set_theme( 'primary' ),
-					( new \WP_Components\Menu() )
-						->set_menu( $term->slug ?? '' )
-						->parse_wp_menu()
-						->set_theme( 'header' )
-						->set_child_themes( [ 'menu-item' => 'header' ] ),
-				];
-				return $this;
+	public function post_has_set() : self {
+		$sections = wp_get_post_terms( $this->get_post_id(), 'section' );
+		$section  = $sections[0]->slug ?? 'header';
+		if ( ! in_array( $section, [ 'news', 'classical', 'indie' ], true ) ) {
+			$this->set_cpr_header();
+		} else {
+			$this->set_header( $section );
 		}
+		return $this;
+	}
 
+	/**
+	 * Hook into term being set.
+	 *
+	 * @return self
+	 */
+	public function term_has_set() : self {
+		$term = $this->query->get_queried_object();
+		$this->set_header( $term->slug );
 		return $this;
 	}
 }

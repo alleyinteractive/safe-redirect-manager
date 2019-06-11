@@ -23,7 +23,7 @@ $plugins = [
 	'/wp-components/wp-components.php',
 	'/wp-irving/wp-irving.php',
 	'/wp-redis/wp-redis.php',
-	'/wp-seo/wp-seo.php',
+	// '/wp-seo/wp-seo.php',
 	'/wpcom-thumbnail-editor/wpcom-thumbnail-editor.php',
 	'/wpcom-legacy-redirector/wpcom-legacy-redirector.php',
 	'/fm-widgets/fm-widgets.php', // Depends on FM.
