@@ -86,8 +86,6 @@ class Header extends \WP_Components\Component {
 				break;
 
 			case 'press-release':
-				$this->set_publish_date();
-
 				$this->set_config( 'eyebrow_label', __( '‹‹ All Press Releases', 'cpr' ) );
 				$this->set_config( 'eyebrow_link', home_url( '/press-releases/' ) );
 				break;

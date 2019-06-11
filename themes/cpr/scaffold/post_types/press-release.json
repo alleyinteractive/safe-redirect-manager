@@ -5,14 +5,8 @@
 	"supports": [
 		"title",
 		"editor",
-		"author",
 		"revisions",
 		"thumbnail",
 		"excerpt"
-	],
-	"taxonomies": [
-		"category",
-		"post_tag",
-		"section"
 	]
 }

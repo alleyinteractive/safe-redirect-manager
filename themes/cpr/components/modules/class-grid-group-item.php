@@ -66,7 +66,6 @@ class Grid_Group_Item extends \WP_Components\Component {
 				)
 		);
 
-		$this->set_eyebrow();
 		$this->wp_post_set_permalink();
 
 		return $this;
