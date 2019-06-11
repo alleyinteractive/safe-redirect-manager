@@ -165,6 +165,8 @@ class Homepage extends \WP_Components\Component {
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'grid_item' )
 							->parse_from_fm_data( $data['more_stories'] ?? [], 6 )
+							->set_config( 'call_to_action_label', __( 'All Stories', 'cpr' ) )
+							->set_config( 'call_to_action_link', home_url( '/all/' ) )
 							->set_theme( 'gridSmall' )
 							->set_child_themes(
 								[
@@ -173,6 +175,7 @@ class Homepage extends \WP_Components\Component {
 									'sidebar'      => 'right',
 								]
 							),
+
 						/**
 						 * Sidebar.
 						 */
@@ -193,11 +196,6 @@ class Homepage extends \WP_Components\Component {
 							),
 					]
 				),
-
-			/**
-			 * Banner Ad.
-			 */
-			new \CPR\Components\Ad(),
 		];
 	}
 

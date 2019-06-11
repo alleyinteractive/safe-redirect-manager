@@ -29,9 +29,9 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function should_object_sync() : bool {
-
+	
 		/**
-		 * Modify migrtaion for newsletters.
+		 * Modify migration for newsletters.
 		 */
 		$tag_ids = array_filter(
 			array_map(

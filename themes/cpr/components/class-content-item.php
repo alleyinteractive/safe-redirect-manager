@@ -91,13 +91,21 @@ class Content_Item extends \WP_Components\Component {
 			}
 		}
 
-		$this->set_byline();
 		$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
 		$this->merge_config(
 			[
 				'permalink' => get_permalink( $this->post->ID ?? 0 ),
 			]
 		);
+
+		switch ( $this->post->post_type ) {
+			case 'press-release':
+				break;
+			default:
+				$this->set_byline();
+				break;
+		}
+
 		return $this;
 	}
 }

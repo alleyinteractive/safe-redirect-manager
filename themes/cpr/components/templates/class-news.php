@@ -247,19 +247,6 @@ class News extends \WP_Components\Component {
 				),
 
 			/**
-			 * Banner Ad.
-			 */
-			( new \CPR\Components\Ad() )
-				->merge_config(
-					[
-						'background_color'   => '#f8f9fa',
-						'background_padding' => true,
-						'width'              => 468,
-						'height'             => 60,
-					]
-				),
-
-			/**
 			 * "More Stories" river.
 			 */
 			( new \CPR\Components\Column_Area() )
@@ -296,37 +283,12 @@ class News extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Sidebar() )
 							->set_theme( 'right' )
-							->append_children(
-								[
-									/**
-									 * River of content "Across Colorado"
-									 */
-									( new \CPR\Components\Modules\Content_List() )
-										->set_config( 'heading', __( 'Across Colorado', 'cpr' ) )
-										->set_theme( 'river' )
-										->parse_from_ids(
-											[],
-											4,
-											[] // TODO: Determine what kind of content this actually is.
-										)
-										->set_child_themes(
-											[
-												'content-item'  => 'river',
-												'content-title' => 'grid',
-												'eyebrow'       => 'small',
-											]
-										),
-
-									/**
-									 * Colorado Wonders question form.
-									 */
-									// new \CPR\Components\Colorado_Wonders(),.
-
-									/**
-									 * Advertisement.
-									 */
-									new \CPR\Components\Ad(),
-								]
+							->set_sidebar( 'news-sidebar' )
+							->prepend_child(
+								/**
+								 * Advertisement.
+								 */
+								new \CPR\Components\Ad()
 							),
 					]
 				),

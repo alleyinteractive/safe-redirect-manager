@@ -10,6 +10,11 @@ namespace CPR;
 define( 'CPR_PATH', dirname( __FILE__ ) );
 define( 'CPR_URL', get_template_directory_uri() );
 
+// Handle local dev port issues.
+if ( false !== strpos( site_url(), 'alley' ) ) {
+	remove_filter( 'template_redirect', 'redirect_canonical' );
+}
+
 /**
  * Alleypack modules.
  */
@@ -17,6 +22,7 @@ define( 'CPR_URL', get_template_directory_uri() );
 \Alleypack\load_module( 'cli-helpers', '1.1' );
 \Alleypack\load_module( 'fm-modules', '1.0' );
 \Alleypack\load_module( 'page-templates', '1.0' );
+\Alleypack\load_module( 'path-dispatch', '1.0' );
 \Alleypack\load_module( 'singleton', '1.0' );
 \Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );
@@ -132,6 +138,7 @@ require_once CPR_PATH . '/inc/partials/partials.php';
 require_once CPR_PATH . '/inc/widgets/class-events-widget.php';
 require_once CPR_PATH . '/inc/widgets/class-external-link-widget.php';
 require_once CPR_PATH . '/inc/widgets/class-colorado-wonders-widget.php';
+require_once CPR_PATH . '/inc/widgets/class-live-stream-widget.php';
 
 // Content types and taxonomies should be included below. In order to scaffold
 // them, leave the Begin and End comments in place.

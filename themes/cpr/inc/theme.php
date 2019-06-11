@@ -49,7 +49,7 @@ function theme_setup() {
 		'footer-2'           => __( 'Footer 2', 'cpr' ),
 		'footer-3'           => __( 'Footer 3', 'cpr' ),
 		'footer-4'           => __( 'Footer 4', 'cpr' ),
-		'header'             => __( 'CPR Header', 'cpr' ),
+		'main'               => __( 'CPR Header', 'cpr' ),
 		'news'               => __( 'News Header', 'cpr' ),
 		'classical'          => __( 'Classical Header', 'cpr' ),
 		'indie'              => __( 'Indie Header', 'cpr' ),

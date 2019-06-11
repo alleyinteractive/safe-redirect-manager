@@ -1,6 +1,6 @@
 <?php
 /**
- * Job Archive Template Component.
+ * Newsletter Archive Template Component.
  *
  * @package CPR
  */
@@ -8,9 +8,9 @@
 namespace CPR\Components\Templates;
 
 /**
- * Job Archive template.
+ * Newsletter Archive template.
  */
-class Job_Archive extends \WP_Components\Component {
+class Newsletter_Archive extends \WP_Components\Component {
 
 	use \WP_Components\WP_Query;
 
@@ -19,7 +19,7 @@ class Job_Archive extends \WP_Components\Component {
 	 *
 	 * @var string
 	 */
-	public $name = 'job-archive-template';
+	public $name = 'newsletter-archive-template';
 
 	/**
 	 * Hook into query being set.
@@ -42,7 +42,7 @@ class Job_Archive extends \WP_Components\Component {
 		return [
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'twoColumn' )
-				->set_config( 'heading', __( 'Employment Opportunities', 'cpr' ) )
+				->set_config( 'heading', __( 'Newsletter', 'cpr' ) )
 				->append_children(
 					[
 						/**
@@ -66,7 +66,7 @@ class Job_Archive extends \WP_Components\Component {
 						 */
 						( new \WP_Components\Pagination() )
 							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-							->set_config( 'base_url', '/jobs/' )
+							->set_config( 'base_url', '/newsletter/' )
 							->set_query( $this->query ),
 
 						/**
@@ -81,7 +81,7 @@ class Job_Archive extends \WP_Components\Component {
 	}
 
 	/**
-	 * Get the job archive footer component.
+	 * Get the newsletter archive footer component.
 	 *
 	 * @return null|\WP_Components\HTML
 	 */

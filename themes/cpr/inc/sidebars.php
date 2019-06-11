@@ -63,6 +63,18 @@ function register_sidebars() {
 			'after_title'   => $after_title,
 		]
 	);
+
+	register_sidebar(
+		[
+			'name'          => __( 'Transitional Sidebar', 'cpr' ),
+			'id'            => 'transitional-sidebar',
+			'description'   => __( 'Transitional Sidebar.', 'cpr' ),
+			'before_widget' => $before_widget,
+			'after_widget'  => $after_widget,
+			'before_title'  => $before_title,
+			'after_title'   => $after_title,
+		]
+	);
 }
 add_action( 'widgets_init', __NAMESPACE__ . '\register_sidebars' );
 
@@ -131,5 +143,6 @@ function register_widgets() {
 	register_widget( __NAMESPACE__ . '\Events_Widget' );
 	register_widget( __NAMESPACE__ . '\External_Link_Widget' );
 	register_widget( __NAMESPACE__ . '\Colorado_Wonders_Widget' );
+	register_widget( __NAMESPACE__ . '\Live_Stream_Widget' );
 }
 add_action( 'widgets_init', __NAMESPACE__ . '\register_widgets' );

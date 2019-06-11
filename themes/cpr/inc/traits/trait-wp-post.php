@@ -155,4 +155,14 @@ trait WP_Post {
 		$sections = wp_get_post_terms( $this->get_post_id(), 'section' );
 		return ( new \WP_Components\Term() )->set_term( $sections[0] ?? null );
 	}
+
+	/**
+	 * Get the section slug.
+	 *
+	 * @return string
+	 */
+	public function get_section_slug() {
+		$section_component = $this->get_section_component();
+		return $section_component->wp_term_get_slug();
+	}
 }
