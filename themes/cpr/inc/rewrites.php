@@ -40,3 +40,6 @@ add_action( 'init', __NAMESPACE__ . '\rewrites', 11 );
 
 // Add search rewrites.
 add_action( 'init', [ '\\CPR\\Components\\Templates\\Search', 'rewrite_rules' ] );
+
+// Add additional path for newsletters to proxy through.
+add_action( 'after_setup_theme', [ '\\CPR\\Components\\Templates\\Newsletter', 'dispatch_rewrites' ] );
