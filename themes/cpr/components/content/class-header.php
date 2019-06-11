@@ -86,22 +86,25 @@ class Header extends \WP_Components\Component {
 
 			case 'podcast-episode':
 			case 'show-segment':
-				$this->append_children(
-					[
-						( new \CPR\Components\Audio\Listen_Now() )->set_post( $this->post ),
-						( new \WP_Components\Social_Sharing() )
-							->merge_config(
-								[
-									'services' => [
-										'facebook' => true,
-										'twitter'  => true,
-										'email'    => true,
-									],
-									'text'     => __( 'Share: ', 'cpr' ),
-								]
-							)
-							->set_post( $this->post ),
-					]
+				$audio_meta = $this->get_audio_metadata();
+
+				if ( ! empty( $audio_meta['src'] ) ) {
+					$this->append_child( ( new \CPR\Components\Audio\Listen_Now() )->set_post( $this->post ) );
+				}
+
+				$this->append_child(
+					( new \WP_Components\Social_Sharing() )
+						->merge_config(
+							[
+								'services' => [
+									'facebook' => true,
+									'twitter'  => true,
+									'email'    => true,
+								],
+								'text'     => __( 'Share: ', 'cpr' ),
+							]
+						)
+						->set_post( $this->post ),
 				);
 				break;
 
