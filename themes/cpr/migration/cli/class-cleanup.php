@@ -159,7 +159,7 @@ class Cleanup extends \CLI_Command {
 				);
 
 				if ( ! empty( $legacy_path ) ) {
-					$retval = \WPCOM_Legacy_Redirector::insert_legacy_redirect( $legacy_path, $new_path, false );
+					$retval = \WPCOM_Legacy_Redirector::insert_legacy_redirect( '/' . $legacy_path, $new_path, false );
 
 					if ( true === $retval ) {
 						WP_CLI::log(
