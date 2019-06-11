@@ -247,19 +247,6 @@ class News extends \WP_Components\Component {
 				),
 
 			/**
-			 * Banner Ad.
-			 */
-			( new \CPR\Components\Ad() )
-				->merge_config(
-					[
-						'background_color'   => '#f8f9fa',
-						'background_padding' => true,
-						'width'              => 468,
-						'height'             => 60,
-					]
-				),
-
-			/**
 			 * "More Stories" river.
 			 */
 			( new \CPR\Components\Column_Area() )
