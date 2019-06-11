@@ -64,10 +64,11 @@ class Top_30 extends \WP_Components\Component {
 		$album_ids = (array) get_post_meta( $this->get_post_id(), 'album_ids', true );
 
 		// Create album children.
-		foreach ( $album_ids as $album_id ) {
+		foreach ( $album_ids as $index => $album_id ) {
 			$this->append_child(
 				( new Album() )
 					->set_post( $album_id )
+					->set_config( 'position', (string) ( $index + 1 ) )
 			);
 		}
 
