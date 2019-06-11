@@ -26,8 +26,10 @@ class Play_Pause_Button extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'src'   => '',
-			'title' => [],
+			'src'                  => '',
+			'title'                => [],
+			'live_stream_endpoint' => '',
+			'live_stream_source'   => '',
 		];
 	}
 }

@@ -67,9 +67,10 @@ class Content_Item extends \WP_Components\Component {
 		$this->set_eyebrow();
 
 		// Set audio if applicable.
-		if ( 'podcast-episode' === ( $this->post->post_type ?? '' ) ) {
-			$this->set_audio();
-		}
+		// @todo get this working.
+		// if ( 'podcast-episode' === ( $this->post->post_type ?? '' ) ) {
+		// 	$this->set_audio();
+		// }
 
 		$this->set_byline();
 		$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );

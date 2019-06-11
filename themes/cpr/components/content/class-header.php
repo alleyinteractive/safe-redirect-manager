@@ -85,6 +85,7 @@ class Header extends \WP_Components\Component {
 				break;
 
 			case 'podcast-episode':
+			case 'show-segment':
 				$this->append_children(
 					[
 						( new \CPR\Components\Audio\Listen_Now() )->set_post( $this->post ),
@@ -123,15 +124,5 @@ class Header extends \WP_Components\Component {
 		}
 
 		return $this;
-	}
-
-	/**
-	 * Set audio.
-	 *
-	 * @todo Do real things.
-	 */
-	public function set_audio() {
-		$this->set_config( 'audio_url', 'http://google.com/test.mp3' );
-		$this->set_config( 'audio_length', 415 );
 	}
 }
