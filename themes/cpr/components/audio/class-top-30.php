@@ -60,20 +60,6 @@ class Top_30 extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 
-		// Create child for the heading.
-		$this->append_child(
-			( new \WP_Components\HTML() )
-				->set_config(
-					'content',
-					sprintf(
-						'<a href="%1$s">%2$s</a> / %3$s',
-						$this->wp_post_get_permalink(),
-						__( 'Top 30', 'cpr' ),
-						$this->wp_post_get_title()
-					)
-				)
-		);
-
 		// Get the albums.
 		$album_ids = (array) get_post_meta( $this->get_post_id(), 'album_ids', true );
 
@@ -86,5 +72,25 @@ class Top_30 extends \WP_Components\Component {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Append child for the heading.
+	 *
+	 * @return self
+	 */
+	public function set_heading() : self {
+
+		return $this->append_child(
+			( new \WP_Components\HTML() )
+				->set_config(
+					'content',
+					sprintf(
+						'<a href="%1$s">%2$s</a>',
+						$this->wp_post_get_permalink(),
+						$this->wp_post_get_title()
+					)
+				)
+		);
 	}
 }

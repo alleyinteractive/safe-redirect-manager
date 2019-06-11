@@ -43,7 +43,10 @@ class Top_30_Archive extends \WP_Components\Component {
 		$top_30_components = [];
 		foreach ( $this->query->posts as $post ) {
 			$top_30_components[] = ( new \CPR\Components\Audio\Top_30() )
-				->set_post( $post );
+				->set_post( $post )
+				->set_config( 'cta_label', '' )
+				->set_config( 'cta_link', '' )
+				->set_heading();
 		}
 		return $top_30_components;
 	}
