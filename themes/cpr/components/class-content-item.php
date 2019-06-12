@@ -82,7 +82,7 @@ class Content_Item extends \WP_Components\Component {
 								'title'         => [
 									$audio_meta['title'],
 									$audio_meta['artist'],
-									$audio_meta['album'],
+									$audio_meta['album'] ?? '',
 								],
 							]
 						)
