@@ -42,6 +42,17 @@ class Grid_Group extends \WP_Components\Component {
 	public static function get_fm_fields() : array {
 		return [
 			'name'                  => new \Fieldmanager_TextField( __( 'Group Name', 'cpr' ) ),
+			'theme'           => new \Fieldmanager_Select(
+				[
+					'label'         => __( 'Theme', 'cpr' ),
+					'default_value' => 'list',
+					'first_empty'   => false,
+					'options'       => [
+						'squares' => __( 'Squares (best for podcasts)', 'cpr' ),
+						'circles' => __( 'Circles (best for hosts)', 'cpr' ),
+					],
+				]
+			),
 			'enable_call_to_action' => new \Fieldmanager_Checkbox( __( 'Display Call To Action?', 'cpr' ) ),
 			'call_to_action_label'  => new \Fieldmanager_TextField(
 				[
@@ -109,6 +120,7 @@ class Grid_Group extends \WP_Components\Component {
 		$this->merge_config(
 			[
 				'name'                 => $fm_data['name'],
+				'theme'                => $fm_data['theme'],
 				'call_to_action_label' => $fm_data['call_to_action_label'] ?? '',
 				'call_to_action_link'  => $fm_data['call_to_action_link'] ?? '',
 			]
