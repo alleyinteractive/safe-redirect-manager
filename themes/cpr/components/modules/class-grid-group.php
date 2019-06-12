@@ -45,7 +45,7 @@ class Grid_Group extends \WP_Components\Component {
 			'theme'           => new \Fieldmanager_Select(
 				[
 					'label'         => __( 'Theme', 'cpr' ),
-					'default_value' => 'list',
+					'default_value' => 'squares',
 					'first_empty'   => false,
 					'options'       => [
 						'squares' => __( 'Squares (best for podcasts)', 'cpr' ),
