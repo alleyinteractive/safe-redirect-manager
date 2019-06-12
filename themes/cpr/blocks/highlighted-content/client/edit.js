@@ -53,7 +53,9 @@ const HighlightedItemEdit = (props) => {
           setAttributes({ heading: value });
         }}
       />
-      <InnerBlocks />
+      <InnerBlocks
+        allowedBlocks={['core/paragraph']}
+      />
     </Fragment>
   );
 };
