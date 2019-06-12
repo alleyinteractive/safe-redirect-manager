@@ -110,6 +110,10 @@ class Cleanup extends \CLI_Command {
 		srm_create_redirect( '/about/press-room/', '/press-releases/', 301 );
 		srm_create_redirect( '/about/press-room/*', '/press-release/*', 301 );
 
+		// Top 30 archive and singles.
+		srm_create_redirect( '/openair/blogs/top-30/', '/indie/top-30/', 301 );
+		srm_create_redirect( '/openair/blog/*', '/indie/top-30/*', 301 );
+
 		\WP_CLI::success( 'Redirects created.' );
 	}
 

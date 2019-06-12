@@ -24,16 +24,15 @@ done
 if [ ! -z "$limited" ]; then
 	echo "Limiting search/replace to only the essential tables."
 	terminus wp cpr-mu.test -- search-replace content.cpr.org content-test.cpr.org wp_blogs wp_site $(terminus wp cpr-mu.live -- db tables "wp_*options" --network | paste -s -d ' ' -) --url=content.cpr.org
-	# terminus wp cpr-mu.test -- search-replace new.denverite.com new-test.denverite.com wp_blogs wp_site $(terminus wp cpr-mu.live -- db tables "wp_*options" --network | paste -s -d ' ' -) --url=new.denverite.com
+	terminus wp cpr-mu.test -- search-replace denverite.com new-test.denverite.com wp_blogs wp_site $(terminus wp cpr-mu.live -- db tables "wp_*options" --network | paste -s -d ' ' -) --url=denverite.com
 else
 	echo "Running a full search-replace."
 	terminus wp cpr-mu.test -- search-replace content.cpr.org content-test.cpr.org --network --url=content.cpr.org
-	# terminus wp cpr-mu.test -- search-replace new.denverite.com new-test.denverite.com --network --url=new.denverite.com
+	terminus wp cpr-mu.test -- search-replace denverite.com new-test.denverite.com --network --url=denverite.com
 fi
 
 # Update home.
 terminus wp cpr-mu.test -- option update home 'https://cpr-test.herokuapp.com' --url=content-test.cpr.org
-# terminus wp cpr-mu.test -- option update home 'https://denverite-test.herokuapp.com' --url=new-test.denverite.com
 
 # Flush the cache.
 terminus env:cc cpr-mu.test

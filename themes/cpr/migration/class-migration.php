@@ -44,7 +44,7 @@ class Migration {
 		'image'                  => true,
 		'job'                    => true,
 		'label'                  => false, // Migrated with albums.
-		'newsletter'             => false, // Migrated with stories.
+		'newsletter'             => true, // Migrated with stories.
 		'page'                   => true,
 		'podcast'                => false,
 		'podcast-episode'        => true, // @todo Migrate with story content type.

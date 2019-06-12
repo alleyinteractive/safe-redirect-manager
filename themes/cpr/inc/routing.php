@@ -209,6 +209,15 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Top 30.
+		 */
+		case $wp_query->is_singular( 'top-30' ):
+			$head->set_post( $wp_query->post );
+			$header->set_indie_header();
+			$template = ( new Components\Templates\Top_30() )->set_post( $wp_query->post );
+			break;
+
+		/**
 		 * Event.
 		 */
 		case $wp_query->is_singular( 'tribe_events' ):

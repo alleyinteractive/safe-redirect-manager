@@ -41,7 +41,14 @@ class Underwriter_Archive extends \WP_Components\Component {
 	public function get_components() : array {
 		return [
 			( new \CPR\Components\Column_Area() )
-				->set_theme( 'twoColumn' )
+				->set_theme( 'oneColumn' )
+				->merge_config(
+					[
+						'heading'           => __( 'List of CPR Sponsors', 'cpr' ),
+						'heading_cta_label' => __( 'Sponsor CPR', 'cpr' ),
+						'heading_cta_link'  => site_url( '/become-a-sponsor-underwriter/' ),
+					]
+				)
 				->append_children(
 					[
 						( new \CPR\Components\Underwriter\Corporate_Partners() )

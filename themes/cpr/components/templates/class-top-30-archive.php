@@ -36,14 +36,53 @@ class Top_30_Archive extends \WP_Components\Component {
 	/**
 	 * Get an array of all components.
 	 *
-	 * @todo Conform to design once created.
 	 * @return array
 	 */
 	public function get_components() : array {
+		return array_merge(
+			/**
+			 * Archive Heading.
+			 */
+			[
+				( new \CPR\Components\Column_Area() )
+					->set_theme( 'oneColumn' )
+					->set_config( 'heading', __( 'Top 30', 'cpr' ) ),
+			],
+
+			/**
+			 * Top 30 components.
+			 */
+			$this->get_top_30_components(),
+
+			/**
+			 * Pagination.
+			 */
+			[
+				( new \CPR\Components\Column_Area() )
+					->set_theme( 'oneColumn' )
+					->append_child(
+						( new \WP_Components\Pagination() )
+							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+							->set_config( 'base_url', '/indie/top-30/' )
+							->set_query( $this->query )
+					)
+			]
+		);
+	}
+
+	/**
+	 * Get Top 30 components.
+	 *
+	 * @return array
+	 */
+	public function get_top_30_components() : array {
 		$top_30_components = [];
 		foreach ( $this->query->posts as $post ) {
 			$top_30_components[] = ( new \CPR\Components\Audio\Top_30() )
-				->set_post( $post );
+				->set_post( $post )
+				->set_config( 'cta_label', '' )
+				->set_config( 'cta_link', '' )
+				->set_heading();
 		}
 		return $top_30_components;
 	}
