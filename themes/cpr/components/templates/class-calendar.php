@@ -42,10 +42,16 @@ class Calendar extends \WP_Components\Component {
 		return [
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'twoColumn' )
-				->set_config( 'heading', __( 'Calendar', 'cpr' ) )
+				->set_config( 'heading', __( 'Events Calendar', 'cpr' ) )
 				->set_config( 'subheading', $this->get_subheading() )
 				->append_children(
 					[
+
+						/**
+						 * Pagination.
+						 */
+						( new \CPR\Components\Calendar_Pagination() )
+							->set_query( $this->query ),
 
 						/**
 						 * Calendar events archive.
@@ -77,7 +83,9 @@ class Calendar extends \WP_Components\Component {
 	 * @return string
 	 */
 	public function get_subheading() {
-		return tribe_get_events_title();
+		$event_month = new \DateTime( $this->query->get( 'eventDate' ) );
+
+		return date_i18n( 'F Y', $event_month->format( 'U' ) );
 	}
 
 	/**
@@ -86,43 +94,50 @@ class Calendar extends \WP_Components\Component {
 	 * @param object $wp_query wp_query object.
 	 */
 	public static function pre_get_posts( $wp_query ) {
-
-		global $wp_query;
-
-		error_log( print_r( $wp_query, true ) );
-
-		// If no args were passed to the constructor, get them from $wp_query.
-		$args                 = $wp_query->query;
-		$args['post_type']    = \Tribe__Events__Main::POSTTYPE;
-		$args['eventDisplay'] = 'month';
-		$args['eventDate']    = $wp_query->get( 'eventDate' );
-		$args['post_status']  = [ 'publish' ];
-
-		if ( ! empty( $wp_query->query_vars['meta_query'] ) ) {
-			// phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-			$args['meta_query'] = $wp_query->query_vars['meta_query'];
-		}
-
-		// Hijack the main query to load the events via provided $args.
 		if (
-			'tribe_events' === $wp_query->get( 'post_type' ) &&
-			$wp_query->is_archive() &&
-			! empty( $wp_query->get( 'irving-path' ) )
+			'tribe_events' !== $wp_query->get( 'post_type' ) ||
+			! $wp_query->is_archive() ||
+			empty( $wp_query->get( 'irving-path' ) )
 		) {
-			error_log( print_r( $args, true ) );
-			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.OverrideProhibited
-			// $wp_query = \Tribe__Events__Main::tribe_get_events( $args, true );
+			return;
 		}
 
-		// if (
-		// 	'tribe_events' === $wp_query->get( 'post_type' ) &&
-		// 	$wp_query->is_archive() &&
-		// 	! empty( $wp_query->get( 'irving-path' ) )
-		// ) {
-		// 	$wp_query->set( 'orderby', 'meta_value_num' );
-		// 	$wp_query->set( 'meta_key', '_EventStartDate' );
-		// 	$wp_query->set( 'order', 'ASC' );
-		// 	error_log( print_r( $wp_query, true ) );
-		// }
+		$wp_query->set( 'orderby', 'meta_value_num' );
+		$wp_query->set( 'meta_key', '_EventStartDate' );
+		$wp_query->set( 'order', 'ASC' );
+
+		// Check the month that we're looking at.
+		$event_month = $wp_query->get( 'eventDate' );
+
+		if ( empty( $event_month ) ) {
+			$event_month = ( new \DateTime() )->format( 'Y-m' );
+		}
+
+		// First of month.
+		$start_date = new \DateTime( $event_month );
+
+		// Last of month.
+		$end_date = new \DateTime( $event_month );
+		$end_date->modify( 'last day of this month' );
+
+		// Find events that end any time after the start of the month,
+		// and start any time before the end of the month.
+		$wp_query->set(
+			'meta_query',
+			[
+				'ends-after'    => [
+					'key'     => '_EventEndDateUTC',
+					'compare' => '>',
+					'value'   => $start_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
+					'type'    => 'DATETIME',
+				],
+				'starts-before' => [
+					'key'     => '_EventStartDateUTC',
+					'compare' => '<',
+					'value'   => $end_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
+					'type'    => 'DATETIME',
+				],
+			]
+		);
 	}
 }

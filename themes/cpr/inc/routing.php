@@ -67,8 +67,6 @@ function build_components_endpoint(
 	// Begin building a head instance for this page.
 	$head = new \WP_Components\Head();
 
-	error_log( print_r( $wp_query, true ) );
-
 	// Build page.
 	switch ( true ) {
 
@@ -174,8 +172,8 @@ function build_components_endpoint(
 		 * Calendar.
 		 */
 		case ! empty( $wp_query->tribe_is_event_query ):
-			$head->set_post( $wp_query->post );
-			$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
+			$head->set_query( $wp_query );
+			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
 			break;
 
 		/**
@@ -226,11 +224,13 @@ function build_components_endpoint(
 	}
 
 	// Set up context providers.
-	$data['providers'] = [
-		( new Components\Google_Tag_Manager() )
-			->set_config( 'container_id', $settings['gtm']['container_id'] )
-			->set_data_layer_from_query( $wp_query ),
-	];
+	if ( isset( $settings['gtm'] ) ) {
+		$data['providers'] = [
+			( new Components\Google_Tag_Manager() )
+				->set_config( 'container_id', $settings['gtm']['container_id'] )
+				->set_data_layer_from_query( $wp_query ),
+		];
+	}
 
 	// Setup the page data based on routing.
 	$data['page'] = $template->to_array()['children'];
