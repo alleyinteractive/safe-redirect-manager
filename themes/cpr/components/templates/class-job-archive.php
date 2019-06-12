@@ -74,7 +74,7 @@ class Job_Archive extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Sidebar() )
 							->set_theme( 'right' )
-							->set_sidebar( 'transitional-sidebar' ),
+							->set_sidebar( 'institutional-sidebar' ),
 					]
 				),
 		];
