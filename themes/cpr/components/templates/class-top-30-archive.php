@@ -48,12 +48,10 @@ class Top_30_Archive extends \WP_Components\Component {
 					->set_theme( 'oneColumn' )
 					->set_config( 'heading', __( 'Top 30', 'cpr' ) ),
 			],
-
 			/**
 			 * Top 30 components.
 			 */
 			$this->get_top_30_components(),
-
 			/**
 			 * Pagination.
 			 */
@@ -65,7 +63,7 @@ class Top_30_Archive extends \WP_Components\Component {
 							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
 							->set_config( 'base_url', '/indie/top-30/' )
 							->set_query( $this->query )
-					)
+					),
 			]
 		);
 	}
