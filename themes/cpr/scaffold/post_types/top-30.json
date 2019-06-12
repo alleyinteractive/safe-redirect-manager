@@ -4,7 +4,7 @@
 	"show_in_rest": true,
 	"menu_icon": "dashicons-star-filled",
 	"rewrite" : {
-		"slug" : "openair/top-30"
+		"slug" : "indie/top-30"
 	},
 	"supports": [
 		"title",

@@ -28,10 +28,11 @@ class Album extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'artist' => '',
-			'label'  => '',
-			'title'  => '',
-			'year'   => '',
+			'artist'   => '',
+			'label'    => '',
+			'position' => '',
+			'title'    => '',
+			'year'     => '',
 		];
 	}
 
