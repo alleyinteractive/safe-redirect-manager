@@ -17,13 +17,15 @@ const HighlightedItemEdit = (props) => {
   const {
     attributes,
     setAttributes,
+    innerblocksContent,
   } = props;
-
   const {
     heading,
     icon,
-    EnableToggle,
+    enableToggle,
   } = attributes;
+
+  setAttributes({ innerblocksContent });
 
   return (
     <Fragment>
@@ -31,9 +33,9 @@ const HighlightedItemEdit = (props) => {
         <PanelBody>
           <ToggleControl
             label={__('Toggle content', 'cpr')}
-            checked={!! EnableToggle}
+            checked={!! enableToggle}
             onChange={(value) => {
-              setAttributes({ EnableToggle: value });
+              setAttributes({ enableToggle: value });
             }}
           />
         </PanelBody>
@@ -46,26 +48,24 @@ const HighlightedItemEdit = (props) => {
         }}
       />
       <RichText
-        placeholder={__('Content Title', 'cpr')}
         value={heading}
         onChange={(value) => {
           setAttributes({ heading: value });
         }}
       />
-      <InnerBlocks
-        templateLock={false}
-      />
+      <InnerBlocks />
     </Fragment>
   );
 };
 
 HighlightedItemEdit.propTypes = {
   attributes: PropTypes.shape({
-    heading: PropTypes.array.isRequired,
-    EnableToggle: PropTypes.bool.isRequired,
+    heading: PropTypes.string.isRequired,
+    enableToggle: PropTypes.bool.isRequired,
     icon: PropTypes.string.isRequired,
   }).isRequired,
   setAttributes: PropTypes.func.isRequired,
+  innerblocksContent: PropTypes.string.isRequired,
 };
 
 export default HighlightedItemEdit;
