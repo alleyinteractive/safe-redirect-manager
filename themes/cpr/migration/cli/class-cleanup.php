@@ -27,15 +27,16 @@ class Cleanup extends \CLI_Command {
 	public function run_all() {
 		WP_CLI::runcommand( 'cpr-cleanup set_site_settings' );
 		WP_CLI::runcommand( 'cpr-cleanup create_redirects' );
+		WP_CLI::runcommand( 'cpr-cleanup post_type_redirects' );
 	}
 
 	/**
 	 * Set the initial site settings. This will override previously chnaged
 	 * values.
 	 *
-	 * ## EXAMPLES
+	 * ## EXAMPLE
 	 *
-	 * wp cpr-cleanup set_site_settings
+	 * $ wp cpr-cleanup set_site_settings
 	 */
 	public function set_site_settings() {
 
@@ -92,9 +93,9 @@ class Cleanup extends \CLI_Command {
 	/**
 	 * Generate redirects as part of the migration process.
 	 *
-	 * ## EXAMPLES
+	 * ## EXAMPLE
 	 *
-	 * wp cpr-cleanup create_redirects
+	 * $ wp cpr-cleanup create_redirects
 	 */
 	public function create_redirects() {
 
@@ -109,7 +110,79 @@ class Cleanup extends \CLI_Command {
 		srm_create_redirect( '/about/press-room/', '/press-releases/', 301 );
 		srm_create_redirect( '/about/press-room/*', '/press-release/*', 301 );
 
+		// Top 30 archive and singles.
+		srm_create_redirect( '/openair/blogs/top-30/', '/indie/top-30/', 301 );
+		srm_create_redirect( '/openair/blog/*', '/indie/top-30/*', 301 );
+
 		\WP_CLI::success( 'Redirects created.' );
+	}
+
+	/**
+	 * Generate redirects for the specific post type.
+	 *
+	 * [--post_type=<post_type>]
+	 * : Post type to create redirects.
+	 * ---
+	 * default: post
+	 * ---
+	 *
+	 * [--post_id=<id>]
+	 * : Post ID to create redirect from.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
+	 * ## EXAMPLES
+	 *
+	 *   $ wp cpr-cleanup post_type_redirects
+	 *   $ wp cpr-cleanup post_type_redirects --post_type=another_post_type
+	 *
+	 * @param array $args       CLI args.
+	 * @param array $assoc_args CLI associate args.
+	 */
+	public function post_type_redirects( $args, $assoc_args ) {
+		// Default values.
+		$query_args = [
+			'post_type' => [ $assoc_args['post_type'] ],
+			'fields'    => 'ids',
+		];
+
+		// Unique post ID.
+		if ( ! empty( $assoc_args['post_id'] ) ) {
+			$query_args['p'] = absint( $assoc_args['post_id'] );
+		}
+
+		$this->bulk_task(
+			$query_args,
+			function ( $post_id ) {
+				$legacy_path = get_post_meta( $post_id, 'legacy_path', true );
+				$new_path    = str_replace(
+					home_url(),
+					'',
+					get_permalink( $post_id )
+				);
+
+				if ( ! empty( $legacy_path ) ) {
+					$retval = \WPCOM_Legacy_Redirector::insert_legacy_redirect( '/' . $legacy_path, $new_path, false );
+
+					if ( true === $retval ) {
+						WP_CLI::log(
+							sprintf( 'Redirect created for post %d.', $post_id )
+						);
+					} else {
+						WP_CLI::log(
+							sprintf( 'Creation of redirect failed for Post ID: %d.', $post_id )
+						);
+					}
+				} else {
+					WP_CLI::log(
+						sprintf( 'Post ID %d has no legacy path.', $post_id )
+					);
+				}
+			}
+		);
+
+		\WP_CLI::success( 'Post types redirects created. o/' );
 	}
 }
 WP_CLI::add_command( 'cpr-cleanup', __NAMESPACE__ . '\Cleanup' );

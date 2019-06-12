@@ -62,29 +62,23 @@ class Body extends \WP_Components\Component {
 
 				( new \CPR\Components\Sidebar() )
 					->set_config( 'position', 'right' )
-					->append_children(
-						[
-							/**
-							 * Social sharing.
-							 */
-							( new \WP_Components\Social_Sharing() )
-								->merge_config(
-									[
-										'services' => [
-											'facebook' => true,
-											'twitter'  => true,
-											'email'    => true,
-										],
-										'text'     => __( 'Share: ', 'cpr' ),
-									]
-								)
-								->set_post( $this->post ),
-
-							/**
-							 * Content List of 4 upcoming events.
-							 */
-							$this->get_more_events_component(),
-						]
+					->set_post( $this->post )
+					->prepend_child(
+						/**
+						 * Social sharing.
+						 */
+						( new \WP_Components\Social_Sharing() )
+							->merge_config(
+								[
+									'services' => [
+										'facebook' => true,
+										'twitter'  => true,
+										'email'    => true,
+									],
+									'text'     => __( 'Share: ', 'cpr' ),
+								]
+							)
+							->set_post( $this->post )
 					),
 			]
 		);

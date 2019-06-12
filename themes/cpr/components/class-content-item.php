@@ -96,6 +96,15 @@ class Content_Item extends \WP_Components\Component {
 				'permalink' => get_permalink( $this->post->ID ?? 0 ),
 			]
 		);
+
+		switch ( $this->post->post_type ) {
+			case 'press-release':
+				break;
+			default:
+				$this->set_byline();
+				break;
+		}
+
 		return $this;
 	}
 }
