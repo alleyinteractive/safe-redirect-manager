@@ -24,16 +24,15 @@ done
 if [ ! -z "$limited" ]; then
 	echo "Limiting search/replace to only the essential tables."
 	terminus wp cpr-mu.staging -- search-replace content.cpr.org content-staging.cpr.org wp_blogs wp_site $(terminus wp cpr-mu.live -- db tables "wp_*options" --network | paste -s -d ' ' -) --url=content.cpr.org
-	# terminus wp cpr-mu.staging -- search-replace new.denverite.com new-staging.denverite.com wp_blogs wp_site $(terminus wp cpr-mu.live -- db tables "wp_*options" --network | paste -s -d ' ' -) --url=new.denverite.com
+	terminus wp cpr-mu.staging -- search-replace denverite.com new-staging.denverite.com wp_blogs wp_site $(terminus wp cpr-mu.live -- db tables "wp_*options" --network | paste -s -d ' ' -) --url=denverite.com
 else
 	echo "Running a full search-replace."
 	terminus wp cpr-mu.staging -- search-replace content.cpr.org content-staging.cpr.org --network --url=content.cpr.org
-	# terminus wp cpr-mu.staging -- search-replace new.denverite.com new-staging.denverite.com --network --url=new.denverite.com
+	terminus wp cpr-mu.staging -- search-replace denverite.com new-staging.denverite.com --network --url=denverite.com
 fi
 
 # Update home.
 terminus wp cpr-mu.staging -- option update home 'https://cpr-staging.herokuapp.com' --url=content-staging.cpr.org
-# terminus wp cpr-mu.staging -- option update home 'https://denverite-staging.herokuapp.com' --url=new-staging.denverite.com
 
 # Flush the cache.
 terminus env:cc cpr-mu.staging
