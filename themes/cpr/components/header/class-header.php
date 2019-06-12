@@ -33,7 +33,7 @@ class Header extends \WP_Components\Component {
 			( new \CPR\Components\Logo() )
 				->set_theme( 'primary' ),
 			( new \WP_Components\Menu() )
-				->set_menu( 'header' )
+				->set_menu( 'main' )
 				->parse_wp_menu()
 				->set_theme( 'header' )
 				->set_child_themes( [ 'menu-item' => 'header' ] ),

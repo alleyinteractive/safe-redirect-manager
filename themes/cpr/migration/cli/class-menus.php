@@ -188,7 +188,7 @@ class Menus extends \CLI_Command {
 					// Justice.
 					// Shows & Podcasts.
 					// Classical.
-					// OpenAir.
+					// Indie.
 					// Support CPR.
 					// About.
 					[

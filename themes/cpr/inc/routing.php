@@ -60,7 +60,6 @@ function build_components_endpoint(
 			( new Components\Footer\Footer_Sidebar() )
 				->set_sidebar( 'footer-sidebar' ),
 			new Components\Footer\Footer(),
-			new Components\Audio\Element(),
 			new Components\Audio\Player(),
 		];
 	}
@@ -165,6 +164,7 @@ function build_components_endpoint(
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Press_Release_Archive() )->set_query( $wp_query );
 			break;
+
 		/**
 		 * Podcast/Show single.
 		 */
@@ -206,6 +206,15 @@ function build_components_endpoint(
 					$template = ( new Components\Templates\Page() )->set_post( $wp_query->post );
 					break;
 			}
+			break;
+
+		/**
+		 * Top 30.
+		 */
+		case $wp_query->is_singular( 'top-30' ):
+			$head->set_post( $wp_query->post );
+			$header->set_indie_header();
+			$template = ( new Components\Templates\Top_30() )->set_post( $wp_query->post );
 			break;
 
 		/**
