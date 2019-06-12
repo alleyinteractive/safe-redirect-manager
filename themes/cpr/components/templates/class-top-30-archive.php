@@ -39,19 +39,35 @@ class Top_30_Archive extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
-		$components = $this->get_top_30_components();
+		return array_merge(
+			/**
+			 * Archive Heading.
+			 */
+			[
+				( new \CPR\Components\Column_Area() )
+					->set_theme( 'oneColumn' )
+					->set_config( 'heading', __( 'Top 30', 'cpr' ) ),
+			],
 
-		// Pagination.
-		$components[] = ( new \CPR\Components\Column_Area() )
-			->set_theme( 'oneColumn' )
-			->append_child(
-				( new \WP_Components\Pagination() )
-					->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-					->set_config( 'base_url', '/indie/top-30/' )
-					->set_query( $this->query )
-			);
+			/**
+			 * Top 30 components.
+			 */
+			$this->get_top_30_components(),
 
-		return $components;
+			/**
+			 * Pagination.
+			 */
+			[
+				( new \CPR\Components\Column_Area() )
+					->set_theme( 'oneColumn' )
+					->append_child(
+						( new \WP_Components\Pagination() )
+							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+							->set_config( 'base_url', '/indie/top-30/' )
+							->set_query( $this->query )
+					)
+			]
+		);
 	}
 
 	/**
