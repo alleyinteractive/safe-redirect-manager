@@ -40,6 +40,12 @@ class Listen_Now extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 		$audio_meta = $this->get_audio_metadata();
+
+		// Invalidate the component if audio src isn't set.
+		if ( empty( $audio_meta ) || empty( $audio_meta['src'] ) ) {
+			return $this->set_invalid();
+		}
+
 		$this->set_config( 'duration', $audio_meta['duration'] );
 
 		return $this->append_child(
