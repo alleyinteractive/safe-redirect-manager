@@ -70,7 +70,7 @@ class Content_Item extends \WP_Components\Component {
 			$audio_meta = $this->get_audio_metadata();
 
 			if ( ! empty( $audio_meta['src'] ) ) {
-				$this->set_config( 'audio_length', $audio_meta['duration'] );
+				$this->set_config( 'audio_length', $audio_meta['duration'] ?? '' );
 
 				$this->append_child(
 					( new \CPR\Components\Audio\Play_Pause_Button() )
@@ -80,9 +80,9 @@ class Content_Item extends \WP_Components\Component {
 								'loadingHeight' => 12,
 								'loadingWidth'  => 12,
 								'title'         => [
-									$audio_meta['title'],
-									$audio_meta['artist'],
-									$audio_meta['album'],
+									$audio_meta['title'] ?? '',
+									$audio_meta['artist'] ?? '',
+									$audio_meta['album'] ?? '',
 								],
 							]
 						)
