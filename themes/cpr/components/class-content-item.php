@@ -81,7 +81,7 @@ class Content_Item extends \WP_Components\Component {
 								'loadingWidth'  => 12,
 								'title'         => [
 									$audio_meta['title'] ?? '',
-									$audio_meta['artist'],
+									$audio_meta['artist'] ?? '',
 									$audio_meta['album'] ?? '',
 								],
 							]
