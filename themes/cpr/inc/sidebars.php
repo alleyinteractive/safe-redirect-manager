@@ -143,5 +143,6 @@ function register_widgets() {
 	register_widget( __NAMESPACE__ . '\Events_Widget' );
 	register_widget( __NAMESPACE__ . '\External_Link_Widget' );
 	register_widget( __NAMESPACE__ . '\Colorado_Wonders_Widget' );
+	register_widget( __NAMESPACE__ . '\Live_Stream_Widget' );
 }
 add_action( 'widgets_init', __NAMESPACE__ . '\register_widgets' );
