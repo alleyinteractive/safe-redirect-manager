@@ -115,14 +115,25 @@ trait WP_Post {
 	}
 
 	/**
-	 * Set audio.
-	 *
-	 * @todo Do real things.
+	 * Create byline components and add to children.
 	 */
-	public function set_audio() {
-		// @todo pull the actual article audio.
-		$this->set_config( 'audio_url', 'http://google.com/test.mp3' );
-		$this->set_config( 'audio_length', 415 );
+	public function get_audio_metadata() {
+		$audio_id = get_post_meta( $this->post->ID, 'audio_id', true );
+
+		if ( empty( $audio_id ) ) {
+			return [];
+		}
+
+		$meta = wp_get_attachment_metadata( $audio_id );
+		$src  = wp_get_attachment_url( $audio_id );
+
+		return [
+			'album'    => $meta['album'] ?? '',
+			'artist'   => $meta['artist'] ?? '',
+			'title'    => get_the_title( $audio_id ),
+			'src'      => $src,
+			'duration' => $meta['length_formatted'] ?? false,
+		];
 	}
 
 	/**

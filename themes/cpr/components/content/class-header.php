@@ -29,8 +29,6 @@ class Header extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'audio_length'  => '',
-			'audio_url'     => '',
 			'eyebrow_label' => '',
 			'eyebrow_link'  => '',
 			'publish_date'  => '',
@@ -55,7 +53,6 @@ class Header extends \WP_Components\Component {
 				$this->set_eyebrow();
 				$this->set_byline();
 				$this->set_publish_date();
-				$this->set_audio();
 
 				// Children.
 				$this->append_child( new \CPR\Components\Ad() );
@@ -72,6 +69,27 @@ class Header extends \WP_Components\Component {
 							]
 						)
 						->set_post( $this->post )
+				);
+				break;
+
+			case 'podcast-episode':
+			case 'show-segment':
+				$this->append_children(
+					[
+						( new \CPR\Components\Audio\Listen_Now() )->set_post( $this->post ),
+						( new \WP_Components\Social_Sharing() )
+							->merge_config(
+								[
+									'services' => [
+										'facebook' => true,
+										'twitter'  => true,
+										'email'    => true,
+									],
+									'text'     => __( 'Share: ', 'cpr' ),
+								]
+							)
+							->set_post( $this->post ),
+					]
 				);
 				break;
 
