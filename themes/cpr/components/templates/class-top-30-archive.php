@@ -48,7 +48,7 @@ class Top_30_Archive extends \WP_Components\Component {
 				( new \WP_Components\Pagination() )
 					->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
 					->set_config( 'base_url', '/indie/top-30/' )
-					->set_query( $this->query ),
+					->set_query( $this->query )
 			);
 
 		return $components;
