@@ -62,36 +62,6 @@ class Top_30 extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Audio\Top_30() )
 				->set_post( $this->post ),
-
-			/**
-			 * Content Footer.
-			 */
-			// @todo remove?
-			( new \CPR\Components\Content\Footer() )
-				->set_post( $this->post ),
-
-			/**
-			 * Recirculation module.
-			 */
-			// @todo remove?
-			( new \CPR\Components\Column_Area() )
-				->set_theme( 'oneColumn' )
-				->set_config( 'heading', __( 'Related Content', 'cpr' ) )
-				->append_children(
-					[
-						( new \CPR\Components\Modules\Content_List() )
-							->set_config( 'image_size', 'grid_item' )
-							->parse_from_jetpack_related( $this->get_post_id(), 4, [] )
-							->set_theme( 'gridLarge' )
-							->set_child_themes(
-								[
-									'content-item'  => 'grid',
-									'eyebrow'       => 'small',
-									'content-title' => 'grid',
-								]
-							),
-					]
-				),
 		];
 	}
 }
