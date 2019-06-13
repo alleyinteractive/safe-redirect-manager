@@ -24,7 +24,7 @@ const HighlightedItemEdit = (props) => {
     attributes: {
       heading,
       icon,
-      EnableToggle,
+      enableToggle,
     },
     setAttributes,
   } = props;
@@ -35,9 +35,9 @@ const HighlightedItemEdit = (props) => {
         <PanelBody>
           <ToggleControl
             label={__('Toggle content', 'cpr')}
-            checked={!! EnableToggle}
+            checked={!! enableToggle}
             onChange={(value) => {
-              setAttributes({ EnableToggle: value });
+              setAttributes({ enableToggle: value });
             }}
           />
         </PanelBody>
@@ -66,7 +66,7 @@ const HighlightedItemEdit = (props) => {
 HighlightedItemEdit.propTypes = {
   attributes: PropTypes.shape({
     heading: PropTypes.array.isRequired,
-    EnableToggle: PropTypes.bool.isRequired,
+    enableToggle: PropTypes.bool.isRequired,
     icon: PropTypes.string.isRequired,
   }).isRequired,
   setAttributes: PropTypes.func.isRequired,
