@@ -47,7 +47,7 @@ function map_dynamic_blocks( $component ) {
 	}
 	return $component;
 }
-add_filter( 'wp_components_dynamic_block', __NAMESPACE__ .  '\map_dynamic_blocks' );
+add_filter( 'wp_components_dynamic_block', __NAMESPACE__ . '\map_dynamic_blocks' );
 
 /**
  * Enqueue Icon assets.
