@@ -163,6 +163,22 @@ trait WP_Post {
 	 */
 	public function get_section_slug() {
 		$section_component = $this->get_section_component();
-		return $section_component->wp_term_get_slug();
+		if ( $section_component->is_valid_term() ) {
+			return $section_component->wp_term_get_slug();
+		}
+		return '';
+	}
+
+	/**
+	 * Get the sidebar slug for a post (determined by section).
+	 *
+	 * @return string
+	 */
+	public function get_sidebar_slug() {
+		$section_slug = $this->get_section_slug();
+		if ( in_array( $section_slug, [ 'indie', 'classical', 'news' ], true ) ) {
+			return "{$section_slug}-sidebar";
+		}
+		return 'institutional-sidebar';
 	}
 }

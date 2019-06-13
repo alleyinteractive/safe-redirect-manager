@@ -53,41 +53,9 @@ class Body extends \WP_Components\Component {
 	 * @return \CPR\Components\Sidebar
 	 */
 	public function get_sidebar_component() : \CPR\Components\Sidebar {
-
-		// Pages.
-		if ( 'page' === get_post_type( $this->get_post_id() ) ) {
-			return ( new \CPR\Components\Sidebar() )
-				->set_config( 'position', 'right' )
-				->set_sidebar( 'institutional-sidebar' );
-		}
-
-		// Get the section.
-		$sections = wp_get_post_terms( $this->get_post_id(), 'section' );
-		if ( ! empty( $sections[0] ) && $sections[0] instanceof \WP_Term ) {
-			$sidebar_slug = "{$sections[0]->slug}-sidebar";
-			return ( new \CPR\Components\Sidebar() )
-				->set_config( 'position', 'right' )
-				->set_sidebar( $sidebar_slug );
-		}
-
-		// Default sidebar.
 		return ( new \CPR\Components\Sidebar() )
-			/**
-			 * Content List of 3 articles tagged with the same primary category.
-			 */
-			->append_child( $this->get_more_articles_sidebar_component() )
-
-			/**
-			 * Advertisement.
-			 */
-			->append_child(
-				new \CPR\Components\Ad()
-			)
-
-			/**
-			 * Content List of 3 most recent articles.
-			 */
-			->append_child( $this->get_recent_articles_sidebar_component() );
+				->set_config( 'position', 'right' )
+				->set_sidebar( $this->get_sidebar_slug() );
 	}
 
 	/**
