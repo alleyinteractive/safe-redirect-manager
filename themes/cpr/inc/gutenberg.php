@@ -25,6 +25,31 @@ function disable_gutenberg_for_selected_post_type( $current_status, $post_type )
 add_filter( 'use_block_editor_for_post_type', __NAMESPACE__ . '\disable_gutenberg_for_selected_post_type', 10, 2 );
 
 /**
+ * Map dynamic blocks to local components.
+ *
+ * @param object $component Component created by Gutenberg Content.
+ * @return object
+ */
+function map_dynamic_blocks( $component ) {
+	switch ( $component->name ) {
+		/**
+		 * Wrap the children highlighted content children with a
+		 * Gutenberg_Content block for easy output and formatting.
+		 */
+		case 'cpr/highlighted-content':
+			$component->set_children(
+				[
+					( new \WP_Components\Gutenberg_Content() )
+						->append_children( $component->children ),
+				]
+			);
+			break;
+	}
+	return $component;
+}
+add_filter( 'wp_components_dynamic_block', __NAMESPACE__ .  '\map_dynamic_blocks' );
+
+/**
  * Enqueue Icon assets.
  */
 function enqueue_icons_assets() {
