@@ -92,7 +92,7 @@ function enqueue_admin() {
 		[],
 		'1.0'
 	);
-	
+
 	// Admins.
 	wp_enqueue_script(
 		'cpr-admin-js',
