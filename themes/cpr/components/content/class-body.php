@@ -54,20 +54,19 @@ class Body extends \WP_Components\Component {
 	 */
 	public function get_sidebar_component() : \CPR\Components\Sidebar {
 
-		// Pages.
+		// Get the section.
+		$section = $this->get_section_slug();
+		if ( in_array( $section, [ 'indie', 'classical', 'news' ], true ) ) {
+			return ( new \CPR\Components\Sidebar() )
+				->set_config( 'position', 'right' )
+				->set_sidebar( "{$section}-sidebar" );
+		}
+
+		// Fallback for pages.
 		if ( 'page' === get_post_type( $this->get_post_id() ) ) {
 			return ( new \CPR\Components\Sidebar() )
 				->set_config( 'position', 'right' )
 				->set_sidebar( 'institutional-sidebar' );
-		}
-
-		// Get the section.
-		$sections = wp_get_post_terms( $this->get_post_id(), 'section' );
-		if ( ! empty( $sections[0] ) && $sections[0] instanceof \WP_Term ) {
-			$sidebar_slug = "{$sections[0]->slug}-sidebar";
-			return ( new \CPR\Components\Sidebar() )
-				->set_config( 'position', 'right' )
-				->set_sidebar( $sidebar_slug );
 		}
 
 		// Default sidebar.
