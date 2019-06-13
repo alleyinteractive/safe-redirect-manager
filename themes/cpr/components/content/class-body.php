@@ -53,40 +53,9 @@ class Body extends \WP_Components\Component {
 	 * @return \CPR\Components\Sidebar
 	 */
 	public function get_sidebar_component() : \CPR\Components\Sidebar {
-
-		// Get the section.
-		$section = $this->get_section_slug();
-		if ( in_array( $section, [ 'indie', 'classical', 'news' ], true ) ) {
-			return ( new \CPR\Components\Sidebar() )
-				->set_config( 'position', 'right' )
-				->set_sidebar( "{$section}-sidebar" );
-		}
-
-		// Fallback for pages.
-		if ( 'page' === get_post_type( $this->get_post_id() ) ) {
-			return ( new \CPR\Components\Sidebar() )
-				->set_config( 'position', 'right' )
-				->set_sidebar( 'institutional-sidebar' );
-		}
-
-		// Default sidebar.
 		return ( new \CPR\Components\Sidebar() )
-			/**
-			 * Content List of 3 articles tagged with the same primary category.
-			 */
-			->append_child( $this->get_more_articles_sidebar_component() )
-
-			/**
-			 * Advertisement.
-			 */
-			->append_child(
-				new \CPR\Components\Ad()
-			)
-
-			/**
-			 * Content List of 3 most recent articles.
-			 */
-			->append_child( $this->get_recent_articles_sidebar_component() );
+				->set_config( 'position', 'right' )
+				->set_sidebar( $this->get_sidebar_slug() );
 	}
 
 	/**
