@@ -86,10 +86,6 @@ class Content_Item extends \WP_Components\Component {
 			$this->set_event_meta();
 		}
 
-		if ( 'tribe_events' !== $post_type ) {
-			$this->set_byline();
-		}
-
 		$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
 		$this->merge_config(
 			[
@@ -99,6 +95,7 @@ class Content_Item extends \WP_Components\Component {
 
 		switch ( $this->post->post_type ) {
 			case 'press-release':
+			case 'tribe_events':
 				break;
 			default:
 				$this->set_byline();
