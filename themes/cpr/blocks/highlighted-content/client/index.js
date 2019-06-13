@@ -18,9 +18,6 @@ registerBlockType('cpr/highlighted-content', {
       type: 'string',
       default: __('Content Item', 'cpr'),
     },
-    innerblocksContent: {
-      type: 'array',
-    },
     enableToggle: {
       type: 'boolean',
       default: false,
@@ -32,6 +29,9 @@ registerBlockType('cpr/highlighted-content', {
   },
   edit: HighlightedItemEdit,
   save: () => {
-    return null;
+    const {
+      InnerBlocks,
+    } = wp.editor;
+    return <InnerBlocks.Content />;
   },
 });
