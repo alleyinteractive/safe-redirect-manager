@@ -1,0 +1,46 @@
+/**
+ * Gutenberg-specific frontend styles
+ *
+ * This file should be enqueued on single templates, if Gutenberg is active.
+ *
+ * These styles are *not* to be enqueued in the post editor;
+ * Gutenberg provides appropriate styles for them there.
+ */
+@import "inc/blocks.less";
+
+// a reset for certain Navis slideshows problems
+.alignfull.no-transform {
+  transform: none;
+}
+// make blocks full-width below 529px;
+.wp-block-columns {
+  @media (max-width:529px) {
+    &.alignwide {
+      max-width: 100vw;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+}
+.wp-block-column {
+  @media (min-width:600px) and (max-width:781px) {
+    flex-basis: 100%;
+    &:not(:last-child),
+    &:not(:first-child),
+    &:nth-child(2n) {
+      margin-right: 0;
+      margin-left: 0;
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  // Override Gutenberg's style here, which improperly sets a margin-right on the third column when the third column is the last column
+  .wp-block-column:nth-child(odd) {
+    margin-right: unset;
+  }
+  // and this, too, which provides uneven margins
+  .wp-block-column:not(:last-child) {
+    margin-right: unset;
+  }
+}

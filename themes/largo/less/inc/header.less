@@ -1,0 +1,184 @@
+.global-nav-bg {
+  height: 38px;
+  background-color: @headerFooterColor;
+}
+.global-nav {
+  font-family: @sansFontFamily;
+  position: relative;
+  height: 38px;
+  overflow:visible;
+
+  ul {
+    margin: 0;
+    list-style:none;
+    font-size: 11px;
+    line-height: 24px;
+    li {
+      float: left;
+      margin: 9px 18px 0 0;
+    }
+    a {
+      .darkLight(@headerFooterColor);
+      &:hover {
+        text-decoration:none;
+        color: darken(@white, 15%);
+      }
+    }
+  }
+  .nav-right {
+    float: right;
+    ul#header-social {
+      float:left;
+      margin: 0 0 0 0;
+      font-size: 14px;
+      li {
+        margin: 5px 0 5px 10px;
+        a {
+          color: @white;
+          i {
+            display: block;
+            height: 24px;
+            padding: 3px 4px 2px 4px;
+            &::before {
+            }
+          }
+        }
+      }
+    }
+    .donate-btn {
+      float: left;
+      margin: 5px 0 0 10px;
+    }
+  }
+}
+
+.donate-btn {
+  font-size: 14px;
+  line-height: 2;
+  background-color: @red;
+  &:hover {
+    background-color: lighten(@red, 5%);
+  }
+  a {
+    padding: 24px 7px;
+    color: @white;
+    &:hover {
+      text-decoration:none;
+    }
+  }
+  i {
+    margin: 1px 3px 0 0;
+  }
+}
+
+.nav-shelf li.donate {
+  a.donate-link {
+    color: @red;
+  }
+}
+
+@media (max-width: 480px) {
+  #header-extras li.donate { display: none; }
+  .nav-shelf li.donate {
+    display: block;
+  }
+}
+
+@media (min-width: 481px) {
+  .nav-shelf li.donate { display: none; }
+}
+
+// #header-search styles apply only to the search in the global nav.
+#header-search {
+  margin-left: 10px;
+  margin-top: 5px;
+  max-width: 210px;
+  float:left;
+  form {
+    margin: 0; // in case of user-agent stylesheet.
+  }
+  input, button {
+    font-family: @sansFontFamily;
+    font-size: 13px;
+    line-height: 1;
+  }
+  input {
+    height: 18px;
+    padding: 6px 4px 2px;
+  }
+  button {
+    height: 28px;
+    text-transform: uppercase;
+  }
+}
+#site-header {
+  margin: @baseline 0;
+  width: auto;
+  img {
+    clear: none;
+    margin: 5px 0;
+  }
+  // for largo_header_widget_sidebar
+  aside {
+    max-width: 320px;
+    float: right;
+  }
+}
+h1.branding,
+h2.branding {
+  clear: both;
+  margin: 20px 0;
+  font-size: @baseFontSize * 3.375;
+  line-height: 1;
+  a {
+    color: @textColor;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  span {
+    display: block;
+    clear: both;
+    text-align: center;
+  }
+  .sitename {
+    margin-bottom: 0.25em;  
+  }
+  .tagline {
+    font-size: @baseFontSize * 1.5;
+    font-weight: 300;
+    color: @gray;
+  }
+}
+.print-header {
+  display: none;
+}
+
+/* Homepage alert */
+.alert-wrapper {
+  background: transparent;
+  border: 2px solid @red;
+  margin: 20px 0;
+}
+#alert-container {
+  max-width: @containerMaxWidth;
+  margin: 1em auto;
+  padding: 8px 20px 0;
+  color: @grayDark;
+  a {
+    color: @grayDark;
+    &:hover {
+      color: @red;
+    }
+  }
+  .widget:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  #main-nav,
+  #site-header {
+    display: none;
+  }
+}

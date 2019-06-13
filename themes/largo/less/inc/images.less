@@ -1,0 +1,33 @@
+// Global image styles
+
+// Style for the thumbnail that appears on thumbnails of videos
+.is-video img {
+  opacity: 0.5;
+  position: relative;
+  background: none;
+  width: 100%;
+}
+.is-video {
+  background-color: black;
+  background-image: url("../img/is-video-play-icon.svg");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: 20%;
+}
+
+.wp-block-gallery {
+  &ul {
+    list-style: none;
+    margin-left: 0;
+  }
+  &.is-cropped {
+    .blocks-gallery-image,
+    .blocks-gallery-item {
+      a, img {
+        height: auto;
+        -o-object-fit: scale-down;
+        object-fit: scale-down;
+      }
+    }
+  }
+}
