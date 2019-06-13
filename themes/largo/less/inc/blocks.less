@@ -1,0 +1,41 @@
+/**
+ * Block styles
+ */
+@import (reference) "variables.less";
+@import (reference) "mixins.less";
+@import (reference) "buttons.less";
+
+.wp-block-button {
+  .wp-block-button__link {
+    .btn-core-properties;
+  }
+  .is-style-outline {
+    .wp-block-button__link {
+    }
+  }
+  .is-style-squared {
+    .wp-block-button__link {
+      border-radius: 0;
+    }
+  }
+}
+.wp-block-pullquote {
+  text-align: unset;
+  border: unset;
+  padding: 0;
+  &.aligncenter {
+    text-align: center;
+  }
+}
+.wp-block-image {
+  .aligncenter,
+  .alignleft,
+  .alignright,
+  &.is-resized {
+    display: table;
+    > figcaption {
+      display: table-caption;
+      caption-side: bottom;
+    }
+  }
+}

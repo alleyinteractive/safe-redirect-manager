@@ -1,0 +1,30 @@
+/**
+ * Styles for the Largo Follow widget
+ *
+ * Note: styles for social buttons are in single.less
+ *
+ * @since 0.5.3
+ */
+.subscribe {
+  display: block;
+  font-size: @baseFontSize - 2;
+  font-family: @sansFontFamily;
+  margin-bottom: @baseline / 4;
+  color: @gray;
+  &:hover {
+  text-decoration: none;
+  color: @grayDarker;
+  }
+  i {
+    color: @white;
+    padding: 0 1em 0 0.5em;
+    border-right:1px solid @white;
+    font-size: @baseFontSize - 3;
+    margin-right: @baseline / 4;
+    float: left;
+  }
+}
+
+.article-bottom .largo-follow {
+  padding: 0;
+}

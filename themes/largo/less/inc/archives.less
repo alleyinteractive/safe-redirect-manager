@@ -1,0 +1,168 @@
+// Category, Tag and Taxonomy Pages
+.archive-background {
+  margin-bottom: @baseline;
+  padding-bottom: @baseline;
+  border-bottom: 1px solid @grayLighter;
+  h1 {
+    font-size: @baseFontSize * 2.75;
+    margin-bottom: 3px;
+  }
+  p {
+    font-size: @baseFontSize;
+    margin-bottom: @baseline/3;
+  }
+  .related-topics {
+    font-family: @sansFontFamily;
+	ul {
+	  float: left;
+	  width: 100%;
+	  list-style: none;
+	  margin: 0;
+	  font-size: @baseFontSize;
+	  line-height: 1.3;
+	  li {
+	    display: inline;
+	    margin: 0;
+	    padding: 0;
+	    &:first-child {
+		  margin-right: 5px;
+	    }
+	    &:after {
+	      content: ", ";
+	    }
+	    &:first-child:after,
+	    &:last-child:after {
+	      content: "";
+	    }
+	  }
+    }
+  }
+  .rss-subscribe-link {
+    float: right;
+    margin-top: 10px;
+    font-family: @sansFontFamily;
+    text-transform: uppercase;
+    color: @rss;
+    i {
+	  padding-left: 3px;
+	  position: relative;
+	  top: -2px;
+    }
+    &:hover {
+      text-decoration: none;
+      color: darken(@rss, 15%);
+    }
+}
+}
+.archive .hero {
+  clear: both;
+  margin: 1em 0;
+  .wp-caption-text,
+  .wp-media-credit {
+    display: none;
+  }
+}
+article div.has-thumbnail {
+  float: right;
+  max-width: 30%;
+  margin: 0 0 10px 20px;
+}
+article img.attachment-post-thumbnail {
+  float: right;
+}
+
+// hierarchical category pages
+.primary-featured-post,
+.secondary-featured-post {
+  padding: 0 0 24px;
+  border-bottom: 1px solid @grayLighter;
+  margin-bottom: 24px;
+}
+.primary-featured-post {
+  h2 {
+    line-height: 1.1;
+    margin-bottom: @baseline/3;
+    font-size: @baseFontSize * 2.25;
+  }
+  .entry-content p,
+  .entry-content ul,
+  .entry-content ol {
+    font-size: @baseFontSize;
+  }
+}
+.secondary-featured-post {
+  margin-bottom: 40px;
+
+  img {
+    margin-bottom: 0;
+    width: 100%;
+  }
+  h2 {
+    margin-bottom: 12px;
+    line-height: 1.3;
+    font-size: @baseFontSize * 1.25;
+  }
+}
+@media (min-width:960px){
+  .secondary-featured-post {
+    h2 {
+      font-size: @baseFontSize * 1.5;
+    }
+  }
+}
+
+// posts on archive pages
+.archive,
+.home {
+  .stories .hero.is-image img {
+    clear: both;
+    float: none;
+    display: block;
+    margin: 0 auto;
+  }
+  .entry-content {
+    &.with-hero {
+      margin: -22px 7% 0;
+      padding: 22px 18px;
+      width: 86%;
+      background: #fff;
+      @media screen and (max-width: 768px) {
+        margin: 8px 0 0;
+        padding: 0;
+        width: 100%;
+      }
+    }
+    h5.byline {
+      font-size: @baseFontSize * 0.815;
+      margin-bottom: @baseline / 2;
+    }
+  }
+}
+
+// Date Archive
+.archive-dropdown {
+  margin: @baseline/2 0;
+}
+
+// Series Landings
+#series-footer {
+  clear: both;
+}
+#series-main #content {
+  margin-bottom: @baseline;
+}
+#series-header .byline time,
+#series-header .byline .sep {
+  display: none;
+}
+
+// Load more posts
+.load-more {
+	display: inline-block;
+}
+.loading .load-more {
+  padding-right: 32px;
+  background-image: url(/wp-admin/images/loading.gif);
+  background-position: 96% center;
+  background-repeat: no-repeat;
+}
