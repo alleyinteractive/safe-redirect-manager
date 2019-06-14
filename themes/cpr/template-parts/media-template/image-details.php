@@ -1,4 +1,4 @@
-<script type="text/html" id="tmpl-cpr-attachement-details">
+<script type="text/html" id="tmpl-cpr-attachment-details">
 <h2>
 		<?php esc_html_e( 'Attachment Details' ); ?>
 	</h2>
