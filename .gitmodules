@@ -43,3 +43,6 @@
 [submodule "mu-plugins/fm-widgets"]
 	path = mu-plugins/fm-widgets
 	url = git@github.com:alleyinteractive/fm-widgets.git
+[submodule "themes/cpr/migration/data"]
+	path = themes/cpr/migration/data
+	url = git@github.com:alleyinteractive/cpr-data.git

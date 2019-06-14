@@ -66,13 +66,6 @@ class Migration {
 	 */
 	public function setup() {
 
-		if (
-			isset( $_SERVER['HTTP_HOST'] )
-			&& 'cpr.alley.test' === $_SERVER['HTTP_HOST']
-		) {
-			$this->migration_scope = 'partial';
-		}
-
 		// Load some AlleyPack modules.
 		\Alleypack\load_module( 'attachments', '1.0' );
 		\Alleypack\load_module( 'block-converter', '1.0' );

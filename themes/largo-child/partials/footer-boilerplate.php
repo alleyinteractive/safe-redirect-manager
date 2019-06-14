@@ -1,40 +1,38 @@
 <div id="boilerplate">
 	<div class="row-fluid clearfix">
-		<div class="span4 left">
-			<ul id="footer-social" class="social-icons">
+        <ul id="footer-social" class="social-icons">
+            <?php
+            /**
+             * Default behavior for Largo is to include social links in the footer (not toggleable)
+             * Removing for now, explicitly
+             * TODO: Make toggle in admin to turn on/off
+             */
+                //largo_social_links();
+            ?>
+        </ul>
+        <div class="footer-bottom clearfix">
+
+            <!-- If you enjoy this theme and use it on a production site we would appreciate it if you would leave the credit in place. Thanks :) -->
+            <span class="footer-credit <?php echo ( !INN_MEMBER ? 'footer-credit-padding-inn-logo-missing' : ''); ?>">
+                <br />
                 <?php
-                /**
-                 * Default behavior for Largo is to include social links in the footer (not toggleable)
-                 * Removing for now, explicitly
-                 * TODO: Make toggle in admin to turn on/off
-                 */
-                    //largo_social_links();
+                printf( __('Built with the <a href="%s">Largo WordPress Theme</a> from the <a href="%s">Institute for Nonprofit News</a>.', 'largo'),
+                    'https://largo.inn.org/',
+                    'https://inn.org'
+                );
+                do_action('largo_after_footer_copyright');
+                largo_nav_menu(
+                    array(
+                        'theme_location' => 'footer-bottom',
+                        'container' => false,
+                        'depth' => 1
+                    ) );
                 ?>
-			</ul>
-			<div class="footer-bottom clearfix">
+            </span>
+            <span class="footer-copyright">
+                <?php largo_copyright_message(); ?>
 
-				<!-- If you enjoy this theme and use it on a production site we would appreciate it if you would leave the credit in place. Thanks :) -->
-				<p class="footer-credit <?php echo ( !INN_MEMBER ? 'footer-credit-padding-inn-logo-missing' : ''); ?>">
-                    <br />
-                    <?php
-                    printf( __('Built with the <a href="%s">Largo WordPress Theme</a> from the <a href="%s">Institute for Nonprofit News</a>.', 'largo'),
-                        'https://largo.inn.org/',
-                        'https://inn.org'
-                    );
-                    largo_copyright_message();
-                    do_action('largo_after_footer_copyright');
-                    largo_nav_menu(
-                        array(
-                            'theme_location' => 'footer-bottom',
-                            'container' => false,
-                            'depth' => 1
-                        ) );
-                    ?>
-                </p>
-			</div>
-		</div>
-
-		<div class="span8 right">
+            </span>
             <div id="mc_embed_signup">
                 <form action="https://onsomething.us13.list-manage.com/subscribe/post?u=2d4d8830ab1f09b0b01a0241a&amp;id=744ed54983" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                     <div id="mc_embed_signup_scroll">
@@ -57,8 +55,12 @@
                     </div>
                 </form>
             </div>
-            <!--End mc_embed_signup-->
-		</div>
+        </div>
+
+
+
+        <!--End mc_embed_signup-->
+
 	</div>
 
 	<p class="back-to-top visuallyhidden"><a href="#top"><?php _e('Back to top', 'largo'); ?> &uarr;</a></p>

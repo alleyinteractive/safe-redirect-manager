@@ -187,6 +187,16 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Archive for all post (post_type) content.
+		 */
+		case ( strpos( $path, '/all/' ) === 0 ):
+			$head->set_query( $wp_query );
+			$head->set_title( __( 'All CPR\'s | CPR', 'cpr' ) );
+			$header->set_query( $wp_query );
+			$template = ( new Components\Templates\All_Archive() )->set_query( $wp_query );
+			break;
+
+		/**
 		 * Pages and other simple content super page style singles.
 		 */
 		case $wp_query->is_page():
