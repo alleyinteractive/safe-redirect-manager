@@ -35,24 +35,20 @@ body {
     position: relative;
     height: 50px;
     background-color: fade(@onsomething_primary_blue, 85%);
-
     .global-nav {
       height: inherit;
       line-height: 2em;
-
       ul {
         a:hover {
           text-decoration: none;
-          color: #333;
+          color: @onsomething_primary_green_drk;
         }
-
         li {
           float: left;
           margin: 11px 18px 0 0;
           font-size: 1.5em;
         }
       }
-
       .donate-btn {
         margin: 10px 0 0 10px;
       }
@@ -67,12 +63,13 @@ body {
   }
   .global-nav ul a:hover {
     text-decoration: none;
-    -webkit-box-shadow: inset 0 -0.3em @onsomething_primary_blue;
-    box-shadow: inset 0 -0.3em @onsomething_primary_blue;
-    -webkit-transition: -webkit-box-shadow .3s cubic-bezier(.215, .61, .355, 1);
-    transition: -webkit-box-shadow .3s cubic-bezier(.215, .61, .355, 1);
-    transition: box-shadow .3s cubic-bezier(.215, .61, .355, 1);
-    transition: box-shadow .3s cubic-bezier(.215, .61, .355, 1), -webkit-box-shadow .3s cubic-bezier(.215, .61, .355);
+    color: @onsomething_primary_green_drk;
+    //-webkit-box-shadow: inset 0 -0.3em @onsomething_primary_blue;
+    //box-shadow: inset 0 -0.3em @onsomething_primary_blue;
+    //-webkit-transition: -webkit-box-shadow .3s cubic-bezier(.215, .61, .355, 1);
+    //transition: -webkit-box-shadow .3s cubic-bezier(.215, .61, .355, 1);
+    //transition: box-shadow .3s cubic-bezier(.215, .61, .355, 1);
+    //transition: box-shadow .3s cubic-bezier(.215, .61, .355, 1), -webkit-box-shadow .3s cubic-bezier(.215, .61, .355);
   }
   .donate-btn {
     font-size: 14px;
@@ -151,7 +148,6 @@ body {
     }
     .entry-title a {
       color: @onsomething_primary_green_drk;
-
       &:hover {
         text-decoration: none;
         -webkit-box-shadow: inset 0 -0.2em @onsomething_primary_blue;
@@ -226,29 +222,24 @@ body {
       }
 
       /* Mail Chimp Signup */
-
       #mc_embed_signup {
         width: 100%;
         height: 0px;
         text-align: left;
-
         #mc_embed_signup_scroll {
           margin: 0px;
           padding: 0px;
-
           h2 {
             position: absolute;
             top: 25px;
             right: 30px;
           }
-
           input[type="email"] {
             position: absolute;
             width: 300px;
             border-radius: 4px 0px 0px 4px;
             right: 15px;
           }
-
           input[type="submit"] {
             color: #FFF;
             background-color: #fb7b56;
@@ -259,17 +250,14 @@ body {
             height: 34px;
             top: 91px;
           }
-
           div.indicates-required {
             display: none;
             height: 0px;
           }
-
           div.mc-field-group {
             position: absolute;
             width: auto;
             right: 100px;
-
             label[for="mce-EMAIL"] {
               display: none;
               height: 0px;
@@ -285,6 +273,9 @@ h1, h2, h3, h4 {
   font-family: 'Zilla Slab', serif;
   &.entry-title {
     font-size: 2em;
+    color: @onsomething_primary_green_drk;
+  }
+  &.widgettitle {
     color: @onsomething_primary_green_drk;
   }
 }
