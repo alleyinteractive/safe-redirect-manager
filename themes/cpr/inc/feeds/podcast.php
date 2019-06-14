@@ -9,29 +9,29 @@ namespace CPR;
 
 // We need to get _all_ the episodes for itunes and other feed use. Disregard
 // that we're not supposed to do this.
-$args = [
+$cpr_args = [
 	'posts_per_page' => -1,
 ];
 
 $term_slug = get_query_var( 'custom-feed-slug' );
-$taxonomy  = 'podcast';
+$term_taxonomy  = 'podcast';
 
 switch ( get_query_var( 'custom-feed-slug' ) ) {
 
-	// Map Beethoven 9 podcast to just `beethoven`
+	// Map Beethoven 9 podcast to just `beethoven`.
 	case 'beethoven':
 		$term_slug = 'the-beethoven-9';
 		break;
 
 	case 'colorado_art_report':
-		$term_slug = '';
-		$taxonomy  = '';
+		$term_slug     = '';
+		$term_taxonomy = '';
 		break;
 
 	// Map Colorado Matters to the show.
 	case 'colorado_matters':
-		$term_slug = 'colorado-matters';
-		$taxonomy  = 'show';
+		$term_slug     = 'colorado-matters';
+		$term_taxonomy = 'show';
 		break;
 
 	case 'centennial-sounds':
@@ -50,14 +50,14 @@ switch ( get_query_var( 'custom-feed-slug' ) ) {
 		// Check if there's a podcast with this slug.
 		$possible_podcast = get_term_by( 'slug', get_query_var( 'custom-feed-slug' ), 'podcast' );
 		if ( $possible_podcast instanceof \WP_Term ) {
-			$taxonomy  = 'podcast';
-			$term_slug = $possible_podcast->slug;
+			$term_taxonomy = 'podcast';
+			$term_slug     = $possible_podcast->slug;
 		} else {
 			// Check if there's a show with this slug.
 			$possible_show    = get_term_by( 'slug', get_query_var( 'custom-feed-slug' ), 'show' );
 			if ( $possible_show instanceof \WP_Term ) {
-				$taxonomy  = 'show';
-				$term_slug = $possible_show->slug;
+				$term_taxonomy = 'show';
+				$term_slug     = $possible_show->slug;
 			} else {
 				wp_safe_redirect( home_url(), 301 );
 				exit();
@@ -66,9 +66,9 @@ switch ( get_query_var( 'custom-feed-slug' ) ) {
 		break;
 }
 
-$args['tax_query'] = [
+$cpr_args['tax_query'] = [
 	[
-		'taxonomy' => $taxonomy,
+		'taxonomy' => $term_taxonomy,
 		'field'    => 'slug',
 		'terms'    => $term_slug,
 	],
@@ -76,7 +76,7 @@ $args['tax_query'] = [
 
 // Get posts to populate this feed.
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-$feed_items = new \WP_Query( $args );
+$feed_items = new \WP_Query( $cpr_args );
 
 // Set the proper header.
 header( 'Content-Type: application/xml; charset=utf-8' );
