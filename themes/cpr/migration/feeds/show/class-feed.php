@@ -43,8 +43,18 @@ class Feed extends \CPR\Migration\Feed {
 	 * @var array
 	 */
 	public static $unique_taxonomy_ids_for_shows = [
-		70,   // Colorado Matters.
+		7564, // Colorado Matters Podcast.
 		6345, // OpenAir Live & Local.
+	];
+
+
+	/**
+	 * The unique ids for the show segment taxonomy objects.
+	 *
+	 * @var array
+	 */
+	public static $unique_taxonomy_ids_for_segments = [
+		70, // Colorado Matters.
 	];
 
 	/**
@@ -54,7 +64,7 @@ class Feed extends \CPR\Migration\Feed {
 	 * @return array
 	 */
 	public function mapping_filter( array $mapping ) : array {
-		return $this->unique_taxonomy_ids_for_shows;
+		return self::$unique_taxonomy_ids_for_shows;
 	}
 
 	/**

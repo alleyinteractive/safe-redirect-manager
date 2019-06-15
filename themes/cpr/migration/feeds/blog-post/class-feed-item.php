@@ -60,6 +60,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function post_object_save() {
+		$this->global_post_save();
 		$this->migrate_bylines();
 		$this->migrate_featured_image();
 		$this->set_section();

@@ -52,8 +52,8 @@ class Feed extends \CPR\Migration\Feed {
 		8934, // The Great Composers.
 		6532, // The Beethoven 9.
 		7524, // The Beethoven 9 Podcast.
-		7564, // Colorado Matters Podcast.
 		9410, // Who's Gonna Govern.
+		5734, // Colorado Art Report.
 	];
 
 	/**
