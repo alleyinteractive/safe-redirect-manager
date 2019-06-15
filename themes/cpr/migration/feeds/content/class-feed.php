@@ -5,7 +5,7 @@
  * @package CPR
  */
 
-namespace CPR\Migration\Post_Blocks_Conversion;
+namespace CPR\Migration\Content;
 
 use Alleypack\Block\Converter;
 
@@ -14,25 +14,38 @@ use Alleypack\Block\Converter;
 /**
  * Feed.
  */
-class Feed extends \Alleypack\Sync_Script\Feed {
+class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 	// Enable functionality for this feed.
 	use \Alleypack\Sync_Script\Endpoint;
 	use \Alleypack\Sync_Script\GUI;
 
 	/**
+	 * Post type for this feed to execute on itself.
+	 *
+	 * @var string
+	 */
+	public $post_type = [
+		'post',
+		'podcast-episode',
+		'show-episode',
+		'show-segment',
+		'press-release'
+	];
+
+	/**
 	 * A unique slug for this feed.
 	 *
 	 * @var string
 	 */
-	protected $sync_slug = 'post-blocks-conversion';
+	protected $sync_slug = 'content';
 
 	/**
 	 * Define the feed item to sync.
 	 *
 	 * @var string
 	 */
-	protected $feed_item_class = '\CPR\Migration\Post_Blocks_Conversion\Feed_Item';
+	protected $feed_item_class = '\CPR\Migration\Content\Feed_Item';
 
 	/**
 	 * Add some post content conversion methods.
@@ -42,50 +55,6 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 		add_filter( 'cpr_block_converter_replace_media', [ $this, 'remove_paragraph_dir' ] );
 		add_filter( 'cpr_block_converter_replace_media', [ $this, 'replace_media' ] );
 		add_filter( 'alleypack_block_converter_html_tag', [ $this, 'apply_custom_block_logic' ], 10, 2 );
-	}
-
-	/**
-	 * Load source data using a limit and offset.
-	 *
-	 * @param int $limit  Feed limit.
-	 * @param int $offset Feed offset.
-	 * @return bool Loaded successfully?
-	 */
-	public function load_source_data_by_limit_and_offset( int $limit, int $offset ) : bool {
-
-		// Run a post query.
-		$source_query = new \WP_Query(
-			[
-				'offset'         => $offset,
-				'post_type'      => 'post',
-				'posts_per_page' => $limit,
-			]
-		);
-
-		$data = array_map(
-			function( $post ) {
-				return (array) $post;
-			},
-			$source_query->posts ?? []
-		);
-
-		$this->set_source_data( $data );
-
-		return $this->has_source_data();
-	}
-
-	/**
-	 * Load source data using a unique ID.
-	 *
-	 * @param string $unique_id Unique ID.
-	 * @return bool Loaded successfully?
-	 */
-	public function load_source_data_by_unique_id( string $unique_id ) : bool {
-		$data = (array) get_post( $unique_id );
-		if ( ! empty( $data ) ) {
-			$this->set_source_data( [ $data ] );
-		}
-		return $this->has_source_data();
 	}
 
 	/**
@@ -228,16 +197,16 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 
 		// Remove some options.
 		$url = remove_query_arg( [ 'list', 'controls', 'showinfo', 'feature' ], $video_url );
-		
+
 		// This is in case there are other types of urls.
 		preg_match( '/embed/', $url, $is_embed );
 		if ( 'embed' !== $is_embed[0] ) {
 			return $content;
 		}
-		
+
 		// Get video id.
 		preg_match( '/embed\/([^\s]+)/', $url, $video_id );
-		
+
 		// Create new url.
 		$youtube_url = 'https://www.youtube.com/watch?v=' . $video_id[1];
 

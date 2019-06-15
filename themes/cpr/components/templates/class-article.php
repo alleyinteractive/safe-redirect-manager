@@ -50,27 +50,32 @@ class Article extends \WP_Components\Component {
 
 			/**
 			 * Content Body.
+			 *
+			 * @todo Extract the grid into this component to more easily build
+			 * the layout.
 			 */
 			( new \CPR\Components\Content\Body() )
 				->set_post( $this->post ),
 
 			/**
 			 * Content Footer.
+			 *
+			 * @todo move all these components into the body.
 			 */
-			( new \CPR\Components\Content\Footer() )
-				->set_post( $this->post ),
+			// ( new \CPR\Components\Content\Footer() )
+			// 	->set_post( $this->post ),
 
 			/**
 			 * Recirculation module.
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'oneColumn' )
-				->set_config( 'heading', __( 'Related Content', 'cpr' ) )
+				->set_config( 'heading', __( 'Recent Content', 'cpr' ) )
 				->append_children(
 					[
 						( new \CPR\Components\Modules\Content_List() )
 							->set_config( 'image_size', 'grid_item' )
-							->parse_from_jetpack_related( $this->get_post_id(), 4, [] )
+							->parse_from_ids( [], 4, [] )
 							->set_theme( 'gridLarge' )
 							->set_child_themes(
 								[

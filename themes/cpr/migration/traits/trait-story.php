@@ -58,7 +58,6 @@ trait Story {
 
 		// Map meta.
 		$this->object['meta_input'] = [
-			'_legacy_post_content' => $this->source['body']['und'][0]['value'] ?? '',
 			'audio'                => $this->source['field_audio']['und'][0]['target_id'] ?? 0,
 			'author'               => $this->source['field_author']['und'][0]['target_id'] ?? 0,
 			'disable_image'        => $disable_image,
@@ -71,6 +70,13 @@ trait Story {
 			'legacy_url'           => empty( $this->source['path']['alias'] ) ? '' : 'https://cpr.org/' . $this->source['path']['alias'],
 			'template'             => sanitize_title( $this->source['title'] ?? '' ),
 		];
+	}
+
+	/**
+	 * Catch-all after an object has saved.
+	 */
+	public function global_post_save() {
+		delete_post_meta( $this->get_object_id(), '_legacy_post_content' );
 	}
 
 	/**

@@ -1,11 +1,11 @@
 <?php
 /**
- * Class for parsing a Show Episode.
+ * Class for parsing a Show Segment.
  *
  * @package CPR
  */
 
-namespace CPR\Migration\Show_Episode;
+namespace CPR\Migration\Show_Segment;
 
 use function Alleypack\Sync_Script\alleypack_log;
 
@@ -21,7 +21,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 *
 	 * @var string
 	 */
-	public static $post_type = 'show-episode';
+	public static $post_type = 'show-segment';
 
 	/**
 	 * This object should always sync.
@@ -29,6 +29,19 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function should_object_sync() : bool {
+
+		// Get this object's story type id.
+		$story_type_id = absint( $this->source['field_story_type']['und'][0]['tid'] ?? 0 );
+		if ( 0 === $story_type_id ) {
+			return false;
+		}
+
+		// Is this a show segment?
+		$show_unique_ids = \CPR\Migration\Show\Feed::$unique_taxonomy_ids_for_segments;
+		if ( ! in_array( $story_type_id, $show_unique_ids, true ) ) {
+			return false;
+		}
+
 		return true;
 	}
 
