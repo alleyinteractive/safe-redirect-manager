@@ -86,7 +86,7 @@ class Migration {
 			'post_row_actions',
 			function( $actions, $post ) {
 
-				// Only apply to some post types
+				// Only apply to some post types.
 				if ( ! in_array( $post->post_type, Content\Feed_Item::$post_type, true ) ) {
 					return $actions;
 				}

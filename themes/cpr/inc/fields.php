@@ -342,10 +342,12 @@ function cpr_fm_post_show_episode_segments() {
 						'description' => __( 'Select the segments for this show.', 'cpr' ),
 						'query_args' => [
 							'post_type' => [ 'show-segment' ],
-							'meta_query' => [ [
-								'key' => '_show_episode_id',
-								'compare' => 'NOT EXISTS',
-							] ],
+							'meta_query' => [
+								[
+									'key' => '_show_episode_id',
+									'compare' => 'NOT EXISTS',
+								],
+							],
 						],
 					]
 				),

@@ -125,7 +125,6 @@ function populate_custom_show_segment_columns( string $column, int $post_id ) {
 		 * Display the episode title + link.
 		 */
 		case 'episode':
-
 			// Get and validate show episode id.
 			$show_episode_id = absint( get_post_meta( $post_id, '_show_episode_id', true ) );
 			if ( 0 === $show_episode_id || ! get_post( $show_episode_id ) instanceof \WP_Post ) {
@@ -143,7 +142,6 @@ function populate_custom_show_segment_columns( string $column, int $post_id ) {
 		 * Display the show title + link.
 		 */
 		case 'show':
-
 			// Get and validate show episode id.
 			$show_episode_id = absint( get_post_meta( $post_id, '_show_episode_id', true ) );
 			if ( ! get_post( $show_episode_id ) instanceof \WP_Post ) {
@@ -160,7 +158,7 @@ function populate_custom_show_segment_columns( string $column, int $post_id ) {
 
 			printf(
 				'<a href="%2$s">%1$s</a>',
-				esc_html( get_the_title( $show_post) ),
+				esc_html( get_the_title( $show_post ) ),
 				esc_url( get_edit_post_link( $show_post ) )
 			);
 			break;

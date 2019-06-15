@@ -53,17 +53,10 @@ class Article extends \WP_Components\Component {
 			 *
 			 * @todo Extract the grid into this component to more easily build
 			 * the layout.
+			 * @todo Move components that were formerly in \Content\Footer into Body.
 			 */
 			( new \CPR\Components\Content\Body() )
 				->set_post( $this->post ),
-
-			/**
-			 * Content Footer.
-			 *
-			 * @todo move all these components into the body.
-			 */
-			// ( new \CPR\Components\Content\Footer() )
-			// 	->set_post( $this->post ),
 
 			/**
 			 * Recirculation module.

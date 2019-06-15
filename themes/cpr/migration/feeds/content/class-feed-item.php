@@ -25,7 +25,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		'podcast-episode',
 		'show-episode',
 		'show-segment',
-		'press-release'
+		'press-release',
 	];
 
 	/**
