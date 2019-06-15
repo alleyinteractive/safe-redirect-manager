@@ -1,6 +1,6 @@
 <?php
 /**
- * Streaming Playlist Data Wrapper Component.
+ * Streaming Playlist Results Component.
  *
  * @package CPR
  */
@@ -8,16 +8,16 @@
 namespace CPR\Components\Audio;
 
 /**
- * Streaming Playlist Data Wrapper component.
+ * Streaming Playlist Results component.
  */
-class Streaming_Playlist_Data extends \WP_Components\Component {
+class Streaming_Playlist_Results extends \WP_Components\Component {
 
 	/**
 	 * Unique component slug.
 	 *
 	 * @var string
 	 */
-	public $name = 'streaming-playlist-data';
+	public $name = 'streaming-playlist-results';
 
 	/**
 	 * Mapping of sections to their corresponding livestream URLs.
@@ -49,7 +49,7 @@ class Streaming_Playlist_Data extends \WP_Components\Component {
 	}
 
 	/**
-	 * Set config for a give station.
+	 * Set config for a given station.
 	 *
 	 * @param string $station Station to be used for this stream's data.
 	 * @return self

@@ -40,7 +40,8 @@ class Streaming_Playlist extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		return [
-			( new \CPR\Components\Audio\Streaming_Playlist_Data() )
+			new \CPR\Components\Audio\Streaming_Playlist_Header(),
+			( new \CPR\Components\Audio\Streaming_Playlist_Results() )
 				->set_config_for_station( $this->query->get( 'station' ) ),
 		];
 	}
