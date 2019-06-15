@@ -40,7 +40,8 @@ class Streaming_Playlist extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		return [
-			( new \WP_Components\HTML() )->set_config( 'content', 'Streaming Playlist' ),
+			( new \CPR\Components\Audio\Streaming_Playlist_Data() )
+				->set_config_for_station( $this->query->get( 'station' ) ),
 		];
 	}
 
@@ -48,13 +49,24 @@ class Streaming_Playlist extends \WP_Components\Component {
 	 * Modify rewrite rules.
 	 */
 	public static function dispatch_rewrites() {
-		\Alleypack\Path_Dispatch()->add_path(
+		\Alleypack\Path_Dispatch()->add_paths(
 			[
-				'path'    => 'streaming-playlist',
-				'rewrite' => [
-					'rule'       => '^(news|classical|indie)/playlist/?$',
-					'redirect'   => 'index.php?dispatch=streaming_playlist&station=$matches[1]',
-					'query_vars' => 'station',
+				[
+					'path'    => 'streaming-playlist',
+					'rewrite' => [
+						'rule'       => '^(classical|indie)/playlist/?$',
+						'redirect'   => 'index.php?dispatch=streaming_playlist&station=$matches[1]',
+						'query_vars' => 'station',
+					],
+				],
+				// @todo is this right, or should it rewrite to indie/playlist/?
+				[
+					'path'    => 'streaming-playlist',
+					'rewrite' => [
+						'rule'       => '^openair/playlist/?$',
+						'redirect'   => 'index.php?dispatch=streaming_playlist&station=indie',
+						'query_vars' => 'station',
+					],
 				],
 			]
 		);
