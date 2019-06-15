@@ -42,6 +42,11 @@ class Body extends \WP_Components\Component {
 			[
 				( new \WP_Components\Gutenberg_Content() )->set_post( $this->post ),
 				$this->get_sidebar_component(),
+				// ( new Keep_Reading() )->set_post( $this->post ),
+				// ( new Related_Tags() )->set_post( $this->post ),
+				// ( new Bylines() )->set_post( $this->post ),
+				new \CPR\Components\Donate\Donate_CTA(),
+				// ( new Comments() )->set_post( $this->post ),
 			]
 		);
 	}

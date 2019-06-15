@@ -327,20 +327,34 @@ add_action( 'fm_post_alert', 'cpr_fm_post_alert_settings' );
 
 /* begin fm:post-show-episode-segments */
 /**
- * `segment_ids` Fieldmanager fields.
+ * `post-show-episode-segments` Fieldmanager fields.
  */
 function cpr_fm_post_show_episode_segments() {
-	$fm = new Fieldmanager_Zone_Field(
+	$fm = new Fieldmanager_Group(
 		[
-			'name' => 'segment_ids',
-			'description' => __( 'Select the segments for this show.', 'cpr' ),
-			'description_after_element' => false,
-			'query_args' => [
-				'post_type' => [ 'show-segment' ],
+			'name' => 'post-show-episode-segments',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'children' => [
+				'show_segment_ids' => new Fieldmanager_Zone_Field(
+					[
+						'label' => __( 'Show Segments', 'cpr' ),
+						'description' => __( 'Select the segments for this show.', 'cpr' ),
+						'query_args' => [
+							'post_type' => [ 'show-segment' ],
+							'meta_query' => [
+								[
+									'key' => '_show_episode_id',
+									'compare' => 'NOT EXISTS',
+								],
+							],
+						],
+					]
+				),
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Show Segments', 'cpr' ), [ 'show-episode' ], 'normal', 'high' );
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'show-episode' ], 'normal', 'high' );
 }
 add_action( 'fm_post_show-episode', 'cpr_fm_post_show_episode_segments' );
 /* end fm:post-show-episode-segments */
@@ -393,6 +407,7 @@ function cpr_fm_post_podcast_and_show_settings() {
 									),
 								]
 							),
+							'teaser' => new Fieldmanager_TextArea( __( 'Podcast/Show Teaser', 'cpr' ) ),
 							'description' => new Fieldmanager_RichTextArea(
 								[
 									'label' => __( 'Podcast/Show Description', 'cpr' ),
@@ -551,6 +566,7 @@ function cpr_fm_post_post_settings() {
 									),
 								]
 							),
+							'excerpt' => new \Alleypack\Fieldmanager\Fields\Fieldmanager_Excerpt( __( 'Excerpt', 'cpr' ) ),
 							'primary_category_id' => new Fieldmanager_Select(
 								[
 									'label' => __( 'Primary Category', 'cpr' ),
@@ -581,6 +597,7 @@ function cpr_fm_post_post_settings() {
 						'serialize_data' => false,
 						'add_to_prefix' => false,
 						'children' => [
+							'_thumbnail_id' => new Fieldmanager_Media( __( 'Select an image to be used as the article thumbnail on the homepage, term archives, search results, and other archives.', 'cpr' ) ),
 							'disable_image' => new Fieldmanager_Checkbox( __( 'Hide Featured Image', 'cpr' ) ),
 							'youtube_url' => new Fieldmanager_Link(
 								[

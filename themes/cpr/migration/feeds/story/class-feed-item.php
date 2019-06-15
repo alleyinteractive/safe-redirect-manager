@@ -63,6 +63,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function post_object_save() {
+		$this->global_post_save();
 		$this->migrate_bylines();
 		$this->migrate_featured_image();
 		$this->set_section();
@@ -118,6 +119,18 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			return $this->migrate_show_episode();
 		}
 
+		// Are any of the story IDs for this in the list of segment terms?
+		$is_segment = ! empty(
+			array_intersect(
+				$story_type_ids,
+				\CPR\Migration\Show\Feed::$unique_taxonomy_ids_for_segments
+			)
+		);
+
+		if ( $is_segment ) {
+			return $this->migrate_show_segment();
+		}
+
 
 		return false;
 	}
@@ -160,6 +173,29 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 				[
 					'ID'        => $episode->ID,
 					'post_type' => 'show-episode',
+				]
+			);
+		}
+
+		// Success!
+		return true;
+	}
+
+	/**
+	 * Migrate this item as a show segment.
+	 *
+	 * @return bool
+	 */
+	public function migrate_show_segment() : bool {
+
+		$segment = \CPR\Migration\Show_Segment\Feed_Item::get_or_create_object_from_source( $this->source );
+
+		// Fix the post type.
+		if ( $segment instanceof \WP_Post ) {
+			wp_update_post(
+				[
+					'ID'        => $segment->ID,
+					'post_type' => 'show-segment',
 				]
 			);
 		}
