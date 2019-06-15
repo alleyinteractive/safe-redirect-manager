@@ -115,6 +115,35 @@ function build_components_endpoint(
 			}
 			break;
 
+		/**
+		 * Landing Pages.
+		 */
+		case 'streaming_playlist' === $wp_query->get( 'dispatch' ):
+			$station = $wp_query->get( 'station' );
+			$head->set_query( $wp_query );
+
+			switch ( $station ) {
+				case 'news':
+					$head->set_title( __( 'Colorado Public Radio News Playlist | CPR', 'cpr' ) );
+					$header->set_news_header();
+					break;
+
+				case 'classical':
+					$head->set_title( __( 'Colorado Public Radio Classical Playlist | CPR', 'cpr' ) );
+					$header->set_classical_header();
+					break;
+
+				case 'indie':
+					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music Playlist | CPR', 'cpr' ) );
+					$header->set_indie_header();
+					break;
+			}
+
+			$template = ( new Components\Templates\Streaming_Playlist() )
+				->set_query( $wp_query );
+
+			break;
+
 
 		/**
 		 * Author archive.
