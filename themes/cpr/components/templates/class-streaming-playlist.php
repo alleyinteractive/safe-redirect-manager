@@ -60,15 +60,6 @@ class Streaming_Playlist extends \WP_Components\Component {
 						'query_vars' => 'station',
 					],
 				],
-				// @todo is this right, or should it rewrite to indie/playlist/?
-				[
-					'path'    => 'streaming-playlist',
-					'rewrite' => [
-						'rule'       => '^openair/playlist/?$',
-						'redirect'   => 'index.php?dispatch=streaming_playlist&station=indie',
-						'query_vars' => 'station',
-					],
-				],
 			]
 		);
 	}

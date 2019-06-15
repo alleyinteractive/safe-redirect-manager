@@ -26,12 +26,12 @@ class Streaming_Playlist_Results extends \WP_Components\Component {
 	 */
 	public $endpoint_map = [
 		'classical' => [
-			'playlist_endpoint' => 'http://playlist.cprnetwork.org/api/playlistCL',
-			'search_endpoint'   => 'http://playlist.cprnetwork.org/api/searchCL',
+			'playlist_endpoint' => 'https://playlist.cprnetwork.org/api/playlistCL',
+			'search_endpoint'   => 'https://playlist.cprnetwork.org/api/searchCL',
 		],
 		'indie'     => [
-			'playlist_endpoint' => 'http://playlist.cprnetwork.org/api/playlistCO',
-			'search_endpoint'   => 'http://playlist.cprnetwork.org/api/searchCO',
+			'playlist_endpoint' => 'https://playlist.cprnetwork.org/api/playlistCO',
+			'search_endpoint'   => 'https://playlist.cprnetwork.org/api/searchCO',
 		],
 	];
 
