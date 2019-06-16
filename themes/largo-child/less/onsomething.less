@@ -153,7 +153,7 @@ body {
         background-color: lighten(@onsomething_primary_orange, 5%);
       }
     }
-    .entry-title a {
+    .entry-title a , .entry-content a {
       color: @onsomething_primary_green_drk;
       &:hover {
         text-decoration: none;
@@ -283,8 +283,18 @@ h1, h2, h3, h4 {
     color: @onsomething_primary_green_drk;
   }
   &.widgettitle {
-    color: @onsomething_primary_green_drk;
+    color: @onsomething_primary_green_drk !important;
   }
+}
+.podcast-widget-head {
+  a {
+    font-size: 18px;
+    color: @onsomething_primary_orange;
+    &:hover {
+
+    }
+  }
+
 }
 
 /**
@@ -315,9 +325,9 @@ h1, h2, h3, h4 {
     background-color: transparent;
   }
   .largo-follow  {
-      .facebook:hover, .email:hover, .twitter:hover {
-        background-color: transparent;
-      }
+    .facebook:hover, .email:hover, .twitter:hover {
+      background-color: transparent;
+    }
     .more-social-links {
       display: none;
     }
