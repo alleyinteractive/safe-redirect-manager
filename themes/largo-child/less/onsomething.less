@@ -66,7 +66,7 @@ body {
       color: @onsomething_primary_green_drk;
     }
   }
-  .donate-btn {
+  .donate-btn, .navbar.sticky-navbar .nav-right #header-extras .donate a span {
     font-size: 14px;
     font-weight: 700;
     line-height: 2;
@@ -87,6 +87,7 @@ body {
       background-color: transparent;
     }
   }
+
   #page {
     background-color: transparent;
     min-height: 100vh;
@@ -108,6 +109,23 @@ body {
     #main-nav.navbar {
       border-top: 1px solid @onsomething_primary_orange;
       border-bottom: 1px solid @onsomething_primary_orange;
+    }
+    /* sticky nav for tablet/mobile */
+    .sticky-nav-wrapper {
+      .sticky-nav-container {
+        background-color: @onsomething_primary_blue;
+        color: #fff;
+        .btn-navbar .icon-bar {
+          background-color: #fff;
+        }
+        .site-name a,  #sticky-nav-search a {
+          font-family: "Zilla Slab";
+          color: #fff;
+          &:hover {
+            color: @onsomething_primary_green_drk;
+          }
+        }
+      }
     }
     #main {
       background-color: transparent;
