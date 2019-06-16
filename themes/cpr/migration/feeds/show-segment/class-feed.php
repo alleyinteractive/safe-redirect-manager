@@ -1,11 +1,11 @@
 <?php
 /**
- * Feed for migrating Podcast Episodes.
+ * Feed for migrating Show Segments.
  *
  * @package CPR
  */
 
-namespace CPR\Migration\Podcast_Episode;
+namespace CPR\Migration\Show_Segment;
 
 /**
  * Feed.
@@ -21,7 +21,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 *
 	 * @var string
 	 */
-	public $post_type = 'podcast-episode';
+	public $post_type = 'show-segment';
 
 	/**
 	 * Legacy slug for this feed.
@@ -35,12 +35,12 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 *
 	 * @var string
 	 */
-	protected $sync_slug = 'podcast-episode';
+	protected $sync_slug = 'show-segment';
 
 	/**
 	 * Define the feed item to sync.
 	 *
 	 * @var string
 	 */
-	protected $feed_item_class = '\CPR\Migration\Podcast_Episode\Feed_Item';
+	protected $feed_item_class = '\CPR\Migration\Show_Segment\Feed_Item';
 }

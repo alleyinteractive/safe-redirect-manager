@@ -103,11 +103,8 @@ class Header extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 		$sections = wp_get_post_terms( $this->get_post_id(), 'section' );
-		$section  = $sections[0]->slug ?? 'header';
-		if ( ! in_array( $section, [ 'news', 'classical', 'indie' ], true ) ) {
-			$this->set_cpr_header();
-		} else {
-			$this->set_header( $section );
+		if ( $sections[0] instanceof \WP_Term ) {
+			$this->set_term( $sections[0] );
 		}
 		return $this;
 	}
@@ -118,8 +115,11 @@ class Header extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function term_has_set() : self {
-		$term = $this->query->get_queried_object();
-		$this->set_header( $term->slug );
+		if ( ! in_array( $this->term->slug, [ 'news', 'classical', 'indie' ], true ) ) {
+			$this->set_cpr_header();
+		} else {
+			$this->set_header( $this->term->slug );
+		}
 		return $this;
 	}
 }

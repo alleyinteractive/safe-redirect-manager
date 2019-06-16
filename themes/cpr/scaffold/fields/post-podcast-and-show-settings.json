@@ -26,8 +26,11 @@
 						"only_save_to_taxonomy": true
 					}
 				},
+				"teaser": {
+					"label": { "__": "Podcast/Show Teaser" },
+					"type": "textarea"
+				},
 				"description": {
-					"type": "richtext",
 					"label": { "__": "Podcast/Show Description" },
 					"type": "richtextarea",
 					"buttons_1": [ "bold", "italic", "link" ],
