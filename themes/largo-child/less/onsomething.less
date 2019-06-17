@@ -34,7 +34,7 @@ body {
     z-index: 100;
     position: relative;
     height: 50px;
-    background-color: fade(@onsomething_primary_blue, 85%);
+    background-color: @onsomething_primary_green_lt;
     .global-nav {
       height: inherit;
       line-height: 2em;
@@ -96,6 +96,7 @@ body {
       background-color: rgba(255, 255, 255, .1);
       aside {
         max-width: 550px;
+        width: auto;
         float: right;
         margin: 75px 50px 0px auto;
       }
@@ -113,7 +114,7 @@ body {
     /* sticky nav for tablet/mobile */
     .sticky-nav-wrapper {
       .sticky-nav-container {
-        background-color: @onsomething_primary_blue;
+        background-color: @onsomething_primary_green_lt;
         color: #fff;
         .btn-navbar .icon-bar {
           background-color: #fff;
@@ -176,7 +177,7 @@ body {
     height: 150px;
     box-shadow: 0px 0px 31px -11px #777;
     -webkit-box-shadow: 0px 0px 31px -11px #777;
-    background-color: @onsomething_primary_blue;
+    background-color: @onsomething_primary_green_lt;
     width: 100%;
     padding: 0 0 35px;
 
@@ -396,6 +397,25 @@ img.onsomething_ad {
 /**
  * MOBILE  / TAB STYLES
  */
+@media (max-width: 980px) {
+  #page {
+    .navbar.sticky-navbar {
+      background-image: url(../../../wp-content/uploads/2019/06/on_something_horiz_white_no_tag.png);
+      background-size: 155px;
+      background-repeat: no-repeat;
+      background-position-x: 0px;
+      background-position-y: 3px;
+      .site-name {
+        display: none;
+      }
+    }
+    #site-header {
+      aside.larg-about {
+        margin: 0px;
+      }
+    }
+  }
+}
 @media (max-width: 768px) {
   #sidebar {
     img.onsomething_ad {
