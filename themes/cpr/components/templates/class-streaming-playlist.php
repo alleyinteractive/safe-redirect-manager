@@ -40,6 +40,7 @@ class Streaming_Playlist extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		$station = $this->query->get( 'station' );
+		$today   = date( 'F j, Y', current_time( 'timestamp' ) );
 
 		return [
 			( new \CPR\Components\Column_Area() )
@@ -50,7 +51,8 @@ class Streaming_Playlist extends \WP_Components\Component {
 							->set_name( 'streaming-playlist-wrapper' )
 							->append_children(
 								[
-									new \CPR\Components\Audio\Streaming_Playlist_Header(),
+									( new \CPR\Components\Audio\Streaming_Playlist_Header() )
+										->set_config( 'date', $today ),
 									( new \CPR\Components\Audio\Streaming_Playlist_Results() )
 										->set_config_for_station( $station ),
 								]
