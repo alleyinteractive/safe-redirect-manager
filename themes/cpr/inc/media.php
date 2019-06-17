@@ -243,7 +243,7 @@ namespace CPR;
  * Override the default WordPress media templates.
  */
 function cpr_custom_media_template() {
-	require_once( CPR_PATH . '/template-parts/media-template/image-details.php' );
+	require_once( CPR_PATH . '/template-parts/media-template/attachment-details-two-column.php' );
 }
 
 add_action( 'print_media_templates', __NAMESPACE__ . '\cpr_custom_media_template', 10, 1 );

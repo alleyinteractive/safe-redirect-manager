@@ -5,6 +5,6 @@
  */
 /* eslint-disable */
 export function loadCustomImageDetailsTemplate() {
-  wp.media.view.Attachment.Details.prototype.template = wp.template( 'cpr-attachment-details' );
+  wp.media.view.Attachment.Details.TwoColumn.prototype.template = wp.template( 'cpr-attachment-details-two-column' );
 }
 /* eslint-enable */
