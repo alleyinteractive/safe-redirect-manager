@@ -119,8 +119,8 @@ class Grid_Group extends \WP_Components\Component {
 		// Set the config values.
 		$this->merge_config(
 			[
-				'name'                 => $fm_data['name'],
-				'theme'                => $fm_data['theme'],
+				'name'                 => $fm_data['name'] ?? '',
+				'theme'                => $fm_data['theme'] ?? '',
 				'call_to_action_label' => $fm_data['call_to_action_label'] ?? '',
 				'call_to_action_link'  => $fm_data['call_to_action_link'] ?? '',
 			]

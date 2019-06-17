@@ -19,10 +19,6 @@ function rewrites() {
 		'top'
 	);
 
-	// All content archive.
-	add_rewrite_rule( '^/all/?$', 'index.php?post_type=post', 'top' );
-	add_rewrite_rule( '^/all/page/?([0-9]{1,})/?$', 'index.php?post_type=post&paged=$matches[1]', 'top' );
-
 	// Section archive.
 	add_rewrite_rule(
 		'^(news|classical|indie)/all/?$',
@@ -35,6 +31,19 @@ function rewrites() {
 		'index.php?taxonomy=section&term=$matches[1]&post_type=post&paged=$matches[2]',
 		'top'
 	);
+
+	// All content archive.
+	add_rewrite_rule(
+		'^all/?$',
+		'index.php?post_type=post',
+		'top'
+	);
+
+	add_rewrite_rule(
+		'^all/page/?([0-9]{1,})/?$',
+		'index.php?post_type=post&paged=$matches[1]',
+		'top'
+	);
 }
 add_action( 'init', __NAMESPACE__ . '\rewrites', 11 );
 
@@ -43,3 +52,6 @@ add_action( 'init', [ '\\CPR\\Components\\Templates\\Search', 'rewrite_rules' ] 
 
 // Add additional path for newsletters to proxy through.
 add_action( 'after_setup_theme', [ '\\CPR\\Components\\Templates\\Newsletter', 'dispatch_rewrites' ] );
+
+// Add path for streaming playlist landing pages.
+add_action( 'after_setup_theme', [ '\\CPR\\Components\\Templates\\Streaming_Playlist', 'dispatch_rewrites' ] );

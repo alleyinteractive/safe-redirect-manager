@@ -66,9 +66,9 @@ function register_sidebars() {
 
 	register_sidebar(
 		[
-			'name'          => __( 'Transitional Sidebar', 'cpr' ),
-			'id'            => 'transitional-sidebar',
-			'description'   => __( 'Transitional Sidebar.', 'cpr' ),
+			'name'          => __( 'Institutional Sidebar', 'cpr' ),
+			'id'            => 'institutional-sidebar',
+			'description'   => __( 'Institutional Sidebar.', 'cpr' ),
 			'before_widget' => $before_widget,
 			'after_widget'  => $after_widget,
 			'before_title'  => $before_title,

@@ -77,8 +77,29 @@ class Content_Item extends \WP_Components\Component {
 		$this->set_eyebrow();
 
 		// Set audio if applicable.
-		if ( 'podcast-episode' === $post_type ) {
-			$this->set_audio();
+		if ( 'podcast-episode' === ( $this->post->post_type ?? '' ) ) {
+			$audio_meta = $this->get_audio_metadata();
+
+			if ( ! empty( $audio_meta['src'] ) ) {
+				$this->set_config( 'audio_length', $audio_meta['duration'] ?? '' );
+
+				$this->append_child(
+					( new \CPR\Components\Audio\Play_Pause_Button() )
+						->merge_config(
+							[
+								'src'           => $audio_meta['src'],
+								'loadingHeight' => 12,
+								'loadingWidth'  => 12,
+								'title'         => [
+									$audio_meta['title'] ?? '',
+									$audio_meta['artist'] ?? '',
+									$audio_meta['album'] ?? '',
+								],
+							]
+						)
+						->set_theme( 'inline' )
+				);
+			}
 		}
 
 		// Set event details, if applicable.

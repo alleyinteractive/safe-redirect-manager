@@ -26,6 +26,10 @@
 						"only_save_to_taxonomy": true
 					}
 				},
+				"excerpt": {
+					"label": { "__": "Excerpt" },
+					"type": "`\\Alleypack\\Fieldmanager\\Fields\\Fieldmanager_Excerpt`"
+				},
 				"primary_category_id": {
 					"label": { "__": "Primary Category" },
 					"type": "select",
@@ -51,6 +55,10 @@
 			"serialize_data": false,
 			"add_to_prefix": false,
 			"children": {
+				"_thumbnail_id": {
+					"label": { "__": "Select an image to be used as the article thumbnail on the homepage, term archives, search results, and other archives." },
+					"type": "media"
+				},
 				"disable_image": {
 					"label": { "__": "Hide Featured Image" },
 					"type": "checkbox"

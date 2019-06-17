@@ -29,19 +29,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function should_object_sync() : bool {
-
-		// Get this object's story type id.
-		$story_type_id = absint( $this->source['field_story_type']['und'][0]['tid'] ?? 0 );
-		if ( 0 === $story_type_id ) {
-			return false;
-		}
-
-		// Is this a show episode?
-		$show_unique_ids = \CPR\Migration\Show\Feed::$unique_taxonomy_ids_for_shows;
-		if ( ! in_array( $story_type_id, $show_unique_ids, true ) ) {
-			return false;
-		}
-
 		return true;
 	}
 
@@ -74,6 +61,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * @return bool
 	 */
 	public function post_object_save() {
+		$this->global_post_save();
 		$this->migrate_bylines();
 		$this->migrate_featured_image();
 		$this->set_section();

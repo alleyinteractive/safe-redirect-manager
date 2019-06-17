@@ -60,7 +60,6 @@ function build_components_endpoint(
 			( new Components\Footer\Footer_Sidebar() )
 				->set_sidebar( 'footer-sidebar' ),
 			new Components\Footer\Footer(),
-			new Components\Audio\Element(),
 			new Components\Audio\Player(),
 		];
 	}
@@ -114,6 +113,35 @@ function build_components_endpoint(
 					$template = ( new Components\Templates\Indie() )->set_post( $wp_query->post );
 					break;
 			}
+			break;
+
+		/**
+		 * Landing Pages.
+		 */
+		case 'streaming_playlist' === $wp_query->get( 'dispatch' ):
+			$station = $wp_query->get( 'station' );
+			$head->set_query( $wp_query );
+
+			switch ( $station ) {
+				case 'news':
+					$head->set_title( __( 'Colorado Public Radio News Playlist | CPR', 'cpr' ) );
+					$header->set_news_header();
+					break;
+
+				case 'classical':
+					$head->set_title( __( 'Colorado Public Radio Classical Playlist | CPR', 'cpr' ) );
+					$header->set_classical_header();
+					break;
+
+				case 'indie':
+					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music Playlist | CPR', 'cpr' ) );
+					$header->set_indie_header();
+					break;
+			}
+
+			$template = ( new Components\Templates\Streaming_Playlist() )
+				->set_query( $wp_query );
+
 			break;
 
 
@@ -201,6 +229,16 @@ function build_components_endpoint(
 		case $wp_query->is_singular( 'tribe_events' ):
 			$head->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
+			break;
+
+		/**
+		 * Archive for all post (post_type) content.
+		 */
+		case ( strpos( $path, '/all/' ) === 0 ):
+			$head->set_query( $wp_query );
+			$head->set_title( __( 'All CPR\'s | CPR', 'cpr' ) );
+			$header->set_query( $wp_query );
+			$template = ( new Components\Templates\All_Archive() )->set_query( $wp_query );
 			break;
 
 		/**

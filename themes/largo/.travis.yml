@@ -1,0 +1,96 @@
+# Travis CI Configuration File
+
+# Use Travis CI container-based infrastructure
+# See: http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
+
+# Tell Travis CI we're using PHP
+language: php
+
+# PHP version used in first build configuration.
+# We only support PHP-supported versions of PHP.
+# https://secure.php.net/supported-versions.php
+# php:
+#     - "5.6"
+#     - "7.0"
+#     - "7.1"
+#     - "7.2"
+#     - "7.3"
+
+# WordPress version used in first build configuration.
+# env:
+#     - WP_VERSION=master
+#     - WP_VERSION=4.9
+#     - WP_VERSION=4.8
+#     - WP_VERSION=4.7
+#     - WP_VERSION=4.6
+#
+# The GUTENBERG env var should be set in WordPress versions where we want to run Gutenberg tests, but Gutenberg has not yet been included in WordPress Core. For 5.0, there is no need to set the GUTENBERG variable.
+#
+
+# For a breakdown of why these versions were chosen, see https://github.com/INN/WP-DS-NPR-API/issues/12#issuecomment-374730094
+# This list should be rechecked periodically.
+matrix:
+    include:
+      # PHPunit 5
+      - php: 5.6
+        env: WP_VERSION=4.6
+      - php: 5.6
+        env: WP_VERSION=4.7
+      - php: 5.6
+        env: WP_VERSION=4.8
+      - php: 5.6
+        env: WP_VERSION=4.9
+      # - php: 5.6
+      #   env: WP_VERSION=4.9 GUTENBERG=1
+      # PHPUnit 6
+      - php: 7.0
+        env: WP_VERSION=4.8
+      - php: 7.0
+        env: WP_VERSION=4.9
+      # - php: 7.0
+      #   env: WP_VERSION=4.9 GUTENBERG=1
+      # PHPUnit 6
+      - php: 7.1
+        env: WP_VERSION=4.9
+      # - php: 7.1
+      #   env: WP_VERSION=4.9 GUTENBERG=1
+      - php: 7.1
+        env: WP_VERSION=5.0
+      # PHPUnit 7 support will come with https://core.trac.wordpress.org/ticket/43218
+      # - php: 7.2
+      #   env: WP_VERSION=4.9 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+      # - php: 7.2
+      #   env: WP_VERSION=5.0 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+      # - php: 7.3
+      #   env: WP_VERSION=4.9 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+      # - php: 7.3
+      #   env: WP_VERSION=5.0 WP_TESTS_DIR=/tmp/wordpress/tests/phpunit WP_CORE_DIR=/tmp/wordpress
+
+
+# Only test the main development branches for now
+branches:
+    only:
+        - 0.5
+        - 0.5-dev
+
+# Clones WordPress and configures our testing environment.
+before_script:
+    - export SLUG=$(basename $(pwd))
+    - export WP_TESTS_DIR=/tmp/wordpress/tests/phpunit
+    - export WP_CORE_DIR=/tmp/wordpress/
+    - git clone --depth=1 --branch="$WP_VERSION" git://develop.git.wordpress.org/ $WP_CORE_DIR
+    - if [ GUTENBERG ]; then git clone --depth=1 --branch="v4.6.0" https://github.com/WordPress/gutenberg.git $WP_CORE_DIR'src/wp-content/plugins/gutenberg'; fi
+    - cd ..
+    - mv $SLUG "$WP_CORE_DIR/src/wp-content/themes/$SLUG"
+    - cd $WP_CORE_DIR
+    - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
+    - cp wp-tests-config-sample.php wp-tests-config.php
+    - sed -i "s:dirname( __FILE__ ) . '/src/':'$WP_CORE_DIR/src/':" wp-tests-config.php
+    - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
+    - sed -i "s/yourusernamehere/travis/" wp-tests-config.php
+    - sed -i "s/yourpasswordhere//" wp-tests-config.php
+    - mv wp-tests-config.php "$WP_TESTS_DIR/wp-tests-config.php"
+    - cd "$WP_CORE_DIR/src/wp-content/themes/$SLUG"
+
+script: phpunit

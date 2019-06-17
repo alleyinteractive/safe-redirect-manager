@@ -1,0 +1,31 @@
+.header-ad-zone {
+	text-align: center;
+	#header-ad-zone-container {
+		display: inline-block;
+		text-align: center;
+		
+		/* ACM ad zones only, sorry */
+		.acm_ad_zones {
+			display: inline-block;
+			text-align: left;
+		}
+	}
+}
+#header-ad-zone-container,
+#before-footer {
+  width: 100%;
+  box-sizing: border-box;
+  div div {
+    display: block !important; //sometimes dfp adds inline styles set to display:inline-block :(
+    max-width: 728px;
+    margin: 1em auto;
+  }
+}
+#header-ad-zone-container {
+  .widget {
+    margin-bottom: 0;
+  }
+  div div {
+    margin: 0.5em auto 0;
+  }
+}

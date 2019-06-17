@@ -1,0 +1,23 @@
+.home .stories article img.attachment-medium,
+.sub-stories img.attachment-post-thumbnail {
+  max-width: 30%;
+  float: right;
+  margin: 0 0 10px 20px;
+}
+
+#homepage-bottom {
+  margin-top: @baseline;
+  .widget {
+    width: 42.5%;
+    padding: 2.5%;
+    &.odd {
+      float: left;
+      clear: both;
+      margin-left: 0;
+    }
+    &.even {
+      float: right;
+      clear: none;
+    }
+  }
+}

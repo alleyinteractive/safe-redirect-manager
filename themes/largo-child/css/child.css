@@ -1,0 +1,104 @@
+/**
+ * Largo Sample Child Theme
+ * =======================
+ * Looking for homepage Styles, they're over here:
+ *    /homepages/less
+ *
+ * The LESS files included here are combined and compiled into /css/child.css and /css/child.min.css
+ * Run 'grunt watch' from the root of the child directory to "watch" these files for changes
+ * This will recomplile the main stylesheet for your child theme anytime you save your work
+ *
+ */
+/**
+ * 1.1 - Variables
+ * =======================
+ * 1.1.1 - Colors
+ * 1.1.2 - Fonts
+ */
+/**
+  * 1.1.1 Colors - Global and Brand
+  * -----------------------
+  */
+/* Default Variable Names
+ * @red, @orange, @yellow
+ * @green, @blue, @purple
+ * @brown, @gray, @black
+ *
+ * @link
+ * @link_hover
+ * @brand_primary (only use if different from default color already in use)
+ * @brand_secondary (only use if different from default color already in use)
+ *
+ * VARIATIONS
+ * @*_light, @*_dark, @*_transparent
+----------------------------- */
+/**
+ * 1.1.2 - Font Definitions
+ * -----------------------
+ */
+/* @headline
+ * Typeface Name
+ * Used on headlines throughout site
+----------------------------- */
+/* @serif
+ * Typeface Name
+ * For body and other general aplications
+----------------------------- */
+/* @sans
+ * Typeface Name
+ * For labels, bylines, photo credits, etc
+----------------------------- */
+/**
+ * If you have any custom LESS mixins they belong here
+ * Check Largo first to see if the mixin you need already exists before adding it here
+ * Uncomment if needed
+ */
+/**
+ * 2.0 - Global Styles
+ * =======================
+ * 2.1 - Largo Parent Overrides
+ * 2.2 - Link Styles
+ * 2.3 - Image Styles
+ * 2.4 - Button Styles
+ * 2.5 - Sidebars
+ * 2.6 - Widgets
+ *     2.6.1 - Example Widget Definition
+ * 2.7 - Misc
+ */
+/**
+  * 2.1 - Largo Parent Overrides
+  * -----------------------
+  */
+/**
+  * 2.2 - Link Styles
+  * -----------------------
+  */
+/**
+  * 2.3 - Image Styles (use only for global img rule boxes, etc)
+  * -----------------------
+  */
+/**
+  * 2.4 - Button Styles
+  * -----------------------
+  */
+/**
+  * 2.5 - Sidebars
+  * -----------------------
+  */
+/**
+  * 2.6 - Widgets
+  * -----------------------
+  */
+/**
+  * 2.6.1 - Example Widget Definition
+  * -----------------------
+  */
+/**
+  * 2.7 - Misc
+  * -----------------------
+  */
+/**
+ * For more complicated child themes you may want to break your LESS up into discrete files
+ * Uncomment any of the following as needed to include them in your main stylesheet
+ */
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsInNvdXJjZXNDb250ZW50IjpbXX0= */

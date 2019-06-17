@@ -1,0 +1,175 @@
+// LANDSCAPE PHONE TO SMALL DESKTOP & PORTRAIT TABLET
+// --------------------------------------------------
+
+@media (max-width: 768px) {
+  #sidebar,
+  #site-footer div[class^="span"],
+  .half,
+  .full,
+  #left-rail,
+  #content-main {
+    clear: both;
+    float: none;
+    width: 100%;
+    margin: 0 0 @baseline;
+  }
+  #homepage-bottom .widget.odd,
+  #homepage-bottom .widget.even {
+    width: 95%;
+    clear: both;
+    float: none;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+  }
+  .half,
+  .full,
+  #content-main {
+    margin: 0;
+  }
+  #page {
+    padding-bottom: 12px;
+  }
+  #main {
+    margin: @baseline / 3 0 0;
+  }
+  #content {
+    width: 100%;
+  }
+  .global-nav ul {
+    display: none;
+  }
+  .global-nav .nav-right {
+    width: 100%;
+  }
+  .global-nav .nav-right .donate-btn {
+    float: left;
+    margin-left: 0;
+  }
+  h1.entry-title,
+  h1.page-title {
+    font-size: @baseFontSize * 2;
+    line-height: 1.2;
+  }
+  .category-background .related-topics ul {
+    line-height: 1.5;
+  }
+  .stories h2.entry-title,
+  .sticky-main-feature h2,
+  .carousel-caption h2 {
+    font-size: @baseFontSize * 1.5;
+  }
+  .sticky-main-feature,
+  .sticky-features-list {
+    clear: both;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  #site-footer .widget_nav_menu li a {
+    font-size: @baseFontSize + 3;
+    padding: 10px 0;
+  }
+  #footer-logos .logo4 {
+    clear: both;
+  }
+  #footer-logos a {
+    width: 33.3333333333%;
+  }
+  #footer-logos h6 a {
+  	display: inline;
+  	clear: both;
+  	float: none;
+  	text-align: left;
+  }
+  #ft-social {
+    float: left;
+    li {
+      margin-right: 10px;
+      margin-left: 10px;
+      i {
+        font-size: @baseFontSize * 2;
+      }
+    }
+  }
+  #site-footer input {
+    margin-bottom: @baseline;
+  }
+  #site-footer input.search-query {
+    height: 32px;
+    width: 74%;
+    float: left;
+  }
+  #site-footer input.search-submit {
+    padding: 8px 2%;
+    width: 20%;
+    float: right;
+  }
+  #boilerplate p.back-to-top {
+    padding-top: @baseline / 2;
+  }
+  #series-main #sidebar-left {
+    display: none;
+  }
+  #series-main #content {
+    margin-left: 0;
+  }
+  .global-nav-bg {
+    display: none;
+  }
+  .navbar .btn-navbar {
+    display: block;
+  }
+  .category {
+    .row-fluid > * {
+      width: 100%;
+      margin-left: 0;
+    }
+    .span4 img {
+      display: block;
+      margin: 0 auto 1em;
+    }
+    .secondary-featured-post img {
+      float: left;
+      max-width: 23%;
+      margin-right: 3%;
+      margin-top: 1em;
+      margin-bottom: 0.5em;
+    }
+  }
+  .alignleft,
+  .alignright,
+  .alignnone,
+  .aligncenter,
+  .wp-block-image .alignleft,
+  .wp-block-image .alignright,
+  .wp-block-image .alignnone,
+  .wp-block-image .aligncenter,
+  .wp-block-embed.alignleft,
+  .wp-block-embed.alignright,
+  .wp-block-embed.alignnone,
+  .wp-block-embed.aligncenter,
+  figure .alignleft,
+  figure .alignright,
+  figure .alignnone,
+  figure .aligncenter,
+  {
+    width: 100%;
+    max-width: 100% !important; // override max-widths set in inline style attribute by 4.9 shortcode
+    display: block;
+    img {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+// UP TO LANDSCAPE PHONE
+// ---------------------
+@media (max-width: 480px) {
+  #footer-logos h6 a {
+  	display: inline;
+  	clear: both;
+  	float: none;
+  	text-align: left;
+  }
+}
+

@@ -1,0 +1,167 @@
+// --------------------------------------------
+// A FEW CORE STYLES FOR WP IMAGES
+// BASED ON: http://jeffsebring.com/responsive-wordpress-images/
+// --------------------------------------------
+
+.sticky,
+.bypostauthor,
+.gallery-caption {
+   display: normal;
+}
+
+.alignnone {
+   margin: @baseline *0.75 0;
+}
+
+.aligncenter,
+.align-center,
+.center {
+   clear: both;
+   display:block;
+   margin: (@baseline *0.75) auto;
+}
+
+.alignright,
+.align-right,
+.right {
+   float:right;
+   margin: @baseline/4 0 @baseline/2 20px;
+}
+
+.alignleft,
+.align-left,
+.left {
+   float:left;
+   margin: @baseline/4 20px @baseline/2 0;
+}
+
+img,
+img[class*="align"],
+img[class*="wp-image-"] {
+   max-width: 100%;
+   height: auto;
+   clear:both;
+}
+
+.alignfull,
+.alignwide {
+  max-width: 100vw;
+  img {
+    width: 100%;
+    display: block;
+  }
+}
+.alignfull {
+  // full width of frame
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  max-width: none;
+}
+.alignwide {
+  // width is halfway from column width to width of frame
+  max-width: none;
+  width: auto;
+  // the width of the column, the padding-(left|right) of that, halved
+  // copy these to .alignwide on the full-width template
+  margin-left: ~"calc(-0.5 * (95vw * 0.17021276594) )";
+  margin-right: ~"calc(-0.5 * (95vw * 0.17021276594) )";
+}
+@media @tabletDown {
+  .alignwide {
+    // these values match the padding on #page, plus the padding on #entry-content, halved
+    margin-left: ~"calc(-0.5 * (2.5vw + 6.38297872%) )";
+    margin-right: ~"calc(-0.5 * (2.5vw + 6.38297872%) )";
+  }
+}
+
+// classic layout alignment CSS
+.classic {
+  .alignfull{
+
+    // because #page does not have box-sizing: border-box but does have padding 0 2.5%
+    // 1170px * 1.05 = 1228.5px
+    //
+    // 1170px: the max-width of #page;
+    // 2.5vw: padding-left and padding-right on #page when #page is whole width of viewport
+    // 24px: padding-left on #sidebar.widget
+    // 2.12765957%: margin-left on #sidebar since it is a .span4
+    // 1170px * 2.12765957%: acceptable bleed from #content into the gutter of the sidebar, at that viewport width
+    // 95vw * 2.12765957%: acceptable bleed, below that viewport width
+    @media ( min-width: 1229px ) {
+      width: ~"calc( 100% + ( 0.5 * ( 100vw - 1170px ) ) + ( 1170px * 0.0212765957 ) )"; // the column width plus the left margin on #page, plus the bleed figure
+      margin-left: ~"calc( -0.5 * ( 100vw - 1170px ) )"; // the left margin on #page, as a negative.
+      transform: none;
+    }
+    @media ( max-width: 1228px ) {
+      width: ~"calc( 100% + 2.5vw + ( 95vw * 0.0212765957 ) )"; // the column width plus the left margin on #page, plus the bleed figure
+      margin-left: -2.5vw; // the left margin on #page, as a negative.
+      transform: none;
+    }
+    @media ( max-width: 768px ) {
+      width: 100vw;
+    }
+
+  }
+
+  // Rather than being the "full" width, align-wide just escapes the column a little.
+  .alignwide {
+    @media ( min-width: 1229px ) {
+      width: ~"calc( 100% + ( 0.5 * ( 100vw - 1170px ) ) + ( 1170px * 0.0212765957 ) )"; // the column width plus the left margin on #page, plus the bleed figure
+      margin-left: ~"calc( -0.5 * ( 100vw - 1170px ) )"; // the left margin on #page, as a negative.
+      transform: none;
+    }
+    @media ( max-width: 1228px ) {
+      width: ~"calc( 100% + 2.5vw + ( 95vw * 0.0212765957 ) )"; // the column width plus the left margin on #page, plus the bleed figure
+      margin-left: -2.5vw; // the left margin on #page, as a negative.
+      transform: none;
+    }
+    @media ( max-width: 768px ) {
+      width: 100vw;
+      margin-left: -2.5vw;
+      margin-right: -2.5vw;
+    }
+  }
+}
+// full-width layout alignment CSS
+.page-template-full-page {
+  .alignwide {
+    @media ( max-width: 1396px ) {
+      // these values match the padding on #page, plus the padding on #entry-content, halved
+      // copy these from .alignwide
+      margin-left: -1.25vw;
+      margin-right: -1.25vw;
+      max-width: 97.5vw;
+    }
+  }
+}
+// @todo
+
+// --------------------------------------------
+// SUPPORT FOR IFRAME/OBJECT/EMBED
+// --------------------------------------------
+
+.embed-container,
+.type-embed {
+    position: relative;
+    padding-bottom: 56.25%; /* 16/9 ratio */
+    padding-top: 30px; /* IE6 workaround*/
+    height: 0;
+    overflow: hidden;
+    margin-bottom:28px;
+}
+.embed-container iframe,
+.embed-container object,
+.embed-container embed,
+.type-embed iframe,
+.type-embed object,
+.type-embed embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+figure iframe {
+  max-width: 100%;
+}

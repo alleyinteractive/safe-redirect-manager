@@ -20,6 +20,7 @@ if ( false !== strpos( site_url(), 'alley' ) ) {
  */
 \Alleypack\load_module( 'block-converter', '1.0' );
 \Alleypack\load_module( 'cli-helpers', '1.1' );
+\Alleypack\load_module( 'fm-helpers', '1.0' );
 \Alleypack\load_module( 'fm-modules', '1.0' );
 \Alleypack\load_module( 'page-templates', '1.0' );
 \Alleypack\load_module( 'path-dispatch', '1.0' );
@@ -87,6 +88,9 @@ require_once CPR_PATH . '/inc/gutenberg.php';
 
 // Helpers.
 require_once CPR_PATH . '/inc/helpers/terms.php';
+
+// Actions and filters that don't really have a good home.
+require_once CPR_PATH . '/inc/hooks.php';
 
 // Setup landing pages.
 require_once CPR_PATH . '/inc/landing-pages.php';

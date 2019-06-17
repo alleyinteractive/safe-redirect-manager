@@ -34,44 +34,38 @@ class Migration {
 	 * @var array
 	 */
 	public $feeds = [
-		'album'                  => true,
-		'artist'                 => false, // Migrated with albums.
-		'blog-post'              => true,
-		'category'               => true,
-		'document'               => true,
-		'entry'                  => true,
-		'guest-author'           => true,
-		'image'                  => true,
-		'job'                    => true,
-		'label'                  => false, // Migrated with albums.
-		'newsletter'             => true, // Migrated with stories.
-		'page'                   => true,
-		'podcast'                => false,
-		'podcast-episode'        => true, // @todo Migrate with story content type.
-		'post-blocks-conversion' => true,
-		'post-tag'               => true,
-		'press-release'          => true,
-		'service'                => true,
-		'show'                   => false,
-		'show-episode'           => true, // @todo Migrate with story content type.
-		'story'                  => true,
-		'top-30'                 => true,
-		'underwriter'            => true,
-		'underwriter-category'   => false, // Migrated with underwriters.
-		'user'                   => true,
+		'album'                => true,
+		'artist'               => false, // Migrated with albums.
+		'blog-post'            => true,
+		'category'             => true,
+		'content'              => true,
+		'document'             => true,
+		'entry'                => true,
+		'guest-author'         => true,
+		'image'                => true,
+		'job'                  => true,
+		'label'                => false, // Migrated with albums.
+		'newsletter'           => true,
+		'page'                 => true,
+		'podcast'              => true,
+		'podcast-episode'      => true,
+		'post-tag'             => true,
+		'press-release'        => true,
+		'service'              => true,
+		'show'                 => true,
+		'show-episode'         => true,
+		'show-segment'         => true,
+		'story'                => true,
+		'top-30'               => true,
+		'underwriter'          => true,
+		'underwriter-category' => false, // Migrated with underwriters.
+		'user'                 => true,
 	];
 
 	/**
 	 * Constructor.
 	 */
 	public function setup() {
-
-		if (
-			isset( $_SERVER['HTTP_HOST'] )
-			&& 'cpr.alley.test' === $_SERVER['HTTP_HOST']
-		) {
-			$this->migration_scope = 'partial';
-		}
 
 		// Load some AlleyPack modules.
 		\Alleypack\load_module( 'attachments', '1.0' );
@@ -86,6 +80,44 @@ class Migration {
 			require_once CPR_PATH . '/migration/cli/class-cleanup.php';
 			require_once CPR_PATH . '/migration/cli/class-menus.php';
 		}
+
+		// Add additional sync link for content.
+		add_filter(
+			'post_row_actions',
+			function( $actions, $post ) {
+
+				// Only apply to some post types.
+				if ( ! in_array( $post->post_type, Content\Feed_Item::$post_type, true ) ) {
+					return $actions;
+				}
+
+				// Build url args.
+				$args = [
+					'post_id' => $post->ID,
+				];
+
+				// Add the current url as a redirect arg.
+				if ( isset( $_SERVER['REQUEST_URI'] ) ) {
+					$request_uri = filter_input( INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL );
+					$args['redirect_to'] = rawurlencode( site_url( wp_unslash( $request_uri ) ) );
+				}
+
+				// Add a sync button to every row action.
+				$actions['sync-content'] = sprintf(
+					'<a href="%1$s">Sync Content</a>',
+					esc_url(
+						add_query_arg(
+							$args,
+							rest_url( 'alleypack/v2/sync/content/' )
+						)
+					)
+				);
+
+				return $actions;
+			},
+			10,
+			2
+		);
 	}
 
 	/**
@@ -194,6 +226,7 @@ class Migration {
 
 		// Generic feed since all our data is structured the same way.
 		require_once CPR_PATH . '/migration/feeds/class-feed.php';
+		require_once CPR_PATH . '/migration/feeds/class-post-datasource-feed.php';
 
 		foreach ( $this->feeds as $feed_slug => $register ) {
 
