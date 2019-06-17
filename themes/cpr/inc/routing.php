@@ -205,20 +205,10 @@ function build_components_endpoint(
 			break;
 
 		/**
-		 * Term archives.
-		 */
-		case $wp_query->is_tax():
-		case $wp_query->is_tag():
-		case $wp_query->is_category():
-			$head->set_query( $wp_query );
-			$header->set_query( $wp_query );
-			$template = ( new Components\Templates\Term_Archive() )->set_query( $wp_query );
-			break;
-
-		/**
 		 * Calendar.
 		 */
 		case ! empty( $wp_query->tribe_is_event_query ):
+			error_log( print_r( $wp_query, true ) );
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
 			break;
@@ -229,6 +219,17 @@ function build_components_endpoint(
 		case $wp_query->is_singular( 'tribe_events' ):
 			$head->set_post( $wp_query->post );
 			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
+			break;
+
+		/**
+		 * Term archives.
+		 */
+		case $wp_query->is_tax():
+		case $wp_query->is_tag():
+		case $wp_query->is_category():
+			$head->set_query( $wp_query );
+			$header->set_query( $wp_query );
+			$template = ( new Components\Templates\Term_Archive() )->set_query( $wp_query );
 			break;
 
 		/**

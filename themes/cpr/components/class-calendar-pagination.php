@@ -47,8 +47,15 @@ class Calendar_Pagination extends \WP_Components\Component {
 			$event_month = ( new \DateTime() )->format( 'Y-m' );
 		}
 
+		// Get the category, if set.
+		$category_slug = $this->query->get( 'tribe_events_cat' );
+
 		// Get the base for the calendar URLs.
-		$calendar_url = tribe_get_events_link();
+		$calendar_url = trailingslashit( tribe_get_events_link() );
+
+		if ( ! empty( $category_slug ) ) {
+			$calendar_url = tribe_get_events_link() . 'category/' . $category_slug;
+		}
 
 		// Get the pagination links.
 		$previous_month = ( new \DateTime( $event_month ) )

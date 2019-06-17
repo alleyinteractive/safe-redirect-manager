@@ -57,7 +57,7 @@ class Calendar extends \WP_Components\Component {
 						 * Calendar events archive.
 						 */
 						( new \CPR\Components\Modules\Content_List() )
-							->set_theme( 'calendarEvent' )
+							->set_theme( 'river_list' )
 							->set_config( 'show_excerpt', false )
 							->parse_from_wp_query( $this->query )
 							->set_child_themes(
@@ -83,9 +83,22 @@ class Calendar extends \WP_Components\Component {
 	 * @return string
 	 */
 	public function get_subheading() {
-		$event_month = new \DateTime( $this->query->get( 'eventDate' ) );
 
-		return date_i18n( 'F Y', $event_month->format( 'U' ) );
+		$event_month = new \DateTime( $this->query->get( 'eventDate' ) );
+		$subheading  = date_i18n( 'F Y', $event_month->format( 'U' ) );
+
+		// Add in the category name, if set.
+		$category_slug = $this->query->get( 'tribe_events_cat' );
+
+		if ( ! empty( $category_slug ) ) {
+			$category = get_term_by( 'slug', $category_slug, 'tribe_events_cat' );
+		}
+
+		if ( $category ) {
+			$subheading .= ': ' . $category->name;
+		}
+
+		return $subheading;
 	}
 
 	/**
@@ -94,6 +107,9 @@ class Calendar extends \WP_Components\Component {
 	 * @param object $wp_query wp_query object.
 	 */
 	public static function pre_get_posts( $wp_query ) {
+
+		// Only modify events archives when on either the base calendar
+		// page or the monthly view.
 		if (
 			'tribe_events' !== $wp_query->get( 'post_type' ) ||
 			! $wp_query->is_archive() ||
@@ -102,6 +118,7 @@ class Calendar extends \WP_Components\Component {
 			return;
 		}
 
+		// Sort by chronological order.
 		$wp_query->set( 'orderby', 'meta_value_num' );
 		$wp_query->set( 'meta_key', '_EventStartDate' );
 		$wp_query->set( 'order', 'ASC' );
