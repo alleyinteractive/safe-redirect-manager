@@ -1,6 +1,7 @@
 import './blockEditor';
 import './editor';
 import { loadCustomImageDetailsTemplate } from './loadCustomImageDetailsTemplate';
+import { runAudioConversion } from './runAudioConversion';
 
 if (module.hot) {
   module.hot.accept();
@@ -8,4 +9,5 @@ if (module.hot) {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadCustomImageDetailsTemplate();
+  runAudioConversion();
 });
