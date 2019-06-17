@@ -61,8 +61,8 @@ class Newsletter extends \WP_Components\Component {
 	public static function dispatch_rewrites() {
 		\Alleypack\Path_Dispatch()->add_path(
 			[
-				'path'     => 'iframe-newsletter',
-				'rewrite'  => [
+				'path'    => 'iframe-newsletter',
+				'rewrite' => [
 					'rule'     => 'iframe/newsletter/(.*)/?',
 					'redirect' => 'index.php?post_type=newsletter-single&name=$matches[1]',
 				],

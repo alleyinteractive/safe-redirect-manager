@@ -22,10 +22,25 @@ function remove_postcustom() {
 	remove_meta_box( 'coauthors-manage-guest-author-bio', null, 'normal' );
 	remove_meta_box( 'coauthors-manage-guest-author-contact-info', null, 'normal' );
 
-	// Remove sharing meta.
+	// Remove misc fields.
 	remove_meta_box( 'sharing_meta', null, 'side' );
+	remove_meta_box( 'pageparentdiv', null, 'side' );
 }
 add_action( 'add_meta_boxes', __NAMESPACE__ . '\remove_postcustom', 100 );
+
+/**
+ * Modify post type support for the 'post' post type.
+ */
+function modify_post_supports() {
+	// Removes unused panels.
+	remove_post_type_support( 'post', 'comments' );
+	remove_post_type_support( 'post', 'page-attributes' );
+	remove_post_type_support( 'post', 'trackbacks' );
+	remove_post_type_support( 'post', 'thumbnail' );
+	remove_post_type_support( 'post', 'excerpt' );
+}
+add_action( 'init', __NAMESPACE__ . '\modify_post_supports' );
+
 
 /**
  * Make post type searchable in the backend so Zoninator can find it.

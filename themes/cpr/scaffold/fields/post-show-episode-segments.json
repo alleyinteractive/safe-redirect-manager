@@ -3,15 +3,26 @@
 		{
 			"type": "post",
 			"post_types": [ "show-episode" ],
-			"title": { "__": "Show Segments" },
+			"title": { "__": "Settings" },
 			"priority": "high"
 		}
 	],
-	"name": "segment_ids",
-	"description": { "__": "Select the segments for this show." },
-	"description_after_element": false,
- 	"type": "`Fieldmanager_Zone_Field`",
- 	"query_args": {
-		"post_type": [ "show-segment" ]
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"children": {
+		"show_segment_ids": {
+			"label": { "__": "Show Segments" },
+			"description": { "__": "Select the segments for this show." },
+			"type": "`Fieldmanager_Zone_Field`",
+			"query_args": {
+				"post_type": [ "show-segment" ],
+				"meta_query": [
+					{
+						"key": "_show_episode_id",
+						"compare": "NOT EXISTS"
+					}
+				]
+			}
+		}
 	}
 }

@@ -52,3 +52,6 @@ add_action( 'init', [ '\\CPR\\Components\\Templates\\Search', 'rewrite_rules' ] 
 
 // Add additional path for newsletters to proxy through.
 add_action( 'after_setup_theme', [ '\\CPR\\Components\\Templates\\Newsletter', 'dispatch_rewrites' ] );
+
+// Add path for streaming playlist landing pages.
+add_action( 'after_setup_theme', [ '\\CPR\\Components\\Templates\\Streaming_Playlist', 'dispatch_rewrites' ] );

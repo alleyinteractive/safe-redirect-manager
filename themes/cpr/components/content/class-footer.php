@@ -2,6 +2,8 @@
 /**
  * Content Footer component.
  *
+ * @todo Deprecate this component.
+ *
  * @package CPR
  */
 
