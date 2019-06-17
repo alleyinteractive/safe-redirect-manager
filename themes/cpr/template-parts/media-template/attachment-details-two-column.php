@@ -159,11 +159,13 @@
 				<input type="text" value="{{ data.url }}" readonly />
 			</label>
 			<?php /* Begin CPR customizations. */ ?>
-			<div class="setting">
-				<span class="name"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
-				<?php /* TODO: Make the content in this section responsive to the current state of encoding processing. */ ?>
-				<input type="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="news-spoken" value="<?php esc_attr_e( 'News/Spoken', 'cpr' ); ?>" />
-				<input type="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="music" value="<?php esc_attr_e( 'Music', 'cpr' ); ?>" />
+			<div class="setting" data-setting="encode-audio">
+				<span class="name" style="padding-top: 14px;"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
+				<span class="value">
+					<?php /* TODO: Make the content in this section responsive to the current state of encoding processing. */ ?>
+					<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="news-spoken" aria-label="<?php esc_attr_e( 'News/Spoken', 'cpr' ); ?>"><?php esc_attr_e( 'News/Spoken', 'cpr' ); ?></button>
+					<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="music" aria-label="<?php esc_attr_e( 'Music', 'cpr' ); ?>"><?php esc_attr_e( 'Music', 'cpr' ); ?></button>
+				</span>
 			</div>
 			<?php /* End CPR customizations. */ ?>
 			<div class="attachment-compat"></div>
