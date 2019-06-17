@@ -1,4 +1,4 @@
-import GalleryEdit from './edit';
+import GalleriesEdit from './edit';
 
 const {
   i18n: {
@@ -12,13 +12,10 @@ const {
 registerBlockType('cpr/galleries', {
   title: __('CPR Galleries', 'cpr'),
   description: __('Galleries for CPR', 'cpr'),
+  icon: 'format-gallery',
   category: 'common',
   attributes: {
     images: {
-      type: 'array',
-      default: [],
-    },
-    ids: {
       type: 'array',
       default: [],
     },
@@ -26,7 +23,7 @@ registerBlockType('cpr/galleries', {
   supports: {
     align: ['full'],
   },
-  edit: GalleryEdit,
+  edit: GalleriesEdit,
   save: () => {
     return null;
   },

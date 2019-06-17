@@ -1,9 +1,11 @@
+import ImageGallery from 'react-image-gallery';
 import PropTypes from 'prop-types';
+
+import 'react-image-gallery/styles/css/image-gallery.css';
 
 const {
   element: {
     Fragment,
-    Component,
   },
   i18n: {
     __,
@@ -21,116 +23,106 @@ const {
 
 const ALLOWED_MEDIA_TYPES = ['image'];
 
-class GalleryEdit extends Component {
-  static propTypes = {
-    attributes: PropTypes.shape({
-      images: PropTypes.array,
-      ids: PropTypes.array,
-    }).isRequired,
-    setAttributes: PropTypes.func.isRequired,
-    className: PropTypes.string.isRequired,
-  };
+const GalleriesEdit = (props) => {
+  const {
+    attributes: {
+      images,
+    },
+    setAttributes,
+    className,
+  } = props;
 
-  constructor() {
-    // eslint-disable-next-line prefer-rest-params
-    super(...arguments);
-    this.onSelectImages = this.onSelectImages.bind(this);
-  }
-
-  onSelectImages(images) {
-    const {
-      setAttributes,
-    } = this.props;
-
-    const imagesArray = Object.keys(images).map((key) => {
-      return images[key];
-    });
-
+  const onSelectImages = (newImages) => {
     setAttributes({
-      images: imagesArray.map((image) => {
+      images: newImages.map((image) => {
         const imageProps = {
-          url: image.url,
+          original: image.url,
           alt: image.alt,
           caption: image.caption,
           id: image.id,
         };
         return imageProps;
       }),
-      ids: imagesArray.map((image) => {
-        return image.id;
-      }),
     });
-  }
+  };
 
-  render() {
-    const {
-      attributes: {
-        images,
-        ids,
-      },
-      className,
-    } = this.props;
+  const hasImages = 0 !== images.length;
 
-    const hasImages = 0 !== images.length;
+  const ids = images.map((image) => {
+    return image.id;
+  });
 
-    return (
-      <Fragment>
-        <div className={className}>
-          {hasImages ? (
-            <Fragment>
-              <BlockControls>
-                <MediaUploadCheck>
-                  <MediaUpload
-                    onSelect={this.onSelectImages}
-                    allowedTypes={ALLOWED_MEDIA_TYPES}
-                    value={ids}
-                    gallery
-                    render={({ open }) => {
-                      return (
-                        <IconButton
-                          className="components-toolbar__control"
-                          label={__('Edit gallery', 'cpr')}
-                          icon="edit"
-                          onClick={open}
-                        />
-                      );
-                    }}
-                  />
-                </MediaUploadCheck>
-              </BlockControls>
-              <div className="cpr-gallery-images">
-                { images.map((img) => {
-                  return (
-                    <div className="slick-slider-block-slide">
-                      <img
-                        className="slick-slider-image"
-                        alt={img.alt}
-                        data-id={img.id}
-                        src={img.url}
+  const gallery = images.map((image) => {
+    const imageProps = {
+      original: image.original,
+      originalAlt: image.alt,
+      description: image.caption,
+    };
+    return imageProps;
+  });
+
+  return (
+    <Fragment>
+      <div className={className}>
+        { hasImages ? (
+          <Fragment>
+            <BlockControls>
+              <MediaUploadCheck>
+                <MediaUpload
+                  onSelect={onSelectImages}
+                  allowedTypes={ALLOWED_MEDIA_TYPES}
+                  value={ids}
+                  multiple
+                  gallery
+                  render={({ open }) => {
+                    return (
+                      <IconButton
+                        className="components-toolbar__control"
+                        label={__('Edit gallery', 'cpr')}
+                        icon="edit"
+                        onClick={open}
                       />
-                    </div>
-                  );
-                }) }
-              </div>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <MediaPlaceholder
-                accept="image/*"
-                allowedTypes={ALLOWED_MEDIA_TYPES}
-                onSelect={this.onSelectImages}
-                multiple
-                labels={{
-                  title: __('CPR Galleries', 'cpr'),
-                  instructions: __('Select the images for this gallery/slideshow.', 'cpr'),
-                }}
+                    );
+                  }}
+                />
+              </MediaUploadCheck>
+            </BlockControls>
+            <div className="cpr-gallery-images">
+              <ImageGallery
+                useBrowserFullscreen={false}
+                showFullscreenButton={false}
+                showBullets={false}
+                showThumbnails={false}
+                showPlayButton={false}
+                items={gallery}
               />
-            </Fragment>
-          )}
-        </div>
-      </Fragment>
-    );
-  }
-}
+            </div>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <MediaPlaceholder
+              accept="image/*"
+              allowedTypes={ALLOWED_MEDIA_TYPES}
+              onSelect={onSelectImages}
+              multiple
+              labels={{
+                title: __('CPR Galleries', 'cpr'),
+                instructions: __('Select the images for this gallery/slideshow.', 'cpr'),
+              }}
+            />
+          </Fragment>
+        )}
+      </div>
+    </Fragment>
+  );
+};
 
-export default GalleryEdit;
+GalleriesEdit.propTypes = {
+  attributes: PropTypes.shape({
+    images: PropTypes.arrayOf.isRequired,
+  }).isRequired,
+  setAttributes: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
+};
+
+export default GalleriesEdit;
