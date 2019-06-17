@@ -160,7 +160,7 @@
 			</label>
 			<?php /* Begin CPR customizations. */ ?>
 			<div class="setting" data-setting="encode-audio">
-				<span class="name" style="padding-top: 14px;"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
+				<span class="name" style="padding-top: 15px;"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
 				<span class="value">
 					<?php /* TODO: Make the content in this section responsive to the current state of encoding processing. */ ?>
 					<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="news-spoken" aria-label="<?php esc_attr_e( 'News/Spoken', 'cpr' ); ?>"><?php esc_attr_e( 'News/Spoken', 'cpr' ); ?></button>
