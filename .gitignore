@@ -39,6 +39,5 @@ plugins/*
 !plugins/user-switching
 !plugins/wordpress-enhanced-media-library-pro
 
-
 /themes/cpr/migration/data/
 /themes/cpr/migration/test-data/
