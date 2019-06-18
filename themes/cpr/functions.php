@@ -27,6 +27,7 @@ if ( false !== strpos( site_url(), 'alley' ) ) {
 \Alleypack\load_module( 'singleton', '1.0' );
 \Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );
+\Alleypack\load_module( 'media-fields', '1.0' );
 
 // Create Term Post Link for Newsletter.
 \Alleypack\create_term_post_link( 'newsletter', 'newsletter-post' );
@@ -74,6 +75,9 @@ require_once CPR_PATH . '/inc/api.php';
 // Manage static assets (js and css).
 require_once CPR_PATH . '/inc/assets.php';
 
+// Attachment.
+require_once CPR_PATH . '/inc/attachment.php';
+
 // Authors.
 require_once CPR_PATH . '/inc/authors.php';
 
@@ -86,8 +90,11 @@ require_once CPR_PATH . '/inc/feeds.php';
 // Gutenberg.
 require_once CPR_PATH . '/inc/gutenberg.php';
 
-// Helpers.
+// Terms Helpers.
 require_once CPR_PATH . '/inc/helpers/terms.php';
+
+// WP_Query Helpers.
+require_once CPR_PATH . '/inc/helpers/wp-query.php';
 
 // Actions and filters that don't really have a good home.
 require_once CPR_PATH . '/inc/hooks.php';
