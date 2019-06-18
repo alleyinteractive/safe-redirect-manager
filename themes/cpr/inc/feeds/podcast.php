@@ -1,6 +1,6 @@
 <?php
 /**
- * XML RSS feed for the CPR app.
+ * XML RSS feed for the CPR podcasts.
  *
  * @package CPR
  */
@@ -13,10 +13,10 @@ $cpr_args = [
 	'posts_per_page' => -1,
 ];
 
-$term_slug = get_query_var( 'custom-feed-slug' );
-$term_taxonomy  = 'podcast';
+$term_slug     = get_query_var( 'custom-feed-slug' );
+$term_taxonomy = 'podcast';
 
-switch ( get_query_var( 'custom-feed-slug' ) ) {
+switch ( $term_slug ) {
 
 	// Map Beethoven 9 podcast to just `beethoven`.
 	case 'beethoven':
@@ -48,13 +48,13 @@ switch ( get_query_var( 'custom-feed-slug' ) ) {
 
 	default:
 		// Check if there's a podcast with this slug.
-		$possible_podcast = get_term_by( 'slug', get_query_var( 'custom-feed-slug' ), 'podcast' );
+		$possible_podcast = get_term_by( 'slug', $term_slug, 'podcast' );
 		if ( $possible_podcast instanceof \WP_Term ) {
 			$term_taxonomy = 'podcast';
 			$term_slug     = $possible_podcast->slug;
 		} else {
 			// Check if there's a show with this slug.
-			$possible_show    = get_term_by( 'slug', get_query_var( 'custom-feed-slug' ), 'show' );
+			$possible_show = get_term_by( 'slug', $term_slug, 'show' );
 			if ( $possible_show instanceof \WP_Term ) {
 				$term_taxonomy = 'show';
 				$term_slug     = $possible_show->slug;

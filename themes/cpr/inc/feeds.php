@@ -2,8 +2,6 @@
 /**
  * Customizations for internal (this site's) RSS, Atom, JSON, etc. feeds.
  *
- * See api.php for external feeds.
- *
  * @package CPR
  */
 
@@ -14,7 +12,7 @@ namespace CPR;
  */
 function setup_feed_routing() {
 
-	// International feeds.
+	// Feeds.
 	\Alleypack\Path_Dispatch()->add_paths(
 		[
 			[

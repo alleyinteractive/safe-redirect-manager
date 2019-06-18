@@ -50,37 +50,109 @@ switch ( get_query_var( 'custom-feed-slug' ) ) {
 				'terms'    => 'indie',
 			],
 		];
-
 		break;
 
 	/**
 	 * The 3 posts at the top of the classical homepage.
 	 */
 	case 'featured_content_classical':
+		$landing_page     = get_page_by_path( 'classical', OBJECT, 'landing-page' );
+		$data             = (array) get_post_meta( $landing_page->ID ?? 0, 'classical', true );
+		$content_item_ids = array_merge(
+			$data['featured_content']['content_item_ids'] ?? [],
+			$data['articles']['content_item_ids'] ?? []
+		);
+		$backfill_args = [
+			'post_type' => [ 'post' ],
+			'tax_query' => [
+				[
+					'taxonomy' => 'section',
+					'field'    => 'slug',
+					'terms'    => 'classical',
+				],
+			],
+		];
+
+		$args['post__in'] = backfill_content_item_ids( $content_item_ids, 3, $backfill_args );
 		break;
 
 	/**
-	 * The 5 posts at the top of the homepage.
+	 * The 3 posts at the top of the indie/openair homepage.
 	 */
-	case 'featured_content_home':
-		break;
+	case 'featured_content_openair':
+		$landing_page     = get_page_by_path( 'indie-102-3', OBJECT, 'landing-page' );
+		$data             = (array) get_post_meta( $landing_page->ID ?? 0, 'indie-102-3', true );
+		$content_item_ids = array_merge(
+			$data['featured_content']['content_item_ids'] ?? [],
+			$data['articles']['content_item_ids'] ?? []
+		);
+		$backfill_args    = [
+			'post_type' => [ 'post' ],
+			'tax_query' => [
+				[
+					'taxonomy' => 'section',
+					'field'    => 'slug',
+					'terms'    => 'indie',
+				],
+			],
+		];
 
-	/**
-	 * The 1st post at the top of the homepage.
-	 */
-	case 'featured_content_home_main':
+		$args['post__in'] = backfill_content_item_ids( $content_item_ids, 3, $backfill_args );
 		break;
 
 	/**
 	 * The 5 posts at the top of the news homepage.
 	 */
 	case 'featured_content_news':
+		$landing_page     = get_page_by_path( 'news', OBJECT, 'landing-page' );
+		$data             = (array) get_post_meta( $landing_page->ID ?? 0, 'news', true );
+		$content_item_ids = array_merge(
+			$data['featured_content']['content_item_ids'] ?? [],
+			$data['highlighted_content']['content_item_ids'] ?? []
+		);
+		$backfill_args    = [
+			'post_type' => [ 'post' ],
+			'tax_query' => [
+				[
+					'taxonomy' => 'section',
+					'field'    => 'slug',
+					'terms'    => 'news',
+				],
+			],
+		];
+
+		$args['post__in'] = backfill_content_item_ids( $content_item_ids, 5, $backfill_args );
 		break;
 
 	/**
-	 * The 3 posts at the top of the indie homepage.
+	 * The 5 posts at the top of the homepage.
 	 */
-	case 'featured_content_openair':
+	case 'featured_content_home':
+		$landing_page     = get_page_by_path( 'homepage', OBJECT, 'landing-page' );
+		$data             = (array) get_post_meta( $landing_page->ID ?? 0, 'homepage', true );
+		$content_item_ids = array_merge(
+			$data['featured_content']['top_headlines_content_item_ids'] ?? [],
+			$data['highlighted_content']['content_item_ids'] ?? [],
+		);
+		$backfill_args    = [
+			'post_type' => [ 'post' ],
+		];
+
+		$args['post__in'] = backfill_content_item_ids( $content_item_ids, 5, $backfill_args );
+		break;
+
+	/**
+	 * The 1st post at the top of the homepage.
+	 */
+	case 'featured_content_home_main':
+		$landing_page     = get_page_by_path( 'homepage', OBJECT, 'landing-page' );
+		$data             = (array) get_post_meta( $landing_page->ID ?? 0, 'homepage', true );
+		$content_item_ids = $data['featured_content']['content_item_ids'] ?? [];
+		$backfill_args    = [
+			'post_type' => [ 'post' ],
+		];
+
+		$args['post__in'] = backfill_content_item_ids( $content_item_ids, 1, $backfill_args );
 		break;
 
 	default:
