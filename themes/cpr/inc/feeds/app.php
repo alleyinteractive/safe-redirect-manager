@@ -132,7 +132,7 @@ switch ( get_query_var( 'custom-feed-slug' ) ) {
 		$data             = (array) get_post_meta( $landing_page->ID ?? 0, 'homepage', true );
 		$content_item_ids = array_merge(
 			$data['featured_content']['top_headlines_content_item_ids'] ?? [],
-			$data['highlighted_content']['content_item_ids'] ?? [],
+			$data['highlighted_content']['content_item_ids'] ?? []
 		);
 		$backfill_args    = [
 			'post_type' => [ 'post' ],
