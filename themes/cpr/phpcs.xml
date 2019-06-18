@@ -89,6 +89,7 @@
 		<!-- In practice, partials should be loaded outside of the global namespace with get_template_part(). -->
 		<exclude-pattern>themes(/vip)?/[^/]+/template-parts/</exclude-pattern>
 		<exclude-pattern>vendor/</exclude-pattern>
+		<exclude-pattern>themes/cpr/inc/feeds/</exclude-pattern>
 	</rule>
 
 	<rule ref="Generic.PHP.ForbiddenFunctions">
