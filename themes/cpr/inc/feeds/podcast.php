@@ -88,6 +88,8 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
 	xmlns:media="https://search.yahoo.com/mrss/"
 	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+
 	<?php
 	/**
 	 * Fires at the end of the RSS root to add namespaces.
@@ -105,23 +107,35 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 		if ( $feed_items->have_posts() ) :
 			while ( $feed_items->have_posts() ) :
 				$feed_items->the_post();
+
+				// Get saved audio file and meta info.
+				$meta_id     = get_post_meta( get_the_ID(), 'audio_id', true );
+				$audio       = wp_get_attachment_url( $meta_id );
+				$audio_meta  = get_post_meta( $meta_id, '_wp_attachment_metadata', true );
+				$podcast     = get_term_by( 'slug', $term_slug, 'podcast' );
+				$podcast_url = sprintf(
+					'%1$s/rss/%2$s.podcast.rss',
+					home_url(),
+					get_query_var( 'custom-feed-slug' ),
+				);
 				?>
 				<item>
 					<guid isPermaLink="false"><?php the_guid(); ?></guid>
 					<title><?php the_title_rss(); ?></title>
-					<image>
-						<url><?php echo esc_html( the_post_thumbnail_url() ); ?></url>
-						<caption><?php echo esc_html( the_post_thumbnail_caption() ); ?></caption>
-					</image>
+					<source url="<?php echo esc_url( $podcast_url ); ?>"><?php echo esc_html( $podcast->name ); ?></source>
 					<link><?php echo esc_url( the_permalink_rss() ); ?></link>
 					<pubDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
-					<updatedDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_the_modified_time( 'Y-m-d H:i:s' ), false ) ); ?></updatedDate>
-					<author><?php echo esc_html( get_the_author() ); ?></author>
-					<dc:creator><?php echo esc_html( get_the_author() ); ?></dc:creator>
-					<?php the_category_rss( 'rss2' ); ?>
 					<description>
 						<![CDATA[ <?php echo esc_html( the_excerpt_rss() ); ?> ]]>
 					</description>
+					<itunes:subtitle><?php the_title_rss(); ?></itunes:subtitle>
+					<itunes:summary><![CDATA[ <?php echo esc_html( the_excerpt_rss() ); ?> ]]></itunes:summary>
+					<itunes:duration><?php echo esc_html( $audio_meta['length_formatted'] ?? '00:00' ); ?></itunes:duration>
+					<enclosure
+						url="<?php echo esc_url( $audio ); ?>"
+						length="<?php echo esc_attr( $audio_meta['length'] ?? 0 ); ?>"
+						type="audio/mpeg"
+					/>
 				</item>
 				<?php
 			endwhile;
