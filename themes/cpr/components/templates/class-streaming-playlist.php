@@ -39,10 +39,29 @@ class Streaming_Playlist extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
+		$station = $this->query->get( 'station' );
+		$today   = date( 'F j, Y', current_time( 'timestamp' ) );
+
 		return [
-			new \CPR\Components\Audio\Streaming_Playlist_Header(),
-			( new \CPR\Components\Audio\Streaming_Playlist_Results() )
-				->set_config_for_station( $this->query->get( 'station' ) ),
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'twoColumn' )
+				->append_children(
+					[
+						( new \WP_Components\Component() )
+							->set_name( 'streaming-playlist-wrapper' )
+							->append_children(
+								[
+									( new \CPR\Components\Audio\Streaming_Playlist_Header() )
+										->set_config( 'date', $today ),
+									( new \CPR\Components\Audio\Streaming_Playlist_Results() )
+										->set_config_for_station( $station ),
+								]
+							),
+						( new \CPR\Components\Sidebar() )
+							->set_theme( 'right' )
+							->set_sidebar( "{$station}-sidebar'" ),
+					]
+				),
 		];
 	}
 
