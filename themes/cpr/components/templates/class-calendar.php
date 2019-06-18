@@ -42,7 +42,7 @@ class Calendar extends \WP_Components\Component {
 		return [
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'twoColumn' )
-				->set_config( 'heading', __( 'Events Calendar', 'cpr' ) )
+				->set_config( 'heading', $this->get_heading() )
 				->set_config( 'subheading', $this->get_subheading() )
 				->append_children(
 					[
@@ -75,6 +75,33 @@ class Calendar extends \WP_Components\Component {
 					]
 				),
 		];
+	}
+
+	/**
+	 * Returns a string with the title for the calendar that we are looking at.
+	 *
+	 * @return string
+	 */
+	public function get_heading() {
+
+		$heading = '';
+
+		// Add in the section name, if set.
+		if ( 'section' === $this->query->get( 'taxonomy' ) && $this->query->get( 'term' ) ) {
+			$section_slug = $this->query->get( 'term' );
+
+			if ( ! empty( $section_slug ) ) {
+				$section = get_term_by( 'slug', $section_slug, 'section' );
+			}
+
+			if ( $section ) {
+				$heading .= $section->name . ': ';
+			}
+		}
+
+		$heading .= __( 'Events Calendar', 'cpr' );
+
+		return $heading;
 	}
 
 	/**

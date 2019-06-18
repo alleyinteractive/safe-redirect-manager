@@ -47,14 +47,27 @@ class Calendar_Pagination extends \WP_Components\Component {
 			$event_month = ( new \DateTime() )->format( 'Y-m' );
 		}
 
+		// Get the section, if set.
+		if ( 'section' === $this->query->get( 'taxonomy' ) && $this->query->get( 'term' ) ) {
+			$section_slug = $this->query->get( 'term' );
+		}
+
 		// Get the category, if set.
 		$category_slug = $this->query->get( 'tribe_events_cat' );
 
-		// Get the base for the calendar URLs.
-		$calendar_url = trailingslashit( tribe_get_events_link() );
+		// Create the base for the calendar URLs.
+		$calendar_base_path = \Tribe__Settings_Manager::get_option( 'eventsSlug', 'events' );
+
+		$calendar_url = '/';
+
+		if ( ! empty( $section_slug ) ) {
+			$calendar_url = trailingslashit( $calendar_url . $section_slug . '/' );
+		}
+
+		$calendar_url = trailingslashit( $calendar_url . $calendar_base_path );
 
 		if ( ! empty( $category_slug ) ) {
-			$calendar_url = tribe_get_events_link() . 'category/' . $category_slug;
+			$calendar_url = trailingslashit( $calendar_url . 'category/' . $category_slug );
 		}
 
 		// Get the pagination links.

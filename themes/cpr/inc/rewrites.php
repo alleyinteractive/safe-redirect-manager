@@ -19,6 +19,31 @@ function rewrites() {
 		'top'
 	);
 
+	// Calendars.
+	add_rewrite_rule(
+		'^(news|classical|indie)/calendar/?$',
+		'index.php?taxonomy=section&term=$matches[1]&post_type=tribe_events&eventDisplay=month',
+		'top'
+	);
+
+	add_rewrite_rule(
+		'^(news|classical|indie)/calendar/([^/]+)/?$',
+		'index.php?taxonomy=section&term=$matches[1]&post_type=tribe_events&eventDisplay=month&eventDate=$matches[2]',
+		'top'
+	);
+
+	add_rewrite_rule(
+		'^(news|classical|indie)/calendar/category/([^/]+)/?$',
+		'index.php?taxonomy=section&term=$matches[1]&post_type=tribe_events&eventDisplay=month&tribe_events_cat=$matches[2]',
+		'top'
+	);
+
+	add_rewrite_rule(
+		'^(news|classical|indie)/calendar/category/([^/]+)/([^/]+)/?$',
+		'index.php?taxonomy=section&term=$matches[1]&post_type=tribe_events&eventDisplay=month&tribe_events_cat=$matches[2]&eventDate=$matches[3]',
+		'top'
+	);
+
 	// Section archive.
 	add_rewrite_rule(
 		'^(news|classical|indie)/all/?$',
