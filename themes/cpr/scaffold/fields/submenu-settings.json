@@ -11,6 +11,16 @@
 	],
 	"tabbed": "vertical",
 	"children": {
+		"general": {
+			"label": { "__": "General settings" },
+			"children": {
+				"fallback_image_id": {
+					"label": { "__": "Fallback image" },
+					"description": { "__": "This image will appear in place of a post's featured image when no other image has been set." },
+					"type": "media"
+				}
+			}
+		},
 		"analytics": {
 			"label": { "__": "Analytics" },
 			"children": {
@@ -73,14 +83,14 @@
 					"type": "richtextarea"
 				}
 			}
-    },
-    "gtm": {
-      "label": { "__": "Google Tag Manager Settings" },
-      "children": {
-        "container_id": {
-          "label": { "__": "Google Tag Manager Container ID" }
-        }
-      }
-    }
-  }
+    	},
+		"gtm": {
+    		"label": { "__": "Google Tag Manager Settings" },
+    		"children": {
+    			"container_id": {
+        			"label": { "__": "Google Tag Manager Container ID" }
+        		}
+      		}
+    	}
+	}
 }
