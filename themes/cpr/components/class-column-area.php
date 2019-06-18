@@ -28,6 +28,7 @@ class Column_Area extends \WP_Components\Component {
 		return [
 			'theme_name'        => 'threeColumn',
 			'heading'           => '',
+			'subheading'        => '',
 			'heading_link'      => '',
 			'heading_cta_label' => '',
 			'heading_cta_link'  => '',

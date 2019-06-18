@@ -216,6 +216,22 @@ function build_components_endpoint(
 			break;
 
 		/**
+		 * Calendar.
+		 */
+		case ! empty( $wp_query->tribe_is_event_query ):
+			$head->set_query( $wp_query );
+			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
+			break;
+
+		/**
+		 * Event.
+		 */
+		case $wp_query->is_singular( 'tribe_events' ):
+			$head->set_post( $wp_query->post );
+			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
+			break;
+
+		/**
 		 * Archive for all post (post_type) content.
 		 */
 		case ( strpos( $path, '/all/' ) === 0 ):

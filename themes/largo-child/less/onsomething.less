@@ -34,7 +34,7 @@ body {
     z-index: 100;
     position: relative;
     height: 50px;
-    background-color: fade(@onsomething_primary_blue, 85%);
+    background-color: @onsomething_primary_green_lt;
     .global-nav {
       height: inherit;
       line-height: 2em;
@@ -91,11 +91,12 @@ body {
   #page {
     background-color: transparent;
     min-height: 100vh;
-    max-width: 900px;
+    max-width: 1000px;
     #site-header {
       background-color: rgba(255, 255, 255, .1);
       aside {
         max-width: 550px;
+        width: auto;
         float: right;
         margin: 75px 50px 0px auto;
       }
@@ -113,7 +114,7 @@ body {
     /* sticky nav for tablet/mobile */
     .sticky-nav-wrapper {
       .sticky-nav-container {
-        background-color: @onsomething_primary_blue;
+        background-color: @onsomething_primary_green_lt;
         color: #fff;
         .btn-navbar .icon-bar {
           background-color: #fff;
@@ -130,6 +131,9 @@ body {
     #main {
       background-color: transparent;
       min-height: 600px;
+      h2.entry-title {
+        font-size: 1.5em;
+      }
     }
     .stories article {
       border-bottom: 1px dotted @onsomething_primary_blue;
@@ -173,7 +177,7 @@ body {
     height: 150px;
     box-shadow: 0px 0px 31px -11px #777;
     -webkit-box-shadow: 0px 0px 31px -11px #777;
-    background-color: @onsomething_primary_blue;
+    background-color: @onsomething_primary_green_lt;
     width: 100%;
     padding: 0 0 35px;
 
@@ -286,15 +290,27 @@ h1, h2, h3, h4 {
     color: @onsomething_primary_green_drk !important;
   }
 }
-.podcast-widget-head {
-  a {
-    font-size: 18px;
-    color: @onsomething_primary_orange;
-    &:hover {
-
+#sidebar_podcast_widget {
+  .podcast-widget-text {
+    float: left;
+  }
+  span.podcast_link {
+    margin: 20px 0px 0px 10px;
+    display: inline-block;
+    float: left;
+    clear: left;
+    a {
+      &:hover {
+        text-decoration: none;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        -webkit-transition: none;
+        transition: none;
+        transition: none;
+        transition: none;
+      }
     }
   }
-
 }
 
 /**
@@ -305,6 +321,12 @@ h1, h2, h3, h4 {
   width: 100%;
 }
 
+/**
+ * AD ZONE STYLES
+ */
+img.onsomething_ad {
+  margin-top: 15px
+}
 /**
  * SOCIAL ICONS
  */
@@ -344,9 +366,63 @@ h1, h2, h3, h4 {
 }
 
 /**
+ * 404 PAGES
+ */
+.error404 {
+  #page {
+    #main {}
+    #content {
+      .widget {
+        h5  {
+          a {
+            font-size: 18px;
+            color: @onsomething_primary_blue;
+            &:hover {
+              color: @onsomething_primary_blue;
+              text-decoration: none;
+              -webkit-box-shadow: inset 0 -0.2em #999;
+              box-shadow: inset 0 -0.2em #999;
+              -webkit-transition: -webkit-box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+              transition: -webkit-box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+              transition: box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+              transition: box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355, 1), -webkit-box-shadow 0.3s cubic-bezier(0.215, 0.61, 0.355);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
  * MOBILE  / TAB STYLES
  */
+@media (max-width: 980px) {
+  #page {
+    .navbar.sticky-navbar {
+      background-image: url(../../../wp-content/uploads/sites/5/2019/06/on_something_horiz_white_no_tag.png);
+      background-size: 155px;
+      background-repeat: no-repeat;
+      background-position-x: 0px;
+      background-position-y: 3px;
+      .site-name {
+        display: none;
+      }
+    }
+    #site-header {
+      aside.larg-about {
+        margin: 0px;
+      }
+    }
+  }
+}
 @media (max-width: 768px) {
+  #sidebar {
+    img.onsomething_ad {
+      margin: 10px auto;
+      display: block;
+    }
+  }
   .footer-credit {
     max-width: 350px;
     line-height: 1em;

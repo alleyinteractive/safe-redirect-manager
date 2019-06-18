@@ -14,6 +14,7 @@ class Content_Item extends \WP_Components\Component {
 
 	use \WP_Components\WP_Post;
 	use \CPR\WP_Post;
+	use \CPR\Event;
 
 	/**
 	 * Unique component slug.
@@ -29,12 +30,19 @@ class Content_Item extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
+			'address'      => '',
 			'audio_length' => '',
+			'audio_url'    => '',
+			'date_time'    => '',
+			'date'         => '',
 			'image_size'   => 'grid-item',
 			'permalink'    => '',
 			'show_excerpt' => false,
 			'theme_name'   => 'grid',
+			'time'         => '',
+			'title'        => '',
 			'type'         => '',
+			'url'          => '',
 		];
 	}
 
@@ -44,6 +52,9 @@ class Content_Item extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
+
+		$post_type = $this->post->post_type ?? '';
+
 		$this->append_child(
 			( new \CPR\Components\Content\Content_Title() )
 				->merge_config(
@@ -91,6 +102,11 @@ class Content_Item extends \WP_Components\Component {
 			}
 		}
 
+		// Set event details, if applicable.
+		if ( 'tribe_events' === $post_type ) {
+			$this->set_event_meta();
+		}
+
 		$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
 		$this->merge_config(
 			[
@@ -100,6 +116,7 @@ class Content_Item extends \WP_Components\Component {
 
 		switch ( $this->post->post_type ) {
 			case 'press-release':
+			case 'tribe_events':
 				break;
 			default:
 				$this->set_byline();
