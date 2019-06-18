@@ -85,8 +85,11 @@ require_once CPR_PATH . '/inc/feeds.php';
 // Gutenberg.
 require_once CPR_PATH . '/inc/gutenberg.php';
 
-// Helpers.
+// Terms Helpers.
 require_once CPR_PATH . '/inc/helpers/terms.php';
+
+// WP_Query Helpers.
+require_once CPR_PATH . '/inc/helpers/wp-query.php';
 
 // Actions and filters that don't really have a good home.
 require_once CPR_PATH . '/inc/hooks.php';
