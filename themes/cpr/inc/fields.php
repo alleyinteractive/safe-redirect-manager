@@ -17,6 +17,19 @@ function cpr_fm_submenu_settings() {
 			'name' => 'cpr-settings',
 			'tabbed' => 'vertical',
 			'children' => [
+				'general' => new Fieldmanager_Group(
+					[
+						'label' => __( 'General settings', 'cpr' ),
+						'children' => [
+							'fallback_image_id' => new Fieldmanager_Media(
+								[
+									'label' => __( 'Fallback image', 'cpr' ),
+									'description' => __( "This image will appear in place of a post's featured image when no other image has been set.", 'cpr' ),
+								]
+							),
+						],
+					]
+				),
 				'analytics' => new Fieldmanager_Group(
 					[
 						'label' => __( 'Analytics', 'cpr' ),
