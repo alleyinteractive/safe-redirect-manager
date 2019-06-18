@@ -54,6 +54,7 @@ require_once CPR_PATH . '/migration/class-migration.php';
 
 // Traits.
 require_once CPR_PATH . '/inc/traits/trait-backfill.php';
+require_once CPR_PATH . '/inc/traits/trait-event.php';
 require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
 
 // Data endpoints.
