@@ -174,6 +174,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
 	xmlns:media="https://search.yahoo.com/mrss/"
 	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
 	<?php
 	/**
 	 * Fires at the end of the RSS root to add namespaces.
@@ -208,6 +209,8 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 					<description>
 						<![CDATA[ <?php echo esc_html( the_excerpt_rss() ); ?> ]]>
 					</description>
+					<source url="<?php self_link(); ?>>"><?php echo esc_html( bloginfo_rss( 'name' ) ); ?></source>
+					<itunes:subtitle><?php esc_html_e( 'Read More', 'cpr' ); ?></itunes:subtitle>
 				</item>
 				<?php
 			endwhile;

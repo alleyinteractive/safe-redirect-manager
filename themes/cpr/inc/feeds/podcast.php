@@ -109,20 +109,15 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 				$feed_items->the_post();
 
 				// Get saved audio file and meta info.
-				$meta_id     = get_post_meta( get_the_ID(), 'audio_id', true );
-				$audio       = wp_get_attachment_url( $meta_id );
-				$audio_meta  = get_post_meta( $meta_id, '_wp_attachment_metadata', true );
-				$podcast     = get_term_by( 'slug', $term_slug, 'podcast' );
-				$podcast_url = sprintf(
-					'%1$s/rss/%2$s.podcast.rss',
-					home_url(),
-					get_query_var( 'custom-feed-slug' ),
-				);
+				$meta_id    = get_post_meta( get_the_ID(), 'audio_id', true );
+				$audio      = wp_get_attachment_url( $meta_id );
+				$audio_meta = get_post_meta( $meta_id, '_wp_attachment_metadata', true );
+				$podcast    = get_term_by( 'slug', $term_slug, 'podcast' );
 				?>
 				<item>
 					<guid isPermaLink="false"><?php the_guid(); ?></guid>
 					<title><?php the_title_rss(); ?></title>
-					<source url="<?php echo esc_url( $podcast_url ); ?>"><?php echo esc_html( $podcast->name ); ?></source>
+					<source url="<?php self_link(); ?>"><?php echo esc_html( $podcast->name ); ?></source>
 					<link><?php echo esc_url( the_permalink_rss() ); ?></link>
 					<pubDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
 					<description>
