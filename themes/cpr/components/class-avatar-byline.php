@@ -20,6 +20,17 @@ class Avatar_Byline extends \WP_Components\Byline {
 	public $name = 'avatar-byline';
 
 	/**
+	 * Define a default config.
+	 *
+	 * @return array Default config.
+	 */
+	public function default_config() : array {
+		return [
+			'pre_byline' => __( 'By ', 'cpr' ),
+		];
+	}
+
+	/**
 	 * Handling for Co-Authors Plus guest author objects.
 	 *
 	 * @return self
