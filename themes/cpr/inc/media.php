@@ -8,6 +8,10 @@
 
 namespace CPR;
 
+\WP_Components\Image::register_fallback_image(
+	get_option( 'cpr-settings', [] )['general']['fallback_image_id'] ?? 0
+);
+
 \WP_Components\Image::register_breakpoints(
 	[
 		'xxl' => '90rem',
@@ -130,7 +134,6 @@ namespace CPR;
 			],
 			'aspect_ratio' => 9 / 16,
 			'retina'       => true,
-			'fallback_image_url' => get_template_directory_uri() . '/images/logo.png',
 		],
 		'album_cover' => [
 			'sources' => [

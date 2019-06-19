@@ -20,3 +20,9 @@ add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Author_Archive', '
 
 // Get all underwriters.
 add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Underwriter_Archive', 'pre_get_posts' ] );
+
+// Modify calendar results.
+add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Calendar', 'pre_get_posts' ] );
+
+// Modify all content results.
+add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\All_Archive', 'pre_get_posts' ] );

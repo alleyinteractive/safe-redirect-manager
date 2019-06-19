@@ -17,6 +17,19 @@ function cpr_fm_submenu_settings() {
 			'name' => 'cpr-settings',
 			'tabbed' => 'vertical',
 			'children' => [
+				'general' => new Fieldmanager_Group(
+					[
+						'label' => __( 'General settings', 'cpr' ),
+						'children' => [
+							'fallback_image_id' => new Fieldmanager_Media(
+								[
+									'label' => __( 'Fallback image', 'cpr' ),
+									'description' => __( "This image will appear in place of a post's featured image when no other image has been set.", 'cpr' ),
+								]
+							),
+						],
+					]
+				),
 				'analytics' => new Fieldmanager_Group(
 					[
 						'label' => __( 'Analytics', 'cpr' ),
@@ -255,10 +268,31 @@ function cpr_fm_post_underwriter_settings() {
 			'serialize_data' => false,
 			'add_to_prefix' => false,
 			'children' => [
+				'description' => new Fieldmanager_RichTextArea(
+					[
+						'label' => __( 'Description', 'cpr' ),
+						'buttons_1' => [ 'bold', 'italic', 'link' ],
+						'buttons_2' => [],
+						'sanitize' => 'wp_filter_post_kses',
+						'editor_settings' => [
+							'media_buttons' => false,
+						],
+						'attributes' => [
+							'style' => 'width: 100%',
+							'rows' => 4,
+						],
+					]
+				),
 				'link' => new Fieldmanager_Link( __( 'Website', 'cpr' ) ),
 				'address' => new Fieldmanager_TextArea( __( 'Address', 'cpr' ) ),
 				'phone_number' => new Fieldmanager_Textfield( __( 'Phone Number', 'cpr' ) ),
 				'is_corporate_partner' => new Fieldmanager_Checkbox( __( 'Corporate Partner', 'cpr' ) ),
+				'is_enhanced_listing' => new Fieldmanager_Checkbox(
+					[
+						'label' => __( 'Enhanced Listing', 'cpr' ),
+						'description' => __( 'This underwriter will always be toggled open.', 'cpr' ),
+					]
+				),
 			],
 		]
 	);

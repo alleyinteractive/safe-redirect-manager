@@ -65,7 +65,7 @@ const HighlightedItemEdit = (props) => {
 
 HighlightedItemEdit.propTypes = {
   attributes: PropTypes.shape({
-    heading: PropTypes.array.isRequired,
+    heading: PropTypes.arrayOf.isRequired,
     enableToggle: PropTypes.bool.isRequired,
     icon: PropTypes.string.isRequired,
   }).isRequired,

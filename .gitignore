@@ -38,6 +38,7 @@ plugins/*
 !plugins/tablepress-responsive-tables
 !plugins/user-switching
 !plugins/wordpress-enhanced-media-library-pro
+!plugins/wordpress-seo
 
 /themes/cpr/migration/data/
 /themes/cpr/migration/test-data/
