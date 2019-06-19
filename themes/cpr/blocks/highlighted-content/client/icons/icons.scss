@@ -46,7 +46,7 @@
   }
 
   .cpr-component-icon-picker-list-wrap {
-    
+
     > span {
       background-color: #fff;
       display: block;
@@ -66,12 +66,13 @@
     margin-left: -10px;
 
     .cpr-component-icon-picker-button {
+      background-color: transparent;
+      border: 0;
+      flex: 0 1 20%;
       font-size: 20px;
-      height: 55px;
-      margin-bottom: 10px;
-      margin-left: 10px;
-      max-width: calc(33.33% - 10px);
-      width: calc(33.33% - 10px);
+      height: auto;
+      padding: 10px;
+      top: 0;
     }
   }
 }

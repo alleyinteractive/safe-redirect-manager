@@ -102,7 +102,6 @@ class IconPickerDropdown extends Component {
           const result = [];
 
           eachIcons((iconsData) => {
-            result.push(<span>{ iconsData.name }</span>);
             result.push(<div className="cpr-component-icon-picker-list">
               { iconsData.icons.map((iconData) => {
                 if (
@@ -131,12 +130,12 @@ class IconPickerDropdown extends Component {
             <div className="cpr-component-icon-picker">
               <div>
                 <TextControl
-                  label={__('Icon class', 'cpr')}
                   value={value}
                   onChange={(newClass) => {
                     onChange(newClass);
                   }}
                   placeholder={__('Icon class', 'cpr')}
+                  type="hidden"
                 />
                 <TextControl
                   label={__('Search icon')}
