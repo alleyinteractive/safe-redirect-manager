@@ -208,7 +208,6 @@ function build_components_endpoint(
 		 * Calendar.
 		 */
 		case ! empty( $wp_query->tribe_is_event_query ):
-			error_log( print_r( $wp_query, true ) );
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
 			break;
