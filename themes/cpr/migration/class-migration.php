@@ -78,7 +78,7 @@ class Migration {
 		$current_user = wp_get_current_user();
 		if (
 			isset( $current_user->data->user_email )
-			&& false === strpos( $current_user->data->user_email, 'alley.co')
+			&& false === strpos( $current_user->data->user_email, 'alley.co' )
 		) {
 			add_action( 'alleypack_sync_enable_gui', '__return_false' );
 		}

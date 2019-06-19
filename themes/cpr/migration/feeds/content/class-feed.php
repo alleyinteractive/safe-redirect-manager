@@ -30,7 +30,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		'podcast-episode',
 		'show-episode',
 		'show-segment',
-		'press-release'
+		'press-release',
 	];
 
 	/**
