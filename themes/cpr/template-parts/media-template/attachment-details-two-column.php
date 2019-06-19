@@ -159,40 +159,45 @@
 				<input type="text" value="{{ data.url }}" readonly />
 			</label>
 			<?php /* Begin CPR customizations. */ ?>
-			<div class="setting" data-setting="encode-audio">
-				<span class="name" style="padding-top: 15px;"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
-				<span class="value cpr-encode-audio-container">
-					<div class="cpr-encode-audio-buttons">
-						<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="news-spoken" aria-label="<?php esc_attr_e( 'News/Spoken', 'cpr' ); ?>"><?php esc_attr_e( 'News/Spoken', 'cpr' ); ?></button>
-						<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="music" aria-label="<?php esc_attr_e( 'Music', 'cpr' ); ?>"><?php esc_attr_e( 'Music', 'cpr' ); ?></button>
+			<# if ( 'audio' === data.type && data.meta.bitrate ) { #>
+				<# if ( 2 === data.meta.cpr_transcoding_status ) { #>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'MP3', 'cpr' ); ?></span>
+						<span class="value"><?php esc_html_e( '(on-demand audio and podcasts)', 'cpr' ); ?></span>
+						<input type="text" value="{{ data.meta.cpr_audio_mp3_url }}" readonly class="cpr-audio-url-mp3" />
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Stereo M4A', 'cpr' ); ?></span>
+						<span class="value"><?php esc_html_e( '(on-demand audio for supported players)', 'cpr' ); ?></span>
+						<input type="text" value="{{ data.meta.cpr_audio_stereo_url }}" readonly class="cpr-audio-url-stereo" />
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Mono M4A', 'cpr' ); ?></span>
+						<span class="value"><?php esc_html_e( '(NPR One)', 'cpr' ); ?></span>
+						<input type="text" value="{{ data.meta.cpr_audio_mono_url }}" readonly class="cpr-audio-url-mono" />
+					</label>
+				<# } else { #>
+					<div class="setting">
+						<span class="name" style="padding-top: 15px;"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
+						<span class="value cpr-encode-audio-container">
+							<# if ( 0 === data.meta.cpr_transcoding_status ) { #>
+								<div class="cpr-encode-audio-buttons">
+									<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="news-spoken" aria-label="<?php esc_attr_e( 'News/Spoken', 'cpr' ); ?>"><?php esc_attr_e( 'News/Spoken', 'cpr' ); ?></button>
+									<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="music" aria-label="<?php esc_attr_e( 'Music', 'cpr' ); ?>"><?php esc_attr_e( 'Music', 'cpr' ); ?></button>
+								</div>
+							<# } else if ( 1 === data.meta.cpr_transcoding_status ) { #>
+								<div class="cpr-notification-message cpr-notification-message-processing">
+									<?php esc_html_e( 'Audio files are being transcoded. Encoded file URLs should be available shortly.', 'cpr' ); ?>
+								</div>
+							<# } else if ( 3 === data.meta.cpr_transcoding_status ) { #>
+								<div class="cpr-notification-message cpr-notification-message-upload-error">
+									<?php esc_html_e( 'Upload to the transcoding system failed.', 'cpr' ); ?>
+								</div>
+							<# } #>
+						</span>
 					</div>
-					<div class="cpr-notification-message cpr-notification-message-processing">
-						<?php esc_html_e( 'Audio files are being transcoded. Encoded file URLs should be available shortly.', 'cpr' ); ?>
-					</div>
-					<div class="cpr-notification-message cpr-notification-message-success">
-						<p>
-							<strong>
-								<?php esc_html_e( 'Encoded Files:', 'cpr' ); ?>
-							</strong>
-						</p>
-						<label class="setting">
-							<span class="name"><?php esc_html_e( 'MP3 (on-demand audio and podcasts)' ); ?></span>
-							<input type="text" value="" readonly class="cpr-audio-url-mp3" />
-						</label>
-						<label class="setting">
-							<span class="name"><?php esc_html_e( 'Stereo M4A (on-demand audio for supported players)' ); ?></span>
-							<input type="text" value="" readonly class="cpr-audio-url-stereo" />
-						</label>
-						<label class="setting">
-							<span class="name"><?php esc_html_e( 'Mono M4A (NPR One)' ); ?></span>
-							<input type="text" value="" readonly class="cpr-audio-url-mono" />
-						</label>
-					</div>
-					<div class="cpr-notification-message cpr-notification-message-upload-error">
-						<?php esc_html_e( 'Upload to the transcoding system failed.', 'cpr' ); ?>
-					</div>
-				</span>
-			</div>
+				<# } #>
+			<# } #>
 			<?php /* End CPR customizations. */ ?>
 			<div class="attachment-compat"></div>
 		</div>

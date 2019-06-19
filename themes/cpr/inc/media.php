@@ -243,7 +243,30 @@ namespace CPR;
  * Override the default WordPress media templates.
  */
 function cpr_custom_media_template() {
-	require_once( CPR_PATH . '/template-parts/media-template/attachment-details-two-column.php' );
+	require_once CPR_PATH . '/template-parts/media-template/attachment-details-two-column.php';
 }
-
 add_action( 'print_media_templates', __NAMESPACE__ . '\cpr_custom_media_template', 10, 1 );
+
+/**
+ * Augment the attachment details to include audio processing flags and file paths.
+ *
+ * @param array    $response   The response array to augment.
+ * @param \WP_Post $attachment The original attachment object.
+ * @param array    $meta       The metadata for the attachment.
+ * @return array The modified response object.
+ */
+function filter_wp_prepare_attachment_for_js( $response, $attachment, $meta ) {
+	// If the type is not audio, bail out.
+	if ( empty( $response['type'] ) || 'audio' !== $response['type'] ) {
+		return $response;
+	}
+
+	// Augment the response with custom metadata for audio files.
+	$response['meta']['cpr_transcoding_status'] = intval( get_post_meta( $response['id'], 'cpr_transcoding_status', true ) );
+	$response['meta']['cpr_audio_stereo_url']   = esc_url_raw( get_post_meta( $response['id'], 'cpr_audio_stereo_url', true ) );
+	$response['meta']['cpr_audio_mono_url']     = esc_url_raw( get_post_meta( $response['id'], 'cpr_audio_mono_url', true ) );
+	$response['meta']['cpr_audio_mp3_url']      = esc_url_raw( get_post_meta( $response['id'], 'cpr_audio_mp3_url', true ) );
+
+	return $response;
+}
+add_filter( 'wp_prepare_attachment_for_js', __NAMESPACE__ . '\filter_wp_prepare_attachment_for_js', 10, 3 );
