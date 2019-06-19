@@ -77,6 +77,7 @@ class Underwriters {
 			'description'       => (string) get_post_meta( $post->ID, 'description', true ),
 			'id'                => $post->ID,
 			'isEnhancedListing' => (bool) get_post_meta( $post->ID, 'is_enhanced_listing', true ),
+			'logo'              => get_the_post_thumbnail_url( $post->ID, 'underwriter' ),
 			'link'              => (string) esc_url( get_post_meta( $post->ID, 'link', true ) ),
 			'name'              => html_entity_decode( get_the_title( $post ) ),
 			'phone'             => (string) get_post_meta( $post->ID, 'phone_number', true ),
