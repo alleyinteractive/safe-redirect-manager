@@ -30,7 +30,7 @@ plugins/*
 !plugins/menu-item-custom-fields
 !plugins/posts-to-posts
 !plugins/redirection
-!plugins/S3-Uploads
+!plugins/s3-uploads/*
 
 !plugins/shortcake-bakery
 !plugins/shortcode-ui
