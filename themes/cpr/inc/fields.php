@@ -376,12 +376,10 @@ function cpr_fm_post_show_episode_segments() {
 						'description' => __( 'Select the segments for this show.', 'cpr' ),
 						'query_args' => [
 							'post_type' => [ 'show-segment' ],
-							'meta_query' => [
-								[
-									'key' => '_show_episode_id',
-									'compare' => 'NOT EXISTS',
-								],
-							],
+							'meta_query' => [ [
+								'key' => '_show_episode_id',
+								'compare' => 'NOT EXISTS',
+							] ],
 						],
 					]
 				),
@@ -498,6 +496,12 @@ function cpr_fm_post_podcast_and_show_settings() {
 				'hosts' => new Fieldmanager_Group(
 					[
 						'label' => __( 'Hosts', 'cpr' ),
+						'children' => \CPR\Components\Modules\Grid_Group::get_fm_fields(),
+					]
+				),
+				'related_podcasts' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Related Podcasts', 'cpr' ),
 						'children' => \CPR\Components\Modules\Grid_Group::get_fm_fields(),
 					]
 				),

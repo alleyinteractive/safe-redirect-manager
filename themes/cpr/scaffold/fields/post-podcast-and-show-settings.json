@@ -85,6 +85,10 @@
 			"label": { "__": "Hosts" },
 			"children": "`\\CPR\\Components\\Modules\\Grid_Group::get_fm_fields()`"
 		},
+		"related_podcasts": {
+			"label": { "__": "Related Podcasts" },
+			"children": "`\\CPR\\Components\\Modules\\Grid_Group::get_fm_fields()`"
+		},
 		"social_and_seo": {
 			"label": { "__": "SEO and Social" },
 			"serialize_data": false,
