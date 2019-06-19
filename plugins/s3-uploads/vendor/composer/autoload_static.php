@@ -4,14 +4,14 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit28eef17be5260c03e3e88914af042afa
+class ComposerStaticInit16ad9ee5039e5f5fca3575696841f081
 {
     public static $files = array (
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
-        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'b067bc7112e384b61c701452d53a14a8' => __DIR__ . '/..' . '/mtdowling/jmespath.php/src/JmesPath.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '8a9dc1de0ca7e01f3e08231539562f61' => __DIR__ . '/..' . '/aws/aws-sdk-php/src/functions.php',
     );
 
@@ -74,8 +74,8 @@ class ComposerStaticInit28eef17be5260c03e3e88914af042afa
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit28eef17be5260c03e3e88914af042afa::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit28eef17be5260c03e3e88914af042afa::$prefixDirsPsr4;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit16ad9ee5039e5f5fca3575696841f081::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit16ad9ee5039e5f5fca3575696841f081::$prefixDirsPsr4;
 
         }, null, ClassLoader::class);
     }
