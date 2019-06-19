@@ -182,8 +182,8 @@
 						<span class="value cpr-encode-audio-container">
 							<# if ( 0 === data.meta.cpr_transcoding_status ) { #>
 								<div class="cpr-encode-audio-buttons">
-									<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="news-spoken" aria-label="<?php esc_attr_e( 'News/Spoken', 'cpr' ); ?>"><?php esc_attr_e( 'News/Spoken', 'cpr' ); ?></button>
-									<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-type="music" aria-label="<?php esc_attr_e( 'Music', 'cpr' ); ?>"><?php esc_attr_e( 'Music', 'cpr' ); ?></button>
+									<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-id="{{ data.id }}" data-cpr-audio-type="news-spoken" aria-label="<?php esc_attr_e( 'News/Spoken', 'cpr' ); ?>"><?php esc_attr_e( 'News/Spoken', 'cpr' ); ?></button>
+									<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-id="{{ data.id }}" data-cpr-audio-type="music" aria-label="<?php esc_attr_e( 'Music', 'cpr' ); ?>"><?php esc_attr_e( 'Music', 'cpr' ); ?></button>
 								</div>
 							<# } else if ( 1 === data.meta.cpr_transcoding_status ) { #>
 								<div class="cpr-notification-message cpr-notification-message-processing">
