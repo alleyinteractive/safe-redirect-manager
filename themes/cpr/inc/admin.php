@@ -68,6 +68,9 @@ function gutenberg_shim() {
 		if (wp.domReady) {
 			wp.domReady(function() {
 				jQuery('.fm-wrapper').trigger('fm_added_element');
+				jQuery(document).on('click', '.postbox', function() {
+					jQuery('.fm-wrapper').trigger('fm_added_element');
+				});
 			});
 		}
 	});
