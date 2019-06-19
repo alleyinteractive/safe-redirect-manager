@@ -9,10 +9,14 @@
  * the default template and add our own extensions. Therefore, most of what is
  * in this file comes from /wp-includes/media-template.php - search for
  * `tmpl-attachment-details-two-column`. Our extensions to the base template
- * are identified below.
+ * are identified below. The phpcs ignore rules are predicated upon the fact
+ * that most of this file was copied out of core and unmodified.
+ *
+ * @package CPR
  */
 
 ?>
+<?php /* phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction,WordPress.WP.I18n.MissingArgDomain,WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 <script type="text/html" id="tmpl-cpr-attachment-details-two-column">
 	<div class="attachment-media-view {{ data.orientation }}">
 		<div class="thumbnail thumbnail-{{ data.type }}">
@@ -158,6 +162,7 @@
 				<span class="name"><?php _e( 'Copy Link' ); ?></span>
 				<input type="text" value="{{ data.url }}" readonly />
 			</label>
+			<?php /* phpcs:enable */ ?>
 			<?php /* Begin CPR customizations. */ ?>
 			<# if ( 'audio' === data.type && data.meta.bitrate ) { #>
 				<# if ( 2 === data.meta.cpr_transcoding_status ) { #>
@@ -199,6 +204,7 @@
 				<# } #>
 			<# } #>
 			<?php /* End CPR customizations. */ ?>
+			<?php /* phpcs:disable WordPress.Security.EscapeOutput.UnsafePrintingFunction,WordPress.WP.I18n.MissingArgDomain,WordPress.Security.EscapeOutput.OutputNotEscaped */ ?>
 			<div class="attachment-compat"></div>
 		</div>
 
@@ -222,3 +228,4 @@
 
 	</div>
 </script>
+<?php /* phpcs:enable */ ?>

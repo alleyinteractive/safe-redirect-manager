@@ -376,7 +376,6 @@ function rest_audio_transcode_end( $request ) {
 
 	// TODO: Get URLs for all three formats and save to postmeta.
 	// TODO: Update general status in postmeta to indicate success.
-
 	return true;
 }
 
@@ -393,7 +392,7 @@ add_action(
 				'methods'  => 'POST',
 				'permission_callback' => function () {
 					return current_user_can( 'upload_files' );
-				}
+				},
 			]
 		);
 
