@@ -50,7 +50,17 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		$this->object['post_title']  = esc_html( $this->source['title'] );
 		$this->object['meta_input']  = [
 			'address'              => $this->get_address(),
-			'description'          => $this->source['body']['und'][0]['value'] ?? '',
+			'description'          => wp_kses(
+				$this->source['body']['und'][0]['value'] ?? '',
+				[
+					'b' => [],
+					'a' => [
+						'href'  => [],
+						'title' => [],
+					],
+					'i' => [],
+				]
+			),
 			'is_corporate_partner' => $this->source['field_corporate_partner']['und'][0]['value'] ?? '0',
 			'is_enhanced_listing'  => $this->source['field_enhanced_underwriter']['und'][0]['value'] ?? '0',
 			'link'                 => $this->source['field_website_url']['und'][0]['url'] ?? '',

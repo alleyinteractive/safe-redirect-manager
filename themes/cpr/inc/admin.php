@@ -58,6 +58,31 @@ function allow_searching_post_types_in_admin() {
 add_action( 'init', __NAMESPACE__ . '\allow_searching_post_types_in_admin', 15 );
 
 /**
+ * Ensure some FM elements get triggered after Gutenberg has fully loaded.
+ */
+function gutenberg_shim() {
+	$js = <<<EOT
+<script>
+	// Ensure everything has loaded.
+	window.addEventListener('load', function() {
+		if (wp.domReady) {
+			wp.domReady(function() {
+				jQuery('.fm-wrapper').trigger('fm_added_element');
+				jQuery(document).on('click', '.postbox', function() {
+					jQuery('.fm-wrapper').trigger('fm_added_element');
+				});
+			});
+		}
+	});
+</script>
+EOT;
+
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo $js;
+}
+add_filter( 'admin_footer', __NAMESPACE__ . '\gutenberg_shim' );
+
+/**
  * Remove unused menu items.
  */
 function remove_menu_pages() {
