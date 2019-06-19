@@ -1,0 +1,9 @@
+/**
+ * Load our custom Image Details template to override attributes like the caption
+ * and add other image attributes like the title.  This template is shown when
+ * viewing a gallery within the tinymce editor.
+ */
+export default function loadCustomImageDetailsTemplate() {
+  wp.media.view.Attachment.Details.TwoColumn.prototype
+    .template = wp.template('cpr-attachment-details-two-column');
+}
