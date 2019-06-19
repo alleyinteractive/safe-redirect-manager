@@ -74,4 +74,15 @@ class All_Archive extends \WP_Components\Component {
 				),
 		];
 	}
+
+	/**
+	 * Modify results.
+	 *
+	 * @param object $wp_query wp_query object.
+	 */
+	public static function pre_get_posts( $wp_query ) {
+		if ( 0 === strpos( $wp_query->get( 'irving-path' ), '/all' ) ) {
+			$wp_query->set( 'posts_per_page', 16 );
+		}
+	}
 }
