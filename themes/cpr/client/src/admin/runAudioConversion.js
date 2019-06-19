@@ -31,6 +31,7 @@ export default function runAudioConversion() {
           id,
           type,
         },
+        method: 'POST',
         path: '/cpr/v1/audio-transcode-start',
       })
         .catch((error) => {

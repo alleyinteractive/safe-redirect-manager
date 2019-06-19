@@ -273,3 +273,108 @@ function filter_wp_prepare_attachment_for_js( $response, $attachment, $meta ) {
 	return $response;
 }
 add_filter( 'wp_prepare_attachment_for_js', __NAMESPACE__ . '\filter_wp_prepare_attachment_for_js', 10, 3 );
+
+/**
+ * A REST endpoint for starting the transcoding process.
+ *
+ * @param \WP_REST_Request $request Request object to be parsed.
+ * @return bool True on success, false on failure.
+ */
+function rest_audio_transcode_start( $request ) {
+	// Ensure we got a valid ID.
+	$id = intval( $request->get_param( 'id' ) );
+	if ( empty( $id ) ) {
+		return false;
+	}
+
+	// Get the attachment details by ID.
+	$attachment = get_post( $id );
+	if ( empty( $attachment ) ) {
+		return false;
+	}
+
+	// If the MIME type is not audio/wav, bail out.
+	if ( empty( $attachment->post_mime_type ) || 'audio/wav' !== $attachment->post_mime_type ) {
+		return false;
+	}
+
+	// Construct filename to be created in the transcoder pipeline.
+	$filename = $id . '-' . $attachment->post_name;
+	if ( 'music' === $request->get_param( 'type' ) ) {
+		$filename .= '-music';
+	}
+	$filename .= '.wav';
+
+	// TODO: Perform S3 copy of file to target name. Theoretically, this can be done via copy( $from, $to ); where $from and $to are in the form of s3://bucket/file.
+	$from = wp_get_attachment_url( $id );
+
+	// TODO: Add postmeta indicating type of file.
+	// TODO: Add postmeta indicating status of copy operation.
+
+	return true;
+}
+
+/**
+ * A REST endpoint for ending the transcoding process.
+ *
+ * @param \WP_REST_Request $request Request object to be parsed.
+ * @return bool True on success, false on failure.
+ */
+function rest_audio_transcode_end( $request ) {
+	// TODO: Verify token. This needs to be configured on the Lambda side as well.
+	// That's the kind of thing an idiot would have on his luggage.
+	if ( 12345 !== $request->get_param( 'shared_secret' ) ) {
+		return false;
+	}
+
+	// TODO: Ensure we got a valid ID. We may need to extract this from the filename ourselves.
+	$id = intval( $request->get_param( 'id' ) );
+	if ( empty( $id ) ) {
+		return false;
+	}
+
+	// Get the attachment details by ID.
+	$attachment = get_post( $id );
+	if ( empty( $attachment ) ) {
+		return false;
+	}
+
+	// If the MIME type is not audio/wav, bail out.
+	if ( empty( $attachment->post_mime_type ) || 'audio/wav' !== $attachment->post_mime_type ) {
+		return false;
+	}
+
+	// TODO: Get URLs for all three formats and save to postmeta.
+	// TODO: Update general status in postmeta to indicate success.
+
+	return true;
+}
+
+// Add custom REST API endpoints.
+add_action(
+	'rest_api_init',
+	function () {
+		// Add the endpoint for starting the audio transcoding process.
+		register_rest_route(
+			'cpr/v1',
+			'/audio-transcode-start',
+			[
+				'callback' => __NAMESPACE__ . '\rest_audio_transcode_start',
+				'methods'  => 'POST',
+				'permission_callback' => function () {
+					return current_user_can( 'upload_files' );
+				}
+			]
+		);
+
+		// Add the endpoint for completing the audio transcoding process.
+		register_rest_route(
+			'cpr/v1',
+			'/audio-transcode-end',
+			[
+				'callback' => __NAMESPACE__ . '\rest_audio_transcode_end',
+				'methods'  => 'POST',
+			]
+		);
+	}
+);
