@@ -139,6 +139,12 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @return string
 	 */
 	public function apply_custom_block_logic( $content, \DOMNode $node ) {
+
+		// Migrate galleries.
+		if ( 'span' === $node->tagName && 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
+			return $this->migrate_galleries( $content, $node );
+		}
+
 		if ( 'p' === $node->tagName && 'img' === ( $node->firstChild->tagName ?? '' ) ) {
 			$html = Converter::get_node_html( $node->firstChild );
 			return ( new Converter( $html ) )->convert_to_block();
@@ -148,13 +154,20 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		if ( 'p' === $node->tagName && 'span' === ( $node->firstChild->tagName ?? '' ) ) {
 			$spans = Converter::get_nodes( $node, 'span' );
 
-			foreach ( $spans as $gallery_span ) {
-				if ( 'cpr-gallery-migration' !== $gallery_span->getAttribute( 'class' ) ) {
-					continue;
-				}
+			foreach ( $spans as $p_span ) {
+				if ( 'cpr-gallery-migration' === $p_span->getAttribute( 'class' ) ) {
+					$gallery_span = Converter::get_nodes( $p_span, 'span' );
 
-				$content .= $this->migrate_galleries( $content, $gallery_span );
+					// Bail if there is no img tag.
+					if ( empty( $gallery_span->item( 0 ) ) ) {
+						return $content;
+					}
+
+					return $this->migrate_galleries( $content, $gallery_span->item( 0 ) );
+				}
 			}
+
+			return $content;
 		}
 
 		// Fix for nested images.
@@ -167,11 +180,6 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			}
 
 			return ( new Converter( '' ) )->img( $img->item( 0 ) );
-		}
-
-		// Migrate galleries.
-		if ( 'span' === $node->tagName && 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
-			return $this->migrate_galleries( $content, $node );
 		}
 
 		if ( 'iframe' === $node->tagName || ( 'div' === $node->tagName && 'embed' === $node->getAttribute( 'class' )  ) ) {
@@ -188,33 +196,39 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @param \DOMNode $node    The node.
 	 * @return string
 	 */
-	public function migrate_galleries( $content, \DOMNode $node ) {
+	public function migrate_galleries( $content, \DOMNode $node ) : string {
 		$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'gallery', absint( $node->getAttribute( 'id' ) ) );
-		if ( ! empty( $source ) && ! empty( $source['field_images']['und'] ) ) {
-			$images = [];
 
-			array_map(
-				function( $target ) use ( &$images ) {
-					$source          = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', absint( $target['target_id'] ) );
-					$attachment      = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
-					$images[] = [
-						'original' => wp_get_attachment_url( $attachment->ID ) ?? '',
-						'alt'      => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ) ?? '',
-						'caption'  => wp_get_attachment_caption( $attachment->ID ) ?? '',
-						'id'       => $attachment->ID,
-					];
-
-				},
-				$source['field_images']['und']
-			);
-
-			$attributes = wp_json_encode(
-				$images,
-				JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE
-			);
-
-			return '<!-- wp:cpr/galleries ' . addslashes( $attributes ) . ' --><!-- /wp:cpr/galleries -->';
+		if ( empty( $source ) && empty( $source['field_images']['und'] ) ) {
+			return $content;
 		}
+
+		// Build gallery output.
+		$gallery = [
+			'images' => [],
+		];
+
+		array_map(
+			function( $target ) use ( &$gallery ) {
+				$source          = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', absint( $target['target_id'] ) );
+				$attachment      = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
+				$gallery['images'][] = [
+					'original' => wp_get_attachment_url( $attachment->ID ) ?? '',
+					'alt'      => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ) ?? '',
+					'caption'  => wp_get_attachment_caption( $attachment->ID ) ?? '',
+					'id'       => $attachment->ID,
+				];
+
+			},
+			$source['field_images']['und']
+		);
+
+		$attributes = wp_json_encode(
+			$gallery,
+			JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE
+		);
+
+		return '<!-- wp:cpr/galleries ' . addslashes( $attributes ) . ' /-->';
 	}
 
 	/**
