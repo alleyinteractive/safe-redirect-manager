@@ -164,17 +164,17 @@
 					<label class="setting">
 						<span class="name"><?php esc_html_e( 'MP3', 'cpr' ); ?></span>
 						<span class="value"><?php esc_html_e( '(on-demand audio and podcasts)', 'cpr' ); ?></span>
-						<input type="text" value="{{ data.meta.cpr_audio_mp3_url }}" readonly class="cpr-audio-url-mp3" />
+						<input type="text" value="{{ data.meta.cpr_audio_mp3_url }}" readonly />
 					</label>
 					<label class="setting">
 						<span class="name"><?php esc_html_e( 'Stereo M4A', 'cpr' ); ?></span>
 						<span class="value"><?php esc_html_e( '(on-demand audio for supported players)', 'cpr' ); ?></span>
-						<input type="text" value="{{ data.meta.cpr_audio_stereo_url }}" readonly class="cpr-audio-url-stereo" />
+						<input type="text" value="{{ data.meta.cpr_audio_stereo_url }}" readonly />
 					</label>
 					<label class="setting">
 						<span class="name"><?php esc_html_e( 'Mono M4A', 'cpr' ); ?></span>
 						<span class="value"><?php esc_html_e( '(NPR One)', 'cpr' ); ?></span>
-						<input type="text" value="{{ data.meta.cpr_audio_mono_url }}" readonly class="cpr-audio-url-mono" />
+						<input type="text" value="{{ data.meta.cpr_audio_mono_url }}" readonly />
 					</label>
 				<# } else { #>
 					<div class="setting">
