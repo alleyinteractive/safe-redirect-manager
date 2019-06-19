@@ -61,9 +61,6 @@ require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
 // Data endpoints.
 require_once CPR_PATH . '/data/class-underwriters.php';
 
-// Landing pages.
-// require_once CPR_PATH . '/inc/class-landing-pages.php';
-
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';
 

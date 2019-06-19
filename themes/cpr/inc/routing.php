@@ -47,8 +47,6 @@ function build_components_endpoint(
 ) : array {
 	$settings = get_option( 'cpr-settings' );
 
-	// print_r($wp_query); die();
-
 	// Build defaults.
 	if ( 'site' === $context ) {
 		$data['defaults'] = [
