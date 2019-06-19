@@ -268,10 +268,31 @@ function cpr_fm_post_underwriter_settings() {
 			'serialize_data' => false,
 			'add_to_prefix' => false,
 			'children' => [
+				'description' => new Fieldmanager_RichTextArea(
+					[
+						'label' => __( 'Description', 'cpr' ),
+						'buttons_1' => [ 'bold', 'italic', 'link' ],
+						'buttons_2' => [],
+						'sanitize' => 'wp_filter_post_kses',
+						'editor_settings' => [
+							'media_buttons' => false,
+						],
+						'attributes' => [
+							'style' => 'width: 100%',
+							'rows' => 4,
+						],
+					]
+				),
 				'link' => new Fieldmanager_Link( __( 'Website', 'cpr' ) ),
 				'address' => new Fieldmanager_TextArea( __( 'Address', 'cpr' ) ),
 				'phone_number' => new Fieldmanager_Textfield( __( 'Phone Number', 'cpr' ) ),
 				'is_corporate_partner' => new Fieldmanager_Checkbox( __( 'Corporate Partner', 'cpr' ) ),
+				'is_enhanced_listing' => new Fieldmanager_Checkbox(
+					[
+						'label' => __( 'Enhanced Listing', 'cpr' ),
+						'description' => __( 'This underwriter will always be toggled open.', 'cpr' ),
+					]
+				),
 			],
 		]
 	);
@@ -357,7 +378,7 @@ function cpr_fm_post_show_episode_segments() {
 							'post_type' => [ 'show-segment' ],
 							'meta_query' => [
 								[
-									'key' => '_show_episode_id',
+									'key'     => '_show_episode_id',
 									'compare' => 'NOT EXISTS',
 								],
 							],
@@ -477,6 +498,12 @@ function cpr_fm_post_podcast_and_show_settings() {
 				'hosts' => new Fieldmanager_Group(
 					[
 						'label' => __( 'Hosts', 'cpr' ),
+						'children' => \CPR\Components\Modules\Grid_Group::get_fm_fields(),
+					]
+				),
+				'related_podcasts' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Related Podcasts', 'cpr' ),
 						'children' => \CPR\Components\Modules\Grid_Group::get_fm_fields(),
 					]
 				),

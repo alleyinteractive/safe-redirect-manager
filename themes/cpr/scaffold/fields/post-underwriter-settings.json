@@ -9,6 +9,20 @@
 	"serialize_data": false,
 	"add_to_prefix": false,
 	"children": {
+		"description": {
+			"label": { "__": "Description" },
+			"type": "richtextarea",
+			"buttons_1": [ "bold", "italic", "link" ],
+			"buttons_2": [],
+			"sanitize": "wp_filter_post_kses",
+			"editor_settings": {
+				"media_buttons": false
+			},
+			"attributes": {
+				"style": "width: 100%",
+				"rows": 4
+			}
+		},
 		"link": {
 			"label": { "__": "Website" },
 			"type": "link"
@@ -23,6 +37,11 @@
 		},
 		"is_corporate_partner": {
 			"label": { "__": "Corporate Partner" },
+			"type": "checkbox"
+		},
+		"is_enhanced_listing": {
+			"label": { "__": "Enhanced Listing" },
+			"description": { "__": "This underwriter will always be toggled open." },
 			"type": "checkbox"
 		}
 	}
