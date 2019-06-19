@@ -7,9 +7,6 @@
 
 namespace CPR;
 
-// Enable landing pages.
-add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Landing_Pages', 'instance' ] );
-
 // Add fields.
 add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Homepage', 'landing_page_fields' ] );
 add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\News', 'landing_page_fields' ] );
