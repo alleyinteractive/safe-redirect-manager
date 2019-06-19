@@ -72,12 +72,14 @@ class Underwriters {
 	public function get_data_from_post( \WP_Post $post ) : array {
 		$categories = (array) wp_get_post_terms( $post->ID, 'underwriter-category' );
 		return [
-			'address'    => (string) get_post_meta( $post->ID, 'address', true ),
-			'categories' => empty( $categories ) ? [] : wp_list_pluck( $categories, 'slug' ),
-			'id'         => $post->ID,
-			'link'       => (string) esc_url( get_post_meta( $post->ID, 'link', true ) ),
-			'name'       => html_entity_decode( get_the_title( $post ) ),
-			'phone'      => (string) get_post_meta( $post->ID, 'phone_number', true ),
+			'address'           => (string) get_post_meta( $post->ID, 'address', true ),
+			'categories'        => empty( $categories ) ? [] : wp_list_pluck( $categories, 'slug' ),
+			'description'       => (string) get_post_meta( $post->ID, 'description', true ),
+			'id'                => $post->ID,
+			'isEnhancedListing' => (bool) get_post_meta( $post->ID, 'is_enhanced_listing', true ),
+			'link'              => (string) esc_url( get_post_meta( $post->ID, 'link', true ) ),
+			'name'              => html_entity_decode( get_the_title( $post ) ),
+			'phone'             => (string) get_post_meta( $post->ID, 'phone_number', true ),
 		];
 	}
 }
