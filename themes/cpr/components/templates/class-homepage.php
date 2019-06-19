@@ -130,8 +130,8 @@ class Homepage extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Modules\Content_List() )
 				->set_config( 'image_size', 'grid_item' )
-				->parse_from_fm_data(
-					$data['latest_podcast_episodes'] ?? [],
+				->parse_from_ids(
+					$data['latest_podcast_episodes']['episode_ids'] ?? [],
 					4,
 					[
 						'post_type' => [ 'podcast-episode', 'show-episode' ],

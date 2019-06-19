@@ -232,8 +232,8 @@ class Classical extends \WP_Components\Component {
 					]
 				)
 				->set_theme( 'gridCentered' )
-				->parse_from_fm_data(
-					$data['podcast_episodes'] ?? [],
+				->parse_from_ids(
+					$data['podcast_episodes']['content_item_ids'] ?? [],
 					4,
 					self::get_classical_episodes_backfill_args()
 				)
