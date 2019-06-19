@@ -207,17 +207,9 @@ function build_components_endpoint(
 		/**
 		 * Calendar.
 		 */
-		case ! empty( $wp_query->tribe_is_event_query ):
+		case $wp_query->is_post_type_archive( 'tribe_events' ):
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
-			break;
-
-		/**
-		 * Event.
-		 */
-		case $wp_query->is_singular( 'tribe_events' ):
-			$head->set_post( $wp_query->post );
-			$template = ( new Components\Templates\Event() )->set_post( $wp_query->post );
 			break;
 
 		/**
