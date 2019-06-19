@@ -9,6 +9,11 @@ namespace CPR;
 
 define( 'CPR_PATH', dirname( __FILE__ ) );
 define( 'CPR_URL', get_template_directory_uri() );
+define( 'CPR_TRANSCODING_TOKEN', '{Rr+C+8vET/r4Nky476kW6bv' );
+define( 'CPR_TRANSCODING_NOT_STARTED', 0 );
+define( 'CPR_TRANSCODING_PROCESSING', 1 );
+define( 'CPR_TRANSCODING_SUCCESS', 2 );
+define( 'CPR_TRANSCODING_ERROR', 3 );
 
 // Handle local dev port issues.
 if ( false !== strpos( site_url(), 'alley' ) ) {
