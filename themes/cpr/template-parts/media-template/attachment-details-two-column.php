@@ -178,7 +178,7 @@
 					</label>
 				<# } else { #>
 					<div class="setting">
-						<span class="name" style="padding-top: 15px;"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
+						<span class="name"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
 						<span class="value cpr-encode-audio-container">
 							<# if ( 0 === data.meta.cpr_transcoding_status ) { #>
 								<div class="cpr-encode-audio-buttons">
