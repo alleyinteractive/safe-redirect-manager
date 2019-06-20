@@ -60,6 +60,8 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	public function map_source_to_object() {
 
+		$this->object['post_content'] = $this->source['body']['und'][0]['value'] ?? '';
+
 		$this->set_basics();
 		$this->migrate_meta();
 
