@@ -307,14 +307,4 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	private function is_video( $url, $type ) : bool {
 		return ( false !== strpos( $url, $type ) );
 	}
-
-	/**
-	 * Custom paragraph.
-	 *
-	 * @param string $content Content.
-	 * @return string
-	 */
-	private function custom_paragraph( $content ) : string {
-		return '<!-- wp:paragraph --><p>' . $content . '</p><!-- /wp:paragraph -->';
-	}
 }
