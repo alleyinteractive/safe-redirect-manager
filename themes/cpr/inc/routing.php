@@ -70,6 +70,12 @@ function build_components_endpoint(
 	// Begin building a new header instance for the request.
 	$header = ( new Components\Header\Header() )->set_cpr_header();
 
+	error_log( print_r( $wp_query->query, true ) );
+
+	error_log( print_r( 'tribe_events' === $wp_query->query->post_type, true ) );
+	error_log( print_r( isset( $wp_query->query->eventDisplay ), true ) );
+	error_log( print_r( 'month' === $wp_query->query->eventDisplay, true ) );
+
 	// Build page.
 	switch ( true ) {
 
@@ -206,8 +212,17 @@ function build_components_endpoint(
 
 		/**
 		 * Calendar.
+		 *
+		 * The second condition prevents 404s when viewing a month without
+		 * any events.
 		 */
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 		case $wp_query->is_post_type_archive( 'tribe_events' ):
+		case (
+			'tribe_events' === $wp_query->query['post_type'] &&
+			isset( $wp_query->query['eventDisplay'] ) &&
+			'month' === $wp_query->query['eventDisplay']
+		):
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
 			break;
