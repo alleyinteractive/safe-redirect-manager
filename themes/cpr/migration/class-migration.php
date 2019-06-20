@@ -74,6 +74,15 @@ class Migration {
 			$this->migration_scope = 'partial';
 		}
 
+		// Disable the sync GUI for logged in users who aren't alley.
+		$current_user = wp_get_current_user();
+		if (
+			isset( $current_user->data->user_email )
+			&& false === strpos( $current_user->data->user_email, 'alley.co' )
+		) {
+			add_action( 'alleypack_sync_enable_gui', '__return_false' );
+		}
+
 		// Load some AlleyPack modules.
 		\Alleypack\load_module( 'attachments', '1.0' );
 		\Alleypack\load_module( 'block-converter', '1.0' );
