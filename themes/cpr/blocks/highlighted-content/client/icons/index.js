@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames/dedupe';
 import './icons.scss';
 
-const { Component } = wp.element;
+const { Component, useState } = wp.element;
 const { __ } = wp.i18n;
 
 const {
@@ -69,93 +69,84 @@ const Icon = (props) => {
   );
 };
 
-class IconPickerDropdown extends Component {
-  constructor() {
-    // eslint-disable-next-line prefer-rest-params
-    super(...arguments);
+const IconPickerDropdown = (props) => {
+  const {
+    label,
+    className,
+    onChange,
+    value,
+    renderToggle,
+  } = props;
 
-    this.state = {
-      search: '',
-    };
-  }
+  const [query, setQuery] = useState('');
 
-  render() {
-    const {
-      label,
-      className,
-      onChange,
-      value,
-      renderToggle,
-    } = this.props;
+  const dropdown = (
+    <Dropdown
+      className={className}
+      renderToggle={renderToggle}
+      renderContent={() => {
+        const result = allIconData.map((icon) => {
+          if (
+            ! query ||
+              (query && - 1 < icon.iconName.indexOf(query))
+          ) {
+            return (
+              <Icon
+                key={icon.iconName}
+                active={icon.iconName === value}
+                iconData={icon}
+                onClick={() => {
+                  onChange(icon);
+                }}
+              />
+            );
+          }
 
-    const dropdown = (
-      <Dropdown
-        className={className}
-        renderToggle={renderToggle}
-        renderContent={() => {
-          const result = allIconData.map((icon) => {
-            if (
-              ! this.state.search ||
-                (this.state.search && - 1 < icon.keys.indexOf(this.state.search))
-            ) {
-              return (
-                <Icon
-                  key={icon.iconName}
-                  active={icon.iconName === value}
-                  iconData={icon}
-                  onClick={() => {
-                    onChange(icon);
-                  }}
-                />
-              );
-            }
+          return '';
+        });
 
-            return '';
-          });
-
-          return (
-            <div className="cpr-component-icon-picker">
-              <div>
-                <TextControl
-                  value={value}
-                  onChange={(newClass) => {
-                    onChange(newClass);
-                  }}
-                  placeholder={__('Icon class', 'cpr')}
-                  type="hidden"
-                />
-                <TextControl
-                  label={__('Search icon')}
-                  value={this.state.search}
-                  onChange={(searchVal) => {
-                    return this.setState({ search: searchVal });
-                  }}
-                  placeholder={__('Type to search...', 'cpr')}
-                />
-              </div>
-              <div className="cpr-component-icon-picker-list-wrap">
-                <div className="cpr-component-icon-picker-list">
-                  { result }
-                </div>
+        return (
+          <div className="cpr-component-icon-picker">
+            <div>
+              <TextControl
+                value={value}
+                onChange={(newClass) => {
+                  onChange(newClass);
+                }}
+                placeholder={__('Icon class', 'cpr')}
+                type="hidden"
+              />
+              <TextControl
+                label={__('Search icon')}
+                value={query}
+                onChange={(searchVal) => {
+                  setQuery(searchVal);
+                }}
+                placeholder={__('Type to search...', 'cpr')}
+              />
+            </div>
+            <div className="cpr-component-icon-picker-list-wrap">
+              <div className="cpr-component-icon-picker-list">
+                { result }
               </div>
             </div>
-          );
-        }}
-      />
-    );
+          </div>
+        );
+      }}
+    />
+  );
 
-    return label ? (
-      <BaseControl
-        label={label}
-        className={className}
-      >
-        { dropdown }
-      </BaseControl>
-    ) : (
-      dropdown
-    );
-  }
-}
+  return label ? (
+    <BaseControl
+      label={label}
+      className={className}
+    >
+      { dropdown }
+    </BaseControl>
+  ) : (
+    dropdown
+  );
+};
 
 export default class IconPicker extends Component {
   render() {
