@@ -398,15 +398,15 @@ function rest_audio_transcode_end( $request ) {
 	$extension = $matches[3];
 	switch ( $extension ) {
 		case 'mp3':
-			update_post_meta( $id, 'cpr_audio_mp3_url', $url );
+			update_post_meta( $id, 'cpr_audio_mp3_url', esc_url_raw( $url ) );
 			break;
 		case 'm4a':
 			switch ( $channels ) {
 				case 'mono':
-					update_post_meta( $id, 'cpr_audio_mono_url', $url );
+					update_post_meta( $id, 'cpr_audio_mono_url', esc_url_raw( $url ) );
 					break;
 				case 'stereo':
-					update_post_meta( $id, 'cpr_audio_stereo_url', $url );
+					update_post_meta( $id, 'cpr_audio_stereo_url', esc_url_raw( $url ) );
 					break;
 				default:
 					return false;
