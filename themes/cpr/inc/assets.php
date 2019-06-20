@@ -113,15 +113,6 @@ function enqueue_admin() {
 		true
 	);
 
-	// Custom settings.
-	wp_localize_script(
-		'cpr-admin-js',
-		'CPR',
-		[
-			'icons' => is_admin() ? apply_filters( 'cpr_icons_list', [] ) : [],
-		]
-	);
-
 	wp_enqueue_style( 'cpr-admin-css', ai_get_versioned_asset_path( 'admin.css' ), [], '1.0' );
 }
 add_action( 'admin_enqueue_scripts', __NAMESPACE__ . '\enqueue_admin' );
