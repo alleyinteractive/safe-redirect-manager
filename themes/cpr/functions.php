@@ -24,6 +24,7 @@ if ( false !== strpos( site_url(), 'alley' ) ) {
 \Alleypack\load_module( 'fm-modules', '1.0' );
 \Alleypack\load_module( 'page-templates', '1.0' );
 \Alleypack\load_module( 'path-dispatch', '1.0' );
+\Alleypack\load_module( 'landing-pages', '1.0' );
 \Alleypack\load_module( 'singleton', '1.0' );
 \Alleypack\load_module( 'term-post-link', '1.0' );
 \Alleypack\load_module( 'unique-wp-query', '1.0' );
@@ -59,9 +60,6 @@ require_once CPR_PATH . '/inc/traits/trait-wp-post.php';
 
 // Data endpoints.
 require_once CPR_PATH . '/data/class-underwriters.php';
-
-// Landing pages.
-require_once CPR_PATH . '/inc/class-landing-pages.php';
 
 // Ad integrations.
 require_once CPR_PATH . '/inc/ads.php';
@@ -110,6 +108,9 @@ require_once CPR_PATH . '/inc/page-templates.php';
 
 // Permalink.
 require_once CPR_PATH . '/inc/permalink.php';
+
+// Previews.
+require_once CPR_PATH . '/inc/previews.php';
 
 // Query modifications and manipulations.
 require_once CPR_PATH . '/inc/query.php';
