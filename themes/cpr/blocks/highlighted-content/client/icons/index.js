@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames/dedupe';
 import './icons.scss';
 
-const { Component, useState } = wp.element;
+const { useState } = wp.element;
 const { __ } = wp.i18n;
 
 const {
@@ -148,35 +148,35 @@ const IconPickerDropdown = (props) => {
   );
 };
 
-export default class IconPicker extends Component {
-  render() {
-    const {
-      value,
-      onChange,
-      label,
-    } = this.props;
+const IconPicker = (props) => {
+  const {
+    value,
+    onChange,
+    label,
+  } = props;
 
-    return (
-      <IconPickerDropdown
-        label={label}
-        className="cpr-component-icon-picker-wrapper"
-        onChange={onChange}
-        value={value}
-        renderToggle={({ isOpen, onToggle }) => {
-          return (
-            <Tooltip text={__('Icon Picker', 'cpr')}>
-              <Icon
-                className="cpr-component-icon-picker-button"
-                aria-expanded={isOpen}
-                onClick={onToggle}
-                iconData={value}
-                alwaysRender
-              />
-            </Tooltip>
-          );
-        }
-        }
-      />
-    );
-  }
-}
+  return (
+    <IconPickerDropdown
+      label={label}
+      className="cpr-component-icon-picker-wrapper"
+      onChange={onChange}
+      value={value}
+      renderToggle={({ isOpen, onToggle }) => {
+        return (
+          <Tooltip text={__('Icon Picker', 'cpr')}>
+            <Icon
+              className="cpr-component-icon-picker-button"
+              aria-expanded={isOpen}
+              onClick={onToggle}
+              iconData={value}
+              alwaysRender
+            />
+          </Tooltip>
+        );
+      }
+      }
+    />
+  );
+};
+
+export default IconPicker;
