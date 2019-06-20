@@ -47,6 +47,8 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	  * @return null|WP_Post
 	  */
 	public static function get_object_by_unique_id( $unique_id ) {
+		// echo $unique_id; die();
+		return null;
 		return [
 			'aac_id' => 0,
 			'mp3_id' => 0,
@@ -59,19 +61,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	 * Map the source to a new object.
 	 */
 	public function map_source_to_object() {
-
-		$args = [
-			'title' => $this->source['title'] ?? '',
-			'meta' => [
-				'legacy_id' => $this->source['nid'],
-			],
-		];
-
-		// Migrate all the audio over.
-		$this->object['aac_id'] = $this->get_attachment_id_by_field( 'field_aac_file', $args );
-		$this->object['mp3_id'] = $this->get_attachment_id_by_field( 'field_mp3_file', $args );
-		$this->object['npr_id'] = $this->get_attachment_id_by_field( 'field_npr_file', $args );
-		$this->object['wav_id'] = $this->get_attachment_id_by_field( 'field_wav_file', $args );
 	}
 
 	/**
@@ -88,35 +77,43 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 			return null;
 		}
 
+		// Add additional meta data.
+		$args['meta']['type']                             = $field;
+		$args['meta']['alleypack_attachments_legacy_url'] = $source_url;
+
 		$query = new \WP_Query(
 			[
 				'post_type'   => 'attachment',
 				'post_status' => 'any',
-				'meta_key'    => 'alleypack_attachments_legacy_url',
-				'meta_value'  => $source_url,
+				'meta_query'  => [
+					[
+						'key'   => 'alleypack_attachments_legacy_url',
+						'value' => $source_url,
+					],
+					[
+						'key'   => 'type',
+						'value' => $field,
+					],
+				]
 			]
 		);
 
 		// Audio has already been migrated, return the id.
 		if ( 0 !== ( $query->post->ID ?? 0 ) ) {
-			\WP_CLI::success( "{$field} already exists as {$query->post->ID}" );
+			foreach ( $args['meta'] as $key => $value ) {
+				update_post_meta( $query->post->ID, $key, $value );
+			}
 			return $query->post->ID ?? null;
 		}
 
-		\WP_CLI::line( "Migrate {$field} from {$source_url}" );
-
 		// Create the audio file.
-		$args['meta']['alleypack_attachments_legacy_url'] = $source_url;
 		$attachment_id = \Alleypack\create_attachment_from_url( $source_url, $args );
 
 		// Was there an error?
 		if ( $attachment_id instanceof \WP_Error ) {
-			\WP_CLI::warning( "{$source_url} failed to migrate." );
-			\WP_CLI::warning( $attachment_id );
+			print_r($attachment_id);
 			return null;
 		}
-
-		\WP_CLI::success( "Migrated to {$attachment_id}" );
 
 		return $attachment_id;
 	}
@@ -125,6 +122,20 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	 * Fires after the object saves.
 	 */
 	public function post_object_save() {
+
+		$args = [
+			'title' => $this->source['title'] ?? '',
+			'meta' => [
+				'legacy_id' => $this->source['nid'],
+			],
+		];
+
+		// Migrate all the audio over.
+		$this->object['aac_id'] = $this->get_attachment_id_by_field( 'field_aac_file', $args );
+		$this->object['mp3_id'] = $this->get_attachment_id_by_field( 'field_mp3_file', $args );
+		$this->object['npr_id'] = $this->get_attachment_id_by_field( 'field_npr_file', $args );
+		$this->object['wav_id'] = $this->get_attachment_id_by_field( 'field_wav_file', $args );
+
 		array_map(
 			function( $attachment_id ) {
 				foreach ( $this->object as $audio_slug => $audio_attachment_id ) {
@@ -133,7 +144,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 			},
 			$this->object
 		);
-		\WP_CLI::line( 'Meta updated' );
 	}
 
 	/**

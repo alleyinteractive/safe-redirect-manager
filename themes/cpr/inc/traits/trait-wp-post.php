@@ -138,7 +138,14 @@ trait WP_Post {
 	 * Create byline components and add to children.
 	 */
 	public function get_audio_metadata() {
+
+		// Get primary file.
 		$audio_id = get_post_meta( $this->post->ID, 'audio_id', true );
+
+		// Fallback to migrated AAC.
+		if ( empty( $audio_id ) ) {
+			$audio_id = get_post_meta( $this->post->ID, 'mp3_id', true );
+		}
 
 		if ( empty( $audio_id ) ) {
 			return [];
@@ -152,7 +159,7 @@ trait WP_Post {
 			'artist'   => $meta['artist'] ?? '',
 			'title'    => get_the_title( $audio_id ),
 			'src'      => $src,
-			'duration' => $meta['length_formatted'] ?? false,
+			'duration' => $meta['length_formatted'] ?? '',
 		];
 	}
 

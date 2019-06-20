@@ -376,12 +376,10 @@ function cpr_fm_post_show_episode_segments() {
 						'description' => __( 'Select the segments for this show.', 'cpr' ),
 						'query_args' => [
 							'post_type' => [ 'show-segment' ],
-							'meta_query' => [
-								[
-									'key'     => '_show_episode_id',
-									'compare' => 'NOT EXISTS',
-								],
-							],
+							'meta_query' => [ [
+								'key' => '_show_episode_id',
+								'compare' => 'NOT EXISTS',
+							] ],
 						],
 					]
 				),
@@ -395,16 +393,36 @@ add_action( 'fm_post_show-episode', 'cpr_fm_post_show_episode_segments' );
 
 /* begin fm:post-mixed-featured-audio */
 /**
- * `audio_id` Fieldmanager fields.
+ * `post-mixed-featured-audio` Fieldmanager fields.
  */
 function cpr_fm_post_mixed_featured_audio() {
-	$fm = new Fieldmanager_Media(
+	$fm = new Fieldmanager_Group(
 		[
-			'name' => 'audio_id',
+			'name' => 'post-mixed-featured-audio',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'tabbed' => 'vertical',
+			'children' => [
+				'settings' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Legacy Audio', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
+							'audio_id' => new Fieldmanager_Media( __( 'Primary Audio', 'cpr' ) ),
+							'aac_id' => new Fieldmanager_Media( __( 'Legacy AAC Audio', 'cpr' ) ),
+							'mp3_id' => new Fieldmanager_Media( __( 'Legacy MP3 Audio', 'cpr' ) ),
+							'npr_id' => new Fieldmanager_Media( __( 'Legacy NPR Audio', 'cpr' ) ),
+							'wav_id' => new Fieldmanager_Media( __( 'Legacy WAV Audio', 'cpr' ) ),
+						],
+					]
+				),
+			],
 		]
 	);
-	$fm->add_meta_box( __( 'Featured Audio', 'cpr' ), [ 'podcast-episode', 'show-segment' ], 'normal', 'high' );
+	$fm->add_meta_box( __( 'Audio', 'cpr' ), [ 'post', 'podcast-episode', 'show-segment' ] );
 }
+add_action( 'fm_post_post', 'cpr_fm_post_mixed_featured_audio' );
 add_action( 'fm_post_podcast-episode', 'cpr_fm_post_mixed_featured_audio' );
 add_action( 'fm_post_show-segment', 'cpr_fm_post_mixed_featured_audio' );
 /* end fm:post-mixed-featured-audio */
@@ -732,9 +750,12 @@ function cpr_fm_post_post_settings() {
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'post' ] );
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'post', 'podcast-episode', 'show-episode', 'show-segment' ] );
 }
 add_action( 'fm_post_post', 'cpr_fm_post_post_settings' );
+add_action( 'fm_post_podcast-episode', 'cpr_fm_post_post_settings' );
+add_action( 'fm_post_show-episode', 'cpr_fm_post_post_settings' );
+add_action( 'fm_post_show-segment', 'cpr_fm_post_post_settings' );
 /* end fm:post-post-settings */
 
 /* begin fm:post-tribe_events_section */

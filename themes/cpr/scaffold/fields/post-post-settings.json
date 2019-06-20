@@ -2,7 +2,7 @@
 	"contexts": [
 		{
 			"type": "post",
-			"post_types": [ "post" ],
+			"post_types": [ "post", "podcast-episode", "show-episode", "show-segment" ],
 			"title": { "__": "Settings" }
 		}
 	],

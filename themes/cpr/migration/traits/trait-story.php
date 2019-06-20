@@ -58,7 +58,6 @@ trait Story {
 
 		// Map meta.
 		$this->object['meta_input'] = [
-			'audio'                => $this->source['field_audio']['und'][0]['target_id'] ?? 0,
 			'author'               => $this->source['field_author']['und'][0]['target_id'] ?? 0,
 			'disable_image'        => $disable_image,
 			'featured_image'       => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
@@ -100,28 +99,26 @@ trait Story {
 	}
 
 	/**
-	 * Migrate the featured image.
+	 * Migrate the audio.
 	 */
 	public function migrate_audio_files() {
 
-		// Get the audio nid.
-		$audio_nid = ( $this->source['field_audio']['und'][0]['target_id'] ?? 0 );
-
-		// Get the attachment id for each filetype.
-
-		// // If none exist, try migrating them.
-		if ( true ) {
-			$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $unique_audio_id );
-			$attachment = \CPR\Migration\Audio\Feed_Item::get_or_create_object_from_source( $source );
+		// Get the audio nid and validate.
+		$audio_nid = absint( $this->source['field_audio']['und'][0]['target_id'] ?? 0 );
+		if ( 0 === $audio_nid ) {
+			return;
 		}
 
-		// Map a post meta key for each filetype, pointing to the attachment id.
+		// Get or create the attachments.
+		$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $audio_nid );
+		$audio_item = new \CPR\Migration\Audio\Feed_Item();
+		$audio_item->load_source( $source );
+		$audio_item->sync();
 
-		\CPR\Migration\Audio\Feed::set_audio(
-			$this->get_object_id(),
-		);
-
-
+		// Store each ID.
+		foreach ( (array) $audio_item->object as $key => $value ) {
+			update_post_meta( $this->get_object_id(), $key, $value );
+		}
 	}
 	/**
 	 * Migrate the featured image.
