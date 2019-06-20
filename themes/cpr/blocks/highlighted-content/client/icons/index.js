@@ -1,8 +1,3 @@
-/* eslint-disable consistent-return */
-/* eslint-disable react/jsx-closing-tag-location */
-/* eslint-disable max-len */
-/* eslint-disable react/prefer-stateless-function */
-/* eslint-disable react/no-multi-comp */
 import camelCase from 'lodash/camelCase';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
@@ -173,8 +168,7 @@ const IconPicker = (props) => {
             />
           </Tooltip>
         );
-      }
-      }
+      }}
     />
   );
 };
