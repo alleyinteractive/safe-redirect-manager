@@ -24,7 +24,7 @@ registerBlockType('cpr/highlighted-content', {
     },
     icon: {
       type: 'object',
-      default: { prefix: 'fab', iconName: 'wordpress-simple' },
+      default: {},
     },
   },
   edit: HighlightedItemEdit,
