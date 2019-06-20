@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import IconPicker from './icons/index';
+import IconPicker from './iconPicker/index';
 
 const {
   editor: {
