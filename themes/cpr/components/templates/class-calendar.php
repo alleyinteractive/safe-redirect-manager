@@ -55,13 +55,11 @@ class Calendar extends \WP_Components\Component {
 						/**
 						 * Calendar events archive.
 						 */
-						( new \CPR\Components\Modules\Content_List() )
-							->set_theme( 'calendar' )
+						( new \CPR\Components\Widgets\Content_List() )
 							->set_config( 'show_excerpt', false )
 							->parse_from_wp_query( $this->query )
 							->set_child_themes(
 								[
-									'content-item'  => 'event',
 									'content-title' => 'grid',
 								]
 							),
