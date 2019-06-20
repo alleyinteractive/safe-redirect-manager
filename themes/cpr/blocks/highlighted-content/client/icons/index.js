@@ -3,6 +3,10 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable react/no-multi-comp */
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames/dedupe';
 import './icons.scss';
 
@@ -16,6 +20,15 @@ const {
   TextControl,
 } = wp.components;
 
+library.add(fab, fas);
+const allFabIcons = Object.values(fab);
+const allFasIcons = Object.values(fas);
+
+const allIcons = allFabIcons.concat(allFasIcons);
+
+console.log('allIcons: ', allIcons);
+console.log('CPR icons: ', CPR.icons);
+
 function eachIcons(callback) {
   const { icons } = CPR;
 
@@ -23,6 +36,16 @@ function eachIcons(callback) {
     callback(icons[key]);
   });
 }
+
+// Example fontawesome Icon
+// const FaIcon = (props) => {
+//   const {
+//     prefix,
+//     iconName
+//   } = props;
+
+//   <FontAwesomeIcon icon={prefix.iconName} />
+// }
 
 const Icon = (props) => {
   const {
