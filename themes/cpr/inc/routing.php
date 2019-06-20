@@ -84,7 +84,7 @@ function build_components_endpoint(
 		/**
 		 * Landing Pages.
 		 */
-		case 'landing-page' === $wp_query->get( 'dispatch' ):
+		case 'landing-page' === $wp_query->get( 'post_type' ):
 			switch ( $wp_query->get( 'landing-page-type' ) ) {
 				case 'homepage':
 					$head->set_post( $wp_query->post );

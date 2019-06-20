@@ -327,7 +327,7 @@ function rest_audio_transcode_start( $request ) {
 	// Perform the copy operation on S3.
 	if ( copy( $from, $to ) ) {
 		// Add postmeta indicating status of copy operation and media type.
-		update_post_meta( $id, 'cpr_transcoding_status', 1 );
+		update_post_meta( $id, 'cpr_transcoding_status', CPR_TRANSCODING_PROCESSING );
 		update_post_meta( $id, 'cpr_audio_type', $type );
 		return true;
 	}
@@ -339,7 +339,7 @@ function rest_audio_transcode_start( $request ) {
 	);
 
 	// Save error state and bail.
-	update_post_meta( $id, 'cpr_transcoding_status', 3 );
+	update_post_meta( $id, 'cpr_transcoding_status', CPR_TRANSCODING_ERROR );
 
 	return false;
 }
@@ -351,14 +351,33 @@ function rest_audio_transcode_start( $request ) {
  * @return bool True on success, false on failure.
  */
 function rest_audio_transcode_end( $request ) {
-	// TODO: Verify token. This needs to be configured on the Lambda side as well.
-	// That's the kind of thing an idiot would have on his luggage.
-	if ( 12345 !== $request->get_param( 'shared_secret' ) ) {
+	// Verify token.
+	if ( CPR_TRANSCODING_TOKEN !== $request->get_param( 'token' ) ) {
 		return false;
 	}
 
-	// TODO: Ensure we got a valid ID. We may need to extract this from the filename ourselves.
-	$id = intval( $request->get_param( 'id' ) );
+	// Ensure there is a file complete URL.
+	$url = $request->get_param( 'fileComplete' );
+	if ( empty( $url ) ) {
+		return false;
+	}
+
+	// Parse the file complete URL into bits to extract the filename.
+	$path       = wp_parse_url( $url, PHP_URL_PATH );
+	$path_parts = explode( '/', $path );
+	$filename   = array_pop( $path_parts );
+	if ( empty( $filename ) ) {
+		return false;
+	}
+
+	// Parse the filename to extract the ID and type.
+	preg_match( '/^([0-9]+)-.+?(stereo|mono)?\.(m4a|mp3)$/', $filename, $matches );
+	if ( 4 !== count( $matches ) ) {
+		return false;
+	}
+
+	// Ensure we got a valid ID. We need to extract this from the filename ourselves.
+	$id = intval( $matches[1] );
 	if ( empty( $id ) ) {
 		return false;
 	}
@@ -374,8 +393,32 @@ function rest_audio_transcode_end( $request ) {
 		return false;
 	}
 
-	// TODO: Get URLs for all three formats and save to postmeta.
-	// TODO: Update general status in postmeta to indicate success.
+	// Based on type, save to postmeta.
+	$channels  = $matches[2];
+	$extension = $matches[3];
+	switch ( $extension ) {
+		case 'mp3':
+			update_post_meta( $id, 'cpr_audio_mp3_url', esc_url_raw( $url ) );
+			break;
+		case 'm4a':
+			switch ( $channels ) {
+				case 'mono':
+					update_post_meta( $id, 'cpr_audio_mono_url', esc_url_raw( $url ) );
+					break;
+				case 'stereo':
+					update_post_meta( $id, 'cpr_audio_stereo_url', esc_url_raw( $url ) );
+					break;
+				default:
+					return false;
+			}
+			break;
+		default:
+			return false;
+	}
+
+	// Update general status in postmeta to indicate success.
+	update_post_meta( $id, 'cpr_transcoding_status', CPR_TRANSCODING_SUCCESS );
+
 	return true;
 }
 
