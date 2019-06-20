@@ -6,7 +6,7 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames/dedupe';
 import './icons.scss';
 
@@ -23,11 +23,10 @@ const {
 library.add(fab, fas);
 const allFabIcons = Object.values(fab);
 const allFasIcons = Object.values(fas);
+const allIconData = allFabIcons.concat(allFasIcons);
 
-const allIcons = allFabIcons.concat(allFasIcons);
-
-console.log('allIcons: ', allIcons);
 console.log('CPR icons: ', CPR.icons);
+console.log('allIconData: ', allIconData);
 
 function eachIcons(callback) {
   const { icons } = CPR;
@@ -36,16 +35,6 @@ function eachIcons(callback) {
     callback(icons[key]);
   });
 }
-
-// Example fontawesome Icon
-// const FaIcon = (props) => {
-//   const {
-//     prefix,
-//     iconName
-//   } = props;
-
-//   <FontAwesomeIcon icon={prefix.iconName} />
-// }
 
 const Icon = (props) => {
   const {
@@ -57,7 +46,7 @@ const Icon = (props) => {
   const style = active ? 'cpr-component-icon-picker-button cpr-component-icon-picker-button-active' : 'cpr-component-icon-picker-button';
 
   return (
-    <IconPicker.Preview
+    <Preview
       className={style}
       onClick={onClick}
       data={iconData}
@@ -65,38 +54,54 @@ const Icon = (props) => {
   );
 };
 
-export default class IconPicker extends Component {
-  render() {
-    const {
-      value,
-      onChange,
-      label,
-    } = this.props;
+// Preview icon.
+const Preview = (props) => {
+  const {
+    onClick,
+    className,
+    alwaysRender = false,
+  } = props;
 
-    return (
-      <IconPicker.Dropdown
-        label={label}
-        className="cpr-component-icon-picker-wrapper"
-        onChange={onChange}
-        value={value}
-        renderToggle={({ isOpen, onToggle }) => {
-          return (
-            <Tooltip text={__('Icon Picker', 'cpr')}>
-              <IconPicker.Preview
-                className="cpr-component-icon-picker-button"
-                aria-expanded={isOpen}
-                onClick={onToggle}
-                name={value}
-                alwaysRender
-              />
-            </Tooltip>
-          );
+  let {
+    data,
+    name,
+  } = props;
+  console.log(data);
+  if (! data && name) {
+    eachIcons((iconsData) => {
+      iconsData.icons.forEach((iconData) => {
+        if (iconData.class && iconData.class === name && iconData.preview) {
+          if (iconData.preview) {
+            data = iconData;
+          } else {
+            name = iconData.class;
+          }
         }
-        }
-      />
-    );
+      });
+    });
   }
-}
+
+  let result = '';
+
+  if (data && data.preview) {
+    // eslint-disable-next-line react/no-danger
+    result = <span dangerouslySetInnerHTML={{ __html: data.preview }} />;
+  } else if (name || (data && data.class)) {
+    result = <IconPicker name={name || data.class} />;
+  }
+
+  return (result || alwaysRender ? (
+    <span
+      className={classnames(className, 'cpr-component-icon-picker-preview', onClick ? 'cpr-component-icon-picker-preview-clickable' : '')}
+      onClick={onClick}
+      onKeyPress={() => {}}
+      role="button"
+      tabIndex={0}
+    >
+      { result }
+    </span>
+  ) : '');
+};
 
 class IconPickerDropdown extends Component {
   constructor() {
@@ -191,55 +196,35 @@ class IconPickerDropdown extends Component {
   }
 }
 
-// Dropdown.
-IconPicker.Dropdown = IconPickerDropdown;
+export default class IconPicker extends Component {
+  render() {
+    const {
+      value,
+      onChange,
+      label,
+    } = this.props;
 
-// Preview icon.
-IconPicker.Preview = (props) => {
-  const {
-    onClick,
-    className,
-    alwaysRender = false,
-  } = props;
-
-  let {
-    data,
-    name,
-  } = props;
-
-  if (! data && name) {
-    eachIcons((iconsData) => {
-      iconsData.icons.forEach((iconData) => {
-        // eslint-disable-next-line max-len
-        if (iconData.class && iconData.class === name && iconData.preview) {
-          if (iconData.preview) {
-            data = iconData;
-          } else {
-            name = iconData.class;
-          }
+    return (
+      <IconPickerDropdown
+        label={label}
+        className="cpr-component-icon-picker-wrapper"
+        onChange={onChange}
+        value={value}
+        renderToggle={({ isOpen, onToggle }) => {
+          return (
+            <Tooltip text={__('Icon Picker', 'cpr')}>
+              <Preview
+                className="cpr-component-icon-picker-button"
+                aria-expanded={isOpen}
+                onClick={onToggle}
+                name={value}
+                alwaysRender
+              />
+            </Tooltip>
+          );
         }
-      });
-    });
+        }
+      />
+    );
   }
-
-  let result = '';
-
-  if (data && data.preview) {
-    // eslint-disable-next-line react/no-danger
-    result = <span dangerouslySetInnerHTML={{ __html: data.preview }} />;
-  } else if (name || (data && data.class)) {
-    result = <IconPicker.Render name={name || data.class} />;
-  }
-
-  return (result || alwaysRender ? (
-    <span
-      className={classnames(className, 'cpr-component-icon-picker-preview', onClick ? 'cpr-component-icon-picker-preview-clickable' : '')}
-      onClick={onClick}
-      onKeyPress={() => {}}
-      role="button"
-      tabIndex={0}
-    >
-      { result }
-    </span>
-  ) : '');
-};
+}
