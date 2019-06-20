@@ -41,12 +41,11 @@ class Calendar extends \WP_Components\Component {
 	public function get_components() : array {
 		return [
 			( new \CPR\Components\Column_Area() )
-				->set_theme( 'twoColumn' )
+				->set_theme( 'calendar' )
 				->set_config( 'heading', $this->get_heading() )
 				->set_config( 'subheading', $this->get_subheading() )
 				->append_children(
 					[
-
 						/**
 						 * Pagination.
 						 */
@@ -56,13 +55,11 @@ class Calendar extends \WP_Components\Component {
 						/**
 						 * Calendar events archive.
 						 */
-						( new \CPR\Components\Modules\Content_List() )
-							->set_theme( 'river_list' )
+						( new \CPR\Components\Widgets\Content_List() )
 							->set_config( 'show_excerpt', false )
 							->parse_from_wp_query( $this->query )
 							->set_child_themes(
 								[
-									'content-item'  => 'event',
 									'content-title' => 'grid',
 								]
 							),
@@ -71,7 +68,21 @@ class Calendar extends \WP_Components\Component {
 						 * Sidebar.
 						 */
 						( new \CPR\Components\Sidebar() )
-							->set_theme( 'right' ),
+							->set_theme( 'right' )
+							->append_children(
+								[
+									/**
+									 * First Ad.
+									*/
+									( new \CPR\Components\Ad() )
+										->set_config( 'height', 400 ),
+
+									/**
+									 * Second Ad.
+									*/
+									new \CPR\Components\Ad(),
+								]
+							),
 					]
 				),
 		];
@@ -122,7 +133,7 @@ class Calendar extends \WP_Components\Component {
 			$category = get_term_by( 'slug', $category_slug, 'tribe_events_cat' );
 		}
 
-		if ( $category ) {
+		if ( ! empty( $category ) ) {
 			$subheading .= ': ' . $category->name;
 		}
 
