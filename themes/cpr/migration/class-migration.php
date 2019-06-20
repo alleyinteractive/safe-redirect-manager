@@ -36,6 +36,7 @@ class Migration {
 	public $feeds = [
 		'album'                   => true,
 		'artist'                  => false, // Migrated with albums.
+		'audio'                   => true,
 		'blog-post'               => true,
 		'category'                => true,
 		'content'                 => true,

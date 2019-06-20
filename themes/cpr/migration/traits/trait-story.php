@@ -102,6 +102,30 @@ trait Story {
 	/**
 	 * Migrate the featured image.
 	 */
+	public function migrate_audio_files() {
+
+		// Get the audio nid.
+		$audio_nid = ( $this->source['field_audio']['und'][0]['target_id'] ?? 0 );
+
+		// Get the attachment id for each filetype.
+
+		// // If none exist, try migrating them.
+		if ( true ) {
+			$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $unique_audio_id );
+			$attachment = \CPR\Migration\Audio\Feed_Item::get_or_create_object_from_source( $source );
+		}
+
+		// Map a post meta key for each filetype, pointing to the attachment id.
+
+		\CPR\Migration\Audio\Feed::set_audio(
+			$this->get_object_id(),
+		);
+
+
+	}
+	/**
+	 * Migrate the featured image.
+	 */
 	public function migrate_featured_image() {
 		\CPR\Migration\Image\Feed::set_featured_image(
 			$this->get_object_id(),
