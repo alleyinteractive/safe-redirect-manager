@@ -47,9 +47,12 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * Map source data to the object.
 	 */
 	public function map_source_to_object() {
-		$this->object['post_status'] = 'publish';
-		$this->object['post_title']  = esc_html( $this->source['title'] );
-		$this->object['post_content'] = $this->source['body']['und'][0]['value'] ?? '';
+		$this->set_basics();
+		$this->migrate_meta();
+
+		// Log debug data.
+		alleypack_log( 'Mapped source to object. Source:', $this->source );
+		alleypack_log( 'Object:', $this->object );
 	}
 
 	/**
@@ -61,6 +64,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		$this->global_post_save();
 		$this->migrate_bylines();
 		$this->set_section();
+		$this->migrate_featured_image();
 		return true;
 	}
 }

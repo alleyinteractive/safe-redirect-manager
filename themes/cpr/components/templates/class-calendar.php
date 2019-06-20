@@ -130,6 +130,7 @@ class Calendar extends \WP_Components\Component {
 		// Add in the category name, if set.
 		$category_slug = $this->query->get( 'tribe_events_cat' );
 
+		$category = null;
 		if ( ! empty( $category_slug ) ) {
 			$category = get_term_by( 'slug', $category_slug, 'tribe_events_cat' );
 		}

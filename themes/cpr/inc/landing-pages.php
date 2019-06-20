@@ -7,14 +7,11 @@
 
 namespace CPR;
 
-// Enable landing pages.
-add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Landing_Pages', 'instance' ] );
-
 // Add fields.
-add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Homepage', 'landing_page_fields' ] );
-add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\News', 'landing_page_fields' ] );
-add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Classical', 'landing_page_fields' ] );
-add_filter( 'landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Indie', 'landing_page_fields' ] );
+add_filter( 'alleypack_landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Homepage', 'landing_page_fields' ] );
+add_filter( 'alleypack_landing_page_fm_children', [ '\\CPR\\Components\\Templates\\News', 'landing_page_fields' ] );
+add_filter( 'alleypack_landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Classical', 'landing_page_fields' ] );
+add_filter( 'alleypack_landing_page_fm_children', [ '\\CPR\\Components\\Templates\\Indie', 'landing_page_fields' ] );
 
 /**
  * Setup landing page options.
@@ -50,4 +47,4 @@ function landing_page_options( $options ) {
 		],
 	];
 }
-add_filter( 'landing_page_options', __NAMESPACE__ . '\landing_page_options' );
+add_filter( 'alleypack_landing_page_options', __NAMESPACE__ . '\landing_page_options' );

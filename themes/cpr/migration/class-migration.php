@@ -34,32 +34,34 @@ class Migration {
 	 * @var array
 	 */
 	public $feeds = [
-		'album'                => true,
-		'artist'               => false, // Migrated with albums.
-		'blog-post'            => true,
-		'category'             => true,
-		'content'              => true,
-		'document'             => true,
-		'entry'                => true,
-		'guest-author'         => true,
-		'image'                => true,
-		'job'                  => true,
-		'label'                => false, // Migrated with albums.
-		'newsletter'           => true,
-		'page'                 => true,
-		'podcast'              => true,
-		'podcast-episode'      => true,
-		'post-tag'             => true,
-		'press-release'        => true,
-		'service'              => true,
-		'show'                 => true,
-		'show-episode'         => true,
-		'show-segment'         => true,
-		'story'                => true,
-		'top-30'               => true,
-		'underwriter'          => true,
-		'underwriter-category' => false, // Migrated with underwriters.
-		'user'                 => true,
+		'album'                   => true,
+		'artist'                  => false, // Migrated with albums.
+		'blog-post'               => true,
+		'category'                => true,
+		'content'                 => true,
+		'document'                => true,
+		'entry'                   => true,
+		'guest-author'            => true,
+		'image'                   => true,
+		'job'                     => true,
+		'label'                   => false, // Migrated with albums.
+		'newsletter'              => true,
+		'page'                    => true,
+		'podcast'                 => true,
+		'podcast-episode'         => true,
+		'post-tag'                => true,
+		'press-release'           => true,
+		'private-page'            => true,
+		'private-podcast-episode' => true,
+		'service'                 => true,
+		'show'                    => true,
+		'show-episode'            => true,
+		'show-segment'            => true,
+		'story'                   => true,
+		'top-30'                  => true,
+		'underwriter'             => true,
+		'underwriter-category'    => false, // Migrated with underwriters.
+		'user'                    => true,
 	];
 
 	/**
@@ -72,6 +74,15 @@ class Migration {
 			&& 'cpr.alley.test' === $_SERVER['HTTP_HOST']
 		) {
 			$this->migration_scope = 'partial';
+		}
+
+		// Disable the sync GUI for logged in users who aren't alley.
+		$current_user = wp_get_current_user();
+		if (
+			isset( $current_user->data->user_email )
+			&& false === strpos( $current_user->data->user_email, 'alley.co' )
+		) {
+			add_action( 'alleypack_sync_enable_gui', '__return_false' );
 		}
 
 		// Load some AlleyPack modules.
