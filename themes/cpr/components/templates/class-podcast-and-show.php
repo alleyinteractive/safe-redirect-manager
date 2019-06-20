@@ -145,7 +145,7 @@ class Podcast_And_Show extends \WP_Components\Component {
 									/**
 									 * Advertisement.
 									 */
-									new \CPR\Components\Ad(),
+									new \CPR\Components\Advertising\Ad_Unit(),
 								]
 							),
 					]

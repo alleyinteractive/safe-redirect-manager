@@ -74,13 +74,13 @@ class Calendar extends \WP_Components\Component {
 									/**
 									 * First Ad.
 									*/
-									( new \CPR\Components\Ad() )
+									( new \CPR\Components\Advertising\Ad_Unit() )
 										->set_config( 'height', 400 ),
 
 									/**
 									 * Second Ad.
 									*/
-									new \CPR\Components\Ad(),
+									new \CPR\Components\Advertising\Ad_Unit(),
 								]
 							),
 					]

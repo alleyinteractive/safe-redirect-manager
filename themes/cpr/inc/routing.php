@@ -305,6 +305,8 @@ function build_components_endpoint(
 		( new Components\Google_Tag_Manager() )
 			->set_config( 'container_id', $settings['gtm']['container_id'] ?? '' )
 			->set_data_layer_from_query( $wp_query ),
+		( new Components\Advertising\Ad_Provider() )
+			->set_config( 'dfp_network_id', 12925303 ),
 	];
 
 	// Setup the page data based on routing.
