@@ -3,16 +3,17 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prefer-stateless-function */
 /* eslint-disable react/no-multi-comp */
+import camelCase from 'lodash/camelCase';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames/dedupe';
 import './icons.scss';
 
 const { Component } = wp.element;
 const { __ } = wp.i18n;
-const { CPR } = window;
+
 const {
   Dropdown,
   Tooltip,
@@ -25,82 +26,47 @@ const allFabIcons = Object.values(fab);
 const allFasIcons = Object.values(fas);
 const allIconData = allFabIcons.concat(allFasIcons);
 
-console.log('CPR icons: ', CPR.icons);
-console.log('allIconData: ', allIconData);
-
-function eachIcons(callback) {
-  const { icons } = CPR;
-
-  Object.keys(icons).forEach((key) => {
-    callback(icons[key]);
-  });
-}
-
 const Icon = (props) => {
   const {
+    className,
     iconData,
     onClick,
     active,
   } = props;
 
-  const style = active ? 'cpr-component-icon-picker-button cpr-component-icon-picker-button-active' : 'cpr-component-icon-picker-button';
+  // These icons cause problems, so let's not try to render them.
+  // camelCase() transforms `fa-500px` to fa500Px, which does not work.
+  // The fontawesome logo is huge, breaks the layout and why is it even there...
+  if (
+    iconData &&
+    ('500px' === iconData.iconName || 'font-awesome-logo-full' === iconData.iconName)
+  ) {
+    return null;
+  }
+
+  const iconPrefix = iconData ? iconData.prefix : '';
+  const iconName = iconData ? `fa-${iconData.iconName}` : '';
+  const iconId = 'fas' === iconPrefix ? fas[camelCase(iconName)] : fab[camelCase(iconName)];
 
   return (
-    <Preview
-      className={style}
-      onClick={onClick}
-      data={iconData}
-    />
-  );
-};
-
-// Preview icon.
-const Preview = (props) => {
-  const {
-    onClick,
-    className,
-    alwaysRender = false,
-  } = props;
-
-  let {
-    data,
-    name,
-  } = props;
-  console.log(data);
-  if (! data && name) {
-    eachIcons((iconsData) => {
-      iconsData.icons.forEach((iconData) => {
-        if (iconData.class && iconData.class === name && iconData.preview) {
-          if (iconData.preview) {
-            data = iconData;
-          } else {
-            name = iconData.class;
-          }
-        }
-      });
-    });
-  }
-
-  let result = '';
-
-  if (data && data.preview) {
-    // eslint-disable-next-line react/no-danger
-    result = <span dangerouslySetInnerHTML={{ __html: data.preview }} />;
-  } else if (name || (data && data.class)) {
-    result = <IconPicker name={name || data.class} />;
-  }
-
-  return (result || alwaysRender ? (
     <span
-      className={classnames(className, 'cpr-component-icon-picker-preview', onClick ? 'cpr-component-icon-picker-preview-clickable' : '')}
+      className={classnames(
+        className,
+        'cpr-component-icon-picker-preview',
+        'cpr-component-icon-picker-button',
+        { 'cpr-component-icon-picker-preview-clickable': onClick },
+        { 'cpr-component-icon-picker-button-active': active },
+      )}
       onClick={onClick}
       onKeyPress={() => {}}
       role="button"
       tabIndex={0}
+      data-iconName={camelCase(iconName)}
+      data-iconPrefix={iconPrefix}
     >
-      { result }
+      <FontAwesomeIcon icon={iconId} />
     </span>
-  ) : '');
+  );
 };
 
 class IconPickerDropdown extends Component {
@@ -127,31 +93,24 @@ class IconPickerDropdown extends Component {
         className={className}
         renderToggle={renderToggle}
         renderContent={() => {
-          const result = [];
+          const result = allIconData.map((icon) => {
+            if (
+              ! this.state.search ||
+                (this.state.search && - 1 < icon.keys.indexOf(this.state.search))
+            ) {
+              return (
+                <Icon
+                  key={icon.iconName}
+                  active={icon.iconName === value}
+                  iconData={icon}
+                  onClick={() => {
+                    onChange(icon);
+                  }}
+                />
+              );
+            }
 
-          eachIcons((iconsData) => {
-            result.push(<div className="cpr-component-icon-picker-list">
-              { iconsData.icons.map((iconData) => {
-                if (
-                  ! this.state.search ||
-                    (this.state.search && - 1 < iconData.keys.indexOf(this.state.search))
-                ) {
-                  return (
-                    <Icon
-                      key={iconData.class}
-                      active={iconData.class === value}
-                      iconData={iconData}
-                      onClick={() => {
-                        onChange(iconData.class);
-                      }}
-                    />
-                  );
-                }
-
-                return '';
-              })
-              }
-            </div>);
+            return '';
           });
 
           return (
@@ -175,7 +134,9 @@ class IconPickerDropdown extends Component {
                 />
               </div>
               <div className="cpr-component-icon-picker-list-wrap">
-                { result }
+                <div className="cpr-component-icon-picker-list">
+                  { result }
+                </div>
               </div>
             </div>
           );
@@ -213,11 +174,11 @@ export default class IconPicker extends Component {
         renderToggle={({ isOpen, onToggle }) => {
           return (
             <Tooltip text={__('Icon Picker', 'cpr')}>
-              <Preview
+              <Icon
                 className="cpr-component-icon-picker-button"
                 aria-expanded={isOpen}
                 onClick={onToggle}
-                name={value}
+                iconData={value}
                 alwaysRender
               />
             </Tooltip>
