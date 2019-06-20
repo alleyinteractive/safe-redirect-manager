@@ -4,7 +4,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames/dedupe';
-import './icons.scss';
+import './iconPicker.scss';
 
 const { useState } = wp.element;
 const { __ } = wp.i18n;
