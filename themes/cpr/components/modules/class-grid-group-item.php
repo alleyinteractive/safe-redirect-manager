@@ -44,7 +44,6 @@ class Grid_Group_Item extends \WP_Components\Component {
 	public function post_has_set() : self {
 
 		if ( 'guest-author' === $this->post->post_type ) {
-			$this->set_theme( 'hosts' );
 			$this->set_config( 'role', __( 'Host', 'cpr' ) );
 			$this->wp_post_set_featured_image( 'grid-group-host' );
 		} else {
