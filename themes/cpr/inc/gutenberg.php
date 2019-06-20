@@ -72,4 +72,3 @@ function enqueue_icons_assets() {
 	wp_enqueue_script( 'font-awesome' );
 }
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_icons_assets', 12 );
-add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_icons_assets', 12 );
