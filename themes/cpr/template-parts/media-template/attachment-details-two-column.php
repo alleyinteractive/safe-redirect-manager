@@ -165,7 +165,7 @@
 			<?php /* phpcs:enable */ ?>
 			<?php /* Begin CPR customizations. */ ?>
 			<# if ( 'audio' === data.type && data.meta.bitrate ) { #>
-				<# if ( 2 === data.meta.cpr_transcoding_status ) { #>
+				<# if ( <?php echo intval( CPR_TRANSCODING_SUCCESS ); ?> === data.meta.cpr_transcoding_status ) { #>
 					<label class="setting">
 						<span class="name"><?php esc_html_e( 'MP3', 'cpr' ); ?></span>
 						<span class="value"><?php esc_html_e( '(on-demand audio and podcasts)', 'cpr' ); ?></span>
@@ -185,16 +185,16 @@
 					<div class="setting">
 						<span class="name"><?php esc_html_e( 'Encode Audio', 'cpr' ); ?></span>
 						<span class="value cpr-encode-audio-container">
-							<# if ( 0 === data.meta.cpr_transcoding_status ) { #>
+							<# if ( <?php echo intval( CPR_TRANSCODING_NOT_STARTED ); ?> === data.meta.cpr_transcoding_status ) { #>
 								<div class="cpr-encode-audio-buttons">
 									<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-id="{{ data.id }}" data-cpr-audio-type="news-spoken" aria-label="<?php esc_attr_e( 'News/Spoken', 'cpr' ); ?>"><?php esc_attr_e( 'News/Spoken', 'cpr' ); ?></button>
 									<button role="button" class="cpr-encode-audio hide-if-no-js button" data-cpr-audio-id="{{ data.id }}" data-cpr-audio-type="music" aria-label="<?php esc_attr_e( 'Music', 'cpr' ); ?>"><?php esc_attr_e( 'Music', 'cpr' ); ?></button>
 								</div>
-							<# } else if ( 1 === data.meta.cpr_transcoding_status ) { #>
+							<# } else if ( <?php echo intval( CPR_TRANSCODING_PROCESSING ); ?> === data.meta.cpr_transcoding_status ) { #>
 								<div class="cpr-notification-message cpr-notification-message-processing">
 									<?php esc_html_e( 'Audio files are being transcoded. Encoded file URLs should be available shortly.', 'cpr' ); ?>
 								</div>
-							<# } else if ( 3 === data.meta.cpr_transcoding_status ) { #>
+							<# } else if ( <?php echo intval( CPR_TRANSCODING_ERROR ); ?> === data.meta.cpr_transcoding_status ) { #>
 								<div class="cpr-notification-message cpr-notification-message-upload-error">
 									<?php esc_html_e( 'Upload to the transcoding system failed.', 'cpr' ); ?>
 								</div>

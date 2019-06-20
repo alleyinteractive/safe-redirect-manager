@@ -206,8 +206,17 @@ function build_components_endpoint(
 
 		/**
 		 * Calendar.
+		 *
+		 * The second condition prevents 404s when viewing a month without
+		 * any events.
 		 */
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 		case $wp_query->is_post_type_archive( 'tribe_events' ):
+		case (
+			'tribe_events' === $wp_query->query['post_type'] &&
+			isset( $wp_query->query['eventDisplay'] ) &&
+			'month' === $wp_query->query['eventDisplay']
+		):
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
 			break;

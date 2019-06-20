@@ -126,11 +126,14 @@ class Grid_Group extends \WP_Components\Component {
 			]
 		);
 
+		$theme = $fm_data['theme'];
 		// Append the Grid_Group_items as children.
 		$this->append_children(
 			array_map(
-				function( $post_id ) {
-					return ( new Grid_Group_Item() )->set_post( $post_id );
+				function( $post_id ) use ( $theme ) {
+					return ( new Grid_Group_Item() )
+						->set_theme( $theme )
+						->set_post( $post_id );
 				},
 				(array) $fm_data['post_ids']
 			)
