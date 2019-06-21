@@ -115,7 +115,7 @@
 				<span class="name"><?php _e( 'Alternative Text' ); ?></span>
 				<input type="text" value="{{ data.alt }}" aria-describedby="alt-text-description" {{ maybeReadOnly }} />
 			</label>
-			<p class="description" id="alt-text-description"><?php echo $alt_text_description; ?></p>
+			<p class="description" id="alt-text-description"><?php echo $alt_text_description ?? ''; ?></p>
 			<# } #>
 			<?php if ( post_type_supports( 'attachment', 'title' ) ) : ?>
 				<label class="setting" data-setting="title">
