@@ -26,7 +26,16 @@ class Ad_Provider extends \WP_Components\Component {
 	 */
 	public static $slot_configs = [
 		'CPR3-Inst-News-Shared-300x600' => [
-			'sizes' => [ [ 300, 600 ] ],
+			'sizes'        => [
+				[ 300, 250 ],
+				[ 300, 600 ],
+			],
+			'size_mapping' => [
+				[
+					'viewport' => [ 1024, 9999 ],
+					'sizes'    => [ [ 300, 250 ] ],
+				],
+			],
 		],
 		'CPR3-Inst-News-Shared-300x250' => [
 			'sizes' => [ [ 300, 250 ] ],
