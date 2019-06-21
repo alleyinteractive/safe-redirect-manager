@@ -21,6 +21,14 @@ const allFabIcons = Object.values(fab);
 const allFasIcons = Object.values(fas);
 const allIconData = allFabIcons.concat(allFasIcons);
 
+// Move question mark icons to the top.
+allIconData.forEach((icon, idx) => {
+  if (icon.iconName.includes('question')) {
+    const thisIcon = allIconData.splice(idx, 1);
+    allIconData.unshift(thisIcon[0]);
+  }
+});
+
 const Icon = (props) => {
   const {
     className,
