@@ -102,24 +102,22 @@ const IconPickerDropdown = (props) => {
 
         return (
           <div className="cpr-component-icon-picker">
-            <div>
-              <TextControl
-                value={value}
-                onChange={(newClass) => {
-                  onChange(newClass);
-                }}
-                placeholder={__('Icon class', 'cpr')}
-                type="hidden"
-              />
-              <TextControl
-                label={__('Search icon')}
-                value={query}
-                onChange={(searchVal) => {
-                  setQuery(searchVal);
-                }}
-                placeholder={__('Type to search...', 'cpr')}
-              />
-            </div>
+            <TextControl
+              value={value}
+              onChange={(newClass) => {
+                onChange(newClass);
+              }}
+              placeholder={__('Icon class', 'cpr')}
+              type="hidden"
+            />
+            <TextControl
+              label={__('Search icon')}
+              value={query}
+              onChange={(searchVal) => {
+                setQuery(searchVal);
+              }}
+              placeholder={__('Type to search...', 'cpr')}
+            />
             <div className="cpr-component-icon-picker-list-wrap">
               <div className="cpr-component-icon-picker-list">
                 { result }
