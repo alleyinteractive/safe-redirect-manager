@@ -26,15 +26,9 @@ class Ad_Provider extends \WP_Components\Component {
 	 */
 	public static $slot_configs = [
 		'CPR3-Inst-News-Shared-300x600' => [
-			'sizes'        => [
+			'sizes' => [
 				[ 300, 250 ],
 				[ 300, 600 ],
-			],
-			'size_mapping' => [
-				[
-					'viewport' => [ 1024, 9999 ],
-					'sizes'    => [ [ 300, 250 ] ],
-				],
 			],
 		],
 		'CPR3-Inst-News-Shared-300x250' => [
@@ -49,8 +43,20 @@ class Ad_Provider extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'targeting'      => [],
+			'targeting'      => [
+				'test' => '',
+			],
 			'dfp_network_id' => '',
+			'size_mapping'   => [
+				[
+					'viewport' => [ 768, 9999 ],
+					'sizes'    => [ [ 300, 250 ] ],
+				],
+				[
+					'viewport' => [ 2400, 9999 ],
+					'sizes'    => [ [ 300, 600 ] ],
+				],
+			],
 		];
 	}
 

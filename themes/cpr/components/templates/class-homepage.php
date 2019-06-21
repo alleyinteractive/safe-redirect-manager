@@ -186,15 +186,8 @@ class Homepage extends \WP_Components\Component {
 							->set_theme( 'right' )
 							->append_children(
 								[
-									/**
-									 * Colorado Wonders question form.
-									 */
-									// new \CPR\Components\Colorado_Wonders(),.
-
-									/**
-									 * Advertisement.
-									 */
-									new \CPR\Components\Advertising\Ad_Unit(),
+									( new \CPR\Components\Advertising\Ad_Unit() )
+										->configure_ad_slot( 'CPR3-Inst-News-Shared-300x250' ),
 								]
 							),
 					]
