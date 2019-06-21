@@ -471,3 +471,38 @@ function filter_s3_uploads_putobject_params( $params ) {
 
 	return $params;
 }
+
+// phpcs:disable
+/**
+ * CURL and request modifications for local for uploading audio.
+ */
+if ( false !== strpos( site_url(), 'alley' ) ) {
+
+	/**
+	 * Setting a custom timeout value for cURL. Using a high value for priority to
+	 * ensure the function runs after any other added to the same action hook.
+	 */
+	function custom_curl_timeout( $handle ){
+		curl_setopt( $handle, CURLOPT_CONNECTTIMEOUT, 30 );
+		curl_setopt( $handle, CURLOPT_TIMEOUT, 30 );
+	}
+	add_action( 'http_api_curl', __NAMESPACE__ . '\custom_curl_timeout', 9999, 1 );
+
+	/**
+	 * Setting custom timeout for the HTTP request.
+	 */
+	function custom_http_request_timeout( $timeout_value ) {
+		return 30;
+	}
+	add_filter( 'http_request_timeout', __NAMESPACE__ . '\custom_http_request_timeout', 9999 );
+
+	/**
+	 * Setting custom timeout in HTTP request args.
+	 */
+	function custom_http_request_args( $r ){
+		$r['timeout'] = 30;
+		return $r;
+	}
+	add_filter( 'http_request_args', __NAMESPACE__ . '\custom_http_request_args', 9999, 1 );
+}
+// phpcs:enable

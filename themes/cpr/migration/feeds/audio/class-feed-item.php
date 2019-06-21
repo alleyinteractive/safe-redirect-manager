@@ -47,14 +47,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	  * @return null|WP_Post
 	  */
 	public static function get_object_by_unique_id( $unique_id ) {
-		// echo $unique_id; die();
 		return null;
-		return [
-			'aac_id' => 0,
-			'mp3_id' => 0,
-			'npr_id' => 0,
-			'wav_id' => 0,
-		];
 	}
 
 	/**
@@ -94,7 +87,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 						'key'   => 'type',
 						'value' => $field,
 					],
-				]
+				],
 			]
 		);
 
@@ -111,7 +104,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 
 		// Was there an error?
 		if ( $attachment_id instanceof \WP_Error ) {
-			print_r($attachment_id);
+			print_r( $attachment_id );
 			return null;
 		}
 
