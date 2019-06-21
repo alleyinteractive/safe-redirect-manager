@@ -23,8 +23,8 @@ registerBlockType('cpr/highlighted-content', {
       default: false,
     },
     icon: {
-      type: 'string',
-      default: 'fab fa-wordpress-simple',
+      type: 'object',
+      default: {},
     },
   },
   edit: HighlightedItemEdit,
