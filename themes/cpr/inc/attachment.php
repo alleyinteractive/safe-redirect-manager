@@ -19,7 +19,7 @@ function add_attachment_fields() : array {
 			'input' => 'text',
 			'helps' => __( 'Image Credit.', 'cpr' ),
 		],
-		'tags'  => [
+		'tags'    => [
 			'label' => __( 'Tags', 'cpr' ),
 			'input' => 'textarea',
 			'helps' => __( 'Image keywords.', 'cpr' ),
@@ -28,7 +28,6 @@ function add_attachment_fields() : array {
 			'label' => __( 'Caption', 'cpr' ),
 			'input' => 'textarea',
 			'helps' => __( 'Override image caption.', 'cpr' ),
-			'class' => 'widefat',
 		],
 	];
 }
@@ -52,24 +51,16 @@ function add_credit_from_image_metadata( $metadata, $attachment_id ) {
 		update_post_meta( $attachment_id, 'caption', $metadata['image_meta']['caption'] );
 	}
 
-	// Update alt with image title.
-	if ( ! empty( $metadata['image_meta']['title'] ) ) {
-		update_post_meta(
-			$attachment_id,
-			'_wp_attachment_image_alt',
-			esc_html( $metadata['image_meta']['title'] )
-		);
+	// Update the alt field with the image title.
+	$alt = get_post_meta( $attachment_id, '_wp_attachment_image_alt', true );
+	if ( ! empty( $metadata['image_meta']['title'] ) && empty( $alt ) ) {
+		update_post_meta( $attachment_id, '_wp_attachment_image_alt', esc_html( $metadata['image_meta']['title'] ) );
 	}
 
-	// Add image tags.
-	if ( ! empty( $metadata['image_meta']['keywords'] ) ) {
-		update_post_meta(
-			$attachment_id,
-			'tags',
-			esc_html(
-				implode( ', ', $metadata['image_meta']['keywords'] )
-			)
-		);
+	// Add image tags/keywords.
+	$tags = get_post_meta( $attachment_id, 'tags', true );
+	if ( ! empty( $metadata['image_meta']['keywords'] ) && empty( $tags ) ) {
+		update_post_meta( $attachment_id, 'tags', esc_html( implode( ', ', $metadata['image_meta']['keywords'] ) ) );
 	}
 
 	return $metadata;
