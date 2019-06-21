@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import IconPicker from './iconPicker';
+import './edit.scss';
 
 const {
   editor: {
@@ -9,9 +10,6 @@ const {
   },
   i18n: {
     __,
-  },
-  element: {
-    Fragment,
   },
   components: {
     PanelBody,
@@ -30,7 +28,7 @@ const HighlightedItemEdit = (props) => {
   } = props;
 
   return (
-    <Fragment>
+    <div className="cpr-component">
       <InspectorControls>
         <PanelBody>
           <ToggleControl
@@ -42,24 +40,28 @@ const HighlightedItemEdit = (props) => {
           />
         </PanelBody>
       </InspectorControls>
-      <IconPicker
-        label={__('Icon', 'cpr')}
-        value={icon}
-        onChange={(value) => {
-          setAttributes({ icon: value });
-        }}
-      />
-      <RichText
-        placeholder={__('Content Title', 'cpr')}
-        value={heading}
-        onChange={(value) => {
-          setAttributes({ heading: value });
-        }}
-      />
+      <div className="cpr-component-heading-wrapper">
+        <IconPicker
+          label={__('Icon', 'cpr')}
+          value={icon}
+          onChange={(value) => {
+            setAttributes({ icon: value });
+          }}
+        />
+        <RichText
+          className="cpr-component-heading-input"
+          placeholder={__('Content Title', 'cpr')}
+          value={heading}
+          formattingControls={['italic', 'strikethrough', 'link']}
+          onChange={(value) => {
+            setAttributes({ heading: value });
+          }}
+        />
+      </div>
       <InnerBlocks
         templateLock={false}
       />
-    </Fragment>
+    </div>
   );
 };
 
