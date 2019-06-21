@@ -176,28 +176,13 @@ class Indie extends \WP_Components\Component {
 				),
 
 			/**
-			 * Newsletter CTA.
-			 */
-			( new \CPR\Components\Modules\Newsletter() )
-				->merge_config(
-					[
-						'background_color' => \CPR\get_site_color( 'indie' ),
-						'subscribe_group'  => 'spinsider',
-						'heading'          => __( 'Sign Up For Spinsider From CPR\'s Indie', 'cpr' ),
-						'tagline'          => __( 'To sign up to receive our emails, fill in the following field and hit submit. Thanks, and welcome!', 'cpr' ),
-					]
-				),
-
-			/**
 			 * Videos content list.
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
-						'heading'           => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
-						// 'heading_cta_label' => __( 'All Videos', 'cpr' ),
-						// 'heading_cta_link'  => home_url(), // @todo Update once known.
+						'heading' => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
 					]
 				)
 				->append_child(

@@ -276,7 +276,7 @@ class Homepage extends \WP_Components\Component {
 										'add_more_label' => __( 'Add Episode', 'cpr' ),
 										'post_limit'     => 4,
 										'query_args'     => [
-											'post_type' => [ 'podcast-episode' ],
+											'post_type' => [ 'podcast-episode', 'show-episode', 'show-segment', 'external-link' ],
 										],
 									]
 								),
