@@ -80,7 +80,6 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			'field_format',
 		];
 
-		// preg_match_all( '/(<p>)?\[\[nid:(\d+)(.+)\]\](<\/p>)?/', $post_content, $matches );
 		preg_match_all( '/(<p>)?\[\[nid:(\d+)(.*?)\]\](<\/p>)?/', $post_content, $matches );
 
 		foreach ( $matches[0] as $key => $value ) {
@@ -115,7 +114,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 					sprintf(
 						'<img src="%1$s" class="cpr-image-block" data-alignment="%2$s" alt="%3$s" data-caption="%4$s" />',
 						esc_url( wp_get_attachment_url( $attachment->ID ) ),
-						trim( $align ),
+						$align,
 						$source['title'] ?? '',
 						$source['body']['und'][0]['value'] ?? '',
 					),
