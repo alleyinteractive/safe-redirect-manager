@@ -1,0 +1,19 @@
+.cpr-component {
+  border-bottom: solid 1px #ddd;
+
+  .is-selected & {
+    border-color: transparent;
+  }
+}
+
+.cpr-component-heading-wrapper {
+  align-items: center;
+  display: flex;
+  font-weight: 700;
+  justify-content: flex-start;
+  padding: 5px;
+
+  > [class*="editor"] {
+    margin-left: 15px;
+  }
+}
