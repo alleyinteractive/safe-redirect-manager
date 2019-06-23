@@ -7,16 +7,56 @@
 
 namespace CPR\Fields;
 
-function get_settings() {
-	return [
-		'excerpt' => new \Alleypack\Fieldmanager\Fields\Fieldmanager_Excerpt( __( 'Excerpt', 'cpr' ) ),
+/**
+ * Get the current post type from the post edit screen.
+ *
+ * @return string
+ */
+function get_current_post_type() : string {
 
+	// Get post type by the post iD.
+	if ( isset( $_GET['post'] ) ) {
+		return get_post_type( absint( $_GET['post'] ) );
+	}
+
+	// New post screen.
+	if ( isset( $_GET['post_type'] ) ) {
+		$post_type = sanitize_text_field( wp_unslash( $_GET['post_type'] ) );
+		if ( post_type_exists( $post_type ) ) {
+			return $post_type;
+		}
+	}
+
+	return 'post';
+}
+
+/**
+ * Get the post settings.
+ *
+ * @return array
+ */
+function get_settings() : array {
+	return [
+		'_group_title' => new \Alleypack\Fieldmanager\Fields\Fieldmanager_Content(
+			[
+				'description' => sprintf(
+					'<h2 style="font-size: 24px; font-style: normal; padding: 0px;">%1$s</h2>',
+					__( 'Settings', 'cpr' )
+				),
+			]
+		),
+		'excerpt' => new \Alleypack\Fieldmanager\Fields\Fieldmanager_Excerpt( __( 'Excerpt', 'cpr' ) ),
 	];
 }
 
-function get_taxonomy_fields() {
-	return [
-		'title' => new \Alleypack\Fieldmanager\Fields\Fieldmanager_Content(
+/**
+ * Get post taxonomy settings.
+ *
+ * @return array
+ */
+function get_taxonomy_fields() : array {
+	$fields  = [
+		'_group_title' => new \Alleypack\Fieldmanager\Fields\Fieldmanager_Content(
 			[
 				'description' => '<h2 style="font-size: 24px; font-style: normal; padding: 0px;">Taxonomies</h2>',
 				'attributes'  => [
@@ -29,6 +69,25 @@ function get_taxonomy_fields() {
 				'label'           => __( 'Section', 'cpr' ),
 				'taxonomy'        => 'section',
 				'can_select_term' => true,
+				'show_group'      => false,
+				'field_type'      => 'select',
+			]
+		),
+		'podcast' => \Alleypack\Fieldmanager\Patterns\get_term_fields(
+			[
+				'label'           => __( 'Podcast', 'cpr' ),
+				'taxonomy'        => 'podcast',
+				'can_select_term' => true,
+				'show_group'      => false,
+				'field_type'      => 'select',
+			]
+		),
+		'show' => \Alleypack\Fieldmanager\Patterns\get_term_fields(
+			[
+				'label'           => __( 'Show', 'cpr' ),
+				'taxonomy'        => 'show',
+				'can_select_term' => true,
+				'show_group'      => false,
 				'field_type'      => 'select',
 			]
 		),
@@ -50,34 +109,59 @@ function get_taxonomy_fields() {
 			]
 		),
 	];
+
+	switch ( get_current_post_type() ) {
+		case 'podcast-episode':
+			unset( $fields['show'] );
+			break;
+		case 'show-episode':
+			unset( $fields['podcast'] );
+			break;
+		case 'show-segment':
+			unset( $fields['podcast'] );
+			unset( $fields['show'] );
+			break;
+		case 'page':
+			unset( $fields['podcast'] );
+			unset( $fields['show'] );
+			break;
+		case 'post':
+		default:
+			unset( $fields['podcast'] );
+			unset( $fields['show'] );
+			break;
+	}
+
+	return $fields;
 }
 
-function get_segment_fields() {
+/**
+ * Get segment fields.
+ *
+ * @return array
+ */
+function get_segment_fields() : array {
 	return [
-		'show_segment_ids' => new \Fieldmanager_Zone_Field(
+		'_group_title'     => new \Alleypack\Fieldmanager\Fields\Fieldmanager_Content(
 			[
-				'label' => __( 'Show Segments', 'cpr' ),
-				'description' => __( 'Select the segments for this show.', 'cpr' ),
-				'query_args' => [
-					'post_type' => [ 'show-segment' ],
-					'meta_query' => [ [
-						'key' => '_show_episode_id',
-						'compare' => 'NOT EXISTS',
-					] ],
-				],
+				'description' => sprintf(
+					'<h2 style="font-size: 24px; font-style: normal; padding: 0px;">%1$s</h2>',
+					__( 'Episode Segments', 'cpr' )
+				),
 			]
 		),
-	];
-}
-
-function get_featured_media_fields() {
-	return [
-		'_thumbnail_id' => new \Fieldmanager_Media(__( 'Select an image to be used as the article thumbnail on the homepage, term archives, search results, and other archives.', 'cpr' ) ),
-		'disable_image' => new \Fieldmanager_Checkbox( __( 'Hide Featured Image', 'cpr' ) ),
-		'youtube_url'   => new \Fieldmanager_Link(
+		'show_segment_ids' => new \Fieldmanager_Zone_Field(
 			[
-				'label'       => __( 'YouTube URL', 'cpr' ),
-				'description' => __( 'Display this video at the top of the page.', 'cpr' ),
+				'description' => __( 'Select the segments for this show.', 'cpr' ),
+				'query_args'  => [
+					'post_type'  => [ 'show-segment' ],
+					'meta_query' => [
+						[
+							'key'     => '_show_episode_id',
+							'compare' => 'NOT EXISTS',
+						],
+					],
+				],
 			]
 		),
 	];
