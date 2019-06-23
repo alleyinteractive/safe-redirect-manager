@@ -90,61 +90,10 @@
 			"children": "`\\CPR\\Components\\Modules\\Grid_Group::get_fm_fields()`"
 		},
 		"social_and_seo": {
-			"label": { "__": "SEO and Social" },
+			"label": { "__": "Social and SEO" },
 			"serialize_data": false,
 			"add_to_prefix": false,
-			"children": {
-				"seo": {
-					"label": { "__": "SEO Settings" },
-					"serialize_data": false,
-					"add_to_prefix": false,
-					"collapsed": true,
-					"children": {
-						"_meta_title": {
-							"label": { "__": "Title Tag" }
-						},
-						"_meta_description": {
-							"label": { "__": "Meta Description" },
-							"type": "textarea",
-							"attributes": {
-								"style": "width: 100%;",
-								"rows": 5
-							}
-						},
-						"_meta_keywords": {
-							"label": { "__": "Meta Keywords" },
-							"type": "textarea",
-							"attributes": {
-								"style": "width: 100%;",
-								"rows": 5
-							}
-						}
-					}
-				},
-				"social": {
-					"label": { "__": "Social Media Settings" },
-					"serialize_data": false,
-					"add_to_prefix": false,
-					"collapsed": true,
-					"children": {
-						"social_title": {
-							"label": { "__": "Social Title" }
-						},
-						"social_description": {
-							"label": { "__": "Social Description" },
-							"type": "textarea",
-							"attributes": {
-								"style": "width: 100%;",
-								"rows": 5
-							}
-						},
-						"social_image_id": {
-							"label": { "__": "Social Image" },
-							"type": "media"
-						}
-					}
-				}
-			}
+			"children": "`\\CPR\\Fields\\get_seo_and_social_fields()`"
 		}
 	}
 }

@@ -32,15 +32,17 @@ add_action( 'add_meta_boxes', __NAMESPACE__ . '\remove_postcustom', 100 );
  * Modify post type support for the 'post' post type.
  */
 function modify_post_supports() {
+
 	// Removes unused panels.
-	remove_post_type_support( 'post', 'comments' );
-	remove_post_type_support( 'post', 'page-attributes' );
-	remove_post_type_support( 'post', 'trackbacks' );
-	remove_post_type_support( 'post', 'thumbnail' );
-	remove_post_type_support( 'post', 'excerpt' );
+	foreach ( [ 'post', 'podcast-episode', 'show-episode', 'show-segment' ] as $post_type ) {
+		remove_post_type_support( $post_type, 'comments' );
+		remove_post_type_support( $post_type, 'page-attributes' );
+		remove_post_type_support( $post_type, 'trackbacks' );
+		remove_post_type_support( $post_type, 'thumbnail' );
+		remove_post_type_support( $post_type, 'excerpt' );
+	}
 }
 add_action( 'init', __NAMESPACE__ . '\modify_post_supports' );
-
 
 /**
  * Make post type searchable in the backend so Zoninator can find it.
@@ -87,6 +89,7 @@ add_filter( 'admin_footer', __NAMESPACE__ . '\gutenberg_shim' );
  */
 function remove_menu_pages() {
 	remove_menu_page( 'edit.php?post_type=feedback' );
+	remove_menu_page( 'edit.php?post_type=npr_story_post' );
 	remove_menu_page( 'edit-comments.php' );
 }
 add_action( 'admin_menu', __NAMESPACE__ . '\remove_menu_pages' );

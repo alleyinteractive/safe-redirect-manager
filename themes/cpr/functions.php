@@ -90,6 +90,9 @@ require_once CPR_PATH . '/inc/cache.php';
 // This site's RSS, Atom, JSON, etc. feeds.
 require_once CPR_PATH . '/inc/feeds.php';
 
+// Field helpers.
+require_once CPR_PATH . '/inc/field-helpers.php';
+
 // Gutenberg.
 require_once CPR_PATH . '/inc/gutenberg.php';
 

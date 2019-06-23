@@ -2,7 +2,7 @@
 	"contexts": [
 		{
 			"type": "post",
-			"post_types": [ "post" ],
+			"post_types": [ "show-segment" ],
 			"title": { "__": "Settings" }
 		}
 	],
@@ -16,12 +16,6 @@
 			"add_to_prefix": false,
 			"children": "`\\CPR\\Fields\\get_settings()`"
 		},
-		"terms": {
-			"label": { "__": "Terms" },
-			"serialize_data": false,
-			"add_to_prefix": false,
-			"children": "`\\CPR\\Fields\\get_taxonomy_fields()`"
-		},
 		"featured_media": {
 			"label": { "__": "Featured Media" },
 			"serialize_data": false,
@@ -32,7 +26,7 @@
 			"label": { "__": "Social and SEO" },
 			"serialize_data": false,
 			"add_to_prefix": false,
-			"children": "`\\Alleypack\\Fieldmanager\\Patterns\\get_seo_and_social_fields()`"
+			"children": "`\\CPR\\Fields\\get_seo_and_social_fields()`"
 		}
 	}
 }
