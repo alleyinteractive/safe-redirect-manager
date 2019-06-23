@@ -146,7 +146,7 @@ class News extends \WP_Components\Component {
 										->set_source( 'news' )
 										->set_config( 'count', 1 )
 										->set_theme( 'sidebar' ),
-									( new \CPR\Components\Ad() )->set_config( 'height', 600 ),
+									( new \CPR\Components\Advertising\Ad_Unit() )->set_config( 'height', 600 ),
 								]
 							),
 
@@ -288,7 +288,7 @@ class News extends \WP_Components\Component {
 								/**
 								 * Advertisement.
 								 */
-								new \CPR\Components\Ad()
+								new \CPR\Components\Advertising\Ad_Unit()
 							),
 					]
 				),
