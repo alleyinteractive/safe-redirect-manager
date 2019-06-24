@@ -31,7 +31,10 @@ class Ad_Provider extends \WP_Components\Component {
 				[ 300, 600 ],
 			],
 		],
-		'CPR3-Inst-News-Shared-300x250' => [
+		'CPR3-Combined-300x250' => [
+			'sizes' => [ [ 300, 250 ] ],
+		],
+		'CPR3-Article-300x250' => [
 			'sizes' => [ [ 300, 250 ] ],
 		],
 	];
@@ -44,7 +47,7 @@ class Ad_Provider extends \WP_Components\Component {
 	public function default_config() : array {
 		return [
 			'targeting'      => [
-				'test' => '',
+				'section' => '',
 			],
 			'dfp_network_id' => '',
 			'size_mapping'   => [

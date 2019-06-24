@@ -315,7 +315,8 @@ function build_components_endpoint(
 			->set_config( 'container_id', $settings['gtm']['container_id'] ?? '' )
 			->set_data_layer_from_query( $wp_query ),
 		( new Components\Advertising\Ad_Provider() )
-			->set_config( 'dfp_network_id', '12925303' ),
+			->set_config( 'dfp_network_id', '12925303' )
+			->set_targeting_from_query( $wp_query ),
 	];
 
 	// Setup the page data based on routing.
