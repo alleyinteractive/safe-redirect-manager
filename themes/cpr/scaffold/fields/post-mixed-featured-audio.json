@@ -1,0 +1,42 @@
+
+{
+	"contexts": [
+		{
+			"type": "post",
+			"post_types": [ "post", "podcast-episode", "show-segment" ],
+			"title": { "__": "Audio" }
+		}
+	],
+	"serialize_data": false,
+	"add_to_prefix": false,
+	"tabbed": "vertical",
+	"children": {
+		"settings": {
+			"label": { "__": "Legacy Audio" },
+			"serialize_data": false,
+			"add_to_prefix": false,
+			"children": {
+				"audio_id": {
+					"label": { "__": "Primary Audio" },
+					"type": "media"
+				},
+				"aac_id": {
+					"label": { "__": "Legacy AAC Audio" },
+					"type": "media"
+				},
+				"mp3_id": {
+					"label": { "__": "Legacy MP3 Audio" },
+					"type": "media"
+				},
+				"npr_id": {
+					"label": { "__": "Legacy NPR Audio" },
+					"type": "media"
+				},
+				"wav_id": {
+					"label": { "__": "Legacy WAV Audio" },
+					"type": "media"
+				}
+			}
+		}
+	}
+}

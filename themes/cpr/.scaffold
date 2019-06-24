@@ -23,13 +23,15 @@
   "cpt:show-episode": "b76c61057cbda5e278193978d50d949e",
   "tax:show": "ef9b502eeb5ff81c173af5511b2c18d2",
   "cpt:show-post": "70ad415bbc8c859ff5aceb554b089628",
-  "fm:post-podcast-and-show-settings": "8fcd0ccd5519cdbb5720764c4065ac9e",
-  "cpt:press-release": "b9125a2fd8a7d4d0879a736b5ce93060",
-  "tax:underwriter-category": "072af0a7a234fd9e1acc6770389678a4",
-  "fm:post-tribe_events_section": "90290608888446e92fb31b7e1d3a7e1b",
   "cpt:newsletter-single": "bee6d31ecea99d3c3880ca9a44e921df",
+  "cpt:press-release": "b9125a2fd8a7d4d0879a736b5ce93060",
   "cpt:newsletter-post": "13d970f1868dcc7f778db1ff18e6a6a8",
+  "tax:underwriter-category": "072af0a7a234fd9e1acc6770389678a4",
   "tax:newsletter": "2a77afdb06e90003d67e0c66af9d0699",
+  "fm:post-mixed-featured-audio": "e127f4e1da6981db776b0957f94bf743",
+  "fm:post-podcast-and-show-settings": "8fcd0ccd5519cdbb5720764c4065ac9e",
   "fm:post-newsletter-settings": "a1215033095fd330dba802e71960d605",
-  "fm:post-mixed-post-types-settings": "d4cb830588522d7e2379aa0552e28c27"
+  "fm:post-post-settings": "297eb8437c46210228737fb474315ade",
+  "fm:post-mixed-post-types-settings": "d4cb830588522d7e2379aa0552e28c27",
+  "fm:post-tribe_events_section": "90290608888446e92fb31b7e1d3a7e1b"
 }
