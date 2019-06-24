@@ -54,7 +54,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Attachment_Feed_Item {
 	 * Map source data to the object.
 	 */
 	public function map_source_to_object() {
-		$this->object['post_title']  = esc_html( $this->source['title'] );
+		$this->object['post_title'] = esc_html( $this->source['title'] );
 	}
 
 	/**
