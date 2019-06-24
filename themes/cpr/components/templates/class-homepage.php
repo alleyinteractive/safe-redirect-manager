@@ -41,8 +41,8 @@ class Homepage extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'homepage', true );
-		$classical_image = wp_get_attachment_image_src( $data['playlist_images']['classical_image'], 'feature_item' );
-		$indie_image = wp_get_attachment_image_src( $data['playlist_images']['indie_image'], 'feature_item' );
+		$classical_image = wp_get_attachment_image_src( $data['playlist_images']['classical_image'], 'medium_large' );
+		$indie_image = wp_get_attachment_image_src( $data['playlist_images']['indie_image'], 'medium_large' );
 
 		return [
 			( new \CPR\Components\Column_Area() )
@@ -163,7 +163,7 @@ class Homepage extends \WP_Components\Component {
 				->merge_config(
 					[
 						'classical_image' => $classical_image[0] ?? '',
-						'indie_image' => $indie_image[0] ?? '',
+						'indie_image'     => $indie_image[0] ?? '',
 					]
 				),
 
