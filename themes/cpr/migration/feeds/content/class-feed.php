@@ -116,7 +116,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						esc_url( wp_get_attachment_url( $attachment->ID ) ),
 						$align,
 						$source['title'] ?? '',
-						$source['body']['und'][0]['value'] ?? '',
+						$source['body']['und'][0]['value'] ?? ''
 					),
 					$post_content
 				);
