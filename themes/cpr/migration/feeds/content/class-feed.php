@@ -265,12 +265,10 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 		if ( empty( $figure_alignment ) ) {
 			return '<!-- wp:image -->' . PHP_EOL .
-			'<div class="wp-block-image">' . PHP_EOL .
-				'<figure>' . PHP_EOL .
-					'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
-					'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
-				'</figure>' . PHP_EOL .
-			'</div>' . PHP_EOL .
+			'<figure class="wp-block-image">' . PHP_EOL .
+				'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
+				'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+			'</figure>' . PHP_EOL .
 			'<!-- /wp:image -->';
 		}
 
