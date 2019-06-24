@@ -147,7 +147,7 @@ class Homepage extends \WP_Components\Component {
 				->set_theme( 'gridCentered' )
 				->set_child_themes(
 					[
-						'content-item'  => 'grid',
+						'content-item'  => 'gridSecondary',
 						'content-title' => 'grid',
 						'eyebrow'       => 'large',
 					]
