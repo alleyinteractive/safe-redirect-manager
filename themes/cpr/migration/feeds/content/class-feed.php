@@ -237,11 +237,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @return string The HTML.
 	 */
 	private function custom_img( \DOMNode $node ) : string {
-		$alignment = $node->getAttribute( 'data-alignment' );
-		$alt       = $node->getAttribute( 'alt' );
-		$image_src = $node->getAttribute( 'src' );
-		$caption   = $node->getAttribute( 'data-caption' );
-		$image_src = ( new Converter( '' ) )->upload_image( $image_src, $alt ?? '' );
+		$alignment = $node->getAttribute( 'data-alignment' ) ?? '';
+		$alt       = $node->getAttribute( 'alt' ) ?? '';
+		$image_src = $node->getAttribute( 'src' ) ?? '';
+		$caption   = $node->getAttribute( 'data-caption' ) ?? '';
+		$image_src = ( new Converter( '' ) )->upload_image( $image_src, $alt );
 		
 		// Check alignment.
 		switch ( $alignment ) {
@@ -256,14 +256,25 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				break;
 		}
 
-		return '<!-- wp:image {"align":"' . $alignment . '","width":300,"height":200} -->' . PHP_EOL .
+		if ( empty( $figure_alignment ) ) {
+			return '<!-- wp:image -->' . PHP_EOL .
 			'<div class="wp-block-image">' . PHP_EOL .
-				'<figure class="' . esc_attr( $figure_alignment ) . ' is-resized">' . PHP_EOL .
-					'<img src="' . esc_url( $image_src ?? '' ) . '" alt="' . esc_attr( $alt ?? '' ) . '" width="300" height="200" />' . PHP_EOL .
+				'<figure>' . PHP_EOL .
+					'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
 					'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
 				'</figure>' . PHP_EOL .
 			'</div>' . PHP_EOL .
 			'<!-- /wp:image -->';
+		}
+
+		return '<!-- wp:image {"align":"' . $alignment . '","width":300,"height":200} -->' . PHP_EOL .
+		'<div class="wp-block-image">' . PHP_EOL .
+			'<figure class="' . esc_attr( $figure_alignment ) . ' is-resized">' . PHP_EOL .
+				'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" width="300" height="200" />' . PHP_EOL .
+				'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+			'</figure>' . PHP_EOL .
+		'</div>' . PHP_EOL .
+		'<!-- /wp:image -->';
 	}
 
 	/**
