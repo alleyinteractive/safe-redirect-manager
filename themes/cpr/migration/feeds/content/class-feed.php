@@ -163,7 +163,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			case 'iframe':
 				return $this->video_to_block( $content, $node );
 			case 'img':
-				if ( 'cpr-image-block' === $node->getAttribute( 'class' ) && ! empty( $node->getAttribute( 'data-alignment' ) ) ) {
+				if ( 'cpr-image-block' === $node->getAttribute( 'class' ) ) {
 					return $this->custom_img( $node );
 				}
 				return $content;
@@ -223,11 +223,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 							// Fix for nested image block inside a paragraph and span.
 							if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
-								if ( ! empty( $innerChild->getAttribute( 'data-alignment' ) ) ) {
-									return $this->custom_img( $innerChild );
-								} else {
-									return ( new Converter( '' ) )->img( $innerChild );
-								}
+								return $this->custom_img( $innerChild );
 							}
 						}
 					}
