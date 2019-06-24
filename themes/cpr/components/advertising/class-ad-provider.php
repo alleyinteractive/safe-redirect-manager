@@ -46,9 +46,7 @@ class Ad_Provider extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'targeting'      => [
-				'section' => '',
-			],
+			'targeting'      => [],
 			'dfp_network_id' => '',
 			'size_mapping'   => [
 				[
@@ -71,6 +69,11 @@ class Ad_Provider extends \WP_Components\Component {
 	 * @return Ad_Provider
 	 */
 	public function set_targeting_from_query( $wp_query ) : self {
-		return $this->merge_config( 'targeting', [] );
+		return $this->set_config(
+			'targeting',
+			[
+				'section' => '',
+			]
+		);
 	}
 }
