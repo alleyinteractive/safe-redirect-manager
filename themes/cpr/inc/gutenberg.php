@@ -72,3 +72,18 @@ function enqueue_icons_assets() {
 	wp_enqueue_script( 'font-awesome' );
 }
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_icons_assets', 12 );
+
+/**
+ * Hide some taxonomies from displaying the default Gutenberg metabox.
+ *
+ * @param \WP_REST_Response $response Rest response object.
+ * @param \WP_Taxonomy      $taxonomy WP taxonomy object.
+ * @return \WP_REST_Response
+ */
+function hide_taxonomy_ui( \WP_REST_Response $response, \WP_Taxonomy $taxonomy ) : \WP_REST_Response {
+	if ( in_array( $taxonomy->name, [ 'category', 'post_tag', 'podcast', 'show' ], true ) ) {
+		$response->data['visibility']['show_ui'] = false;
+	}
+	return $response;
+}
+add_filter( 'rest_prepare_taxonomy', __NAMESPACE__ . '\hide_taxonomy_ui', 10, 2 );

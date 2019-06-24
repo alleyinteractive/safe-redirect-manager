@@ -46,7 +46,7 @@ class Underwriter_Archive extends \WP_Components\Component {
 					[
 						'heading'           => __( 'List of CPR Sponsors', 'cpr' ),
 						'heading_cta_label' => __( 'Sponsor CPR', 'cpr' ),
-						'heading_cta_link'  => '/become-a-sponsor-underwriter/',
+						'heading_cta_link'  => '/become-a-sponsor/',
 					]
 				)
 				->append_children(

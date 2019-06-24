@@ -93,7 +93,10 @@ class Homepage extends \WP_Components\Component {
 						 * Right sidebar with an ad.
 						 */
 						( new \CPR\Components\Sidebar() )
-							->append_child( ( new \CPR\Components\Ad() )->set_config( 'height', 600 ) )
+							->append_child(
+								( new \CPR\Components\Advertising\Ad_Unit() )
+									->configure_ad_slot( 'CPR3-Inst-News-Shared-300x600' )
+							)
 							->set_theme( 'right' ),
 
 					]
@@ -183,15 +186,8 @@ class Homepage extends \WP_Components\Component {
 							->set_theme( 'right' )
 							->append_children(
 								[
-									/**
-									 * Colorado Wonders question form.
-									 */
-									// new \CPR\Components\Colorado_Wonders(),.
-
-									/**
-									 * Advertisement.
-									 */
-									new \CPR\Components\Ad(),
+									( new \CPR\Components\Advertising\Ad_Unit() )
+										->configure_ad_slot( 'CPR3-Inst-News-Shared-300x250' ),
 								]
 							),
 					]
