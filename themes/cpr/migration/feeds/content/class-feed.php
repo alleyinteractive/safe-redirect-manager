@@ -162,6 +162,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		switch ( $node->tagName ) {
 			case 'iframe':
 				return $this->video_to_block( $content, $node );
+			case 'img':
+				if ( 'cpr-image-block' === $node->getAttribute( 'class' ) && ! empty( $node->getAttribute( 'data-alignment' ) ) ) {
+					return $this->custom_img( $node );
+				}
+				return $content;
 			case 'div':
 				if ( 'embed' === $node->getAttribute( 'class' ) ) {
 					return $this->video_to_block( $content, $node );
@@ -190,7 +195,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				return $content;
 			case 'p':
 
-				// Fix for nested galleries.
+				// Fix for nested galleries inside a paragraph.
 				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
 					return $this->migrate_galleries( $content, $node );
 				}
@@ -211,6 +216,12 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 								return $content;
 							}
 
+							// Fix for nested galleries inside a paragraph and span.
+							if ( 'cpr-gallery-migration' === $innerChild->getAttribute( 'class' ) ) {
+								return $this->migrate_galleries( $content, $innerChild );
+							}
+
+							// Fix for nested image block inside a paragraph and span.
 							if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
 								if ( ! empty( $innerChild->getAttribute( 'data-alignment' ) ) ) {
 									return $this->custom_img( $innerChild );
