@@ -162,6 +162,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		switch ( $node->tagName ) {
 			case 'iframe':
 				return $this->video_to_block( $content, $node );
+			case 'img':
+				if ( 'cpr-image-block' === $node->getAttribute( 'class' ) ) {
+					return $this->custom_img( $node );
+				}
+				return $content;
 			case 'div':
 				if ( 'embed' === $node->getAttribute( 'class' ) ) {
 					return $this->video_to_block( $content, $node );
@@ -190,7 +195,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				return $content;
 			case 'p':
 
-				// Fix for nested galleries.
+				// Fix for nested galleries inside a paragraph.
 				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
 					return $this->migrate_galleries( $content, $node );
 				}
@@ -211,12 +216,14 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 								return $content;
 							}
 
+							// Fix for nested galleries inside a paragraph and span.
+							if ( 'cpr-gallery-migration' === $innerChild->getAttribute( 'class' ) ) {
+								return $this->migrate_galleries( $content, $innerChild );
+							}
+
+							// Fix for nested image block inside a paragraph and span.
 							if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
-								if ( ! empty( $innerChild->getAttribute( 'data-alignment' ) ) ) {
-									return $this->custom_img( $innerChild );
-								} else {
-									return ( new Converter( '' ) )->img( $innerChild );
-								}
+								return $this->custom_img( $innerChild );
 							}
 						}
 					}
@@ -237,11 +244,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @return string The HTML.
 	 */
 	private function custom_img( \DOMNode $node ) : string {
-		$alignment = $node->getAttribute( 'data-alignment' );
-		$alt       = $node->getAttribute( 'alt' );
-		$image_src = $node->getAttribute( 'src' );
-		$caption   = $node->getAttribute( 'data-caption' );
-		$image_src = ( new Converter( '' ) )->upload_image( $image_src, $alt ?? '' );
+		$alignment = $node->getAttribute( 'data-alignment' ) ?? '';
+		$alt       = $node->getAttribute( 'alt' ) ?? '';
+		$image_src = $node->getAttribute( 'src' ) ?? '';
+		$caption   = $node->getAttribute( 'data-caption' ) ?? '';
+		$image_src = ( new Converter( '' ) )->upload_image( $image_src, $alt );
 		
 		// Check alignment.
 		switch ( $alignment ) {
@@ -256,14 +263,25 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				break;
 		}
 
-		return '<!-- wp:image {"align":"' . $alignment . '","width":300,"height":200} -->' . PHP_EOL .
+		if ( empty( $figure_alignment ) ) {
+			return '<!-- wp:image -->' . PHP_EOL .
 			'<div class="wp-block-image">' . PHP_EOL .
-				'<figure class="' . esc_attr( $figure_alignment ) . ' is-resized">' . PHP_EOL .
-					'<img src="' . esc_url( $image_src ?? '' ) . '" alt="' . esc_attr( $alt ?? '' ) . '" width="300" height="200" />' . PHP_EOL .
+				'<figure>' . PHP_EOL .
+					'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
 					'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
 				'</figure>' . PHP_EOL .
 			'</div>' . PHP_EOL .
 			'<!-- /wp:image -->';
+		}
+
+		return '<!-- wp:image {"align":"' . $alignment . '","width":300,"height":200} -->' . PHP_EOL .
+		'<div class="wp-block-image">' . PHP_EOL .
+			'<figure class="' . esc_attr( $figure_alignment ) . ' is-resized">' . PHP_EOL .
+				'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" width="300" height="200" />' . PHP_EOL .
+				'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+			'</figure>' . PHP_EOL .
+		'</div>' . PHP_EOL .
+		'<!-- /wp:image -->';
 	}
 
 	/**
