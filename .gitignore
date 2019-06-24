@@ -27,6 +27,7 @@ plugins/*
 !plugins/meta-inspector
 !plugins/npr-story-api
 !plugins/pantheon-advanced-page-cache
+!plugins/post-type-switcher
 !plugins/posts-to-posts
 !plugins/pym-shortcode
 !plugins/redirection
