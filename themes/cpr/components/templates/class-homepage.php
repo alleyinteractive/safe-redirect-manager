@@ -41,6 +41,9 @@ class Homepage extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'homepage', true );
+		$classical_image = wp_get_attachment_image_src( $data['playlist_images']['classical_image'], 'medium_large' );
+		$indie_image = wp_get_attachment_image_src( $data['playlist_images']['indie_image'], 'medium_large' );
+
 		return [
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'threeColumn' )
@@ -155,7 +158,14 @@ class Homepage extends \WP_Components\Component {
 			 *
 			 * @todo Build this component. Determine if we can reuse another component.
 			 */
-			new \CPR\Components\Audio\Homepage_Playlists(),
+
+			( new \CPR\Components\Audio\Homepage_Playlists() )
+				->merge_config(
+					[
+						'classical_image' => $classical_image[0] ?? '',
+						'indie_image'     => $indie_image[0] ?? '',
+					]
+				),
 
 			/**
 			 * "More Stories" content grid with a sidebar for Colorado Wonders and an ad.
@@ -271,6 +281,27 @@ class Homepage extends \WP_Components\Component {
 										'query_args'     => [
 											'post_type' => [ 'podcast-episode', 'show-episode', 'show-segment', 'external-link' ],
 										],
+									]
+								),
+							],
+						]
+					),
+					'playlist_images'   => new \Fieldmanager_Group(
+						[
+							'label'     => __( 'Playlist Background Images', 'cpr' ),
+							'children' => [
+								'classical_image' => new \Fieldmanager_Media( esc_html__( 'Classical Playlist', 'cpr' ),
+									[
+										'button_label'       => esc_html__( 'Select Background Image', 'cpr' ),
+										'modal_button_label' => esc_html__( 'Select image', 'cpr' ),
+										'modal_title'        => esc_html__( 'Choose image', 'cpr' ),
+									]
+								),
+								'indie_image' => new \Fieldmanager_Media( esc_html__( 'Indie Playlist', 'cpr' ),
+									[
+										'button_label'       => esc_html__( 'Select Background Image', 'cpr' ),
+										'modal_button_label' => esc_html__( 'Select image', 'cpr' ),
+										'modal_title'        => esc_html__( 'Choose image', 'cpr' ),
 									]
 								),
 							],
