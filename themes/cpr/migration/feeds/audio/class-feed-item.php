@@ -104,7 +104,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 
 		// Was there an error?
 		if ( $attachment_id instanceof \WP_Error ) {
-			print_r( $attachment_id );
 			return null;
 		}
 
