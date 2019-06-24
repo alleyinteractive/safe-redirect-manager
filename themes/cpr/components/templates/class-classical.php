@@ -177,12 +177,6 @@ class Classical extends \WP_Components\Component {
 				),
 
 			/**
-			 * Newsletter CTA.
-			 */
-			( new \CPR\Components\Modules\Newsletter() )
-				->set_config( 'background_color', \CPR\get_site_color( 'classical' ) ),
-
-			/**
 			 * Articles content list.
 			 */
 			( new \CPR\Components\Column_Area() )

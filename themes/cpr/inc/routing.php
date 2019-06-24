@@ -206,8 +206,17 @@ function build_components_endpoint(
 
 		/**
 		 * Calendar.
+		 *
+		 * The second condition prevents 404s when viewing a month without
+		 * any events.
 		 */
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar
 		case $wp_query->is_post_type_archive( 'tribe_events' ):
+		case (
+			'tribe_events' === $wp_query->query['post_type'] &&
+			isset( $wp_query->query['eventDisplay'] ) &&
+			'month' === $wp_query->query['eventDisplay']
+		):
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
 			break;
@@ -305,6 +314,8 @@ function build_components_endpoint(
 		( new Components\Google_Tag_Manager() )
 			->set_config( 'container_id', $settings['gtm']['container_id'] ?? '' )
 			->set_data_layer_from_query( $wp_query ),
+		( new Components\Advertising\Ad_Provider() )
+			->set_config( 'dfp_network_id', '12925303' ),
 	];
 
 	// Setup the page data based on routing.

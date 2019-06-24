@@ -138,55 +138,56 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @param \DOMNode $node    The node.
 	 * @return string
 	 */
-	public function apply_custom_block_logic( $content, \DOMNode $node ) {
+	public function apply_custom_block_logic( $content, \DOMNode $node ) : string {
+		switch ( $node->tagName ) {
+			case 'iframe':
+				return $this->video_to_block( $content, $node );
+			case 'div':
+				if ( 'embed' === $node->getAttribute( 'class' ) ) {
+					return $this->video_to_block( $content, $node );
+				}
+				return $content;
+			case 'span':
+				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
+					return $this->migrate_galleries( $content, $node );
+				}
+				return $content;
+			case 'p':
+				$spans = Converter::get_nodes( $node, 'span' );
 
-		// Migrate galleries.
-		if ( 'span' === $node->tagName && 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
-			return $this->migrate_galleries( $content, $node );
-		}
+				if ( empty( $spans ) ) {
+					return $content;
+				}
 
-		if ( 'p' === $node->tagName && 'img' === ( $node->firstChild->tagName ?? '' ) ) {
-			$html = Converter::get_node_html( $node->firstChild );
-			return ( new Converter( $html ) )->convert_to_block();
-		}
+				foreach ( $spans as $span ) {
 
-		// Fix for nested galleries.
-		if ( 'p' === $node->tagName && 'span' === ( $node->firstChild->tagName ?? '' ) ) {
-			$spans = Converter::get_nodes( $node, 'span' );
-
-			foreach ( $spans as $p_span ) {
-				if ( 'cpr-gallery-migration' === $p_span->getAttribute( 'class' ) ) {
-					$gallery_span = Converter::get_nodes( $p_span, 'span' );
-
-					// Bail if there is no img tag.
-					if ( empty( $gallery_span->item( 0 ) ) ) {
-						return $content;
+					if ( empty( $span ) ) {
+						continue;
+					}
+					
+					if ( '#text' === $span->nodeName ) {
+						continue;
 					}
 
-					return $this->migrate_galleries( $content, $gallery_span->item( 0 ) );
+					// Fix for nested galleries.
+					$inner_span = Converter::get_nodes( $span, 'span' );
+					if ( 'cpr-gallery-migration' === $span->getAttribute( 'class' ) && ! empty( $inner_span->item( 0 ) ) ) {
+						return $this->migrate_galleries( $content, $inner_span->item( 0 ) );
+					}
+
+					// Fix for nested images.
+					$img = Converter::get_nodes( $span, 'img' );						
+					if ( ! empty( $img->item( 0 ) ) ) {
+						return ( new Converter( '' ) )->img( $img->item( 0 ) );
+					}
+
+					return $content;
 				}
-			}
 
-			return $content;
-		}
-
-		// Fix for nested images.
-		if ( 'p' === $node->tagName && 'img' === ( $node->firstChild->tagName ?? '' ) ) {
-			$img = Converter::get_nodes( $node, 'img' );
-
-			// Bail if there is no img tag.
-			if ( empty( $img->item( 0 ) ) ) {
 				return $content;
-			}
-
-			return ( new Converter( '' ) )->img( $img->item( 0 ) );
+			default:
+				return $content;
 		}
-
-		if ( 'iframe' === $node->tagName || ( 'div' === $node->tagName && 'embed' === $node->getAttribute( 'class' )  ) ) {
-			return $this->video_to_block( $content, $node );
-		}
-
-		return $content;
 	}
 
 	/**
@@ -249,7 +250,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		}
 
 		// Get the iframe src/url.
-		$video_url = $iframe->item( 0 )->getAttribute( 'src' );
+		$video_url = $iframe->item( 0 )->getAttribute( 'src' ) ?? '';
 
 		// Bail early.
 		if ( empty( $video_url )
@@ -261,6 +262,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			return $content;
 		}
 
+		// Return vimeo first.
 		if ( $this->is_video( $video_url, 'vimeo.com' ) ) {
 			return '<!-- wp:core-embed/vimeo {"url":"' . esc_url( $video_url ) . '","type":"video","providerNameSlug":"vimeo","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->' . PHP_EOL .
 				'<figure class="wp-block-embed-vimeo wp-block-embed is-type-video is-provider-vimeo wp-embed-aspect-16-9 wp-has-aspect-ratio">' . PHP_EOL .

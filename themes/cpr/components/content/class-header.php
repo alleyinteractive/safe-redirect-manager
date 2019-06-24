@@ -55,7 +55,7 @@ class Header extends \WP_Components\Component {
 				$this->set_publish_date();
 
 				// Children.
-				$this->append_child( new \CPR\Components\Ad() );
+				$this->append_child( new \CPR\Components\Advertising\Ad_Unit() );
 				$this->append_child(
 					( new \WP_Components\Social_Sharing() )
 						->merge_config(
