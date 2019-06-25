@@ -112,7 +112,7 @@ class Homepage extends \WP_Components\Component {
 												'sizes'    => [ 300, 250 ],
 											],
 										]
-									),
+									)
 							),
 					]
 				),
