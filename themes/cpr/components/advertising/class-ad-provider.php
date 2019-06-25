@@ -69,10 +69,23 @@ class Ad_Provider extends \WP_Components\Component {
 	 * @return Ad_Provider
 	 */
 	public function set_targeting_from_query( $wp_query ) : self {
+		$section      = 'cpr';
+		$sections     = [ 'cpr', 'news', 'indie', 'classical' ];
+		$landing_page = $wp_query->query_vars['landing-page-type'];
+
+		if ( ! empty( $landing_page ) && in_array( $landing_page, $sections, true ) ) {
+			$section = $landing_page;
+		}
+
+		if ( $wp_query->is_singular() ) {
+			$term_obj = get_the_terms( $wp_query->queried_object->ID, 'section' );
+			$section  = is_array( $term_obj ) && in_array( $term_obj[0]->slug, $sections, true ) ? $term_obj[0]->slug : $section;
+		}
+
 		return $this->set_config(
 			'targeting',
 			[
-				'section' => '',
+				'section' => $section,
 			]
 		);
 	}
