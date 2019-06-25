@@ -212,4 +212,22 @@ class Podcast_And_Show extends \WP_Components\Component {
 
 		return $args;
 	}
+
+	/**
+	 * Modify results.
+	 *
+	 * @param object $wp_query wp_query object.
+	 */
+	public static function pre_get_posts( $wp_query ) {
+		if ( ! empty( $wp_query->get( 'irving-path' ) && ( $wp_query->is_tax( 'podcast' ) || $wp_query->is_tax( 'show' ) ) ) ) {
+			$wp_query->set(
+				'post_type',
+				[
+					'podcast-episode',
+					'show-episode',
+				]
+			);
+			$wp_query->set( 'posts_per_page', 8 );
+		}
+	}
 }
