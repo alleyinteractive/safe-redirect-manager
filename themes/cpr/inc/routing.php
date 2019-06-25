@@ -197,8 +197,6 @@ function build_components_endpoint(
 		case $wp_query->is_tax( 'podcast' ):
 		case $wp_query->is_tax( 'show' ):
 			$head->set_query( $wp_query );
-			// $header->set_query( $wp_query );
-			// $header->set_term( $wp_query->get_queried_object_id() );
 			$template = ( new Components\Templates\Podcast_And_Show() )->set_query( $wp_query );
 			break;
 
