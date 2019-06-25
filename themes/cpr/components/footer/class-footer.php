@@ -48,10 +48,10 @@ class Footer extends \WP_Components\Component {
 				'footer-4',
 			],
 			[
-				home_url(),
-				home_url( '/news/' ),
-				home_url( '/classical/' ),
-				home_url( '/indie/' ),
+				home_url( '/about/' ),
+				home_url( '/contact/' ),
+				home_url( '/ways-to-listen/' ),
+				home_url( '/support/' ),
 			]
 		);
 

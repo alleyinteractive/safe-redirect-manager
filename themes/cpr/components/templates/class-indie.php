@@ -215,32 +215,6 @@ class Indie extends \WP_Components\Component {
 				->set_from_latest(),
 
 			/**
-			 * Podcast episodes content list.
-			 */
-			( new \CPR\Components\Modules\Content_List() )
-				->merge_config(
-					[
-						'background_color' => '#f8f9fa',
-						'eyebrow_location' => 'top',
-						'heading'          => __( 'Listen', 'cpr' ),
-						'image_size'       => 'grid_item',
-					]
-				)
-				->set_theme( 'gridCentered' )
-				->parse_from_ids(
-					$data['podcast_episodes']['content_item_ids'] ?? [],
-					4,
-					self::get_indie_episodes_backfill_args()
-				)
-				->set_child_themes(
-					[
-						'content-item'  => 'grid',
-						'eyebrow'       => 'small',
-						'content-title' => 'grid',
-					]
-				),
-
-			/**
 			 * Articles content list.
 			 */
 			( new \CPR\Components\Column_Area() )

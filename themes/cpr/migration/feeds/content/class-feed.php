@@ -69,7 +69,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	}
 
 	/**
-	 * Convert [[nid]] into media.
+	 * Convert [[nid]] into its proper media.
 	 *
 	 * @param string $post_content Post content.
 	 * @return string
@@ -80,7 +80,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			'field_format',
 		];
 
-		preg_match_all( '/(<p>)?\[\[nid:(\d+)(.+)\]\](<\/p>)?/', $post_content, $matches );
+		preg_match_all( '/(<p>)?\[\[nid:(\d+)(.*?)\]\](<\/p>)?/', $post_content, $matches );
 
 		foreach ( $matches[0] as $key => $value ) {
 
@@ -91,12 +91,32 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			// Migrate images.
 			$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_nid );
 			if ( ! empty( $source ) ) {
-				$attachment   = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
+				$attachment = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
+
+				// Check alignment.
+				switch ( trim( $matches[3][ $key ] ) ) {
+					case 'field_align=left':
+						$align = 'left';
+						break;
+					case 'field_align=right':
+						$align = 'right';
+						break;
+					case 'field_align=center':
+						$align = '';
+						break;
+					default:
+						$align = '';
+						break;
+				}
+
 				$post_content = str_replace(
 					$matches[0][ $key ],
 					sprintf(
-						'<img src="%1$s" />',
-						esc_url( wp_get_attachment_url( $attachment->ID ) )
+						'<img src="%1$s" class="cpr-image-block" data-alignment="%2$s" alt="%3$s" data-caption="%4$s" />',
+						esc_url( wp_get_attachment_url( $attachment->ID ) ),
+						$align,
+						$source['title'] ?? '',
+						$source['body']['und'][0]['value'] ?? ''
 					),
 					$post_content
 				);
@@ -142,43 +162,70 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		switch ( $node->tagName ) {
 			case 'iframe':
 				return $this->video_to_block( $content, $node );
+			case 'img':
+				if ( 'cpr-image-block' === $node->getAttribute( 'class' ) ) {
+					return $this->custom_img( $node );
+				}
+				return $content;
 			case 'div':
 				if ( 'embed' === $node->getAttribute( 'class' ) ) {
 					return $this->video_to_block( $content, $node );
 				}
-				return $content;
+
+				if ( $node->hasChildNodes() ) {
+					foreach ( $node->childNodes as $span ) {
+						if ( $span->hasChildNodes() ) {
+							foreach ( $span->childNodes as $innerChild ) {
+								if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
+									if ( ! empty( $innerChild->getAttribute( 'data-alignment' ) ) ) {
+										return $this->custom_img( $innerChild );
+									} else {
+										return ( new Converter( '' ) )->img( $innerChild );
+									}
+								}
+							}
+						}
+					}
+				}
+				return ( new Converter( '' ) )->p( $node );
 			case 'span':
 				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
 					return $this->migrate_galleries( $content, $node );
 				}
 				return $content;
 			case 'p':
-				$spans = Converter::get_nodes( $node, 'span' );
 
-				if ( empty( $spans ) ) {
+				// Fix for nested galleries inside a paragraph.
+				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
+					return $this->migrate_galleries( $content, $node );
+				}
+
+				if ( ! $node->hasChildNodes() ) {
 					return $content;
 				}
 
-				foreach ( $spans as $span ) {
+				foreach ( $node->childNodes as $span ) {
 
-					if ( empty( $span ) ) {
-						continue;
-					}
-					
 					if ( '#text' === $span->nodeName ) {
-						continue;
+						return $content;
 					}
 
-					// Fix for nested galleries.
-					$inner_span = Converter::get_nodes( $span, 'span' );
-					if ( 'cpr-gallery-migration' === $span->getAttribute( 'class' ) && ! empty( $inner_span->item( 0 ) ) ) {
-						return $this->migrate_galleries( $content, $inner_span->item( 0 ) );
-					}
+					if ( $span->hasChildNodes() ) {
+						foreach ( $span->childNodes as $innerChild ) {
+							if ( '#text' === $innerChild->nodeName ) {
+								return $content;
+							}
 
-					// Fix for nested images.
-					$img = Converter::get_nodes( $span, 'img' );						
-					if ( ! empty( $img->item( 0 ) ) ) {
-						return ( new Converter( '' ) )->img( $img->item( 0 ) );
+							// Fix for nested galleries inside a paragraph and span.
+							if ( 'cpr-gallery-migration' === $innerChild->getAttribute( 'class' ) ) {
+								return $this->migrate_galleries( $content, $innerChild );
+							}
+
+							// Fix for nested image block inside a paragraph and span.
+							if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
+								return $this->custom_img( $innerChild );
+							}
+						}
 					}
 
 					return $content;
@@ -191,13 +238,58 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	}
 
 	/**
+	 * Create custom img block.
+	 *
+	 * @param \DOMNode $node The node.
+	 * @return string The HTML.
+	 */
+	private function custom_img( \DOMNode $node ) : string {
+		$alignment = $node->getAttribute( 'data-alignment' ) ?? '';
+		$alt       = $node->getAttribute( 'alt' ) ?? '';
+		$image_src = $node->getAttribute( 'src' ) ?? '';
+		$caption   = $node->getAttribute( 'data-caption' ) ?? '';
+		$image_src = ( new Converter( '' ) )->upload_image( $image_src, $alt );
+		
+		// Check alignment.
+		switch ( $alignment ) {
+			case 'right':
+				$figure_alignment = 'alignright';
+				break;
+			case 'left':
+				$figure_alignment = 'alignleft';
+				break;
+			default:
+				$figure_alignment = '';
+				break;
+		}
+
+		if ( empty( $figure_alignment ) ) {
+			return '<!-- wp:image -->' . PHP_EOL .
+			'<figure class="wp-block-image">' . PHP_EOL .
+				'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
+				'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+			'</figure>' . PHP_EOL .
+			'<!-- /wp:image -->';
+		}
+
+		return '<!-- wp:image {"align":"' . $alignment . '","width":300,"height":200} -->' . PHP_EOL .
+		'<div class="wp-block-image">' . PHP_EOL .
+			'<figure class="' . esc_attr( $figure_alignment ) . ' is-resized">' . PHP_EOL .
+				'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" width="300" height="200" />' . PHP_EOL .
+				'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+			'</figure>' . PHP_EOL .
+		'</div>' . PHP_EOL .
+		'<!-- /wp:image -->';
+	}
+
+	/**
 	 * Map gallery to its custom block.
 	 *
 	 * @param string   $content HTML content, already blocks.
 	 * @param \DOMNode $node    The node.
 	 * @return string
 	 */
-	public function migrate_galleries( $content, \DOMNode $node ) : string {
+	private function migrate_galleries( $content, \DOMNode $node ) : string {
 		$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'gallery', absint( $node->getAttribute( 'id' ) ) );
 
 		if ( empty( $source ) && empty( $source['field_images']['und'] ) ) {
@@ -211,8 +303,14 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 		array_map(
 			function( $target ) use ( &$gallery ) {
-				$source          = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', absint( $target['target_id'] ) );
-				$attachment      = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
+				$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', absint( $target['target_id'] ) );
+				$attachment = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
+
+				// Validate attachment.
+				if ( ! $attachment instanceof \WP_Post ) {
+					return false;
+				}
+
 				$gallery['images'][] = [
 					'original' => wp_get_attachment_url( $attachment->ID ) ?? '',
 					'alt'      => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ) ?? '',

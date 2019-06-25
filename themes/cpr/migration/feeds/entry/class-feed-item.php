@@ -55,6 +55,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	public function post_object_save() {
 		$this->migrate_bylines();
+		$this->migrate_audio_files();
 		$this->migrate_featured_image();
 		$this->set_section();
 		$this->set_podcast();

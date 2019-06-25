@@ -69,7 +69,8 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		// Get, filter, convert, and save the post content.
 		$source_post_content          = $this->source['body']['und'][0]['value'] ?? '';
 		$source_post_content          = apply_filters( 'cpr_block_converter_replace_media', $source_post_content, $this );
-		$this->object['post_content'] = ( new Converter( $source_post_content ) )->convert_to_block();
+		$source_post_content          = ( new Converter( $source_post_content ) )->convert_to_block();
+		$this->object['post_content'] = ( new Converter( '' ) )->remove_empty_blocks( $source_post_content );
 	}
 
 	/**

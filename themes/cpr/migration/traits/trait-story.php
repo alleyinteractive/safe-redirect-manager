@@ -58,7 +58,6 @@ trait Story {
 
 		// Map meta.
 		$this->object['meta_input'] = [
-			'audio'                => $this->source['field_audio']['und'][0]['target_id'] ?? 0,
 			'author'               => $this->source['field_author']['und'][0]['target_id'] ?? 0,
 			'disable_image'        => $disable_image,
 			'featured_image'       => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
@@ -99,6 +98,28 @@ trait Story {
 		);
 	}
 
+	/**
+	 * Migrate the audio.
+	 */
+	public function migrate_audio_files() {
+
+		// Get the audio nid and validate.
+		$audio_nid = absint( $this->source['field_audio']['und'][0]['target_id'] ?? 0 );
+		if ( 0 === $audio_nid ) {
+			return;
+		}
+
+		// Get or create the attachments.
+		$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $audio_nid );
+		$audio_item = new \CPR\Migration\Audio\Feed_Item();
+		$audio_item->load_source( $source );
+		$audio_item->sync();
+
+		// Store each ID.
+		foreach ( (array) $audio_item->object as $key => $value ) {
+			update_post_meta( $this->get_object_id(), $key, $value );
+		}
+	}
 	/**
 	 * Migrate the featured image.
 	 */
