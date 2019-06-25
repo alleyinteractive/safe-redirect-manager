@@ -69,10 +69,21 @@ class Ad_Provider extends \WP_Components\Component {
 	 * @return Ad_Provider
 	 */
 	public function set_targeting_from_query( $wp_query ) : self {
+		$section = 'colorado-public-radio';
+
+		if ( ! empty( $wp_query->query_vars['landing-page-type'] ) ) {
+			$section = $wp_query->query_vars['landing-page-type'];
+		}
+
+		if ( $wp_query->is_singular() ) {
+			$term_obj = get_the_terms( $wp_query->queried_object->ID, 'section' );
+			$section  = is_array( $term_obj ) ? $term_obj[0]->slug : '';
+		}
+
 		return $this->set_config(
 			'targeting',
 			[
-				'section' => '',
+				'section' => $section,
 			]
 		);
 	}
