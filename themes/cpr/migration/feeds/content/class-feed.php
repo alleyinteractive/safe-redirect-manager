@@ -163,20 +163,44 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			case 'iframe':
 				return $this->video_to_block( $content, $node );
 			case 'img':
-				if ( 'cpr-image-block' === $node->getAttribute( 'class' ) ) {
+				if ( $this->has_class( $node->getAttribute( 'class' ), 'cpr-image-block' ) ) {
 					return $this->custom_img( $node );
 				}
 				return $content;
 			case 'div':
-				if ( 'embed' === $node->getAttribute( 'class' ) ) {
+				static $caption = '1';
+
+				$class = $node->getAttribute( 'class' );
+
+				// Remove those divs.
+				if ( $this->has_class( $class, 'pane-ads' ) || $this->has_class( $class, 'ad-toggle' ) ) {
+					return '';
+				}
+
+				// Convert video embed.
+				if ( $this->has_class( $class, 'embed' ) ) {
 					return $this->video_to_block( $content, $node );
 				}
 
+				if ( 'div' === $node->nodeName ) {
+					$caption = $node->nodeValue;
+				}
+
 				if ( $node->hasChildNodes() ) {
+
 					foreach ( $node->childNodes as $span ) {
+
+						if ( 'img' === $span->nodeName ) {
+							if ( ! empty( $caption ) ) {
+								return $this->custom_img_block( $span, $caption );
+							} else {
+								return ( new Converter( '' ) )->img( $span );
+							}
+						}
+
 						if ( $span->hasChildNodes() ) {
 							foreach ( $span->childNodes as $innerChild ) {
-								if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
+								if ( 'img' === $innerChild->nodeName && $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-image-block' ) ) {
 									if ( ! empty( $innerChild->getAttribute( 'data-alignment' ) ) ) {
 										return $this->custom_img( $innerChild );
 									} else {
@@ -279,6 +303,25 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
 			'</figure>' . PHP_EOL .
 		'</div>' . PHP_EOL .
+		'<!-- /wp:image -->';
+	}
+
+	/**
+	 * Create custom img wide block.
+	 *
+	 * @param \DOMNode $node The node.
+	 * @return string The HTML.
+	 */
+	private function custom_img_block( \DOMNode $node, $caption ) : string {
+		$alt       = $node->getAttribute( 'alt' ) ?? '';
+		$image_src = $node->getAttribute( 'src' ) ?? '';
+		$image_src = ( new Converter( '' ) )->upload_image( $image_src, $alt );
+
+		return '<!-- wp:image -->' . PHP_EOL .
+		'<figure class="wp-block-image">' . PHP_EOL .
+			'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
+			'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+		'</figure>' . PHP_EOL .
 		'<!-- /wp:image -->';
 	}
 
@@ -403,6 +446,10 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @return boolean
 	 */
 	private function is_video( $url, $type ) : bool {
+		return ( false !== strpos( $url, $type ) );
+	}
+
+	private function has_class( $url, $type ) : bool {
 		return ( false !== strpos( $url, $type ) );
 	}
 }
