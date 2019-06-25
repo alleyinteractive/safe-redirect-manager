@@ -126,7 +126,7 @@ class Grid_Group extends \WP_Components\Component {
 			]
 		);
 
-		$theme = $fm_data['theme'];
+		$theme = $fm_data['theme'] ?? '';
 		// Append the Grid_Group_items as children.
 		$this->append_children(
 			array_map(
