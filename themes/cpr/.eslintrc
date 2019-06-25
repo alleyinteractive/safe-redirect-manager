@@ -26,7 +26,8 @@
   "globals": {
     "jQuery": true,
     "angular": false, // Enable if using Angular
-    "wp": true
+    "wp": true,
+    "HowlerGlobal": true
   },
   "settings": {
     "import/resolver": {
