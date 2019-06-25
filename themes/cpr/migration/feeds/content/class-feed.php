@@ -168,8 +168,6 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				}
 				return $content;
 			case 'div':
-				static $caption = '1';
-
 				$class = $node->getAttribute( 'class' );
 
 				// Remove those divs.
@@ -181,6 +179,9 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				if ( $this->has_class( $class, 'embed' ) ) {
 					return $this->video_to_block( $content, $node );
 				}
+
+				// Save staticly to persist other checks.
+				static $caption = '';
 
 				if ( 'div' === $node->nodeName ) {
 					$caption = $node->nodeValue;
@@ -449,7 +450,14 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		return ( false !== strpos( $url, $type ) );
 	}
 
-	private function has_class( $url, $type ) : bool {
-		return ( false !== strpos( $url, $type ) );
+	/**
+	 * Has class.
+	 *
+	 * @param string $attrs Node attrs.
+	 * @param string $class Class.
+	 * @return boolean
+	 */
+	private function has_class( $attrs, $class ) : bool {
+		return ( false !== strpos( $attrs, $class ) );
 	}
 }
