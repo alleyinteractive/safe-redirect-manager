@@ -60,7 +60,6 @@ function build_components_endpoint(
 			( new Components\Footer\Footer_Sidebar() )
 				->set_sidebar( 'footer-sidebar' ),
 			new Components\Footer\Footer(),
-			new Components\Audio\Player(),
 		];
 	}
 
@@ -139,11 +138,8 @@ function build_components_endpoint(
 					break;
 			}
 
-			$template = ( new Components\Templates\Streaming_Playlist() )
-				->set_query( $wp_query );
-
+			$template = ( new Components\Templates\Streaming_Playlist() )->set_query( $wp_query );
 			break;
-
 
 		/**
 		 * Author archive.
@@ -200,8 +196,7 @@ function build_components_endpoint(
 		case $wp_query->is_tax( 'podcast' ):
 		case $wp_query->is_tax( 'show' ):
 			$head->set_query( $wp_query );
-			$header->set_term( $wp_query->get_queried_object_id() );
-			$template = ( new Components\Templates\Podcast_And_Show() )->set_term( $wp_query->get_queried_object_id() );
+			$template = ( new Components\Templates\Podcast_And_Show() )->set_query( $wp_query );
 			break;
 
 		/**

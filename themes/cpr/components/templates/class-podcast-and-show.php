@@ -12,6 +12,7 @@ namespace CPR\Components\Templates;
  */
 class Podcast_And_Show extends \WP_Components\Component {
 
+	use \WP_Components\WP_Query;
 	use \WP_Components\WP_Post;
 	use \WP_Components\WP_Term;
 
@@ -21,6 +22,17 @@ class Podcast_And_Show extends \WP_Components\Component {
 	 * @var string
 	 */
 	public $name = 'podcast-and-show-template';
+
+	/**
+	 * Hook into query being set.
+	 *
+	 * @return self
+	 */
+	public function query_has_set() : self {
+		// Also set the term.
+		$this->set_term( $this->get_queried_object() );
+		return $this;
+	}
 
 	/**
 	 * Hook into the term being set, and then load the linked post. This gives
@@ -41,7 +53,7 @@ class Podcast_And_Show extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
-		$body = new \WP_Components\Body();
+		$body           = new \WP_Components\Body();
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
 		return $this;
@@ -53,7 +65,6 @@ class Podcast_And_Show extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
-		$data = get_post_meta( $this->get_post_id(), 'settings', true );
 		return [
 			/**
 			 * Header.
@@ -104,28 +115,12 @@ class Podcast_And_Show extends \WP_Components\Component {
 						( new \CPR\Components\Modules\Content_List() )
 							->merge_config(
 								[
-									'theme'                => 'riverFull',
-									'image_size'           => 'grid_item',
-									'show_excerpt'         => true,
+									'theme'        => 'riverFull',
+									'image_size'   => 'grid_item',
+									'show_excerpt' => true,
 								]
 							)
-							->parse_from_ids(
-								[],
-								8,
-								[
-									'post_type' => [
-										'podcast-episode',
-										'show-episode',
-									],
-									'tax_query' => [
-										[
-											'taxonomy' => $this->term->taxonomy,
-											'field'    => 'slug',
-											'terms'    => $this->term->slug,
-										],
-									],
-								]
-							)
+							->parse_from_wp_query( $this->query )
 							->set_theme( 'riverFull' )
 							->set_child_themes(
 								[
@@ -134,6 +129,14 @@ class Podcast_And_Show extends \WP_Components\Component {
 									'eyebrow'       => 'small',
 								]
 							),
+
+						/**
+						 * Pagination
+						 */
+						( new \WP_Components\Pagination() )
+							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+							->set_config( 'base_url', "/{$this->wp_term_get_taxonomy()}/{$this->wp_term_get_slug()}/" )
+							->set_query( $this->query ),
 
 						/**
 						 * Right Sidebar.
@@ -208,5 +211,23 @@ class Podcast_And_Show extends \WP_Components\Component {
 		];
 
 		return $args;
+	}
+
+	/**
+	 * Modify results.
+	 *
+	 * @param object $wp_query wp_query object.
+	 */
+	public static function pre_get_posts( $wp_query ) {
+		if ( ! empty( $wp_query->get( 'irving-path' ) && ( $wp_query->is_tax( 'podcast' ) || $wp_query->is_tax( 'show' ) ) ) ) {
+			$wp_query->set(
+				'post_type',
+				[
+					'podcast-episode',
+					'show-episode',
+				]
+			);
+			$wp_query->set( 'posts_per_page', 8 );
+		}
 	}
 }

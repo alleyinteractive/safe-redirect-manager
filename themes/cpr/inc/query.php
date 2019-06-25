@@ -26,3 +26,6 @@ add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Calendar', 'pre_ge
 
 // Modify all content results.
 add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\All_Archive', 'pre_get_posts' ] );
+
+// Modify Podcast and Shows results.
+add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Podcast_And_Show', 'pre_get_posts' ] );
