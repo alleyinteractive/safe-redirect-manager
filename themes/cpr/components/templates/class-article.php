@@ -49,6 +49,11 @@ class Article extends \WP_Components\Component {
 				->set_post( $this->post ),
 
 			/**
+			 * Segments list.
+			 */
+			( new \CPR\Components\Podcast_And_Show\Segments_Playlist() )->set_post( $this->post ),
+
+			/**
 			 * Content Body.
 			 *
 			 * @todo Extract the grid into this component to more easily build
