@@ -60,7 +60,6 @@ function build_components_endpoint(
 			( new Components\Footer\Footer_Sidebar() )
 				->set_sidebar( 'footer-sidebar' ),
 			new Components\Footer\Footer(),
-			new Components\Audio\Player(),
 		];
 	}
 
