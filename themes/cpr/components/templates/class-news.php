@@ -137,6 +137,7 @@ class News extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Sidebar() )
 							->set_theme( 'right' )
+							->set_config( 'has_ad', true )
 							->append_children(
 								[
 									/**
@@ -146,7 +147,8 @@ class News extends \WP_Components\Component {
 										->set_source( 'news' )
 										->set_config( 'count', 1 )
 										->set_theme( 'sidebar' ),
-									( new \CPR\Components\Advertising\Ad_Unit() )->set_config( 'height', 600 ),
+									( new \CPR\Components\Advertising\Ad_Unit() )
+										->configure_ad_slot( 'CPR3-Inst-News-Shared-300x600' ),
 								]
 							),
 
