@@ -50,12 +50,12 @@ class Ad_Provider extends \WP_Components\Component {
 			'dfp_network_id' => '',
 			'size_mapping'   => [
 				[
-					'viewport' => [ 768, 9999 ],
-					'sizes'    => [ [ 300, 250 ] ],
+					'viewport' => [ 768, 0 ],
+					'sizes'    => [ 300, 600 ],
 				],
 				[
-					'viewport' => [ 2400, 9999 ],
-					'sizes'    => [ [ 300, 600 ] ],
+					'viewport' => [ 0, 0 ],
+					'sizes'    => [ 300, 250 ],
 				],
 			],
 		];
