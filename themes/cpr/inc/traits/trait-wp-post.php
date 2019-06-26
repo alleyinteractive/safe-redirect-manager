@@ -138,7 +138,6 @@ trait WP_Post {
 	 * Create byline components and add to children.
 	 */
 	public function get_audio_metadata() {
-
 		// Get primary file.
 		$audio_id = get_post_meta( $this->post->ID, 'audio_id', true );
 
@@ -155,11 +154,12 @@ trait WP_Post {
 		$src  = wp_get_attachment_url( $audio_id );
 
 		return [
-			'album'    => $meta['album'] ?? '',
-			'artist'   => $meta['artist'] ?? '',
-			'title'    => get_the_title( $audio_id ),
-			'src'      => $src,
-			'duration' => $meta['length_formatted'] ?? '',
+			'album'        => $meta['album'] ?? '',
+			'artist'       => $meta['artist'] ?? '',
+			'title'        => get_the_title( $audio_id ),
+			'src'          => $src,
+			'duration'     => $meta['length_formatted'] ?? '',
+			'duration_raw' => $meta['length'] ?? '',
 		];
 	}
 
