@@ -3,7 +3,7 @@
 	"contexts": [
 		{
 			"type": "post",
-			"post_types": [ "post", "podcast-episode", "show-segment" ],
+			"post_types": [ "post", "podcast-episode", "show-episode", "show-segment" ],
 			"title": { "__": "Audio" }
 		}
 	],

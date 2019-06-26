@@ -8,12 +8,9 @@
 	},
 	"supports": [
 		"title",
-		"thumbnail",
 		"author",
 		"editor",
-		"revisions",
-		"excerpt",
-		"custom-fields"
+		"revisions"
 	],
 	"taxonomies": [
 		"category",
