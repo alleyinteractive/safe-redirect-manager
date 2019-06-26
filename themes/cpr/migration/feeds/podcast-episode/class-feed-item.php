@@ -77,7 +77,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		$this->global_post_save();
 		$this->migrate_audio_files();
 		$this->migrate_meta();
-		$this->migrate_meta();
 		$this->migrate_bylines();
 		$this->migrate_featured_image();
 		$this->set_section();
