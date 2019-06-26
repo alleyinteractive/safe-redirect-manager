@@ -148,6 +148,7 @@ class Indie extends \WP_Components\Component {
 						 */
 						( new \CPR\Components\Sidebar() )
 							->set_theme( 'right' )
+							->set_config( 'has_ad', true )
 							->append_child(
 
 								/**
@@ -171,6 +172,10 @@ class Indie extends \WP_Components\Component {
 											],
 										]
 									)
+							)
+							->append_child(
+								( new \CPR\Components\Advertising\Ad_Unit() )
+										->configure_ad_slot( 'CPR3-Combined-300x250' )
 							),
 					]
 				),
