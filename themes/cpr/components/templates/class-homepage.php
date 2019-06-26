@@ -40,9 +40,9 @@ class Homepage extends \WP_Components\Component {
 	 * @return array
 	 */
 	public function get_components() : array {
-		$data = (array) get_post_meta( $this->get_post_id(), 'homepage', true );
-		$classical_image = wp_get_attachment_image_src( $data['playlist_images']['classical_image'], 'medium_large' );
-		$indie_image = wp_get_attachment_image_src( $data['playlist_images']['indie_image'], 'medium_large' );
+		$data            = (array) get_post_meta( $this->get_post_id(), 'homepage', true );
+		$classical_image = wp_get_attachment_image_src( $data['playlist_images']['classical_image'] ?? '', 'medium_large' );
+		$indie_image     = wp_get_attachment_image_src( $data['playlist_images']['indie_image'] ?? '', 'medium_large' );
 
 		return [
 			( new \CPR\Components\Column_Area() )
@@ -170,7 +170,6 @@ class Homepage extends \WP_Components\Component {
 			 *
 			 * @todo Build this component. Determine if we can reuse another component.
 			 */
-
 			( new \CPR\Components\Audio\Homepage_Playlists() )
 				->merge_config(
 					[
