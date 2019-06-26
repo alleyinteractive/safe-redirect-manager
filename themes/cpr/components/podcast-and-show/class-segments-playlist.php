@@ -69,12 +69,21 @@ class Segments_Playlist extends \WP_Components\Component {
 			0
 		);
 
-		$this->merge_config(
-			[
-				'total_duration'       => gmdate( 'i:s', $total_duration ),
-				'first_segment_source' => $this->children[0]->get_config( 'src' ) ?? '',
-			]
+		// Append play button.
+		$first_segment = $this->children[0];
+
+		$this->append_child(
+			( new \CPR\Components\Audio\Play_Pause_Button() )
+				->merge_config(
+					[
+						'src'   => $first_segment->get_config( 'src' ) ?? '',
+						'title' => [ $first_segment->get_config( 'title' ) ?? '' ],
+					]
+				)
+				->set_theme( 'inverse' )
 		);
+
+		$this->set_config( 'total_duration', gmdate( 'i:s', $total_duration ) );
 
 		return $this;
 	}

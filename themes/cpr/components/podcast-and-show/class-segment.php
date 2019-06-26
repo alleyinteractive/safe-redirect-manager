@@ -49,7 +49,25 @@ class Segment extends \WP_Components\Component {
 			$this->set_invalid();
 		}
 
-		$this->merge_config( $audio_metadata );
+		$this->merge_config(
+			array_merge(
+				$audio_metadata,
+				[
+					'title' => $this->wp_post_get_title(),
+				]
+			)
+		);
+
+		$this->append_child(
+			( new \CPR\Components\Audio\Play_Pause_Button() )
+				->merge_config(
+					[
+						'src'   => $audio_metadata['src'],
+						'title' => [ $audio_metadata['title'] ],
+					]
+				)
+				->set_theme( 'inverse' )
+		);
 
 		return $this;
 	}
