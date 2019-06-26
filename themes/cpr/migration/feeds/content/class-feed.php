@@ -81,12 +81,12 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		];
 
 		preg_match_all( '/(<p>)?\[\[nid:(\d+)(.*?)\]\](<\/p>)?/', $post_content, $matches );
+		preg_match_all( '/\[\[nid:(\d+)(.*?)\]\]?/', $post_content, $matches );
 
 		foreach ( $matches[0] as $key => $value ) {
 
 			// Extra fields and parse as needed.
-			$legacy_nid          = $matches[2][ $key ];
-			$attachment_settings = wp_parse_args( $matches[3][ $key ] );
+			$legacy_nid          = $matches[1][ $key ];
 
 			// Migrate images.
 			$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_nid );
@@ -94,7 +94,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				$attachment = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
 
 				// Check alignment.
-				switch ( trim( $matches[3][ $key ] ) ) {
+				switch ( trim( $matches[2][ $key ] ) ) {
 					case 'field_align=left':
 						$align = 'left';
 						break;
@@ -116,7 +116,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						esc_url( wp_get_attachment_url( $attachment->ID ) ),
 						$align,
 						$source['title'] ?? '',
-						$source['body']['und'][0]['value'] ?? ''
+						wp_strip_all_tags( $source['body']['und'][0]['value'] ?? '' )
 					),
 					$post_content
 				);
@@ -161,10 +161,30 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	public function apply_custom_block_logic( $content, \DOMNode $node ) : string {
 		switch ( $node->nodeName ) {
 			case 'iframe':
-				return $this->video_to_block( $content, $node );
+				// Vimeo and Youtube.
+				if ( $this->has_iframe( $node->getAttribute( 'src' ) ?? '' ) ) {
+					return $this->video_to_block( $content, $node );
+				}
+
+				// Spotify.
+				if ( $this->has_class( $node->getAttribute( 'src' ) ?? '', 'spotify.com' ) ) {
+					$text = $this->get_paragraph_from_image( $content, 'down', 'yes' );
+					if ( ! empty( $text ) ) {
+						return $this->spotify_to_block( $content, $node ) . $text;
+					} else {
+						return $this->spotify_to_block( $content, $node );
+					}
+				}
+
+				return $content;
 			case 'img':
 				if ( $this->has_class( $node->getAttribute( 'class' ), 'cpr-image-block' ) ) {
 					return $this->custom_img( $node );
+				}
+				return $content;
+			case 'span':
+				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
+					return $this->migrate_galleries( $content, $node );
 				}
 				return $content;
 			case 'div':
@@ -191,6 +211,10 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 					foreach ( $node->childNodes as $span ) {
 
+						if ( 'p' === $span->nodeName ) {
+							return ( new Converter( '' ) )->p( $span );
+						}
+
 						if ( 'img' === $span->nodeName ) {
 							if ( ! empty( $caption ) ) {
 								return $this->custom_img_block( $span, $caption );
@@ -213,11 +237,6 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 					}
 				}
 				return ( new Converter( '' ) )->p( $node );
-			case 'span':
-				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
-					return $this->migrate_galleries( $content, $node );
-				}
-				return $content;
 			case 'p':
 
 				// Fix for nested galleries inside a paragraph.
@@ -235,25 +254,54 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						return $content;
 					}
 
-					if ( $span->hasChildNodes() ) {
-						foreach ( $span->childNodes as $innerChild ) {
-							if ( '#text' === $innerChild->nodeName ) {
-								return $content;
+					switch ( $span->nodeName ) {
+						case 'iframe':
+							if ( $this->has_iframe( $span->getAttribute( 'src' ) ?? '' ) ) {
+								return $this->video_to_block( $content, $span );
 							}
 
-							// Fix for nested galleries inside a paragraph and span.
-							if ( 'cpr-gallery-migration' === $innerChild->getAttribute( 'class' ) ) {
-								return $this->migrate_galleries( $content, $innerChild );
+							if ( $this->has_class( $span->getAttribute( 'src' ) ?? '', 'spotify.com' ) ) {
+								$text = $this->get_paragraph_from_image( $content, 'down', 'yes' );
+								if ( ! empty( $text ) ) {
+									return $this->spotify_to_block( $content, $span ) . $text;
+								} else {
+									return $this->spotify_to_block( $content, $span );
+								}
 							}
 
-							// Fix for nested image block inside a paragraph and span.
-							if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
-								return $this->custom_img( $innerChild );
+							return $content;
+						case 'img':
+
+						if ( $this->has_class( $span->getAttribute( 'class' ), 'cpr-image-block' ) ) {
+								$text = $this->get_paragraph_from_image( $content, 'down' );
+								if ( ! empty( $text ) ) {
+									return $this->custom_img( $span ) . $text;
+								} else {
+									return $this->custom_img( $span );
+								}
 							}
-						}
+							return $content;
+						default:
+							if ( $span->hasChildNodes() ) {
+								foreach ( $span->childNodes as $innerChild ) {
+									if ( '#text' === $innerChild->nodeName ) {
+										return $content;
+									}
+		
+									// Fix for nested galleries inside a paragraph and span.
+									if ( 'cpr-gallery-migration' === $innerChild->getAttribute( 'class' ) ) {
+										return $this->migrate_galleries( $content, $innerChild );
+									}
+		
+									// Fix for nested image block inside a paragraph and span.
+									if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
+										return $this->custom_img( $innerChild );
+									}
+								}
+							}
+	
+							return $content;
 					}
-
-					return $content;
 				}
 
 				return $content;
@@ -292,7 +340,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			return '<!-- wp:image -->' . PHP_EOL .
 			'<figure class="wp-block-image">' . PHP_EOL .
 				'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
-				'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+				'<figcaption>' . $caption . '</figcaption>' . PHP_EOL .
 			'</figure>' . PHP_EOL .
 			'<!-- /wp:image -->';
 		}
@@ -301,7 +349,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		'<div class="wp-block-image">' . PHP_EOL .
 			'<figure class="' . esc_attr( $figure_alignment ) . ' is-resized">' . PHP_EOL .
 				'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" width="300" height="200" />' . PHP_EOL .
-				'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+				'<figcaption>' . $caption . '</figcaption>' . PHP_EOL .
 			'</figure>' . PHP_EOL .
 		'</div>' . PHP_EOL .
 		'<!-- /wp:image -->';
@@ -321,7 +369,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		return '<!-- wp:image -->' . PHP_EOL .
 		'<figure class="wp-block-image">' . PHP_EOL .
 			'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
-			'<figcaption>' . wp_strip_all_tags( $caption ) . '</figcaption>' . PHP_EOL .
+			'<figcaption>' . $caption . '</figcaption>' . PHP_EOL .
 		'</figure>' . PHP_EOL .
 		'<!-- /wp:image -->';
 	}
@@ -381,31 +429,23 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @param \DOMNode $node    The node.
 	 * @return string
 	 */
-	public function video_to_block( $content, \DOMNode $node ) {
-
-		// Get iframe.
-		$iframe = Converter::get_nodes( $node, 'iframe' );
-
-		// Bail if there is no iframe.
-		if ( empty( $iframe->item( 0 ) ) ) {
-			return $content;
-		}
+	public function video_to_block( $content, \DOMNode $node ) : string {
 
 		// Get the iframe src/url.
-		$video_url = $iframe->item( 0 )->getAttribute( 'src' ) ?? '';
+		$video_url = $node->getAttribute( 'src' ) ?? '';
 
 		// Bail early.
 		if ( empty( $video_url )
 			&& ! (
-			$this->is_video( $video_url, 'youtube.com' )
-			&& $this->is_video( $video_url, 'youtu.be' )
-			&& $this->is_video( $video_url, 'vimeo.com'
+			$this->has_class( $video_url, 'youtube.com' )
+			&& $this->has_class( $video_url, 'youtu.be' )
+			&& $this->has_class( $video_url, 'vimeo.com'
 			) ) ) {
 			return $content;
 		}
 
 		// Return vimeo first.
-		if ( $this->is_video( $video_url, 'vimeo.com' ) ) {
+		if ( $this->has_class( $video_url, 'vimeo.com' ) ) {
 			return '<!-- wp:core-embed/vimeo {"url":"' . esc_url( $video_url ) . '","type":"video","providerNameSlug":"vimeo","className":"wp-embed-aspect-16-9 wp-has-aspect-ratio"} -->' . PHP_EOL .
 				'<figure class="wp-block-embed-vimeo wp-block-embed is-type-video is-provider-vimeo wp-embed-aspect-16-9 wp-has-aspect-ratio">' . PHP_EOL .
 					'<div class="wp-block-embed__wrapper">' . PHP_EOL .
@@ -440,14 +480,25 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	}
 
 	/**
-	 * Check video url.
+	 * Map legacy spotify iframe into a spotify block.
 	 *
-	 * @param string $url  Video url.
-	 * @param string $type Video type.
-	 * @return boolean
+	 * @param string   $content HTML content, already blocks.
+	 * @param \DOMNode $node    The node.
+	 * @return string
 	 */
-	private function is_video( $url, $type ) : bool {
-		return ( false !== strpos( $url, $type ) );
+	private function spotify_to_block( $content, \DOMNode $node ) : string {
+
+		// Get url.
+		$url         = $node->getAttribute( 'src' ) ?? '';
+		$spotify_url = str_replace( 'embed/', '', $url );
+
+		return '<!-- wp:core-embed/spotify {"url":"' . esc_url( $spotify_url ) . '","type":"rich","providerNameSlug":"spotify","className":"wp-embed-aspect-9-16 wp-has-aspect-ratio"} -->' . PHP_EOL .
+				'<figure class="wp-block-embed-spotify wp-block-embed is-type-rich is-provider-spotify wp-embed-aspect-9-16 wp-has-aspect-ratio">' . PHP_EOL .
+					'<div class="wp-block-embed__wrapper">' . PHP_EOL .
+						esc_url( $spotify_url ) . PHP_EOL .
+					'</div>' . PHP_EOL .
+				'</figure>' . PHP_EOL .
+		'<!-- /wp:core-embed/spotify -->';
 	}
 
 	/**
@@ -459,5 +510,46 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 */
 	private function has_class( $attrs, $class ) : bool {
 		return ( false !== strpos( $attrs, $class ) );
+	}
+
+	/**
+	 * See if is one of those two iframes.
+	 *
+	 * @param string $video_url Iframe url.
+	 * @return boolean
+	 */
+	private function has_iframe( $video_url ) : bool {
+		return ( $this->has_class( $video_url, 'youtube.com' )
+			|| $this->has_class( $video_url, 'youtu.be' ) 
+			|| $this->has_class( $video_url, 'vimeo.com' ) );
+	}
+
+	/**
+	 * Get content after image withing a paragraph.
+	 *
+	 * @param string $content  HTML content, already block.
+	 * @param string $position Position.
+	 * @param string $strip    Strip HTML.
+	 * @return string
+	 */
+	private function get_paragraph_from_image( $content, $position, $strip = '' ) : string {
+		if ( 'down' === $position ) {
+			preg_match_all( '/">(.*?)<\/p>?/', $content, $html_down );
+			if ( ! empty( $html_down[1][0] ) ) {
+				$p = ! empty( $strip ) ? wp_strip_all_tags( $html_down[1][0] ) : $html_down[1][0];
+				return $this->custom_paragraph( $p );
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * Custom paragraph.
+	 *
+	 * @param string $content Content.
+	 * @return string
+	 */
+	private function custom_paragraph( $content ) : string {
+		return '<!-- wp:paragraph --><p>' . $content . '</p><!-- /wp:paragraph -->';
 	}
 }
