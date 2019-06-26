@@ -40,12 +40,36 @@ class Body extends \WP_Components\Component {
 
 		return $this->append_children(
 			[
+				/**
+				 * Segments list.
+				 */
+				( new \CPR\Components\Podcast_And_Show\Segments_Playlist() )->set_post( $this->post ),
+
+				/**
+				 * Content body.
+				 */
 				( new \WP_Components\Gutenberg_Content() )->set_post( $this->post ),
+
+				/**
+				 * Sidebar items.
+				 */
 				$this->get_sidebar_component(),
+
+				/**
+				 * Get these outta here for now (address post-launch).
+				 */
 				// ( new Keep_Reading() )->set_post( $this->post ),
 				// ( new Related_Tags() )->set_post( $this->post ),
 				// ( new Bylines() )->set_post( $this->post ),
+
+				/**
+				 * Donate call to action.
+				 */
 				new \CPR\Components\Donate\Donate_CTA(),
+
+				/**
+				 * Comments come later.
+				 */
 				// ( new Comments() )->set_post( $this->post ),
 			]
 		);
