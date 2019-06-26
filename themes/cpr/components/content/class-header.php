@@ -74,6 +74,7 @@ class Header extends \WP_Components\Component {
 
 			case 'podcast-episode':
 			case 'show-segment':
+				$this->set_publish_date();
 				$this->append_children(
 					[
 						( new \CPR\Components\Audio\Listen_Now() )->set_post( $this->post ),
