@@ -34,10 +34,11 @@ function cpr_fm_post_mixed_featured_audio() {
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Audio', 'cpr' ), [ 'post', 'podcast-episode', 'show-segment' ] );
+	$fm->add_meta_box( __( 'Audio', 'cpr' ), [ 'post', 'podcast-episode', 'show-episode', 'show-segment' ] );
 }
 add_action( 'fm_post_post', 'cpr_fm_post_mixed_featured_audio' );
 add_action( 'fm_post_podcast-episode', 'cpr_fm_post_mixed_featured_audio' );
+add_action( 'fm_post_show-episode', 'cpr_fm_post_mixed_featured_audio' );
 add_action( 'fm_post_show-segment', 'cpr_fm_post_mixed_featured_audio' );
 /* end fm:post-mixed-featured-audio */
 

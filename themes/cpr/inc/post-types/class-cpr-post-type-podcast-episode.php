@@ -59,7 +59,7 @@ class Cpr_Post_Type_Podcast_Episode extends Cpr_Post_Type {
 				'public' => true,
 				'show_in_rest' => true,
 				'show_in_menu' => 'shows-podcasts',
-				'supports' => [ 'title', 'thumbnail', 'author', 'editor', 'revisions', 'excerpt', 'custom-fields' ],
+				'supports' => [ 'title', 'author', 'editor', 'revisions' ],
 				'taxonomies' => [ 'category', 'post_tag', 'podcast', 'section' ],
 			]
 		);
