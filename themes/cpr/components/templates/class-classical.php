@@ -251,9 +251,7 @@ class Classical extends \WP_Components\Component {
 				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
-						'heading'           => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
-						// 'heading_cta_label' => __( 'All Videos', 'cpr' ),
-						// 'heading_cta_link'  => home_url(), // @todo Update once known.
+						'heading' => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
 					]
 				)
 				->append_child(
@@ -268,7 +266,7 @@ class Classical extends \WP_Components\Component {
 						->add_video_items(
 							$data['videos']['content_item_ids'] ?? [],
 							2,
-							self::get_classical_posts_backfill_args() // @todo Determine actual backfill args.
+							self::get_classical_posts_backfill_args()
 						)
 						->set_theme( 'gridHalf' )
 						->set_child_themes(
@@ -407,6 +405,24 @@ class Classical extends \WP_Components\Component {
 										'post_limit' => 2,
 										'query_args' => [
 											'post_type' => 'post',
+											'tax_query' => [
+												[
+													'taxonomy' => 'section',
+													'field'    => 'slug',
+													'terms'    => 'classical',
+												],
+											],
+											'meta_query' => [
+												[
+													'key'     => 'featured_media_type',
+													'compare' => '=',
+													'value'   => 'video',
+												],
+												[
+													'key'     => 'youtube_url',
+													'compare' => 'EXISTS',
+												],
+											],
 										],
 									]
 								),
