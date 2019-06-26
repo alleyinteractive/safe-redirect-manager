@@ -264,6 +264,23 @@ class Content_List extends \WP_Components\Component {
 	 */
 	public function add_video_items( array $ids, $backfill_to = 0, $backfill_args = [] ) : Content_List {
 
+		$backfill_args = wp_parse_args(
+			$backfill_args,
+			[
+				'meta_query' => [
+					[
+						'key'     => 'featured_media_type',
+						'compare' => '=',
+						'value'   => 'video',
+					],
+					[
+						'key'     => 'video_url',
+						'compare' => 'EXISTS',
+					],
+				],
+			]
+		);
+
 		// Backfill as needed.
 		$ids = $this->backfill_content_item_ids(
 			$ids,
@@ -273,9 +290,15 @@ class Content_List extends \WP_Components\Component {
 
 		// Generate content items, each with an HTML child for the video embed.
 		foreach ( $ids as $id ) {
-			// @todo Get the video URL dynamically for each post.
-			$youtube_url = 'https://www.youtube.com/watch?v=7yujlqgVz5M';
-			$markup      = wp_oembed_get( $youtube_url );
+			$video_url = get_post_meta( $id, 'video_url', true );
+			if ( empty( $video_url ) ) {
+				continue;
+			}
+
+			$markup = wp_oembed_get( $video_url );
+			if ( false === $markup ) {
+				continue;
+			}
 
 			$this->children[] = $this->create_content_item( $id )
 				->append_child(

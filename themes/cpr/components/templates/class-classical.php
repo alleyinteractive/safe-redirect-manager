@@ -251,9 +251,7 @@ class Classical extends \WP_Components\Component {
 				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
-						'heading'           => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
-						// 'heading_cta_label' => __( 'All Videos', 'cpr' ),
-						// 'heading_cta_link'  => home_url(), // @todo Update once known.
+						'heading' => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
 					]
 				)
 				->append_child(
@@ -268,7 +266,7 @@ class Classical extends \WP_Components\Component {
 						->add_video_items(
 							$data['videos']['content_item_ids'] ?? [],
 							2,
-							self::get_classical_posts_backfill_args() // @todo Determine actual backfill args.
+							self::get_classical_posts_backfill_args()
 						)
 						->set_theme( 'gridHalf' )
 						->set_child_themes(
@@ -290,40 +288,6 @@ class Classical extends \WP_Components\Component {
 					}
 				),
 		];
-	}
-
-	/**
-	 * Generate a content list of people items from FM data.
-	 *
-	 * @param array $data People data array.
-	 * @return \CPR\Components\Modules\Content_List
-	 */
-	public function get_people_list( $data ) : \CPR\Components\Modules\Content_List {
-		$people_list = ( new \CPR\Components\Modules\Content_List() )
-			->merge_config(
-				[
-					'image_size'        => 'feature_item_small', // @todo change
-					'theme'             => 'featureSecondary', // @todo change
-				]
-			);
-
-		foreach ( ( $data['content_items'] ?? [] ) as $item ) {
-			$people_list->append_child(
-				( new \CPR\Components\Person_Item() )
-					->set_guest_author( get_post( $item['guest_author'] ?? 0 ) )
-					->merge_config(
-						[
-							'subheading' => sprintf(
-								/* translators: a show title */
-								esc_html__( 'Host, “%s”', 'cpr' ),
-								$item['show'] ?? ''
-							),
-						]
-					)
-			);
-		}
-
-		return $people_list;
 	}
 
 	/**
@@ -441,6 +405,24 @@ class Classical extends \WP_Components\Component {
 										'post_limit' => 2,
 										'query_args' => [
 											'post_type' => 'post',
+											'tax_query' => [
+												[
+													'taxonomy' => 'section',
+													'field'    => 'slug',
+													'terms'    => 'classical',
+												],
+											],
+											'meta_query' => [
+												[
+													'key'     => 'featured_media_type',
+													'compare' => '=',
+													'value'   => 'video',
+												],
+												[
+													'key'     => 'video_url',
+													'compare' => 'EXISTS',
+												],
+											],
 										],
 									]
 								),
