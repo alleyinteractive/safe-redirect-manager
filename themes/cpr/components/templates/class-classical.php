@@ -293,40 +293,6 @@ class Classical extends \WP_Components\Component {
 	}
 
 	/**
-	 * Generate a content list of people items from FM data.
-	 *
-	 * @param array $data People data array.
-	 * @return \CPR\Components\Modules\Content_List
-	 */
-	public function get_people_list( $data ) : \CPR\Components\Modules\Content_List {
-		$people_list = ( new \CPR\Components\Modules\Content_List() )
-			->merge_config(
-				[
-					'image_size'        => 'feature_item_small', // @todo change
-					'theme'             => 'featureSecondary', // @todo change
-				]
-			);
-
-		foreach ( ( $data['content_items'] ?? [] ) as $item ) {
-			$people_list->append_child(
-				( new \CPR\Components\Person_Item() )
-					->set_guest_author( get_post( $item['guest_author'] ?? 0 ) )
-					->merge_config(
-						[
-							'subheading' => sprintf(
-								/* translators: a show title */
-								esc_html__( 'Host, “%s”', 'cpr' ),
-								$item['show'] ?? ''
-							),
-						]
-					)
-			);
-		}
-
-		return $people_list;
-	}
-
-	/**
 	 * Add additional FM fields to a landing page.
 	 *
 	 * @param array $fields FM fields.
