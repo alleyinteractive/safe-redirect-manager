@@ -109,7 +109,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 
 				$post_id = get_the_ID();
 				$meta_id = get_post_meta( $post_id, 'audio_id', true );
-				if ( ! empty( $meta_id ) ) {
+				if ( empty( $meta_id ) ) {
 					$meta_id = get_post_meta( $post_id, 'mp3_id', true );
 				}
 
