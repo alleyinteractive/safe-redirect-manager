@@ -107,12 +107,10 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 			while ( $feed_items->have_posts() ) :
 				$feed_items->the_post();
 
-				// Get one of the saved audio file.
-				foreach ( [ 'mp3_id', 'npm_ud', 'wav_id', 'acc_id' ] as $meta_key ) {
-					$meta_id = get_post_meta( get_the_ID(), $meta_key, true );
-					if ( ! empty( $meta_id ) ) {
-						break;
-					}
+				$post_id = get_the_ID();
+				$meta_id = get_post_meta( $post_id, 'audio_id', true );
+				if ( ! empty( $meta_id ) ) {
+					$meta_id = get_post_meta( $post_id, 'mp3_id', true );
 				}
 
 				$audio      = wp_get_attachment_url( $meta_id );
