@@ -209,7 +209,7 @@ class Homepage extends \WP_Components\Component {
 							->append_children(
 								[
 									( new \CPR\Components\Advertising\Ad_Unit() )
-										->configure_ad_slot( 'CPR3-Inst-News-Shared-300x250' ),
+										->configure_ad_slot( 'CPR3-Combined-300x250' ),
 								]
 							),
 					]
