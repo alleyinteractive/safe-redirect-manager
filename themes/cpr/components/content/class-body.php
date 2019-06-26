@@ -30,13 +30,7 @@ class Body extends \WP_Components\Component {
 		// Ensure this post isn't used in the backfill.
 		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $this->get_post_id() );
 
-		// Featured image.
-		if (
-			has_post_thumbnail( $this->get_post_id() )
-			&& 1 !== absint( get_post_meta( $this->get_post_id(), 'disable_image', true ) )
-		) {
-			$this->wp_post_set_featured_image( 'content_single', [ 'show_caption' => true ] );
-		}
+		$this->set_featured_media();
 
 		return $this->append_children(
 			[
@@ -49,6 +43,49 @@ class Body extends \WP_Components\Component {
 				// ( new Comments() )->set_post( $this->post ),
 			]
 		);
+	}
+
+	/**
+	 * Set the featured media.
+	 *
+	 * @return self
+	 */
+	public function set_featured_media() : self {
+
+		$type = (string) get_post_meta( $this->get_post_id(), 'featured_media_type', true );
+
+		switch ( $type ) {
+			case 'image':
+			default:
+				if (
+					has_post_thumbnail( $this->get_post_id() )
+					&& 1 !== absint( get_post_meta( $this->get_post_id(), 'disable_image', true ) ) // Migrated content.
+				) {
+					$this->wp_post_set_featured_image( 'content_single', [ 'show_caption' => true ] );
+				}
+				break;
+			case 'video':
+				$youtube_url = get_post_meta( $this->get_post_id(), 'youtube_url', true );
+				if ( empty( $youtube_url ) ) {
+					break;
+				}
+	
+				$markup = wp_oembed_get( $youtube_url );
+				if ( false === $markup ) {
+					break;
+				}
+	
+				$this->append_child(
+					( new \WP_Components\HTML() )
+						->set_config( 'content', $markup )
+						->set_name( 'featured-video' )
+				);
+				break;
+			case 'none':
+				break;
+		}
+
+		return $this;
 	}
 
 	/**
