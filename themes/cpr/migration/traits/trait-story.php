@@ -43,7 +43,7 @@ trait Story {
 	 */
 	public function migrate_meta() {
 
-		$disable_image   = 0;
+		// If the featured image is in the body content, hide the featured image.
 		$legacy_image_id = $this->source['field_feature_image']['und'][0]['target_id'] ?? 0;
 		if (
 			! empty( $legacy_image_id )
@@ -52,14 +52,12 @@ trait Story {
 				"[[nid:{$legacy_image_id} "
 			)
 		) {
-			$disable_image = 1;
-			update_post_meta( $this->get_object_id(), 'disable_image', true );
+			update_post_meta( $this->get_object_id(), 'featured_media_type', 'none' );
 		}
 
 		// Map meta.
 		$this->object['meta_input'] = [
 			'author'               => $this->source['field_author']['und'][0]['target_id'] ?? 0,
-			'disable_image'        => $disable_image,
 			'featured_image'       => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
 			'legacy_changed'       => $this->source['changed'] ?? '',
 			'legacy_created'       => $this->source['created'] ?? '',
