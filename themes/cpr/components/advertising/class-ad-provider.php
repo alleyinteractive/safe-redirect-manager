@@ -30,6 +30,16 @@ class Ad_Provider extends \WP_Components\Component {
 				[ 300, 250 ],
 				[ 300, 600 ],
 			],
+			'size_mapping' => [
+				[
+					'viewport' => [ 1024, 0 ],
+					'sizes'    => [ 300, 600 ],
+				],
+				[
+					'viewport' => [ 0, 0 ],
+					'sizes'    => [ 300, 250 ],
+				],
+			],
 		],
 		'CPR3-Combined-300x250' => [
 			'sizes' => [ [ 300, 250 ] ],
@@ -48,16 +58,6 @@ class Ad_Provider extends \WP_Components\Component {
 		return [
 			'targeting'      => [],
 			'dfp_network_id' => '',
-			'size_mapping'   => [
-				[
-					'viewport' => [ 768, 0 ],
-					'sizes'    => [ 300, 600 ],
-				],
-				[
-					'viewport' => [ 0, 0 ],
-					'sizes'    => [ 300, 250 ],
-				],
-			],
 		];
 	}
 
@@ -71,7 +71,7 @@ class Ad_Provider extends \WP_Components\Component {
 	public function set_targeting_from_query( $wp_query ) : self {
 		$section      = 'cpr';
 		$sections     = [ 'cpr', 'news', 'indie', 'classical' ];
-		$landing_page = $wp_query->query_vars['landing-page-type'];
+		$landing_page = $wp_query->query_vars['landing-page-type'] ?? '';
 
 		if ( ! empty( $landing_page ) && in_array( $landing_page, $sections, true ) ) {
 			$section = $landing_page;

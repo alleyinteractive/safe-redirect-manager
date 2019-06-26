@@ -84,7 +84,12 @@ class Body extends \WP_Components\Component {
 	public function get_sidebar_component() : \CPR\Components\Sidebar {
 		return ( new \CPR\Components\Sidebar() )
 				->set_config( 'position', 'right' )
-				->set_sidebar( $this->get_sidebar_slug() );
+				->set_config( 'has_ad', true )
+				->set_sidebar( $this->get_sidebar_slug() )
+				->prepend_child(
+					( new \CPR\Components\Advertising\Ad_Unit() )
+						->configure_ad_slot( 'CPR3-Article-300x250' )
+				);
 	}
 
 	/**
