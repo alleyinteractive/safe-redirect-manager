@@ -45,7 +45,6 @@ switch ( $term_slug ) {
 		// These podcasts have the same slug as url, so just keep moving.
 		break;
 
-
 	default:
 		// Check if there's a podcast with this slug.
 		$possible_podcast = get_term_by( 'slug', $term_slug, 'podcast' );
@@ -66,7 +65,7 @@ switch ( $term_slug ) {
 		break;
 }
 
-$cpr_args['tax_query'] = [
+$cpr_args['tax_query'] = [ // phpcs:ignore
 	[
 		'taxonomy' => $term_taxonomy,
 		'field'    => 'slug',
@@ -108,8 +107,14 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 			while ( $feed_items->have_posts() ) :
 				$feed_items->the_post();
 
-				// Get saved audio file and meta info.
-				$meta_id    = get_post_meta( get_the_ID(), 'audio_id', true );
+				// Get one of the saved audio file.
+				foreach ( [ 'mp3_id', 'npm_ud', 'wav_id', 'acc_id' ] as $meta_key ) {
+					$meta_id = get_post_meta( get_the_ID(), $meta_key, true );
+					if ( ! empty( $meta_id ) ) {
+						break;
+					}
+				}
+
 				$audio      = wp_get_attachment_url( $meta_id );
 				$audio_meta = get_post_meta( $meta_id, '_wp_attachment_metadata', true );
 				$podcast    = get_term_by( 'slug', $term_slug, 'podcast' );
@@ -125,12 +130,16 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 					</description>
 					<itunes:subtitle><?php the_title_rss(); ?></itunes:subtitle>
 					<itunes:summary><![CDATA[ <?php echo esc_html( the_excerpt_rss() ); ?> ]]></itunes:summary>
-					<itunes:duration><?php echo esc_html( $audio_meta['length_formatted'] ?? '00:00' ); ?></itunes:duration>
-					<enclosure
-						url="<?php echo esc_url( $audio ); ?>"
-						length="<?php echo esc_attr( $audio_meta['length'] ?? 0 ); ?>"
-						type="audio/mpeg"
-					/>
+
+					<?php if ( ! empty( $audio ) ) : ?>
+						<enclosure
+							url="<?php echo esc_url( $audio ); ?>"
+							length="<?php echo esc_attr( $audio_meta['length'] ?? 0 ); ?>"
+							type="<?php echo esc_attr( $audio_meta['mime_type'] ); ?>"
+						/>
+
+						<itunes:duration><?php echo esc_html( $audio_meta['length_formatted'] ?? '00:00' ); ?></itunes:duration>
+					<?php endif; ?>
 				</item>
 				<?php
 			endwhile;
