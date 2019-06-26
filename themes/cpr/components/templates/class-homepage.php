@@ -96,12 +96,24 @@ class Homepage extends \WP_Components\Component {
 						 * Right sidebar with an ad.
 						 */
 						( new \CPR\Components\Sidebar() )
+							->set_theme( 'right' )
 							->append_child(
 								( new \CPR\Components\Advertising\Ad_Unit() )
 									->configure_ad_slot( 'CPR3-Inst-News-Shared-300x600' )
-							)
-							->set_theme( 'right' ),
-
+									->set_config(
+										'size_mapping',
+										[
+											[
+												'viewport' => [ 768, 0 ],
+												'sizes'    => [ 300, 600 ],
+											],
+											[
+												'viewport' => [ 0, 0 ],
+												'sizes'    => [ 300, 250 ],
+											],
+										]
+									)
+							),
 					]
 				),
 

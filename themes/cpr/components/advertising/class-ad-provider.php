@@ -32,7 +32,7 @@ class Ad_Provider extends \WP_Components\Component {
 			],
 			'size_mapping' => [
 				[
-					'viewport' => [ 768, 0 ],
+					'viewport' => [ 1024, 0 ],
 					'sizes'    => [ 300, 600 ],
 				],
 				[
