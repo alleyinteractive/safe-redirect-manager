@@ -202,7 +202,7 @@ class Indie extends \WP_Components\Component {
 						->add_video_items(
 							$data['videos']['content_item_ids'] ?? [],
 							2,
-							self::get_indie_posts_backfill_args() // @todo Determine actual backfill args.
+							self::get_indie_posts_backfill_args()
 						)
 						->set_theme( 'gridHalf' )
 						->set_child_themes(
@@ -333,6 +333,24 @@ class Indie extends \WP_Components\Component {
 										'post_limit' => 2,
 										'query_args' => [
 											'post_type' => 'post',
+											'tax_query' => [
+												[
+													'taxonomy' => 'section',
+													'field'    => 'slug',
+													'terms'    => 'indie',
+												],
+											],
+											'meta_query' => [
+												[
+													'key'     => 'featured_media_type',
+													'compare' => '=',
+													'value'   => 'video',
+												],
+												[
+													'key'     => 'video_url',
+													'compare' => 'EXISTS',
+												],
+											],
 										],
 									]
 								),
