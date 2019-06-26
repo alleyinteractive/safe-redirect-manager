@@ -37,9 +37,9 @@ class Post_Datasource_Feed extends Feed {
 	 */
 	public function load_source_data_by_limit_and_offset( int $limit, int $offset ) : bool {
 
-		// Run a post query.
 		$source_query = new \WP_Query(
 			[
+				'fields'         => 'ids',
 				'offset'         => $offset,
 				'post_type'      => $this->post_type,
 				'posts_per_page' => $limit,
@@ -47,16 +47,22 @@ class Post_Datasource_Feed extends Feed {
 		);
 
 		$data = array_map(
-			function( $post ) {
+			function( $post_id ) {
+				$legacy_type = get_post_meta( $post_id, 'legacy_type', true );
+				if ( empty( $legacy_type ) ) {
+					$legacy_type = $this->data_slug;
+				}
 				// Get the unique ID so we can get the source data.
-				$unique_id = get_post_meta( $post->ID, $this->feed_item_class::get_unique_id_key(), true );
-				$data      = Migration::instance()->get_source_data_by_id( $this->data_slug, absint( $unique_id ) );
+				$unique_id = get_post_meta( $post_id, $this->feed_item_class::get_unique_id_key(), true );
+				$data      = Migration::instance()->get_source_data_by_id( $legacy_type, absint( $unique_id ) );
 				return (array) $data;
 			},
 			$source_query->posts ?? []
 		);
 
 		$this->set_source_data( $data );
+
+		\WP_CLI::line( "(Total {$source_query->found_posts})" );
 
 		return $this->has_source_data();
 	}
