@@ -347,7 +347,7 @@ class Indie extends \WP_Components\Component {
 													'value'   => 'video',
 												],
 												[
-													'key'     => 'youtube_url',
+													'key'     => 'video_url',
 													'compare' => 'EXISTS',
 												],
 											],

@@ -57,20 +57,17 @@ class Body extends \WP_Components\Component {
 		switch ( $type ) {
 			case 'image':
 			default:
-				if (
-					has_post_thumbnail( $this->get_post_id() )
-					&& 1 !== absint( get_post_meta( $this->get_post_id(), 'disable_image', true ) ) // Migrated content.
-				) {
+				if ( has_post_thumbnail( $this->get_post_id() ) ) {
 					$this->wp_post_set_featured_image( 'content_single', [ 'show_caption' => true ] );
 				}
 				break;
 			case 'video':
-				$youtube_url = get_post_meta( $this->get_post_id(), 'youtube_url', true );
-				if ( empty( $youtube_url ) ) {
+				$video_url = get_post_meta( $this->get_post_id(), 'video_url', true );
+				if ( empty( $video_url ) ) {
 					break;
 				}
 	
-				$markup = wp_oembed_get( $youtube_url );
+				$markup = wp_oembed_get( $video_url );
 				if ( false === $markup ) {
 					break;
 				}

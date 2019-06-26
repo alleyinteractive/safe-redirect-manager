@@ -274,7 +274,7 @@ class Content_List extends \WP_Components\Component {
 						'value'   => 'video',
 					],
 					[
-						'key'     => 'youtube_url',
+						'key'     => 'video_url',
 						'compare' => 'EXISTS',
 					],
 				],
@@ -290,12 +290,12 @@ class Content_List extends \WP_Components\Component {
 
 		// Generate content items, each with an HTML child for the video embed.
 		foreach ( $ids as $id ) {
-			$youtube_url = get_post_meta( $id, 'youtube_url', true );
-			if ( empty( $youtube_url ) ) {
+			$video_url = get_post_meta( $id, 'video_url', true );
+			if ( empty( $video_url ) ) {
 				continue;
 			}
 
-			$markup = wp_oembed_get( $youtube_url );
+			$markup = wp_oembed_get( $video_url );
 			if ( false === $markup ) {
 				continue;
 			}
