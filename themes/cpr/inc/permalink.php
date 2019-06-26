@@ -23,15 +23,6 @@ function replace_permalink_external_link( $url, $post ) {
 	switch ( $post->post_type ) {
 		case 'external-link':
 			return get_post_meta( $post->ID, 'link', true );
-
-		case 'page':
-			// Prepend the sections where necessary.
-			$section = wp_get_post_terms( $post->ID, 'section' )[0] ?? null;
-			if ( $section instanceof \WP_Term && 'colorado-public-radio' !== $section->slug ) {
-				$path = wp_parse_url( $url, PHP_URL_PATH );
-				return home_url( $section->slug . $path );
-			}
-			return $url;
 	}
 	return $url;
 }
