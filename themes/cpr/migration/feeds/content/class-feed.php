@@ -159,7 +159,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @return string
 	 */
 	public function apply_custom_block_logic( $content, \DOMNode $node ) : string {
-		switch ( $node->tagName ) {
+		switch ( $node->nodeName ) {
 			case 'iframe':
 				return $this->video_to_block( $content, $node );
 			case 'img':
