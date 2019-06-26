@@ -87,7 +87,6 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 			// Extra fields and parse as needed.
 			$legacy_nid          = $matches[1][ $key ];
-			// $attachment_settings = wp_parse_args( $matches[3][ $key ] );
 
 			// Migrate images.
 			$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_nid );
