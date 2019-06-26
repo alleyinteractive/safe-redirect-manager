@@ -135,7 +135,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 						<enclosure
 							url="<?php echo esc_url( $audio ); ?>"
 							length="<?php echo esc_attr( $audio_meta['length'] ?? 0 ); ?>"
-							type="<?php echo esc_attr( $audio_meta['mime_type'] ); ?>"
+							type="<?php echo esc_attr( $audio_meta['mime_type'] ?? '' ); ?>"
 						/>
 
 						<itunes:duration><?php echo esc_html( $audio_meta['length_formatted'] ?? '00:00' ); ?></itunes:duration>
