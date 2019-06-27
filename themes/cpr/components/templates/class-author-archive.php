@@ -62,74 +62,83 @@ class Author_Archive extends \WP_Components\Component {
 			 */
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'twoColumn' )
-				->append_children( [
+				->append_children(
+					[
+						/**
+						 * River of posts by this author.
+						 */
+						( new \CPR\Components\Modules\Content_List() )
+							->merge_config(
+								[
+									'theme'        => 'riverFull',
+									'image_size'   => 'grid_item',
+									'show_excerpt' => true,
+								]
+							)
+							->parse_from_wp_query( $this->query )
+							->set_theme( 'riverFull' )
+							->set_child_themes(
+								[
+									'content-item'  => 'riverFull',
+									'content-title' => 'featureSecondary',
+									'eyebrow'       => 'small',
+								]
+							),
 
-					/**
-					 * River of posts by this author.
-					 */
-					( new \CPR\Components\Modules\Content_List() )
-						->merge_config(
-							[
-								'theme'        => 'riverFull',
-								'image_size'   => 'grid_item',
-								'show_excerpt' => true,
-							]
-						)
-						->parse_from_wp_query( $this->query )
-						->set_theme( 'riverFull' )
-						->set_child_themes(
-							[
-								'content-item'  => 'riverFull',
-								'content-title' => 'featureSecondary',
-								'eyebrow'       => 'small',
-							]
-						),
+						/**
+						 * Pagination
+						 */
+						( new \WP_Components\Pagination() )
+							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+							->set_config( 'base_url', "/author/{$this->query->get( 'author_name' )}/" )
+							->set_query( $this->query ),
 
-					/**
-					 * Pagination
-					 */
-					( new \WP_Components\Pagination() )
-						->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-						->set_config( 'base_url', "/author/{$this->query->get( 'author_name' )}/" )
-						->set_query( $this->query ),
+						/**
+						 * Content sidebar.
+						 */
+						( new \CPR\Components\Sidebar() )
+							->set_theme( 'right' )
+							->append_children(
+								[
+									/**
+									 * Grid of additional items.
+									 */
+									( new \CPR\Components\Modules\Content_List() )
+										->set_config( 'eyebrow_label', __( 'Across Colorado', 'cpr' ) ) // $todo Change to the source of the data.
+										->set_heading_from_fm_data( $data['author_archive_stories'] ?? [] )
+										->parse_from_fm_data( $data['author_archive_stories'] ?? [], 4 ) // $todo Change to the source of the data.
+										->set_child_themes(
+											[
+												'content-list' => 'river',
+												'content-item' => 'river',
+												'eyebrow'      => 'small',
+												'title'        => 'grid',
+											]
+										),
 
-					/**
-					 * Content sidebar.
-					 */
-					( new \CPR\Components\Sidebar() )
-						->set_theme( 'right' )
-						->append_children(
-							[
+									/**
+									 * First Ad.
+									*/
+									( new \CPR\Components\Advertising\Ad_Unit() )
+										->set_config( 'height', 400 ),
 
-								/**
-								 * Grid of additional items.
-								 */
-								( new \CPR\Components\Modules\Content_List() )
-									->set_config( 'eyebrow_label', __( 'Across Colorado', 'cpr' ) ) // $todo Change to the source of the data.
-									->set_heading_from_fm_data( $data['author_archive_stories'] ?? [] )
-									->parse_from_fm_data( $data['author_archive_stories'] ?? [], 4 ) // $todo Change to the source of the data.
-									->set_child_themes(
-										[
-											'content-list' => 'river',
-											'content-item' => 'river',
-											'eyebrow'      => 'small',
-											'title'        => 'grid',
-										]
-									),
-
-								/**
-								 * First Ad.
-								*/
-								( new \CPR\Components\Advertising\Ad_Unit() )
-									->set_config( 'height', 400 ),
-
-								/**
-								 * Second Ad.
-								*/
-								new \CPR\Components\Advertising\Ad_Unit(),
-							]
-						),
-				] ),
+									/**
+									 * Second Ad.
+									*/
+									new \CPR\Components\Advertising\Ad_Unit(),
+								]
+							),
+					]
+				)
+				->callback(
+					function( $column_area ) {
+						if ( empty( $this->query->posts ) ) {
+							// Kill this component when we don't have any content to show.
+							return null;
+						}
+						return $column_area;
+					}
+				),
 		];
 	}
 
