@@ -50,7 +50,7 @@ if ( is_admin() ) {
 	require_once CPR_PATH . '/inc/admin-columns.php';
 }
 
-// Blocks
+// Blocks.
 require_once CPR_PATH . '/blocks/audio/block-component.php';
 
 // wp-cli command.
