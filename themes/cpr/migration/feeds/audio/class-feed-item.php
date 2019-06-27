@@ -26,7 +26,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	 *
 	 * @return int|null
 	 */
-	public function get_object_id() : ?int {
+	public function get_object_id() {
 		return $this->object['ID'] ?? false;
 	}
 
@@ -37,7 +37,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	 * @return string|bool
 	 */
 	public function get_unique_id() {
-		return $this->source['nid'];
+		return $this->source['nid'] ?? '';
 	}
 
 	/**
@@ -46,7 +46,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	 * @param string $unique_id Unique ID.
 	 * @return null|WP_Post
 	 */
-	public static function get_object_by_unique_id( $unique_id ) : ?WP_Post {
+	public static function get_object_by_unique_id( $unique_id ) {
 		return null;
 	}
 

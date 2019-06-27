@@ -116,7 +116,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						esc_url( wp_get_attachment_url( $attachment->ID ) ),
 						$align,
 						$source['title'] ?? '',
-						wp_strip_all_tags( $source['body']['und'][0]['value'] ?? '' )
+						wp_strip_all_tags( $source['body']['und'][0]['value'] ) ?? ''
 					),
 					$post_content
 				);
@@ -134,16 +134,12 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 			// Migrate audios.
 			$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $legacy_nid );
-			if ( ! empty( $source ) ) {
-				$filename = $source['field_mp3_file']['und'][0]['uri'] ?? '';
-				$filename = str_replace( 'public: //', '', $filename );
-				$mp3      = 'https://www.cpr.org/sites/default/files/' . $filename;
-
+			if ( ! empty( $source ) && ! empty( $source['nid'] ) ) {
 				$post_content = str_replace(
 					$matches[0][ $key ],
 					sprintf(
-						'</p><span class="cpr-audio-migration" src="%1$s" />',
-						$mp3
+						'</p><span class="cpr-audio-migration" id="%1$d" />',
+						absint( $source['nid'] )
 					),
 					$post_content
 				);
@@ -157,7 +153,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						$matches[0][ $key ],
 						sprintf(
 							'<span class="cpr-gallery-migration" id="%1$s" />',
-							$source['nid']
+							absint( $source['nid'] )
 						),
 						$post_content
 					);
@@ -348,16 +344,28 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		}
 	}
 
-	private function migrate_audio( $content, \DOMNode $node ) {
-		$src = $node->getAttribute( 'src' ) ?? '';
-
-		if ( empty( $src ) ) {
-			return $content;
+	/**
+	 * Map legacy audio to core audio blocks.
+	 *
+	 * @param string   $content HTML content, already blocks.
+	 * @param \DOMNode $node    The node.
+	 * @return string
+	 */
+	private function migrate_audio( $content, \DOMNode $node ) : string {
+		$audio_id   = $node->getAttribute( 'id' ) ?? '';
+		$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $audio_id );
+		$audio_item = new \CPR\Migration\Audio\Feed_Item();
+		$audio_item->load_source( $source );
+		$attachment_id = $audio_item->get_attachment_id_by_field( 'field_mp3_file', [] );
+		
+		// Validate attachment.
+		if ( empty( $attachment_id ) ) {
+			return '';
 		}
 
-		return '<!-- wp:audio -->' . PHP_EOL .
+		return '<!-- wp:audio {"id":"' . absint( $attachment_id ) . '"} -->' . PHP_EOL .
 			'<figure class="wp-block-audio">' . PHP_EOL .
-				'<audio controls src="' . esc_url( $src ) . '" />' . PHP_EOL .
+				'<audio controls src="' . esc_url( wp_get_attachment_url( $attachment_id ) ?? '' ) . '" />' . PHP_EOL .
 			'</figure>' . PHP_EOL .
 		'<!-- /wp:audio -->';
 	}
