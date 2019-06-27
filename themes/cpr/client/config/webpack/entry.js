@@ -4,9 +4,7 @@
  * @param {object} env - environmental variables, including specific entry to compile.
  */
 const entry = {
-  global: ['client/src/entries/global/index.js'],
   admin: ['client/src/admin/admin.js'],
-  editor: ['client/src/admin/editor/index.js'],
 };
 
 function getSingleEntry(devEntry, env) {
@@ -29,10 +27,7 @@ module.exports = function getEntry(mode, env) {
     case 'development': {
       const devEntry = Object.keys(entry)
         .map((currentValue) => (
-          [
-            'webpack-dev-server/client?https://8080-httpsproxy.alley.test',
-            'webpack/hot/only-dev-server',
-          ].concat(entry[currentValue])
+          [].concat(entry[currentValue])
         ))
         .reduce((acc, entryArray, index) => (
           Object.assign(acc, {
