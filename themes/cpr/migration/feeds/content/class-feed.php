@@ -306,7 +306,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 				return $content;
 			default:
-				return $content;
+				return $content ?? '';
 		}
 	}
 
