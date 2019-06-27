@@ -363,11 +363,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			return '';
 		}
 
-		return '<!-- wp:audio {"id":"' . absint( $attachment_id ) . '"} -->' . PHP_EOL .
-			'<figure class="wp-block-audio">' . PHP_EOL .
-				'<audio controls src="' . esc_url( wp_get_attachment_url( $attachment_id ) ?? '' ) . '" />' . PHP_EOL .
-			'</figure>' . PHP_EOL .
-		'<!-- /wp:audio -->';
+		return '<!-- wp:audio {"src":"' . esc_url( wp_get_attachment_url( $attachment_id ) ) . '", "id":' . absint( $attachment_id ) . '} /-->';
 	}
 
 	/**
