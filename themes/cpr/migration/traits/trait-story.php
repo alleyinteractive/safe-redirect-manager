@@ -73,6 +73,7 @@ trait Story {
 	 * Catch-all after an object has saved.
 	 */
 	public function global_post_save() {
+		update_post_meta( $this->get_object_id(), 'alleypack_sync_script_mapping_version', \CPR\Migration\Migration_CLI::$version );
 		delete_post_meta( $this->get_object_id(), '_legacy_post_content' );
 	}
 

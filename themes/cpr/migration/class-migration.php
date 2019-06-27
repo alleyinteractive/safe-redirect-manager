@@ -98,6 +98,7 @@ class Migration {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			require_once CPR_PATH . '/migration/cli/class-cleanup.php';
 			require_once CPR_PATH . '/migration/cli/class-menus.php';
+			require_once CPR_PATH . '/migration/cli/class-migration-cli.php';
 		}
 
 		// Add additional sync link for content.
