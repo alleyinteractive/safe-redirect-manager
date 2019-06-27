@@ -30,10 +30,10 @@ class Author_Header extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'name'        => '',
-			'twitter'     => '',
-			'short_bio'   => '',
-			'title'       => '',
+			'name'      => '',
+			'twitter'   => '',
+			'short_bio' => '',
+			'title'     => '',
 		];
 	}
 

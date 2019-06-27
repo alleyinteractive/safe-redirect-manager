@@ -144,7 +144,12 @@ function build_components_endpoint(
 		/**
 		 * Author archive.
 		 */
-		case $wp_query->is_author():
+		case ( $wp_query->is_author() || ! empty( $wp_query->query_vars['author'] ) ):
+			// Force 404 author aarchive pages.
+			if ( ! empty( $wp_query->query_vars['author'] ) ) {
+				$wp_query->is_author = true;
+				$wp_query->is_404    = false;
+			}
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Author_Archive() )->set_query( $wp_query );
 			break;

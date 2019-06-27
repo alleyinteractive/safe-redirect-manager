@@ -70,9 +70,9 @@ class Author_Archive extends \WP_Components\Component {
 					( new \CPR\Components\Modules\Content_List() )
 						->merge_config(
 							[
-								'theme'                => 'riverFull',
-								'image_size'           => 'grid_item',
-								'show_excerpt'         => true,
+								'theme'        => 'riverFull',
+								'image_size'   => 'grid_item',
+								'show_excerpt' => true,
 							]
 						)
 						->parse_from_wp_query( $this->query )
@@ -110,10 +110,10 @@ class Author_Archive extends \WP_Components\Component {
 									->parse_from_fm_data( $data['author_archive_stories'] ?? [], 4 ) // $todo Change to the source of the data.
 									->set_child_themes(
 										[
-											'content-list'         => 'river',
-											'content-item'         => 'river',
-											'eyebrow'              => 'small',
-											'title'                => 'grid',
+											'content-list' => 'river',
+											'content-item' => 'river',
+											'eyebrow'      => 'small',
+											'title'        => 'grid',
 										]
 									),
 
