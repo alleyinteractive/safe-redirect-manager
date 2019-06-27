@@ -29,10 +29,9 @@ class Segments_Playlist extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'title'                => __( 'Listen Now', 'cpr' ),
-			'episode_title'        => '',
-			'total_duration'       => '',
-			'first_segment_source' => '',
+			'heading'  => __( 'Listen Now', 'cpr' ),
+			'title'    => '',
+			'duration' => '',
 		];
 	}
 
@@ -49,7 +48,7 @@ class Segments_Playlist extends \WP_Components\Component {
 			return $this->set_invalid();
 		}
 
-		$this->set_config( 'episode_title', $this->wp_post_get_title() );
+		$audio_metadata = $this->get_audio_metadata();
 
 		foreach ( $segment_ids as $idx => $segment_id ) {
 			$this->append_child(
@@ -59,31 +58,27 @@ class Segments_Playlist extends \WP_Components\Component {
 			);
 		}
 
-		// Calculate total duration of all episode segments.
-		$total_duration = array_reduce(
-			$this->children,
-			function ( $carry, $segment ) {
-				$carry += $segment->get_config( 'duration_raw' );
-				return $carry;
-			},
-			0
-		);
-
-		// Append play button.
-		$first_segment = $this->children[0];
-
 		$this->append_child(
 			( new \CPR\Components\Audio\Play_Pause_Button() )
 				->merge_config(
 					[
-						'src'   => $first_segment->get_config( 'src' ) ?? '',
-						'title' => [ $first_segment->get_config( 'title' ) ?? '' ],
+						'src'   => $audio_metadata['src'] ?? '',
+						'title' => [ $audio_metadata['title'] ?? '' ],
 					]
 				)
 				->set_theme( 'inverse' )
 		);
 
-		$this->set_config( 'total_duration', gmdate( 'i:s', $total_duration ) );
+		$this->merge_config(
+			[
+				'eyebrow' => sprintf(
+					// translators: %1$s audio duration.
+					'Episode | %1$s',
+					$audio_metadata['duration'],
+				),
+				'title'   => $this->wp_post_get_title(),
+			]
+		);
 
 		return $this;
 	}
