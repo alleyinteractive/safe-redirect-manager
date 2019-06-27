@@ -22,6 +22,15 @@ class Feed extends \Alleypack\Sync_Script\Feed {
 	protected $data_slug = '';
 
 	/**
+	 * Return the data slug.
+	 *
+	 * @return string
+	 */
+	public function get_data_slug() : string {
+		return $this->data_slug;
+	}
+
+	/**
 	 * Callback used to modify the mapping built being loaded.
 	 *
 	 * @param array $mapping Mapping.
