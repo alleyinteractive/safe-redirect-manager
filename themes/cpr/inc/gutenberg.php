@@ -50,30 +50,6 @@ function map_dynamic_blocks( $component ) {
 add_filter( 'wp_components_dynamic_block', __NAMESPACE__ . '\map_dynamic_blocks' );
 
 /**
- * Enqueue Icon assets.
- */
-function enqueue_icons_assets() {
-	wp_enqueue_script(
-		'font-awesome-v4-shims',
-		get_template_directory_uri() . '/assets/font-awesome/v4-shims.min.js',
-		array(),
-		'5.7.2',
-		true
-	);
-
-	wp_enqueue_script(
-		'font-awesome',
-		get_template_directory_uri() . '/assets/font-awesome/all.min.js',
-		array( 'font-awesome-v4-shims' ),
-		'5.7.2',
-		true
-	);
-
-	wp_enqueue_script( 'font-awesome' );
-}
-add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\enqueue_icons_assets', 12 );
-
-/**
  * Hide some taxonomies from displaying the default Gutenberg metabox.
  *
  * @param \WP_REST_Response $response Rest response object.
