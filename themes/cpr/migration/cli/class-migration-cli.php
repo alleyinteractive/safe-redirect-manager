@@ -100,6 +100,7 @@ class Migration_CLI extends \CLI_Command {
 				if ( $count >= 20 ) {
 					\WP_CLI::line( 'Pausing to clear the cache' );
 					$this->stop_the_insanity();
+					$count = 0;
 				}
 				$count++;
 			},
