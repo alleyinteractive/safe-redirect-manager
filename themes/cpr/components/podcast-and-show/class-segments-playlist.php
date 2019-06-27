@@ -74,7 +74,7 @@ class Segments_Playlist extends \WP_Components\Component {
 				'eyebrow' => sprintf(
 					// translators: %1$s audio duration.
 					'Episode | %1$s',
-					$audio_metadata['duration'],
+					$audio_metadata['duration']
 				),
 				'title'   => $this->wp_post_get_title(),
 			]
