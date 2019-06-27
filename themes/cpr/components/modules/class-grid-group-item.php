@@ -43,9 +43,14 @@ class Grid_Group_Item extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 
+		$this->wp_post_set_permalink();
+
 		if ( 'guest-author' === $this->post->post_type ) {
-			$this->set_config( 'role', __( 'Host', 'cpr' ) );
+			$author_url = get_author_posts_url( $this->get_post_id(), $this->post->post_name );
+
 			$this->wp_post_set_featured_image( 'grid-group-host' );
+			$this->set_config( 'role', get_post_meta( $this->get_post_id(), 'title', true ) );
+			$this->set_config( 'permalink', $author_url );
 		} else {
 			$this->wp_post_set_featured_image( 'grid-group-item' );
 			$this->append_child(
@@ -60,12 +65,10 @@ class Grid_Group_Item extends \WP_Components\Component {
 				->merge_config(
 					[
 						'content' => $this->wp_post_get_title(),
-						'link'    => $this->wp_post_get_permalink(),
+						'link'    => $author_url ?? $this->wp_post_get_permalink(),
 					]
 				)
 		);
-
-		$this->wp_post_set_permalink();
 
 		return $this;
 	}
