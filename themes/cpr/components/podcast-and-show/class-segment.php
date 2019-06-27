@@ -53,7 +53,8 @@ class Segment extends \WP_Components\Component {
 			array_merge(
 				$audio_metadata,
 				[
-					'title' => $this->wp_post_get_title(),
+					'title'     => $this->wp_post_get_title(),
+					'permalink' => $this->wp_post_get_permalink(),
 				]
 			)
 		);
