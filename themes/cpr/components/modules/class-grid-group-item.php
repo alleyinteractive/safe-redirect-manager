@@ -47,6 +47,7 @@ class Grid_Group_Item extends \WP_Components\Component {
 
 		if ( 'guest-author' === $this->post->post_type ) {
 			$author_url = get_author_posts_url( $this->get_post_id(), $this->post->post_name );
+			$author_url = str_replace( 'cap-', '', $author_url );
 
 			$this->wp_post_set_featured_image( 'grid-group-host' );
 			$this->set_config( 'role', get_post_meta( $this->get_post_id(), 'title', true ) );

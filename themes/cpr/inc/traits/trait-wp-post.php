@@ -175,7 +175,7 @@ trait WP_Post {
 			}
 		}
 
-		// Fallback to legacy mp3.
+		// Fallback to migrated mp3.
 		if ( empty( $audio_id ) ) {
 			$audio_id = get_post_meta( $this->post->ID, 'mp3_id', true );
 			if ( ! empty( $audio_id ) ) {
