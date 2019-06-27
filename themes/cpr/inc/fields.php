@@ -157,7 +157,7 @@ function cpr_fm_post_podcast_and_show_settings() {
 						'label' => __( 'Social and SEO', 'cpr' ),
 						'serialize_data' => false,
 						'add_to_prefix' => false,
-						'children' => \CPR\Fields\get_seo_and_social_fields(),
+						'children' => \Alleypack\Fieldmanager\Patterns\get_seo_and_social_fields(),
 					]
 				),
 			],
