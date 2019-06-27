@@ -138,30 +138,64 @@ trait WP_Post {
 	 * Create byline components and add to children.
 	 */
 	public function get_audio_metadata() {
+
+		$data = [
+			'album'        => '',
+			'artist'       => '',
+			'title'        => '',
+			'src'          => '',
+			'duration'     => '',
+			'duration_raw' => '',
+		];
+
+		// Get the title directly.
+		$title = get_post_meta( $this->post->ID, 'audio_title', true );
+		if ( ! empty( $title ) ) {
+			$data['title'] = $title;
+		}
+
+		// Get the src directly.
+		$src = get_post_meta( $this->post->ID, 'audio_url', true );
+		if ( ! empty( $src ) ) {
+			$data['src'] = $src;
+			return $data;
+		}
+
 		// Get primary file.
 		$audio_id = get_post_meta( $this->post->ID, 'audio_id', true );
+		if ( ! empty( $audio_id ) ) {
 
-		// @todo actually get the mp3 version if it exists.
+			// Get the mp3 version.
+			$transcoded_mp3_url = get_post_meta( $audio_id, 'cpr_audio_mp3_url', true );
+			if ( ! empty( $transcoded_mp3_url ) ) {
+				$data['src'] = $transcoded_mp3_url;
+			} else {
+				// Get the wav version.
+				$data['src'] = wp_get_attachment_url( $audio_id );
+			}
+		}
+
 		// Fallback to migrated mp3.
 		if ( empty( $audio_id ) ) {
 			$audio_id = get_post_meta( $this->post->ID, 'mp3_id', true );
-		}
-
-		if ( empty( $audio_id ) ) {
-			return [];
+			if ( ! empty( $audio_id ) ) {
+				$data['src'] = wp_get_attachment_url( $audio_id );
+			}
 		}
 
 		$meta = wp_get_attachment_metadata( $audio_id );
-		$src  = wp_get_attachment_url( $audio_id );
 
-		return [
-			'album'        => $meta['album'] ?? '',
-			'artist'       => $meta['artist'] ?? '',
-			'title'        => get_the_title( $audio_id ),
-			'src'          => $src,
-			'duration'     => $meta['length_formatted'] ?? '',
-			'duration_raw' => $meta['length'] ?? '',
-		];
+		$data['album']        = $meta['album'] ?? '';
+		$data['artist']       = $meta['artist'] ?? '';
+		$data['duration']     = $meta['length_formatted'] ?? '';
+		$data['duration_raw'] = $meta['length'] ?? '';
+
+		// Set title from audio id if empty.
+		if ( empty( $data['title'] ) ) {
+			$data['title'] = get_the_title( $audio_id );
+		}
+
+		return $data;
 	}
 
 	/**
