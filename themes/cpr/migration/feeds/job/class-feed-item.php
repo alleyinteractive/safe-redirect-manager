@@ -16,13 +16,6 @@ use function Alleypack\Sync_Script\alleypack_log;
 class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 
 	/**
-	 * Versioning.
-	 *
-	 * @var string
-	 */
-	protected static $mapping_version = '1.1';
-
-	/**
 	 * Post type.
 	 *
 	 * @var string
