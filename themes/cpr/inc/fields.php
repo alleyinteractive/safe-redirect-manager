@@ -23,6 +23,18 @@ function cpr_fm_post_mixed_featured_audio() {
 						'serialize_data' => false,
 						'add_to_prefix' => false,
 						'children' => [
+							'audio_title' => new Fieldmanager_TextField(
+								[
+									'label' => __( 'Audio Title', 'cpr' ),
+									'description' => __( "By default, this will use any uploaded file's title.", 'cpr' ),
+								]
+							),
+							'audio_url' => new Fieldmanager_Link(
+								[
+									'label' => __( 'Audio MP3 URL', 'cpr' ),
+									'description' => __( 'Use any MP3 url on the web.', 'cpr' ),
+								]
+							),
 							'audio_id' => new Fieldmanager_Media( __( 'Primary Audio', 'cpr' ) ),
 							'aac_id' => new Fieldmanager_Media( __( 'Legacy AAC Audio', 'cpr' ) ),
 							'mp3_id' => new Fieldmanager_Media( __( 'Legacy MP3 Audio', 'cpr' ) ),
@@ -34,12 +46,13 @@ function cpr_fm_post_mixed_featured_audio() {
 			],
 		]
 	);
-	$fm->add_meta_box( __( 'Audio', 'cpr' ), [ 'post', 'podcast-episode', 'show-episode', 'show-segment' ] );
+	$fm->add_meta_box( __( 'Audio', 'cpr' ), [ 'post', 'podcast-episode', 'show-episode', 'show-segment', 'external-link' ] );
 }
 add_action( 'fm_post_post', 'cpr_fm_post_mixed_featured_audio' );
 add_action( 'fm_post_podcast-episode', 'cpr_fm_post_mixed_featured_audio' );
 add_action( 'fm_post_show-episode', 'cpr_fm_post_mixed_featured_audio' );
 add_action( 'fm_post_show-segment', 'cpr_fm_post_mixed_featured_audio' );
+add_action( 'fm_post_external-link', 'cpr_fm_post_mixed_featured_audio' );
 /* end fm:post-mixed-featured-audio */
 
 /* begin fm:post-podcast-and-show-settings */
@@ -144,7 +157,7 @@ function cpr_fm_post_podcast_and_show_settings() {
 						'label' => __( 'Social and SEO', 'cpr' ),
 						'serialize_data' => false,
 						'add_to_prefix' => false,
-						'children' => \CPR\Fields\get_seo_and_social_fields(),
+						'children' => \Alleypack\Fieldmanager\Patterns\get_seo_and_social_fields(),
 					]
 				),
 			],

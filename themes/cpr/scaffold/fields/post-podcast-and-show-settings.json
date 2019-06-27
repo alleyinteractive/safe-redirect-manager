@@ -93,7 +93,7 @@
 			"label": { "__": "Social and SEO" },
 			"serialize_data": false,
 			"add_to_prefix": false,
-			"children": "`\\CPR\\Fields\\get_seo_and_social_fields()`"
+			"children": "`\\Alleypack\\Fieldmanager\\Patterns\\get_seo_and_social_fields()`"
 		}
 	}
 }
