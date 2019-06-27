@@ -93,21 +93,21 @@ function build_components_endpoint(
 
 				case 'news':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'Colorado Public Radio News | CPR', 'cpr' ) );
+					$head->set_title( __( 'Colorado Public Radio News | Colorado Public Radio', 'cpr' ) );
 					$header->set_news_header();
 					$template = ( new Components\Templates\News() )->set_post( $wp_query->post );
 					break;
 
 				case 'classical':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'Colorado Public Radio Classical | CPR', 'cpr' ) );
+					$head->set_title( __( 'Colorado Public Radio Classical | Colorado Public Radio', 'cpr' ) );
 					$header->set_classical_header();
 					$template = ( new Components\Templates\Classical() )->set_post( $wp_query->post );
 					break;
 
 				case 'indie':
 					$head->set_post( $wp_query->post );
-					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music | CPR', 'cpr' ) );
+					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music | Colorado Public Radio', 'cpr' ) );
 					$header->set_indie_header();
 					$template = ( new Components\Templates\Indie() )->set_post( $wp_query->post );
 					break;
@@ -123,17 +123,17 @@ function build_components_endpoint(
 
 			switch ( $station ) {
 				case 'news':
-					$head->set_title( __( 'Colorado Public Radio News Playlist | CPR', 'cpr' ) );
+					$head->set_title( __( 'Colorado Public Radio News Playlist | Colorado Public Radio', 'cpr' ) );
 					$header->set_news_header();
 					break;
 
 				case 'classical':
-					$head->set_title( __( 'Colorado Public Radio Classical Playlist | CPR', 'cpr' ) );
+					$head->set_title( __( 'Colorado Public Radio Classical Playlist | Colorado Public Radio', 'cpr' ) );
 					$header->set_classical_header();
 					break;
 
 				case 'indie':
-					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music Playlist | CPR', 'cpr' ) );
+					$head->set_title( __( 'CPR\'s Indie 102.3 - New and Independent Music Playlist | Colorado Public Radio', 'cpr' ) );
 					$header->set_indie_header();
 					break;
 			}
@@ -144,9 +144,20 @@ function build_components_endpoint(
 		/**
 		 * Author archive.
 		 */
-		case $wp_query->is_author():
-			$head->set_query( $wp_query );
+		case ( $wp_query->is_author() || ! empty( $wp_query->query_vars['author_name'] ) ):
+			if ( empty( $wp_query->posts ) ) {
+				$wp_query->is_author = true;
+				$wp_query->is_404    = false;
+			}
 			$template = ( new Components\Templates\Author_Archive() )->set_query( $wp_query );
+			$head->set_query( $wp_query );
+			$head->set_title(
+				sprintf(
+					// translators: Author Display name.
+					__( '%1$s | Colorado Public Radio', 'cpr' ),
+					$template->get_author_display_name()
+				)
+			);
 			break;
 
 		/**
@@ -232,7 +243,7 @@ function build_components_endpoint(
 		 */
 		case ( strpos( $path, '/all/' ) === 0 ):
 			$head->set_query( $wp_query );
-			$head->set_title( __( 'All CPR\'s | CPR', 'cpr' ) );
+			$head->set_title( __( 'All CPR\'s | Colorado Public Radi', 'cpr' ) );
 			$header->set_query( $wp_query );
 			$template = ( new Components\Templates\All_Archive() )->set_query( $wp_query );
 			break;
