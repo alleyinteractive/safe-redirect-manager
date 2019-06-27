@@ -50,6 +50,9 @@ if ( is_admin() ) {
 	require_once CPR_PATH . '/inc/admin-columns.php';
 }
 
+// Blocks
+require_once CPR_PATH . '/blocks/audio/block-component.php';
+
 // wp-cli command.
 if ( WP_Utils::wp_cli() ) {
 	require_once CPR_PATH . '/inc/cli.php';

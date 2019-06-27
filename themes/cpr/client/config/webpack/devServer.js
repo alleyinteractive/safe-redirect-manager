@@ -17,13 +17,15 @@ module.exports = function getDevServer(mode, env) {
         hot: true,
         quiet: false,
         noInfo: false,
+        disableHostCheck: true,
         contentBase: '/client/build',
+        port: 8080,
         headers: { 'Access-Control-Allow-Origin': '*' },
-        host: '0.0.0.0',
-        proxy: {
-          '**': 'https://8080-httpsproxy.alley.test',
-          changeOrigin: true,
-        },
+        // host: '0.0.0.0',
+        // proxy: {
+        //   '**': 'https://8080-httpsproxy.alley.test',
+        //   changeOrigin: true,
+        // },
         stats: { colors: true },
         https: http ? false : {
           cert: fs.readFileSync(
