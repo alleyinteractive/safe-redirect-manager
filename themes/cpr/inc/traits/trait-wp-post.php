@@ -141,7 +141,9 @@ trait WP_Post {
 		// Get primary file.
 		$audio_id = get_post_meta( $this->post->ID, 'audio_id', true );
 
-		// Fallback to migrated AAC.
+		// @todo actually get the mp3 version if it exists.
+
+		// Fallback to migrated mp3.
 		if ( empty( $audio_id ) ) {
 			$audio_id = get_post_meta( $this->post->ID, 'mp3_id', true );
 		}

@@ -56,8 +56,9 @@ class Ad_Provider extends \WP_Components\Component {
 	 */
 	public function default_config() : array {
 		return [
-			'targeting'      => [],
 			'dfp_network_id' => '',
+			'size_mapping'   => [],
+			'targeting'      => [],
 		];
 	}
 
