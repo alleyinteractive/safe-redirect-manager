@@ -152,6 +152,10 @@ class Classical extends \WP_Components\Component {
 							->set_theme( 'right' )
 							->set_config( 'has_ad', true )
 							->append_child(
+								( new \CPR\Components\Advertising\Ad_Unit() )
+										->configure_ad_slot( 'CPR3-Combined-300x250' )
+							)
+							->append_child(
 
 								/**
 								 * Concert calendar via a content list with a
@@ -162,7 +166,7 @@ class Classical extends \WP_Components\Component {
 									->set_config( 'header_link', $data['calendar']['heading_link'] ?? site_url( 'classical/calendar/' ) )
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
-										4,
+										2,
 										[
 											'post_type'  => 'tribe_events',
 											'tax_query'  => [
@@ -174,10 +178,6 @@ class Classical extends \WP_Components\Component {
 											],
 										]
 									)
-							)
-							->append_child(
-								( new \CPR\Components\Advertising\Ad_Unit() )
-										->configure_ad_slot( 'CPR3-Combined-300x250' )
 							),
 					]
 				),
