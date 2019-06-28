@@ -316,6 +316,18 @@ function build_components_endpoint(
 		 * Error page.
 		 */
 		case $wp_query->is_404():
+			// Attempt to redirec to a legacy piece of content.
+			$wp_query = new \WP_Query(
+				[
+					'post_type'   => 'any',
+					'post_status' => 'publish',
+					'meta_key'    => 'legacy_path',
+					'meta_value'  => substr( $path, 1 ),
+				]
+			);
+			wp_safe_redirect( get_permalink( $wp_query->post->ID ), $status = 302 );
+			exit();
+
 		default:
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Error() )->set_query( $wp_query );
