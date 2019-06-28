@@ -12,6 +12,8 @@ namespace CPR\Migration\Image;
  */
 class Feed_Item extends \Alleypack\Sync_Script\Attachment_Feed_Item {
 
+	use \CPR\Migration\Traits\Story;
+
 	/**
 	 * This object should always sync.
 	 *
@@ -54,17 +56,21 @@ class Feed_Item extends \Alleypack\Sync_Script\Attachment_Feed_Item {
 	 * Map source data to the object.
 	 */
 	public function map_source_to_object() {
+
+		self::$mapping_version = \CPR\Migration\Migration_CLI::$version;
+
 		$this->object['post_title']   = esc_html( $this->source['title'] ?? '' );
 		$this->object['post_excerpt'] = esc_html( $this->source['body']['und'][0]['value'] ?? '' );
-	}
-
-	/**
-	 * Modify object after it's been saved.
-	 *
-	 * @return bool
-	 */
-	public function post_object_save() : bool {
-		update_post_meta( $this->get_object_id(), 'legacy_path', str_replace( 'https://www.cpr.org', '', $this->get_source_url() ) );
-		return true;
+		$this->object['post_content'] = $this->source['body']['und'][0]['value'] ?? '';
+		$this->object['meta_input']   = [
+			'credit'                       => $this->source['field_photo_credits']['und'][0]['value'] ?? '',
+			'cpr_block_conversion_mapping' => \CPR\Migration\Content\Feed_Item::get_mapping_version(),
+			'legacy_path'                  => str_replace( 'https://www.cpr.org', '', $this->get_source_url() ),
+			'legacy_changed'               => $this->source['changed'] ?? '',
+			'legacy_created'               => $this->source['created'] ?? '',
+			'legacy_id'                    => $this->source['nid'],
+			'legacy_path'                  => $this->source['path']['alias'] ?? '',
+			'legacy_type'                  => $this->source['type'] ?? '',
+		];
 	}
 }

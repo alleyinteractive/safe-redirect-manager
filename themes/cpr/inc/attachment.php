@@ -17,17 +17,10 @@ function add_attachment_fields() : array {
 		'credit'  => [
 			'label' => __( 'Credit', 'cpr' ),
 			'input' => 'text',
-			'helps' => __( 'Image Credit.', 'cpr' ),
 		],
 		'tags'    => [
 			'label' => __( 'Tags', 'cpr' ),
 			'input' => 'textarea',
-			'helps' => __( 'Image keywords.', 'cpr' ),
-		],
-		'caption' => [
-			'label' => __( 'Caption', 'cpr' ),
-			'input' => 'textarea',
-			'helps' => __( 'Override image caption.', 'cpr' ),
 		],
 	];
 }
