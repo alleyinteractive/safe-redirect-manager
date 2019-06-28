@@ -174,6 +174,8 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	public function apply_custom_block_logic( $content, \DOMNode $node ) : string {
 		$class = $node->getAttribute( 'class' );
 		switch ( $node->nodeName ) {
+			case 'script':
+				return '';
 			case 'iframe':
 				$source = $node->getAttribute( 'src' ) ?? '';
 
@@ -256,6 +258,10 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				}
 				return ( new Converter( '' ) )->p( $node );
 			case 'p':
+
+				if ( ! empty( $node->getAttribute( 'data-pym-src' ) ?? '' ) ) {
+					return $this->migrate_pym( $content, $node );
+				}
 
 				if ( $this->has_class( $class, 'cpr-gallery-migration' ) ) {
 					return $this->migrate_galleries( $content, $node );
@@ -364,6 +370,27 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		}
 
 		return '<!-- wp:audio {"src":"' . esc_url( wp_get_attachment_url( $attachment_id ) ) . '", "id":' . absint( $attachment_id ) . '} /-->';
+	}
+
+	/**
+	 * Map legacy pym to new block.
+	 *
+	 * @param string   $content HTML content, already blocks.
+	 * @param \DOMNode $node    The node.
+	 * @return string
+	 */
+	private function migrate_pym( $content, \DOMNode $node ) : string {
+		$source_url = $node->getAttribute( 'data-pym-src' ) ?? '';
+
+		if ( empty( $source_url ) ) {
+			return $content;
+		}
+
+		return '<!-- wp:pym-shortcode/pym {"src":"' . esc_url( $source_url ) . '"} -->' . PHP_EOL .
+			'<a href="' . esc_url( $source_url ) . '" class="wp-block-pym-shortcode-pym">' . PHP_EOL .
+				esc_url( $source_url ) . PHP_EOL .
+			'</a>' . PHP_EOL .
+		'<!-- /wp:pym-shortcode/pym -->';
 	}
 
 	/**
