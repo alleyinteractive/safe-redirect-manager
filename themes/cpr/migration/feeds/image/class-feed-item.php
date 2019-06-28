@@ -57,7 +57,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Attachment_Feed_Item {
 	 */
 	public function map_source_to_object() {
 
-		self::$mapping_version = \CPR\Migration\Migration_CLI::$version;
+		self::$mapping_version = '2.0';
 
 		$this->object['post_title']   = esc_html( $this->source['title'] ?? '' );
 		$this->object['post_excerpt'] = esc_html( $this->source['body']['und'][0]['value'] ?? '' );
