@@ -110,27 +110,9 @@ trait WP_Post {
 	 * Create byline components and add to children.
 	 */
 	public function set_byline() {
-		$this->append_children(
-			array_filter(
-				array_map(
-					function( $byline ) {
-						if (
-							in_array(
-								$this->post->post_type ?? '',
-								[
-									'podcast-episode',
-									'show-episode',
-									'show-segment',
-								]
-							)
-						) {
-							$byline->set_config( 'pre_byline', __( 'Hosted By', 'cpr' ) );
-						}
-						return $byline;
-					},
-					\CPR\Components\Avatar_Byline::get_post_bylines( $this->get_post_id() )
-				)
-			)
+		$this->append_child(
+			( new \CPR\Components\Content\Bylines() )
+				->set_post( $this->post )
 		);
 	}
 
