@@ -35,7 +35,7 @@ class News extends \WP_Components\Component {
 	}
 
 	/**
-	 * Get the backfill arguments for this landing page.
+	 * Get the backfill zone arguments for this landing page.
 	 *
 	 * @return array
 	 */
@@ -58,6 +58,17 @@ class News extends \WP_Components\Component {
 				],
 			],
 		];
+	}
+
+	/**
+	 * Get the curation arguments for this landing page.
+	 *
+	 * @return array
+	 */
+	public static function get_curation_args() : array {
+		$args = static::get_backfill_args();
+		$args['post_type'] = [ 'post', 'podcast-episode', 'show-episode', 'show-segment', 'external-link' ];
+		return $args;
 	}
 
 	/**
@@ -322,7 +333,7 @@ class News extends \WP_Components\Component {
 										'add_more_label' => __( 'Add Content', 'cpr' ),
 										'label'          => __( 'Featured Story', 'cpr' ),
 										'post_limit'     => 1,
-										'query_args'     => self::get_backfill_args(),
+										'query_args'     => self::get_curation_args(),
 									]
 								),
 							],
@@ -336,7 +347,7 @@ class News extends \WP_Components\Component {
 									[
 										'add_more_label' => __( 'Add Content', 'cpr' ),
 										'post_limit'     => 4,
-										'query_args'     => self::get_backfill_args(),
+										'query_args'     => self::get_curation_args(),
 									]
 								),
 							],
@@ -362,7 +373,7 @@ class News extends \WP_Components\Component {
 								'content_item_ids' => new \Fieldmanager_Zone_Field(
 									[
 										'post_limit' => 4,
-										'query_args' => self::get_backfill_args(),
+										'query_args' => self::get_curation_args(),
 									]
 								),
 							],
