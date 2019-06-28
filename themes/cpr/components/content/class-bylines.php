@@ -42,27 +42,21 @@ class Bylines extends \WP_Components\Component {
 		// Setup byline using guest authors.
 		$coauthors = get_coauthors( $this->post->ID );
 
-		// Loop through coauthors, adding an image for each.
+		// Loop through coauthors, adding an image and byline for each.
 		foreach ( $coauthors as $coauthor ) {
+			$byline = new \WP_Components\Byline();
+
 			$this->append_child(
 				( new \WP_Components\Image() )
 					->set_post_id( $coauthor->ID ?? 0 )
 					->set_config_for_size( 'avatar' )
 			);
-		}
-
-		// Loop through coauthors, adding the meta data for each.
-		$bylines = [];
-
-		foreach ( $coauthors as $coauthor ) {
-			$byline = new \WP_Components\Byline();
 
 			if ( 'guest-author' === ( $coauthor->type ?? '' ) ) {
 				$byline->set_guest_author( $coauthor );
 			}
-			$bylines[] = $byline;
+			$this->append_child( $byline );
 		}
-		$this->append_children( $bylines );
 
 		return $this;
 	}
