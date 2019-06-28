@@ -55,25 +55,30 @@ class Header extends \WP_Components\Component {
 				$this->set_publish_date();
 
 				// Children.
-				$this->append_child( new \CPR\Components\Advertising\Ad_Unit() );
-				$this->append_child(
-					( new \WP_Components\Social_Sharing() )
-						->merge_config(
-							[
-								'services' => [
-									'facebook' => true,
-									'twitter'  => true,
-									'email'    => true,
-								],
-								'text'     => __( 'Share: ', 'cpr' ),
-							]
-						)
-						->set_post( $this->post )
+				$this->append_children(
+					[
+						new \CPR\Components\Advertising\Ad_Unit(),
+						( new \CPR\Components\Audio\Listen_Now() )->set_post( $this->post ),
+						( new \WP_Components\Social_Sharing() )
+							->merge_config(
+								[
+									'services' => [
+										'facebook' => true,
+										'twitter'  => true,
+										'email'    => true,
+									],
+									'text'     => __( 'Share: ', 'cpr' ),
+								]
+							)
+							->set_post( $this->post ),
+					]
 				);
 				break;
 
 			case 'podcast-episode':
+			case 'show-episode':
 			case 'show-segment':
+				$this->set_publish_date();
 				$this->append_children(
 					[
 						( new \CPR\Components\Audio\Listen_Now() )->set_post( $this->post ),

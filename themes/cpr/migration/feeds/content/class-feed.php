@@ -116,7 +116,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						esc_url( wp_get_attachment_url( $attachment->ID ) ),
 						$align,
 						$source['title'] ?? '',
-						wp_strip_all_tags( $source['body']['und'][0]['value'] ?? '' )
+						wp_strip_all_tags( $source['body']['und'][0]['value'] ) ?? ''
 					),
 					$post_content
 				);
@@ -132,6 +132,19 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				);
 			}
 
+			// Migrate audios.
+			$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $legacy_nid );
+			if ( ! empty( $source ) && ! empty( $source['nid'] ) ) {
+				$post_content = str_replace(
+					$matches[0][ $key ],
+					sprintf(
+						'</p><span class="cpr-audio-migration" id="%1$d" />',
+						absint( $source['nid'] )
+					),
+					$post_content
+				);
+			}
+
 			// Migrate galleries.
 			if ( empty( $source ) ) {
 				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'gallery', $legacy_nid );
@@ -140,7 +153,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						$matches[0][ $key ],
 						sprintf(
 							'<span class="cpr-gallery-migration" id="%1$s" />',
-							$source['nid']
+							absint( $source['nid'] )
 						),
 						$post_content
 					);
@@ -159,15 +172,18 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @return string
 	 */
 	public function apply_custom_block_logic( $content, \DOMNode $node ) : string {
+		$class = $node->getAttribute( 'class' );
 		switch ( $node->nodeName ) {
 			case 'iframe':
+				$source = $node->getAttribute( 'src' ) ?? '';
+
 				// Vimeo and Youtube.
-				if ( $this->has_iframe( $node->getAttribute( 'src' ) ?? '' ) ) {
+				if ( $this->has_iframe( $source ) ) {
 					return $this->video_to_block( $content, $node );
 				}
 
 				// Spotify.
-				if ( $this->has_class( $node->getAttribute( 'src' ) ?? '', 'spotify.com' ) ) {
+				if ( $this->has_class( $source, 'spotify.com' ) ) {
 					$text = $this->get_paragraph_from_image( $content, 'down', 'yes' );
 					if ( ! empty( $text ) ) {
 						return $this->spotify_to_block( $content, $node ) . $text;
@@ -178,18 +194,20 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 				return $content;
 			case 'img':
-				if ( $this->has_class( $node->getAttribute( 'class' ), 'cpr-image-block' ) ) {
+				if ( $this->has_class( $class, 'cpr-image-block' ) ) {
 					return $this->custom_img( $node );
 				}
 				return $content;
 			case 'span':
-				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
+				if ( $this->has_class( $class, 'cpr-gallery-migration' ) ) {
 					return $this->migrate_galleries( $content, $node );
+				}
+
+				if ( $this->has_class( $class, 'cpr-audio-migration' ) ) {
+					return $this->migrate_audio( $content, $node );
 				}
 				return $content;
 			case 'div':
-				$class = $node->getAttribute( 'class' );
-
 				// Remove those divs.
 				if ( $this->has_class( $class, 'pane-ads' ) || $this->has_class( $class, 'ad-toggle' ) ) {
 					return '';
@@ -239,9 +257,12 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				return ( new Converter( '' ) )->p( $node );
 			case 'p':
 
-				// Fix for nested galleries inside a paragraph.
-				if ( 'cpr-gallery-migration' === $node->getAttribute( 'class' ) ) {
+				if ( $this->has_class( $class, 'cpr-gallery-migration' ) ) {
 					return $this->migrate_galleries( $content, $node );
+				}
+
+				if ( $this->has_class( $class, 'cpr-audio-migration' ) ) {
+					return $this->migrate_audio( $content, $node );
 				}
 
 				if ( ! $node->hasChildNodes() ) {
@@ -249,18 +270,19 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				}
 
 				foreach ( $node->childNodes as $span ) {
-
 					if ( '#text' === $span->nodeName ) {
 						return $content;
 					}
 
 					switch ( $span->nodeName ) {
 						case 'iframe':
-							if ( $this->has_iframe( $span->getAttribute( 'src' ) ?? '' ) ) {
+							$source = $span->getAttribute( 'src' ) ?? '';
+
+							if ( $this->has_iframe( $source ) ) {
 								return $this->video_to_block( $content, $span );
 							}
 
-							if ( $this->has_class( $span->getAttribute( 'src' ) ?? '', 'spotify.com' ) ) {
+							if ( $this->has_class( $source, 'spotify.com' ) ) {
 								$text = $this->get_paragraph_from_image( $content, 'down', 'yes' );
 								if ( ! empty( $text ) ) {
 									return $this->spotify_to_block( $content, $span ) . $text;
@@ -271,8 +293,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 							return $content;
 						case 'img':
-
-						if ( $this->has_class( $span->getAttribute( 'class' ), 'cpr-image-block' ) ) {
+							if ( $this->has_class( $span->getAttribute( 'class' ), 'cpr-image-block' ) ) {
 								$text = $this->get_paragraph_from_image( $content, 'down' );
 								if ( ! empty( $text ) ) {
 									return $this->custom_img( $span ) . $text;
@@ -280,6 +301,18 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 									return $this->custom_img( $span );
 								}
 							}
+							return $content;
+						case 'span':
+							$span_class = $span->getAttribute( 'class' );
+
+							if ( $this->has_class( $span_class, 'cpr-gallery-migration' ) ) {
+								return $this->migrate_galleries( $content, $node );
+							}
+
+							if ( $this->has_class( $span_class, 'cpr-audio-migration' ) ) {
+								return $this->migrate_audio( $content, $node );
+							}
+
 							return $content;
 						default:
 							if ( $span->hasChildNodes() ) {
@@ -289,8 +322,12 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 									}
 		
 									// Fix for nested galleries inside a paragraph and span.
-									if ( 'cpr-gallery-migration' === $innerChild->getAttribute( 'class' ) ) {
+									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-gallery-migration' ) ) { 
 										return $this->migrate_galleries( $content, $innerChild );
+									}
+
+									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-audio-migration' ) ) {
+										return $this->migrate_audio( $content, $innerChild );
 									}
 		
 									// Fix for nested image block inside a paragraph and span.
@@ -299,15 +336,34 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 									}
 								}
 							}
-	
 							return $content;
 					}
 				}
-
-				return $content;
 			default:
-				return $content;
+				return $content ?? '';
 		}
+	}
+
+	/**
+	 * Map legacy audio to core audio blocks.
+	 *
+	 * @param string   $content HTML content, already blocks.
+	 * @param \DOMNode $node    The node.
+	 * @return string
+	 */
+	private function migrate_audio( $content, \DOMNode $node ) : string {
+		$audio_id   = $node->getAttribute( 'id' ) ?? '';
+		$source     = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $audio_id );
+		$audio_item = new \CPR\Migration\Audio\Feed_Item();
+		$audio_item->load_source( $source );
+		$attachment_id = $audio_item->get_attachment_id_by_field( 'field_mp3_file', [] );
+		
+		// Validate attachment.
+		if ( empty( $attachment_id ) ) {
+			return '';
+		}
+
+		return '<!-- wp:audio {"src":"' . esc_url( wp_get_attachment_url( $attachment_id ) ) . '", "id":' . absint( $attachment_id ) . '} /-->';
 	}
 
 	/**

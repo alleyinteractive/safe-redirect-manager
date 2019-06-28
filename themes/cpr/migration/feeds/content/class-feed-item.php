@@ -43,7 +43,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 *
 	 * @var string
 	 */
-	protected static $mapping_version = '1.2';
+	protected static $mapping_version = '1.3';
 
 	/**
 	 * Meta key for storing mapping version key.

@@ -37,15 +37,15 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	 * @return string|bool
 	 */
 	public function get_unique_id() {
-		return $this->source['nid'];
+		return $this->source['nid'] ?? '';
 	}
 
-	 /**
-	  * Return the default state of the feed item.
-	  *
-	  * @param string $unique_id Unique ID.
-	  * @return null|WP_Post
-	  */
+	/**
+	 * Return the default state of the feed item.
+	 *
+	 * @param string $unique_id Unique ID.
+	 * @return null|WP_Post
+	 */
 	public static function get_object_by_unique_id( $unique_id ) {
 		return null;
 	}
@@ -53,8 +53,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	/**
 	 * Map the source to a new object.
 	 */
-	public function map_source_to_object() {
-	}
+	public function map_source_to_object() {}
 
 	/**
 	 * Get the attachment id from the source field slug.
@@ -117,7 +116,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 
 		$args = [
 			'title' => $this->source['title'] ?? '',
-			'meta' => [
+			'meta'  => [
 				'legacy_id' => $this->source['nid'],
 			],
 		];
@@ -163,7 +162,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	 *
 	 * @return bool
 	 */
-	public function save_object() {
+	public function save_object() : bool {
 		return true;
 	}
 

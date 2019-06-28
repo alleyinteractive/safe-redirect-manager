@@ -6,7 +6,7 @@ module.exports = function getOutput(mode) {
     case 'development':
       return {
         path: paths.buildRoot,
-        publicPath: 'https://8080-httpsproxy.alley.test/client/build/',
+        publicPath: '//localhost:8080/client/build/',
         filename: 'js/[name].bundle.js',
         chunkFilename: 'js/[name].chunk.js',
       };

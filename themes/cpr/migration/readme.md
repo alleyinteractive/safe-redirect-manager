@@ -98,6 +98,7 @@ Terms
 Attachments
 * `wp alleypack sync document`
 * `wp alleypack sync image`
+* `wp alleypack sync audio`
 
 Posts
 * `wp alleypack sync podcast-episode`

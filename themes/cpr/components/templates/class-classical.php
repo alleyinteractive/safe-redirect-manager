@@ -141,6 +141,7 @@ class Classical extends \WP_Components\Component {
 								( new \CPR\Components\Audio\Live_Stream() )
 									->set_source( 'classical' )
 									->set_config( 'count', 4 )
+									->set_config( 'title_link', '/classical/playlist/' )
 									->set_theme( 'sidebar' )
 							),
 
