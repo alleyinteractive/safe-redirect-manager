@@ -175,6 +175,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		$class = $node->getAttribute( 'class' );
 		switch ( $node->nodeName ) {
 			case 'script':
+			case 'style':
 				return '';
 			case 'iframe':
 				$source = $node->getAttribute( 'src' ) ?? '';
@@ -218,6 +219,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				// Convert video embed.
 				if ( $this->has_class( $class, 'embed' ) ) {
 					return $this->video_to_block( $content, $node );
+				}
+
+				// Convert normal iframe.
+				if ( $this->has_class( $class, 'video-container' ) ) {
+					return $content;
 				}
 
 				// Save staticly to persist other checks.
