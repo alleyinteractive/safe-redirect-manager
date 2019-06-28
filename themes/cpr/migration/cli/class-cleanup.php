@@ -184,5 +184,54 @@ class Cleanup extends \CLI_Command {
 
 		\WP_CLI::success( 'Post types redirects created. o/' );
 	}
+
+	/**
+	 * Decode caption data from attachments.
+	 *
+	 * ## EXAMPLE
+	 *
+	 *   $ wp cpr-cleanup image_caption_decode
+	 *
+	 * @param array $args       CLI args.
+	 * @param array $assoc_args CLI associate args.
+	 */
+	public function image_caption_decode( $args, $assoc_args ) {
+		// Default values.
+		$query_args = [
+			'post_type' => [ 'attachment' ],
+			'fields'    => 'ids',
+		];
+
+		// Unique post ID.
+		if ( ! empty( $assoc_args['post_id'] ) ) {
+			$query_args['p'] = absint( $assoc_args['post_id'] );
+		}
+
+		$this->bulk_task(
+			$query_args,
+			function ( $post_id ) {
+				$current_caption = wp_get_attachment_caption( $post_id );
+
+				if ( ! empty( $current_caption ) ) {
+					wp_update_post(
+						[
+							'ID'           => $post_id,
+							'post_excerpt' => html_entity_decode( $current_caption ),
+						]
+					);
+
+					WP_CLI::log(
+						sprintf( 'Post ID %d caption updated.', $post_id )
+					);
+				} else {
+					WP_CLI::log(
+						sprintf( 'No caption for Post ID %d.', $post_id )
+					);
+				}
+			}
+		);
+
+		\WP_CLI::success( 'Captions decoded. o/' );
+	}
 }
 WP_CLI::add_command( 'cpr-cleanup', __NAMESPACE__ . '\Cleanup' );
