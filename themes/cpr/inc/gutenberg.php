@@ -50,6 +50,19 @@ function map_dynamic_blocks( $component ) {
 add_filter( 'wp_components_dynamic_block', __NAMESPACE__ . '\map_dynamic_blocks' );
 
 /**
+ * Add to array of non-dinamic blocks.
+ *
+ * @param array $blocks Blocks.
+ * @return array
+ */
+function bypass_dynamic_block( $blocks ) : array {
+	$blocks[] = 'pym-shortcode/pym';
+
+	return $blocks;
+}
+add_filter( 'wp_components_block_render_exceptions', __NAMESPACE__ . '\bypass_dynamic_block' );
+
+/**
  * Hide some taxonomies from displaying the default Gutenberg metabox.
  *
  * @param \WP_REST_Response $response Rest response object.
