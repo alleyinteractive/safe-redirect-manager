@@ -103,7 +103,10 @@ class Header extends \WP_Components\Component {
 	 */
 	public function post_has_set() : self {
 		$sections = wp_get_post_terms( $this->get_post_id(), 'section' );
-		if ( $sections[0] instanceof \WP_Term ) {
+		if (
+			isset( $sections[0] )
+			&& $sections[0] instanceof \WP_Term
+		) {
 			$this->set_term( $sections[0] );
 		}
 		return $this;

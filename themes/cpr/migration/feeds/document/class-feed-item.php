@@ -37,11 +37,14 @@ class Feed_Item extends \Alleypack\Sync_Script\Attachment_Feed_Item {
 	 * @return null|string
 	 */
 	public function get_source_url() : ?string {
-		$filename = $this->source['field_file']['und'][0]['filename'] ?? '';
 
+		$filename = $this->source['field_file']['und'][0]['uri'] ?? '';
 		if ( empty( $filename ) ) {
 			return null;
 		}
+
+		// Remove protocol.
+		$filename = str_replace( 'public://', '', $filename );
 
 		return 'https://www.cpr.org/sites/default/files/' . $filename;
 	}
@@ -50,6 +53,18 @@ class Feed_Item extends \Alleypack\Sync_Script\Attachment_Feed_Item {
 	 * Map source data to the object.
 	 */
 	public function map_source_to_object() {
-		$this->object['post_title']  = esc_html( $this->source['title'] );
+
+		self::$mapping_version = \CPR\Migration\Migration_CLI::$version;
+
+		$this->object['post_title'] = esc_html( $this->source['title'] );
+		$this->object['meta_input'] = [
+			'cpr_block_conversion_mapping' => \CPR\Migration\Content\Feed_Item::get_mapping_version(),
+			'legacy_path'                  => str_replace( 'https://www.cpr.org', '', $this->get_source_url() ),
+			'legacy_changed'               => $this->source['changed'] ?? '',
+			'legacy_created'               => $this->source['created'] ?? '',
+			'legacy_id'                    => $this->source['nid'],
+			'legacy_path'                  => $this->source['path']['alias'] ?? '',
+			'legacy_type'                  => $this->source['type'] ?? '',
+		];
 	}
 }

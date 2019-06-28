@@ -326,16 +326,16 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 									if ( '#text' === $innerChild->nodeName ) {
 										return $content;
 									}
-		
+
 									// Fix for nested galleries inside a paragraph and span.
-									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-gallery-migration' ) ) { 
+									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-gallery-migration' ) ) {
 										return $this->migrate_galleries( $content, $innerChild );
 									}
 
 									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-audio-migration' ) ) {
 										return $this->migrate_audio( $content, $innerChild );
 									}
-		
+
 									// Fix for nested image block inside a paragraph and span.
 									if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
 										return $this->custom_img( $innerChild );
@@ -363,7 +363,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		$audio_item = new \CPR\Migration\Audio\Feed_Item();
 		$audio_item->load_source( $source );
 		$attachment_id = $audio_item->get_attachment_id_by_field( 'field_mp3_file', [] );
-		
+
 		// Validate attachment.
 		if ( empty( $attachment_id ) ) {
 			return '';
@@ -405,7 +405,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 		$image_src = $node->getAttribute( 'src' ) ?? '';
 		$caption   = $node->getAttribute( 'data-caption' ) ?? '';
 		$image_src = ( new Converter( '' ) )->upload_image( $image_src, $alt );
-		
+
 		// Check alignment.
 		switch ( $alignment ) {
 			case 'right':
@@ -603,7 +603,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 */
 	private function has_iframe( $video_url ) : bool {
 		return ( $this->has_class( $video_url, 'youtube.com' )
-			|| $this->has_class( $video_url, 'youtu.be' ) 
+			|| $this->has_class( $video_url, 'youtu.be' )
 			|| $this->has_class( $video_url, 'vimeo.com' ) );
 	}
 

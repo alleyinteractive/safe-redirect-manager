@@ -66,6 +66,12 @@ trait WP_Post {
 							'eyebrow_link'  => get_term_link( $podcast_terms[0], $podcast_terms[0]->taxonomy ),
 						]
 					);
+					$this->merge_config(
+						[
+							'eyebrow_label' => '‹‹ ' . $podcast_terms[0]->name,
+							'eyebrow_link'  => get_term_link( $podcast_terms[0], $podcast_terms[0]->taxonomy ),
+						]
+					);
 				}
 
 				$this->append_child( $eyebrow );
@@ -78,6 +84,12 @@ trait WP_Post {
 					$eyebrow->merge_config(
 						[
 							'eyebrow_label' => $show_terms[0]->name,
+							'eyebrow_link'  => get_term_link( $show_terms[0], $show_terms[0]->taxonomy ),
+						]
+					);
+					$this->merge_config(
+						[
+							'eyebrow_label' => '‹‹ ' . $show_terms[0]->name,
 							'eyebrow_link'  => get_term_link( $show_terms[0], $show_terms[0]->taxonomy ),
 						]
 					);
@@ -125,27 +137,9 @@ trait WP_Post {
 	 * Create byline components and add to children.
 	 */
 	public function set_byline() {
-		$this->append_children(
-			array_filter(
-				array_map(
-					function( $byline ) {
-						if (
-							in_array(
-								$this->post->post_type ?? '',
-								[
-									'podcast-episode',
-									'show-episode',
-									'show-segment',
-								]
-							)
-						) {
-							$byline->set_config( 'pre_byline', __( 'Hosted By', 'cpr' ) );
-						}
-						return $byline;
-					},
-					\CPR\Components\Avatar_Byline::get_post_bylines( $this->get_post_id() )
-				)
-			)
+		$this->append_child(
+			( new \CPR\Components\Content\Bylines() )
+				->set_post( $this->post )
 		);
 	}
 

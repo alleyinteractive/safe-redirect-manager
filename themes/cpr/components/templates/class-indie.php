@@ -151,6 +151,10 @@ class Indie extends \WP_Components\Component {
 							->set_theme( 'right' )
 							->set_config( 'has_ad', true )
 							->append_child(
+								( new \CPR\Components\Advertising\Ad_Unit() )
+										->configure_ad_slot( 'CPR3-Combined-300x250' )
+							)
+							->append_child(
 
 								/**
 								 * Concert calendar via a content list with a
@@ -161,7 +165,7 @@ class Indie extends \WP_Components\Component {
 									->set_config( 'header_link', $data['calendar']['header_link'] ?? site_url( 'indie/calendar/' ) )
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
-										4,
+										2,
 										[
 											'post_type'  => 'tribe_events',
 											'tax_query'  => [
@@ -173,10 +177,6 @@ class Indie extends \WP_Components\Component {
 											],
 										]
 									)
-							)
-							->append_child(
-								( new \CPR\Components\Advertising\Ad_Unit() )
-										->configure_ad_slot( 'CPR3-Combined-300x250' )
 							),
 					]
 				),
@@ -213,6 +213,13 @@ class Indie extends \WP_Components\Component {
 							]
 						)
 				),
+
+			/**
+			 * Articles content list.
+			 */
+			( new \CPR\Components\Column_Area() )
+				->set_theme( 'oneColumn' )
+				->set_config( 'heading', __( 'Top 30', 'cpr' ) ),
 
 			/**
 			 * Top 30.

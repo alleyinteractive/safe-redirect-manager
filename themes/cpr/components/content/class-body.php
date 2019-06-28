@@ -48,23 +48,6 @@ class Body extends \WP_Components\Component {
 				 * Sidebar items.
 				 */
 				$this->get_sidebar_component(),
-
-				/**
-				 * Get these outta here for now (address post-launch).
-				 */
-				// ( new Keep_Reading() )->set_post( $this->post ),
-				// ( new Related_Tags() )->set_post( $this->post ),
-				// ( new Bylines() )->set_post( $this->post ),
-
-				/**
-				 * Donate call to action.
-				 */
-				new \CPR\Components\Donate\Donate_CTA(),
-
-				/**
-				 * Comments come later.
-				 */
-				// ( new Comments() )->set_post( $this->post ),
 			]
 		);
 	}
@@ -90,12 +73,12 @@ class Body extends \WP_Components\Component {
 				if ( empty( $video_url ) ) {
 					break;
 				}
-	
+
 				$markup = wp_oembed_get( $video_url );
 				if ( false === $markup ) {
 					break;
 				}
-	
+
 				$this->append_child(
 					( new \WP_Components\HTML() )
 						->set_config( 'content', $markup )

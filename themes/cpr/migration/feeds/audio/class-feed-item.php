@@ -130,7 +130,17 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 		array_map(
 			function( $attachment_id ) {
 				foreach ( $this->object as $audio_slug => $audio_attachment_id ) {
-					update_post_meta( $attachment_id, $audio_slug, $audio_attachment_id );
+					if (
+						! empty( $audio_attachment_id )
+						&& ! empty( $attachment_id )
+					) {
+						update_post_meta( $attachment_id, $audio_slug, $audio_attachment_id );
+
+						// Display a real line message.
+						if ( method_exists( '\WP_CLI', 'line' ) ) {
+							\WP_CLI::line( "Setting meta on `{$attachment_id}` Audio file `{$audio_slug}` migrated to {$audio_attachment_id}." );
+						}
+					}
 				}
 			},
 			$this->object

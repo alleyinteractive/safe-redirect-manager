@@ -55,7 +55,7 @@ class Job_Archive extends \WP_Components\Component {
 							->set_child_themes(
 								[
 									'content-item'  => 'river',
-									'content-title' => 'grid',
+									'content-title' => 'featureSecondary',
 								]
 							),
 
