@@ -69,7 +69,7 @@ class Content_List_Item extends \WP_Components\Component {
 						'day'        => tribe_get_start_date( $this->get_post_id(), false, 'd' ),
 						'location'   => get_the_title( absint( get_post_meta( $this->post->ID, '_EventVenueID', true ) ) ),
 						'month'      => tribe_get_start_date( $this->get_post_id(), false, 'M' ),
-						'start_time' => tribe_get_start_date( $this->get_post_id(), false, 'ga' ),
+						'start_time' => tribe_get_start_date( $this->get_post_id(), false, 'g:ia' ),
 					]
 				);
 				break;
