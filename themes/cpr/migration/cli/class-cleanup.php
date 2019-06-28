@@ -28,6 +28,7 @@ class Cleanup extends \CLI_Command {
 		WP_CLI::runcommand( 'cpr-cleanup set_site_settings' );
 		WP_CLI::runcommand( 'cpr-cleanup create_redirects' );
 		WP_CLI::runcommand( 'cpr-cleanup post_type_redirects' );
+		WP_CLI::runcommand( 'cpr-cleanup image_caption_decode' );
 	}
 
 	/**
