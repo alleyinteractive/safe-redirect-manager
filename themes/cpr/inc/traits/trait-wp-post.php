@@ -66,6 +66,12 @@ trait WP_Post {
 							'eyebrow_link'  => get_term_link( $podcast_terms[0], $podcast_terms[0]->taxonomy ),
 						]
 					);
+					$this->merge_config(
+						[
+							'eyebrow_label' => '‹‹ ' . $podcast_terms[0]->name,
+							'eyebrow_link'  => get_term_link( $podcast_terms[0], $podcast_terms[0]->taxonomy ),
+						]
+					);
 				}
 
 				$this->append_child( $eyebrow );
@@ -78,6 +84,12 @@ trait WP_Post {
 					$eyebrow->merge_config(
 						[
 							'eyebrow_label' => $show_terms[0]->name,
+							'eyebrow_link'  => get_term_link( $show_terms[0], $show_terms[0]->taxonomy ),
+						]
+					);
+					$this->merge_config(
+						[
+							'eyebrow_label' => '‹‹ ' . $show_terms[0]->name,
 							'eyebrow_link'  => get_term_link( $show_terms[0], $show_terms[0]->taxonomy ),
 						]
 					);

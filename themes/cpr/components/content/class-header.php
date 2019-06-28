@@ -78,6 +78,7 @@ class Header extends \WP_Components\Component {
 			case 'podcast-episode':
 			case 'show-episode':
 			case 'show-segment':
+				$this->set_eyebrow();
 				$this->set_publish_date();
 				$this->append_children(
 					[
