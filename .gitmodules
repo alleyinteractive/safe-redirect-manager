@@ -43,3 +43,6 @@
 [submodule "mu-plugins/fm-widgets"]
 	path = mu-plugins/fm-widgets
 	url = git@github.com:alleyinteractive/fm-widgets.git
+[submodule "mu-plugins/archiveless"]
+	path = mu-plugins/archiveless
+	url = git@github.com:alleyinteractive/archiveless.git
