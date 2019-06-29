@@ -73,4 +73,24 @@ class Feed_Item extends \Alleypack\Sync_Script\Attachment_Feed_Item {
 			'legacy_type'                  => $this->source['type'] ?? '',
 		];
 	}
+
+	/**
+	 * Get the source URL.
+	 *
+	 * @param mixed $source array Source object.
+	 * @return null|string
+	 */
+	public static function get_url_from_source( $source ) : ?string {
+
+		// Get filename.
+		$filename = $source['field_photo']['und'][0]['uri'] ?? '';
+		if ( empty( $filename ) ) {
+			return null;
+		}
+
+		// Remove protocol.
+		$filename = str_replace( 'public://', '', $filename );
+
+		return 'https://www.cpr.org/sites/default/files/' . $filename;
+	}
 }

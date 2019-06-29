@@ -43,13 +43,18 @@ trait Story {
 	 */
 	public function migrate_meta() {
 
-		// If the featured image is in the body content, hide the featured image.
+		// If the featured image is in the body content,
+		// inside a [nid] or as regular image tag,
+		// hide the featured image.
 		$legacy_image_id = $this->source['field_feature_image']['und'][0]['target_id'] ?? 0;
+		$souce           = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_image_id );
+		$url             = \CPR\Migration\Image\Feed_Item::get_url_from_source( $souce );
+		$body            = $this->source['body']['und'][0]['value'] ?? '';
 		if (
 			! empty( $legacy_image_id )
-			&& false !== strpos(
-				( $this->source['body']['und'][0]['value'] ?? '' ),
-				"[[nid:{$legacy_image_id} "
+			&& (
+				false !== strpos( $body, "[[nid:{$legacy_image_id} " )
+				|| false !== strpos( $body, ( $url ?? '' ) )
 			)
 		) {
 			update_post_meta( $this->get_object_id(), 'featured_media_type', 'none' );
