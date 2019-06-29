@@ -79,6 +79,8 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	public function post_object_save() {
 		$this->global_post_save();
+		$this->migrate_bylines();
+		$this->migrate_featured_image();
 		update_post_meta( $this->get_object_id(), 'newsletter_html', $this->source['body']['und'][0]['value'] ?? '' );
 		wp_set_object_terms( $this->get_object_id(), 'The Lookout', 'newsletter' );
 		return true;

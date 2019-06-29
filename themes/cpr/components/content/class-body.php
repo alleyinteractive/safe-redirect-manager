@@ -30,26 +30,54 @@ class Body extends \WP_Components\Component {
 		// Ensure this post isn't used in the backfill.
 		\Alleypack\Unique_WP_Query_Manager::add_used_post_ids( $this->get_post_id() );
 
-		$this->set_featured_media();
+		switch ( $this->post->post_type ) {
+			case 'newsletter-single':
+				$this->append_children(
+					[
+						/**
+						 * Newsletter Content Area.
+						 */
+						( new \CPR\Components\Content\Newsletter_Content() )
+							->set_post( $this->post ),
 
-		return $this->append_children(
-			[
-				/**
-				 * Segments list.
-				 */
-				( new \CPR\Components\Podcast_And_Show\Segments_Playlist() )->set_post( $this->post ),
+						/**
+						 * Sidebar items.
+						 */
+						( new \CPR\Components\Sidebar() )
+							->set_config( 'position', 'right' )
+							->set_sidebar( 'institutional-sidebar' )
+							->prepend_child(
+								( new \CPR\Components\Advertising\Ad_Unit() )
+									->configure_ad_slot( 'CPR3-Article-300x250' )
+							),
+					]
+				);
+				break;
 
-				/**
-				 * Content body.
-				 */
-				( new \WP_Components\Gutenberg_Content() )->set_post( $this->post ),
+			default:
+				$this->set_featured_media();
+				$this->append_children(
+					[
+						/**
+						 * Segments list.
+						 */
+						( new \CPR\Components\Podcast_And_Show\Segments_Playlist() )->set_post( $this->post ),
 
-				/**
-				 * Sidebar items.
-				 */
-				$this->get_sidebar_component(),
-			]
-		);
+						/**
+						 * Content body.
+						 */
+						( new \WP_Components\Gutenberg_Content() )->set_post( $this->post ),
+
+						/**
+						 * Sidebar items.
+						 */
+						$this->get_sidebar_component(),
+					]
+				);
+		}
+
+		return $this;
+
 	}
 
 	/**
