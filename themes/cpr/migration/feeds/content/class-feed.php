@@ -80,13 +80,12 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			'field_format',
 		];
 
-		preg_match_all( '/(<p>)?\[\[nid:(\d+)(.*?)\]\](<\/p>)?/', $post_content, $matches );
 		preg_match_all( '/\[\[nid:(\d+)(.*?)\]\]?/', $post_content, $matches );
 
 		foreach ( $matches[0] as $key => $value ) {
 
 			// Extra fields and parse as needed.
-			$legacy_nid          = $matches[1][ $key ];
+			$legacy_nid = $matches[1][ $key ];
 
 			// Migrate images.
 			$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_nid );
