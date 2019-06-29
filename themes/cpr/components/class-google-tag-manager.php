@@ -210,6 +210,10 @@ class Google_Tag_Manager extends \WP_Components\Integrations\Google_Tag_Manager 
 		if ( $wp_query->is_single() ) {
 			$tags = get_the_tags( $wp_query->queried_object->ID ?? 0 );
 
+			if ( ! is_array( $tags ) ) {
+				return [];
+			}
+
 			return array_map(
 				function( $tag ) {
 					return $tag->name;
