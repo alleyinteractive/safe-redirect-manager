@@ -58,7 +58,7 @@ class Cpr_Post_Type_Newsletter_Single extends Cpr_Post_Type {
 				],
 				'public' => true,
 				'show_in_rest' => true,
-				'supports' => [ 'title', 'revisions', 'excerpt' ],
+				'supports' => [ 'title', 'revisions', 'excerpt', 'thumbnail', 'author' ],
 				'taxonomies' => [ 'newsletter' ],
 			]
 		);
