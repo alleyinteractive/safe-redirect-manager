@@ -207,6 +207,7 @@ function build_components_endpoint(
 		case $wp_query->is_tax( 'podcast' ):
 		case $wp_query->is_tax( 'show' ):
 			$head->set_query( $wp_query );
+			$header->set_query( $wp_query );
 			$template = ( new Components\Templates\Podcast_And_Show() )->set_query( $wp_query );
 			break;
 
@@ -316,6 +317,26 @@ function build_components_endpoint(
 		 * Error page.
 		 */
 		case $wp_query->is_404():
+			// Attempt to redirec to a legacy piece of content.
+			$wp_query = new \WP_Query(
+				[
+					'fields'      => 'ids',
+					'meta_key'    => 'legacy_path',
+					'meta_value'  => substr( $path, 1 ), // Trim first slash to match meta values.
+					'post_status' => 'publish',
+					'post_type'   => 'any',
+				]
+			);
+
+			// Handle redirects.
+			if ( 0 !== absint( $wp_query->posts[0] ?? 0 ) && class_exists( '\WPCOM_Legacy_Redirector' ) ) {
+				$redirect_to = get_permalink( $wp_query->posts[0] );
+				\WPCOM_Legacy_Redirector::insert_legacy_redirect( site_url( $path ), $redirect_to );
+				wp_safe_redirect( $redirect_to, 301 );
+				exit();
+			}
+
+			// no break.
 		default:
 			$head->set_query( $wp_query );
 			$template = ( new Components\Templates\Error() )->set_query( $wp_query );

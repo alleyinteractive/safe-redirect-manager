@@ -58,6 +58,12 @@ class Bylines extends \WP_Components\Component {
 			$this->append_child( $byline );
 		}
 
+		if ( ! empty( $bylines ) ) {
+			$this->append_children( $bylines );
+		} else {
+			$this->set_invalid();
+		}
+
 		return $this;
 	}
 }

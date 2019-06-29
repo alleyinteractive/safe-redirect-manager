@@ -57,7 +57,16 @@ class Grid_Group_Item extends \WP_Components\Component {
 			$this->append_child(
 				( new \WP_Components\Component() )
 					->set_name( 'excerpt' )
-					->set_config( 'content', get_post_meta( $this->get_post_id(), 'teaser', true ) )
+					->callback(
+						function( $component ) {
+							if ( 'external-link' === $this->post->post_type ) {
+								$component->set_config( 'content', strip_tags( $this->post->post_content ) );
+							} else {
+								$component->set_config( 'content', get_post_meta( $this->get_post_id(), 'teaser', true ) );
+							}
+							return $component;
+						}
+					)
 			);
 		}
 

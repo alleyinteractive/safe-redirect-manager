@@ -98,6 +98,31 @@ trait WP_Post {
 				$this->append_child( $eyebrow );
 				break;
 
+			case 'show-segment':
+				// Get the show episode id from meta.
+				$show_episode_id = get_post_meta( $this->get_post_id(), '_show_episode_id', true );
+
+				// Get the show.
+				$show_terms = wp_get_post_terms( $show_episode_id, 'show' );
+
+				if ( ! empty( $show_terms ) && $show_terms[0] instanceof \WP_Term ) {
+					$eyebrow->merge_config(
+						[
+							'eyebrow_label' => $show_terms[0]->name,
+							'eyebrow_link'  => get_term_link( $show_terms[0], $show_terms[0]->taxonomy ),
+						]
+					);
+					$this->merge_config(
+						[
+							'eyebrow_label' => '‹‹ ' . $show_terms[0]->name,
+							'eyebrow_link'  => get_term_link( $show_terms[0], $show_terms[0]->taxonomy ),
+						]
+					);
+				}
+
+				$this->append_child( $eyebrow );
+				break;
+
 			case 'podcast-post':
 			case 'show-post':
 				// Use section as the eyebrow.
@@ -129,6 +154,27 @@ trait WP_Post {
 					);
 					$this->append_child( $eyebrow );
 				}
+				break;
+
+			case 'newsletter-single':
+				$newsletter_terms = wp_get_post_terms( $this->get_post_id(), 'newsletter' );
+
+				if ( ! empty( $newsletter_terms ) && $newsletter_terms[0] instanceof \WP_Term ) {
+					$eyebrow->merge_config(
+						[
+							'eyebrow_label' => $newsletter_terms[0]->name,
+							'eyebrow_link'  => get_term_link( $newsletter_terms[0], $newsletter_terms[0]->taxonomy ),
+						]
+					);
+					$this->merge_config(
+						[
+							'eyebrow_label' => '‹‹ ' . $newsletter_terms[0]->name,
+							'eyebrow_link'  => get_term_link( $newsletter_terms[0], $newsletter_terms[0]->taxonomy ),
+						]
+					);
+				}
+
+				$this->append_child( $eyebrow );
 				break;
 		}
 	}

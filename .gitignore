@@ -31,6 +31,7 @@ plugins/*
 !plugins/posts-to-posts
 !plugins/pym-shortcode
 !plugins/redirection
+!plugins/s3-direct-attachments/*
 !plugins/s3-uploads/*
 !plugins/shortcake-bakery
 !plugins/shortcode-ui

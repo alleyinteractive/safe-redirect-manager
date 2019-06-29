@@ -13,6 +13,7 @@
 		"newsletter_html": {
 			"label": { "__": "Newsletter HTML" },
 			"type": "textarea",
+			"sanitize": "`function( $value ) { return $value; }`",
 			"attributes": {
 				"rows": 40,
 				"style": "width: 100%"
