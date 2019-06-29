@@ -46,9 +46,10 @@ trait Story {
 		// If the featured image is in the body content,
 		// inside a [nid] or as regular image tag,
 		// hide the featured image.
-		$legacy_image_id = $this->source['field_feature_image']['und'][0]['target_id'] ?? 0;
-		$souce           = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_image_id );
-		$url             = \CPR\Migration\Image\Feed_Item::get_url_from_source( $souce );
+		$legacy_image_id     = $this->source['field_feature_image']['und'][0]['target_id'] ?? 0;
+		$source              = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'image', $legacy_image_id );
+		$url                 = \CPR\Migration\Image\Feed_Item::get_url_from_source( $source );
+		$hide_featured_image = false;
 
 		if (
 			! empty( $legacy_image_id )
@@ -57,20 +58,22 @@ trait Story {
 				|| false !== strpos( ( $this->source['body']['und'][0]['value'] ?? '' ), ( $url ?? '' ) )
 			)
 		) {
+			$hide_featured_image = true;
 			update_post_meta( $this->get_object_id(), 'featured_media_type', 'none' );
 		}
 
 		// Map meta.
 		$this->object['meta_input'] = [
-			'author'         => $this->source['field_author']['und'][0]['target_id'] ?? 0,
-			'featured_image' => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
-			'legacy_changed' => $this->source['changed'] ?? '',
-			'legacy_created' => $this->source['created'] ?? '',
-			'legacy_id'      => $this->source['nid'],
-			'legacy_path'    => $this->source['path']['alias'] ?? '',
-			'legacy_type'    => $this->source['type'] ?? '',
-			'legacy_url'     => empty( $this->source['path']['alias'] ) ? '' : 'https://cpr.org/' . $this->source['path']['alias'],
-			'template'       => sanitize_title( $this->source['title'] ?? '' ),
+			'author'              => $this->source['field_author']['und'][0]['target_id'] ?? 0,
+			'featured_image'      => $this->source['field_feature_image']['und'][0]['target_id'] ?? 0,
+			'featured_media_type' => $hide_featured_image ? 'none' : '',
+			'legacy_changed'      => $this->source['changed'] ?? '',
+			'legacy_created'      => $this->source['created'] ?? '',
+			'legacy_id'           => $this->source['nid'],
+			'legacy_path'         => $this->source['path']['alias'] ?? '',
+			'legacy_type'         => $this->source['type'] ?? '',
+			'legacy_url'          => empty( $this->source['path']['alias'] ) ? '' : 'https://cpr.org/' . $this->source['path']['alias'],
+			'template'            => sanitize_title( $this->source['title'] ?? '' ),
 		];
 	}
 
