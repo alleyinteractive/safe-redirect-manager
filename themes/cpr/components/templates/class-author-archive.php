@@ -94,40 +94,11 @@ class Author_Archive extends \WP_Components\Component {
 							->set_query( $this->query ),
 
 						/**
-						 * Content sidebar.
+						 * Sidebar.
 						 */
 						( new \CPR\Components\Sidebar() )
 							->set_theme( 'right' )
-							->append_children(
-								[
-									/**
-									 * Grid of additional items.
-									 */
-									( new \CPR\Components\Modules\Content_List() )
-										->set_config( 'eyebrow_label', __( 'Across Colorado', 'cpr' ) ) // $todo Change to the source of the data.
-										->set_heading_from_fm_data( $data['author_archive_stories'] ?? [] )
-										->parse_from_fm_data( $data['author_archive_stories'] ?? [], 4 ) // $todo Change to the source of the data.
-										->set_child_themes(
-											[
-												'content-list' => 'river',
-												'content-item' => 'river',
-												'eyebrow'      => 'small',
-												'title'        => 'grid',
-											]
-										),
-
-									/**
-									 * First Ad.
-									*/
-									( new \CPR\Components\Advertising\Ad_Unit() )
-										->set_config( 'height', 400 ),
-
-									/**
-									 * Second Ad.
-									*/
-									new \CPR\Components\Advertising\Ad_Unit(),
-								]
-							),
+							->set_sidebar( 'institutional-sidebar' ),
 					]
 				)
 				->callback(
