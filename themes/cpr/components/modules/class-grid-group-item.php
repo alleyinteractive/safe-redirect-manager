@@ -66,7 +66,7 @@ class Grid_Group_Item extends \WP_Components\Component {
 							}
 							return $component;
 						}
-					),
+					)
 			);
 		}
 
