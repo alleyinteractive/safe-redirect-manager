@@ -9,7 +9,8 @@
 	},
 	"supports": [
 		"title",
-		"thumbnail"
+		"thumbnail",
+		"custom-fields"
 	],
 	"taxonomies": [
 		"section"

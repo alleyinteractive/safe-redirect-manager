@@ -59,7 +59,7 @@ class Cpr_Post_Type_Newsletter_Post extends Cpr_Post_Type {
 				'public' => true,
 				'show_in_rest' => true,
 				'show_in_menu' => false,
-				'supports' => [ 'title', 'thumbnail', 'editor', 'revisions' ],
+				'supports' => [ 'title', 'thumbnail', 'editor', 'revisions', 'custom-fields' ],
 			]
 		);
 	}
