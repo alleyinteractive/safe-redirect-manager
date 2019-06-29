@@ -38,3 +38,13 @@ function wp_seo_single_post_types( $post_types ) {
 	return $post_types;
 }
 add_filter( 'wp_seo_single_post_types', __NAMESPACE__ . '\wp_seo_single_post_types' );
+
+/**
+ * Connects Archiveless to the noindex option.
+ *
+ * @return string
+ */
+function noindex_if_hidden_from_archives() {
+	return 'archiveless';
+}
+add_filter( 'wp_components_head_deindex_url_key', __NAMESPACE__ . '\noindex_if_hidden_from_archives' );
