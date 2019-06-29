@@ -7,7 +7,8 @@
   "menu_icon": "dashicons-money",
   "supports": [
     "title",
-    "thumbnail"
+    "thumbnail",
+    "custom-fields"
   ],
   "taxonomies": [
     "underwriter-category"

@@ -38,7 +38,8 @@
 		"revisions",
 		"excerpt",
 		"thumbnail",
-		"author"
+		"author",
+		"custom-fields"
 	],
 	"taxonomies": [
 		"newsletter"

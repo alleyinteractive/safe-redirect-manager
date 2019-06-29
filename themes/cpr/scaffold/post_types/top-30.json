@@ -8,6 +8,7 @@
 	},
 	"supports": [
 		"title",
-		"editor"
+		"editor",
+		"custom-fields"
 	]
 }
