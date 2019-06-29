@@ -338,7 +338,7 @@ function build_components_endpoint(
 	$data['providers'] = [
 		( new Components\Google_Tag_Manager() )
 			->set_config( 'container_id', $settings['gtm']['container_id'] ?? '' )
-			->set_data_layer_from_query( $wp_query ),
+			->set_meta_from_query( $wp_query, $head ),
 		( new Components\Advertising\Ad_Provider() )
 			->set_config( 'dfp_network_id', '12925303' )
 			->set_targeting_from_query( $wp_query ),
