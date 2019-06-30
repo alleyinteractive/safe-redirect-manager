@@ -331,7 +331,8 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 							if ( $span->hasChildNodes() ) {
 								foreach ( $span->childNodes as $innerChild ) {
-									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-image-block' ) ) {
+									$inner_class = $innerChild->getAttribute( 'class' ) ?? '';
+									if ( ! empty( $inner_class ) && $this->has_class( $inner_class, 'cpr-image-block' ) ) {
 										return $this->custom_img( $innerChild );
 									}
 								}
@@ -345,16 +346,19 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 										return $content;
 									}
 
-									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-gallery-migration' ) ) {
-										return $this->migrate_galleries( $content, $innerChild );
-									}
-
-									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-audio-migration' ) ) {
-										return $this->migrate_audio( $content, $innerChild );
-									}
-
-									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-image-block' ) ) {
-										return $this->custom_img( $innerChild );
+									$inner_class = $innerChild->getAttribute( 'class' ) ?? '';
+									if ( ! empty( $inner_class ) ) {
+										if ( $this->has_class( $inner_class, 'cpr-gallery-migration' ) ) {
+											return $this->migrate_galleries( $content, $innerChild );
+										}
+	
+										if ( $this->has_class( $inner_class, 'cpr-audio-migration' ) ) {
+											return $this->migrate_audio( $content, $innerChild );
+										}
+	
+										if ( $this->has_class( $inner_class, 'cpr-image-block' ) ) {
+											return $this->custom_img( $innerChild );
+										}
 									}
 								}
 							}
