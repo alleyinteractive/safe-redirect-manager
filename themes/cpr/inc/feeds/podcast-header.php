@@ -17,7 +17,6 @@ if ( ! empty( $image_url ) ) : ?>
 	</image>
 <?php endif; ?>
 
-<copyright><?php echo esc_html( bloginfo_rss( 'name' ) ); ?></copyright>
 <itunes:subtitle>From <?php echo esc_html( bloginfo_rss( 'name' ) ); ?></itunes:subtitle>
 <itunes:summary><?php bloginfo_rss( 'description' ); ?></itunes:summary>
 <itunes:category text="Music" />
