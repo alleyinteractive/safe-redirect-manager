@@ -50,7 +50,7 @@ function map_dynamic_blocks( $component ) {
 add_filter( 'wp_components_dynamic_block', __NAMESPACE__ . '\map_dynamic_blocks' );
 
 /**
- * Add to array of non-dinamic blocks.
+ * Add to array of non-dynamic blocks.
  *
  * @param array $blocks Blocks.
  * @return array
@@ -61,6 +61,23 @@ function bypass_dynamic_block( $blocks ) : array {
 	return $blocks;
 }
 add_filter( 'wp_components_block_render_exceptions', __NAMESPACE__ . '\bypass_dynamic_block' );
+
+/**
+ * Vuhaus doesn't have oembed, so short-circuit the
+ * logic and put the URL in an iframe.
+ *
+ * @param null|string $result The HTML to be used to embed. Default null.
+ * @param string      $url    The URL to the content to be embedded.
+ * @param array       $args   Arguments passed. Optional, default empty.
+ * @return null|string
+ */
+function vuhaus_embed( $result, $url, $args ) {
+	if ( false === strpos( $url, 'https://www.vuhaus.com/embed/v2/videos/' ) ) {
+		return $result;
+	}
+	return "<iframe src={$url}></iframe>";
+}
+add_filter( 'pre_oembed_result', __NAMESPACE__ . '\vuhaus_embed', 10, 3 );
 
 /**
  * Hide some taxonomies from displaying the default Gutenberg metabox.
