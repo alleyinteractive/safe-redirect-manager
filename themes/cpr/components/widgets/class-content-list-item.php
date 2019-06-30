@@ -86,10 +86,8 @@ class Content_List_Item extends \WP_Components\Component {
 						 * External link description.
 						 */
 						( new \WP_Components\HTML() )
-							->set_config(
-								'content',
-								apply_filters( 'the_content', $this->post->post_content )
-							),
+							// phpcs:ignore
+							->set_config( 'content', apply_filters( 'the_content', $this->post->post_content ?? '' ) ),
 
 						/**
 						 * External link cta.

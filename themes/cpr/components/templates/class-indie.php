@@ -105,6 +105,7 @@ class Indie extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'indie', true );
+
 		return [
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'threeColumn' )
@@ -166,16 +167,7 @@ class Indie extends \WP_Components\Component {
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
 										2,
-										[
-											'post_type'  => 'tribe_events',
-											'tax_query'  => [
-												[
-													'taxonomy' => 'section',
-													'field'    => 'slug',
-													'terms'    => 'indie',
-												],
-											],
-										]
+										Calendar::get_events_args_for_widgets( 'indie' ),
 									)
 							),
 					]

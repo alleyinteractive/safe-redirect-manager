@@ -227,11 +227,8 @@ function build_components_endpoint(
 			$template = ( new Components\Templates\Calendar() )->set_query( $wp_query );
 			$head->set_query( $wp_query );
 			$head->set_title(
-				sprintf(
-					// translators: Calendar Header.
-					__( '%1$s | Colorado Public Radio', 'cpr' ),
-					$template->get_heading()
-				)
+				// translators: Calendar Header.
+				sprintf( __( '%1$s | Colorado Public Radio', 'cpr' ), $template->get_heading() )
 			);
 			break;
 
