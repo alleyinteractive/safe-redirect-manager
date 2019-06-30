@@ -120,14 +120,14 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			}
 			return false;
 		}
-
+		
 		// Convert.
 		$blocked_content = apply_filters( 'cpr_block_converter_replace_media', $legacy_content );
 		$blocked_content = ( new Converter( $blocked_content ) )->convert_to_block();
 		$blocked_content = ( new Converter( '' ) )->remove_empty_blocks( $blocked_content );
 
 		// Update.
-		$thing = wp_update_post(
+		wp_update_post(
 			[
 				'ID'           => $post_id,
 				'post_content' => $blocked_content,
