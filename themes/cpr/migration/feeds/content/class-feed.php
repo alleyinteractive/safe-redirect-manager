@@ -331,6 +331,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 
 							if ( $span->hasChildNodes() ) {
 								foreach ( $span->childNodes as $innerChild ) {
+
+									if ( '#text' === $innerChild->nodeName ) {
+										return $content;
+									}
+
 									$inner_class = $innerChild->getAttribute( 'class' ) ?? '';
 									if ( ! empty( $inner_class ) && $this->has_class( $inner_class, 'cpr-image-block' ) ) {
 										return $this->custom_img( $innerChild );
