@@ -319,11 +319,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 							$span_class = $span->getAttribute( 'class' );
 
 							if ( $this->has_class( $span_class, 'cpr-gallery-migration' ) ) {
-								return $this->migrate_galleries( $content, $span );
+								return $this->migrate_galleries( $content, $node );
 							}
 
 							if ( $this->has_class( $span_class, 'cpr-audio-migration' ) ) {
-								return $this->migrate_audio( $content, $span );
+								return $this->migrate_audio( $content, $node );
 							}
 
 							return $content;
