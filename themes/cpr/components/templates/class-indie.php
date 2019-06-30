@@ -167,7 +167,7 @@ class Indie extends \WP_Components\Component {
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
 										2,
-										Calendar::get_events_args_for_widgets( 'indie' ),
+										Calendar::get_events_args_for_widgets( 'indie' )
 									)
 							),
 					]

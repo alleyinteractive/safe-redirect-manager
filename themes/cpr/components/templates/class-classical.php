@@ -167,7 +167,7 @@ class Classical extends \WP_Components\Component {
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
 										2,
-										Calendar::get_events_args_for_widgets( 'classical' ),
+										Calendar::get_events_args_for_widgets( 'classical' )
 									)
 							),
 					]
