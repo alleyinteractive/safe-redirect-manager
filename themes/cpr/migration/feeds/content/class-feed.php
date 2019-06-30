@@ -65,9 +65,8 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 */
 	public function remove_paragraph_dir( string $post_content ) : string {
 		$post_content = str_replace( ' dir="ltr"', '', $post_content );
-		$post_content = str_replace( '<div', '<p', $post_content );
-		$post_content = str_replace( '</div', '</p', $post_content );
 		$post_content = str_replace( '<p></p>', '', $post_content );
+		$post_content = str_replace( '<p>&nbsp;</p>', '', $post_content );
 		return $post_content;
 	}
 
@@ -324,7 +323,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 							}
 
 							if ( $this->has_class( $span_class, 'cpr-audio-migration' ) ) {
-								return $this->migrate_audio( $content, $node );
+								return $this->migrate_audio( $content, $span );
 							}
 
 							return $content;

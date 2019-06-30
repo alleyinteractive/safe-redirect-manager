@@ -67,20 +67,16 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 */
 	public function map_source_to_object() {
 		static::migrate_post( $this->object['ID'], true );
-		// Get, filter, convert, and save the post content.
-		// $source_post_content          = $this->source['body']['und'][0]['value'] ?? '';
-		// $source_post_content          = apply_filters( 'cpr_block_converter_replace_media', $source_post_content, $this );
-		// $source_post_content          = ( new Converter( $source_post_content ) )->convert_to_block();
-		// $this->object['post_content'] = ( new Converter( '' ) )->remove_empty_blocks( $source_post_content );
 	}
 
 	/**
-	 * Cache different values to track just the block conversion.
+	 * Create or update the post object.
+	 *
+	 * @return bool Did the object save?
 	 */
-	public function update_object_cache() {
-		// update_post_meta( $this->get_object_id(), static::get_mapping_version_key(), static::get_mapping_version() );
+	public function save_object() {
+		return true;
 	}
-
 
 	/**
 	 * Migrate the content for a single post.
@@ -120,7 +116,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		$legacy_content = $source['body']['und'][0]['value'] ?? '';
 		if ( empty( $legacy_content ) ) {
 			if ( class_exists( '\WP_CLI' ) ) {
-				\WP_CLI::warning( "Legacy body content missing." );
+				\WP_CLI::warning( 'Legacy body content missing.' );
 			}
 			return false;
 		}
@@ -130,8 +126,8 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		$blocked_content = ( new Converter( $blocked_content ) )->convert_to_block();
 		$blocked_content = ( new Converter( '' ) )->remove_empty_blocks( $blocked_content );
 
-		// Update
-		wp_update_post(
+		// Update.
+		$thing = wp_update_post(
 			[
 				'ID'           => $post_id,
 				'post_content' => $blocked_content,
@@ -139,7 +135,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 		);
 
 		if ( class_exists( '\WP_CLI' ) ) {
-			\WP_CLI::success( "Updated mapping." );
+			\WP_CLI::success( 'Updated mapping.' );
 		}
 
 		update_post_meta( $post_id, 'cpr_block_conversion_mapping', $ideal_version );

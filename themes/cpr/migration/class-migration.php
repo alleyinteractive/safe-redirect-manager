@@ -101,6 +101,27 @@ class Migration {
 			require_once CPR_PATH . '/migration/cli/class-migration-cli.php';
 		}
 
+		add_action(
+			'rest_api_init',
+			function () {
+				register_rest_route(
+					'cpr/v1',
+					'/sync/content/',
+					[
+						'methods'  => 'GET',
+						'callback' => function( $request ) {
+							$post_id = $request->get_param( 'post_id' );
+							if ( empty( $post_id ) ) {
+								return false;
+							}
+							\CPR\Migration\Content\Feed_Item::migrate_post( $post_id, true );
+							return true;
+						},
+					]
+				);
+			}
+		);
+
 		// Add additional sync link for content.
 		add_filter(
 			'post_row_actions',
@@ -128,7 +149,7 @@ class Migration {
 					esc_url(
 						add_query_arg(
 							$args,
-							rest_url( 'alleypack/v2/sync/content/' )
+							rest_url( 'cpr/v1/sync/content/' )
 						)
 					)
 				);

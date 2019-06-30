@@ -169,17 +169,8 @@ class Migration_CLI extends \CLI_Command {
 	 * default: 0
 	 * ---
 	 *
-	 * [--unique_id=<id>]
-	 * : Drupal NID to migrate.
-	 * ---
-	 * default: 0
-	 * ---
-	 *
 	 * [--force]
-	 * : Skip the version check.
-	 *
-	 * [--dry-run]
-	 * : Don't actually do anything.
+	 * : Skip the version check
 	 *
 	 * ## EXAMPLES
 	 *
@@ -190,11 +181,9 @@ class Migration_CLI extends \CLI_Command {
 	 */
 	public function migrate_content( $args, $assoc_args ) {
 
-
 		$force     = ! empty( $assoc_args['force'] );
 		$post_id   = absint( $assoc_args['post_id'] ?? 0 );
 		$post_type = $assoc_args['post_type'] ?? 'post';
-		$unique_id = absint( $assoc_args['unique_id'] ?? 0 );
 
 		// Initialize a feed so we get the right filters.
 		new \CPR\Migration\Content\Feed();
