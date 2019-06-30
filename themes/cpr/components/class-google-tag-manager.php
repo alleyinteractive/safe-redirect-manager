@@ -52,7 +52,6 @@ class Google_Tag_Manager extends \WP_Components\Integrations\Google_Tag_Manager 
 			'programs'      => $this->get_programs( $wp_query ),
 			'datePublished' => $this->get_publish_date( $wp_query ),
 			'story_id'      => $this->get_story_id( $wp_query ),
-			'tags'          => $this->get_tags( $wp_query ),
 		];
 
 		// Add meta tags.
@@ -79,7 +78,7 @@ class Google_Tag_Manager extends \WP_Components\Integrations\Google_Tag_Manager 
 					'programs'      => $meta['programs'],
 					'section'       => $this->get_section( $wp_query ),
 					'story_id'      => $meta['story_id'],
-					'tags'          => $meta['tags'],
+					'tags'          => $this->get_tags( $wp_query ),
 				],
 			]
 		);

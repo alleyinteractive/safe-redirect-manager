@@ -66,3 +66,31 @@ function update_show_episode_segments_connection( $meta_id, $object_id, $meta_ke
 }
 add_action( 'updated_post_meta', __NAMESPACE__ . '\update_show_episode_segments_connection', 10, 4 );
 add_action( 'added_post_meta', __NAMESPACE__ . '\update_show_episode_segments_connection', 10, 4 );
+
+/**
+ * Filter meta keywords from wp-components
+ *
+ * @param array $meta_keywords Existing keywords pulled from post meta.
+ * @param \WP_Post $current_post Current post object.
+ * @return array
+ */
+function meta_keywords( $meta_keywords, $current_post ) : array {
+	$tags = [];
+
+	// Single article.
+	$tags = get_the_tags( $current_post->ID ?? 0 );
+
+	if ( ! is_array( $tags ) ) {
+		return $meta_keywords;
+	}
+
+	$tags = array_map(
+		function( $tag ) {
+			return $tag->name;
+		},
+		$tags
+	);
+
+	return array_merge( $meta_keywords, $tags );
+}
+add_filter( 'wp_components_head_meta_keywords', __NAMESPACE__ . '\meta_keywords', 10, 2 );
