@@ -8,6 +8,7 @@
 namespace CPR\Migration;
 
 use WP_CLI;
+use Alleypack\Block\Converter;
 
 /**
  * Migration Cleanup CLI command.
@@ -149,6 +150,68 @@ class Migration_CLI extends \CLI_Command {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Migrate content.
+	 *
+	 * ## Options
+	 *
+	 * [--post_type]
+	 * : Post type to execute on
+	 * ---
+	 * default: post
+	 * ---
+	 *
+	 * [--post_id=<id>]
+	 * : Post ID to migrate.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
+	 * [--unique_id=<id>]
+	 * : Drupal NID to migrate.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
+	 * [--force]
+	 * : Skip the version check.
+	 *
+	 * [--dry-run]
+	 * : Don't actually do anything.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *   $ wp cpr-migration migrate_content --post_type=podcast-episode
+	 *
+	 * @param array $args       CLI args.
+	 * @param array $assoc_args CLI associate args.
+	 */
+	public function migrate_content( $args, $assoc_args ) {
+
+
+		$force     = ! empty( $assoc_args['force'] );
+		$post_id   = absint( $assoc_args['post_id'] ?? 0 );
+		$post_type = $assoc_args['post_type'] ?? 'post';
+		$unique_id = absint( $assoc_args['unique_id'] ?? 0 );
+
+		// Initialize a feed so we get the right filters.
+		new \CPR\Migration\Content\Feed();
+
+		if ( 0 !== $post_id ) {
+			Content\Feed_Item::migrate_post( $post_id, $force );
+		} else {
+			$this->bulk_task(
+				[
+					'post_status' => 'any',
+					'post_type'   => $post_type,
+				],
+				function ( $post ) use ( $force ) {
+					Content\Feed_Item::migrate_post( $post->ID, $force );
+				}
+			);
+		}
 	}
 
 	/**

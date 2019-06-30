@@ -65,6 +65,9 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 */
 	public function remove_paragraph_dir( string $post_content ) : string {
 		$post_content = str_replace( ' dir="ltr"', '', $post_content );
+		$post_content = str_replace( '<div', '<p', $post_content );
+		$post_content = str_replace( '</div', '</p', $post_content );
+		$post_content = str_replace( '<p></p>', '', $post_content );
 		return $post_content;
 	}
 
@@ -115,7 +118,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						esc_url( wp_get_attachment_url( $attachment->ID ) ),
 						$align,
 						$source['title'] ?? '',
-						wp_strip_all_tags( $source['body']['und'][0]['value'] ) ?? ''
+						wp_strip_all_tags( $source['body']['und'][0]['value'] ?? '' )
 					),
 					$post_content
 				);
@@ -317,7 +320,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 							$span_class = $span->getAttribute( 'class' );
 
 							if ( $this->has_class( $span_class, 'cpr-gallery-migration' ) ) {
-								return $this->migrate_galleries( $content, $node );
+								return $this->migrate_galleries( $content, $span );
 							}
 
 							if ( $this->has_class( $span_class, 'cpr-audio-migration' ) ) {
