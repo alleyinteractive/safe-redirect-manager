@@ -103,14 +103,14 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 
 		// Get the source data.
 		$legacy_type = get_post_meta( $post_id, 'legacy_type', true );
-		$legacy_id   = get_post_meta( $post_id, 'legacy_id', true );
-		$source      = [];
-		switch ( $legacy_type ) {
-			case 'story':
-			default:
-				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( $legacy_type, $legacy_id );
-				break;
+		$legacy_id   = absint( get_post_meta( $post_id, 'legacy_id', true ) );
+
+		// Not legacy content.
+		if ( 0 === $legacy_id ) {
+			return true;
 		}
+
+		$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( $legacy_type, $legacy_id );
 
 		// Validate source data.
 		$legacy_content = $source['body']['und'][0]['value'] ?? '';
