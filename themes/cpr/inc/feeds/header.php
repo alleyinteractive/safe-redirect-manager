@@ -4,6 +4,7 @@
  *
  * @package CPR
  */
+
 ?>
 
 <title><?php echo esc_html( bloginfo_rss( 'name' ) ); ?></title>
