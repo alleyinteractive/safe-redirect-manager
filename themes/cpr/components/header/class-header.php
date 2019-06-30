@@ -97,11 +97,30 @@ class Header extends \WP_Components\Component {
 	}
 
 	/**
+	 * Hook into query being set.
+	 *
+	 * @return self
+	 */
+	public function query_has_set() : self {
+		if (
+			$this->query->is_tax( 'podcast' )
+			|| $this->query->is_tax( 'show' )
+		) {
+			$term_post_id = \Alleypack\Term_Post_Link::get_post_from_term( $this->query->get_queried_object_id() );
+			$this->set_post( $term_post_id );
+		}
+
+		return $this;
+	}
+
+	/**
 	 * Hook into post being set.
 	 *
 	 * @return self
 	 */
 	public function post_has_set() : self {
+
+		// Use any associated sections if it exists.
 		$sections = wp_get_post_terms( $this->get_post_id(), 'section' );
 		if (
 			isset( $sections[0] )
@@ -109,6 +128,36 @@ class Header extends \WP_Components\Component {
 		) {
 			$this->set_term( $sections[0] );
 		}
+
+		switch ( $this->post->post_type ) {
+			case 'show-segment':
+				// Get the show associated with this segment, and set the post
+				// again.
+				$show_episode_id = get_post_meta( $this->get_post_id(), '_show_episode_id', true );
+				return $this->set_post( $show_episode_id );
+
+			case 'show-episode':
+				// Get the show for this episode, and set the post again.
+				$show = wp_get_post_terms( $this->get_post_id(), 'show' );
+				if ( isset( $show[0] ) && $show[0] instanceof \WP_Term ) {
+					$show_post_id = \Alleypack\Term_Post_Link::get_post_from_term( $show[0]->term_id );
+					return $this->set_post( $show_post_id );
+				}
+				break;
+
+			case 'podcast-episode':
+				// Get the show for this episode, and set the post again.
+				$show = wp_get_post_terms( $this->get_post_id(), 'show' );
+				if ( isset( $show[0] ) && $show[0] instanceof \WP_Term ) {
+					$show_post_id = \Alleypack\Term_Post_Link::get_post_from_term( $show[0]->term_id );
+					return $this->set_post( $show_post_id );
+				}
+				break;
+
+			default:
+				break;
+		}
+
 		return $this;
 	}
 

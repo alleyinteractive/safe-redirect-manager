@@ -60,7 +60,7 @@ class Cpr_Post_Type_Show_Episode extends Cpr_Post_Type {
 				'show_in_rest' => true,
 				'show_in_menu' => false,
 				'show_in_admin_bar' => true,
-				'supports' => [ 'title', 'author', 'editor', 'revisions' ],
+				'supports' => [ 'title', 'author', 'editor', 'revisions', 'custom-fields' ],
 				'taxonomies' => [ 'category', 'post_tag', 'show', 'section' ],
 			]
 		);

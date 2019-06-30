@@ -61,7 +61,7 @@ class Cpr_Post_Type_External_Link extends Cpr_Post_Type {
 				'has_single' => false,
 				'show_in_rest' => true,
 				'menu_icon' => 'dashicons-admin-links',
-				'supports' => [ 'title', 'editor', 'thumbnail', 'author' ],
+				'supports' => [ 'title', 'editor', 'thumbnail', 'author', 'custom-fields' ],
 			]
 		);
 	}

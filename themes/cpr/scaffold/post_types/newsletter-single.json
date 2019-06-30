@@ -36,7 +36,10 @@
 	"supports": [
 		"title",
 		"revisions",
-		"excerpt"
+		"excerpt",
+		"thumbnail",
+		"author",
+		"custom-fields"
 	],
 	"taxonomies": [
 		"newsletter"

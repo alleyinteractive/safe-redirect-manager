@@ -19,7 +19,7 @@ function cpr_fm_post_mixed_featured_audio() {
 			'children' => [
 				'settings' => new Fieldmanager_Group(
 					[
-						'label' => __( 'Legacy Audio', 'cpr' ),
+						'label' => __( 'Audio', 'cpr' ),
 						'serialize_data' => false,
 						'add_to_prefix' => false,
 						'children' => [
@@ -36,6 +36,15 @@ function cpr_fm_post_mixed_featured_audio() {
 								]
 							),
 							'audio_id' => new Fieldmanager_Media( __( 'Primary Audio', 'cpr' ) ),
+						],
+					]
+				),
+				'legacy_audio' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Legacy Audio (Drupal)', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => [
 							'aac_id' => new Fieldmanager_Media( __( 'Legacy AAC Audio', 'cpr' ) ),
 							'mp3_id' => new Fieldmanager_Media( __( 'Legacy MP3 Audio', 'cpr' ) ),
 							'npr_id' => new Fieldmanager_Media( __( 'Legacy NPR Audio', 'cpr' ) ),
@@ -227,6 +236,7 @@ function cpr_fm_post_newsletter_settings() {
 				'newsletter_html' => new Fieldmanager_TextArea(
 					[
 						'label' => __( 'Newsletter HTML', 'cpr' ),
+						'sanitize' => function( $value ) { return $value; },
 						'attributes' => [
 							'rows' => 40,
 							'style' => 'width: 100%',
@@ -558,7 +568,6 @@ function cpr_fm_post_top_30_albums() {
 			'name' => 'album_ids',
 			'description' => __( 'Select the top 30 albums for this week.', 'cpr' ),
 			'description_after_element' => false,
-			'post_limit' => 30,
 			'query_args' => [
 				'post_type' => [ 'album' ],
 			],
@@ -686,3 +695,40 @@ function cpr_fm_post_show_episode_segments() {
 }
 add_action( 'fm_post_show-episode', 'cpr_fm_post_show_episode_segments' );
 /* end fm:post-show-episode-segments */
+
+/* begin fm:post-mixed-post-types-simple-settings */
+/**
+ * `post-mixed-post-types-simple-settings` Fieldmanager fields.
+ */
+function cpr_fm_post_mixed_post_types_simple_settings() {
+	$fm = new Fieldmanager_Group(
+		[
+			'name' => 'post-mixed-post-types-simple-settings',
+			'serialize_data' => false,
+			'add_to_prefix' => false,
+			'tabbed' => 'vertical',
+			'children' => [
+				'settings' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Settings', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => \CPR\Fields\get_settings(),
+					]
+				),
+				'social_and_seo' => new Fieldmanager_Group(
+					[
+						'label' => __( 'Social and SEO', 'cpr' ),
+						'serialize_data' => false,
+						'add_to_prefix' => false,
+						'children' => \Alleypack\Fieldmanager\Patterns\get_seo_and_social_fields(),
+					]
+				),
+			],
+		]
+	);
+	$fm->add_meta_box( __( 'Settings', 'cpr' ), [ 'job', 'press-release' ] );
+}
+add_action( 'fm_post_job', 'cpr_fm_post_mixed_post_types_simple_settings' );
+add_action( 'fm_post_press-release', 'cpr_fm_post_mixed_post_types_simple_settings' );
+/* end fm:post-mixed-post-types-simple-settings */

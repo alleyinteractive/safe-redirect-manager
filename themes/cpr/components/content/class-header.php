@@ -113,6 +113,32 @@ class Header extends \WP_Components\Component {
 				$this->set_config( 'eyebrow_label', __( '‹‹ All Press Releases', 'cpr' ) );
 				$this->set_config( 'eyebrow_link', home_url( '/press-releases/' ) );
 				break;
+
+			case 'newsletter-single':
+				$this->set_publish_date();
+				$this->set_byline();
+				$this->set_eyebrow();
+
+				// Children.
+				$this->append_children(
+					[
+						new \CPR\Components\Advertising\Ad_Unit(),
+						( new \WP_Components\Social_Sharing() )
+							->merge_config(
+								[
+									'services' => [
+										'facebook' => true,
+										'twitter'  => true,
+										'email'    => true,
+									],
+									'text'     => __( 'Share: ', 'cpr' ),
+								]
+							)
+							->set_post( $this->post ),
+					]
+				);
+				break;
+				break;
 		}
 
 		return $this;
