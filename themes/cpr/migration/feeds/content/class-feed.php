@@ -65,6 +65,8 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 */
 	public function remove_paragraph_dir( string $post_content ) : string {
 		$post_content = str_replace( ' dir="ltr"', '', $post_content );
+		$post_content = str_replace( '<p></p>', '', $post_content );
+		$post_content = str_replace( '<p>&nbsp;</p>', '', $post_content );
 		return $post_content;
 	}
 
@@ -92,8 +94,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 			if ( ! empty( $source ) ) {
 				$attachment = \CPR\Migration\Image\Feed_Item::get_or_create_object_from_source( $source );
 
+				$alignment = str_replace( 'field_format=1', '', $matches[2][ $key ] );
+				$alignment = str_replace( '&amp;', '', $alignment );
+
 				// Check alignment.
-				switch ( trim( $matches[2][ $key ] ) ) {
+				switch ( trim( $alignment ) ) {
 					case 'field_align=left':
 						$align = 'left';
 						break;
@@ -115,7 +120,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 						esc_url( wp_get_attachment_url( $attachment->ID ) ),
 						$align,
 						$source['title'] ?? '',
-						wp_strip_all_tags( $source['body']['und'][0]['value'] ) ?? ''
+						wp_strip_all_tags( $source['body']['und'][0]['value'] ?? '' )
 					),
 					$post_content
 				);
@@ -324,6 +329,14 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 								return $this->migrate_audio( $content, $node );
 							}
 
+							if ( $span->hasChildNodes() ) {
+								foreach ( $span->childNodes as $innerChild ) {
+									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-image-block' ) ) {
+										return $this->custom_img( $innerChild );
+									}
+								}
+							}
+
 							return $content;
 						default:
 							if ( $span->hasChildNodes() ) {
@@ -332,7 +345,6 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 										return $content;
 									}
 
-									// Fix for nested galleries inside a paragraph and span.
 									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-gallery-migration' ) ) {
 										return $this->migrate_galleries( $content, $innerChild );
 									}
@@ -341,8 +353,7 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 										return $this->migrate_audio( $content, $innerChild );
 									}
 
-									// Fix for nested image block inside a paragraph and span.
-									if ( 'img' === $innerChild->nodeName && 'cpr-image-block' === $innerChild->getAttribute( 'class' ) ) {
+									if ( $this->has_class( $innerChild->getAttribute( 'class' ), 'cpr-image-block' ) ) {
 										return $this->custom_img( $innerChild );
 									}
 								}
@@ -430,6 +441,16 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 				'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" />' . PHP_EOL .
 				'<figcaption>' . $caption . '</figcaption>' . PHP_EOL .
 			'</figure>' . PHP_EOL .
+			'<!-- /wp:image -->';
+		}
+
+		if ( empty( $caption ) ) {
+			return '<!-- wp:image {"align":"' . $alignment . '","width":300,"height":200} -->' . PHP_EOL .
+			'<div class="wp-block-image">' . PHP_EOL .
+				'<figure class="' . esc_attr( $figure_alignment ) . ' is-resized">' . PHP_EOL .
+					'<img src="' . esc_url( $image_src ) . '" alt="' . esc_attr( $alt ) . '" width="300" height="200" />' . PHP_EOL .
+				'</figure>' . PHP_EOL .
+			'</div>' . PHP_EOL .
 			'<!-- /wp:image -->';
 		}
 
@@ -576,9 +597,17 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 */
 	private function spotify_to_block( $content, \DOMNode $node ) : string {
 
-		// Get url.
-		$url         = $node->getAttribute( 'src' ) ?? '';
-		$spotify_url = str_replace( 'embed/', '', $url );
+		$url = $node->getAttribute( 'src' );
+
+		// Get playlist id.
+		preg_match( '/playlist:([^\s]+)/', $url, $playlist_id );
+		if ( ! empty( $playlist_id[1] ) ) {
+
+			// Create new url.
+			$spotify_url = 'https://open.spotify.com/playlist/' . $playlist_id[1];
+		} else {
+			$spotify_url = str_replace( 'embed/', '', $url );
+		}
 
 		return '<!-- wp:core-embed/spotify {"url":"' . esc_url( $spotify_url ) . '","type":"rich","providerNameSlug":"spotify","className":"wp-embed-aspect-9-16 wp-has-aspect-ratio"} -->' . PHP_EOL .
 				'<figure class="wp-block-embed-spotify wp-block-embed is-type-rich is-provider-spotify wp-embed-aspect-9-16 wp-has-aspect-ratio">' . PHP_EOL .

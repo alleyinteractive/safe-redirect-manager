@@ -102,7 +102,18 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 	<channel>
 		<?php
 		get_template_part( 'inc/feeds/header' );
+		
+		$podcast      = get_term_by( 'slug', $term_slug, 'podcast' );
+		$show_post_id = \Alleypack\Term_Post_Link::get_post_from_term( $podcast->term_id );
 
+		ai_get_template_part(
+			'inc/feeds/podcast-header',
+			[
+				'podcast_id'    => $show_post_id,
+				'podcast_title' => $podcast->name,
+			] 
+		);
+		
 		if ( $feed_items->have_posts() ) :
 			while ( $feed_items->have_posts() ) :
 				$feed_items->the_post();
@@ -115,28 +126,27 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 
 				$audio      = wp_get_attachment_url( $meta_id );
 				$audio_meta = get_post_meta( $meta_id, '_wp_attachment_metadata', true );
-				$podcast    = get_term_by( 'slug', $term_slug, 'podcast' );
 				?>
 				<item>
 					<guid isPermaLink="false"><?php the_guid(); ?></guid>
 					<title><?php the_title_rss(); ?></title>
-					<source url="<?php self_link(); ?>"><?php echo esc_html( $podcast->name ); ?></source>
 					<link><?php echo esc_url( the_permalink_rss() ); ?></link>
-					<pubDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
 					<description>
 						<![CDATA[ <?php echo esc_html( the_excerpt_rss() ); ?> ]]>
 					</description>
+					<source url="<?php self_link(); ?>"><?php echo esc_html( $podcast->name ); ?></source>
+					<pubDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
 					<itunes:subtitle><?php the_title_rss(); ?></itunes:subtitle>
 					<itunes:summary><![CDATA[ <?php echo esc_html( the_excerpt_rss() ); ?> ]]></itunes:summary>
 
 					<?php if ( ! empty( $audio ) ) : ?>
+						<itunes:duration><?php echo esc_html( $audio_meta['length_formatted'] ?? '00:00' ); ?></itunes:duration>
+
 						<enclosure
 							url="<?php echo esc_url( $audio ); ?>"
 							length="<?php echo esc_attr( $audio_meta['length'] ?? 0 ); ?>"
 							type="<?php echo esc_attr( $audio_meta['mime_type'] ?? '' ); ?>"
 						/>
-
-						<itunes:duration><?php echo esc_html( $audio_meta['length_formatted'] ?? '00:00' ); ?></itunes:duration>
 					<?php endif; ?>
 				</item>
 				<?php

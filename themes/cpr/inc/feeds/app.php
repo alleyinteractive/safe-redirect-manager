@@ -196,14 +196,14 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 				<item>
 					<guid isPermaLink="false"><?php the_guid(); ?></guid>
 					<title><?php the_title_rss(); ?></title>
-					<link><?php echo esc_url( the_permalink_rss() ); ?></link>
+					<link><?php the_permalink_rss(); ?></link>
 					<pubDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_post_time( 'Y-m-d H:i:s', true ), false ) ); ?></pubDate>
 					<updatedDate><?php echo esc_html( mysql2date( 'D, d M Y H:i:s +0000', get_the_modified_time( 'Y-m-d H:i:s' ), false ) ); ?></updatedDate>
 					<author><?php echo esc_html( get_the_author() ); ?></author>
 					<dc:creator><?php echo esc_html( get_the_author() ); ?></dc:creator>
 					<?php the_category_rss( 'rss2' ); ?>
 					<description>
-						<![CDATA[ <?php echo esc_html( the_excerpt_rss() ); ?> ]]>
+						<![CDATA[ <?php the_excerpt_rss(); ?> ]]>
 					</description>
 					<source url="<?php self_link(); ?>>"><?php echo esc_html( bloginfo_rss( 'name' ) ); ?></source>
 					<itunes:subtitle><?php esc_html_e( 'Read More', 'cpr' ); ?></itunes:subtitle>

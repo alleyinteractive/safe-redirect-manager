@@ -16,9 +16,6 @@
 [submodule "mu-plugins/edit-flow"]
 	path = mu-plugins/edit-flow
 	url = git@github.com:Automattic/Edit-Flow.git
-[submodule "mu-plugins/msm-sitemap"]
-	path = mu-plugins/msm-sitemap
-	url = git@github.com:Automattic/msm-sitemap.git
 [submodule "mu-plugins/wpcom-thumbnail-editor"]
 	path = mu-plugins/wpcom-thumbnail-editor
 	url = git@github.com:Automattic/wpcom-thumbnail-editor.git

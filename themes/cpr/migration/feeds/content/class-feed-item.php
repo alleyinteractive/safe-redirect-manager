@@ -66,17 +66,78 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 	 * Map source data to the object.
 	 */
 	public function map_source_to_object() {
-		// Get, filter, convert, and save the post content.
-		$source_post_content          = $this->source['body']['und'][0]['value'] ?? '';
-		$source_post_content          = apply_filters( 'cpr_block_converter_replace_media', $source_post_content, $this );
-		$source_post_content          = ( new Converter( $source_post_content ) )->convert_to_block();
-		$this->object['post_content'] = ( new Converter( '' ) )->remove_empty_blocks( $source_post_content );
+		static::migrate_post( $this->object['ID'], true );
 	}
 
 	/**
-	 * Cache different values to track just the block conversion.
+	 * Create or update the post object.
+	 *
+	 * @return bool Did the object save?
 	 */
-	public function update_object_cache() {
-		update_post_meta( $this->get_object_id(), static::get_mapping_version_key(), static::get_mapping_version() );
+	public function save_object() {
+		return true;
+	}
+
+	/**
+	 * Migrate the content for a single post.
+	 *
+	 * @param int     $post_id Post ID.
+	 * @param boolean $force   Ignore versioning.
+	 * @return boolean
+	 */
+	public static function migrate_post( $post_id, $force = false ) {
+
+		if ( class_exists( '\WP_CLI' ) ) {
+			\WP_CLI::line( "----- Syncing {$post_id} ------" );
+		}
+
+		// Check the version.
+		$current_version = get_post_meta( $post_id, 'cpr_block_conversion_mapping', true );
+		$ideal_version   = self::get_mapping_version();
+		if ( $current_version === $ideal_version && ! $force ) {
+			if ( class_exists( '\WP_CLI' ) ) {
+				\WP_CLI::line( "Already up to date - {$current_version}" );
+			}
+			return true;
+		}
+
+		// Get the source data.
+		$legacy_type = get_post_meta( $post_id, 'legacy_type', true );
+		$legacy_id   = get_post_meta( $post_id, 'legacy_id', true );
+		$source      = [];
+		switch ( $legacy_type ) {
+			case 'story':
+			default:
+				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( $legacy_type, $legacy_id );
+				break;
+		}
+
+		// Validate source data.
+		$legacy_content = $source['body']['und'][0]['value'] ?? '';
+		if ( empty( $legacy_content ) ) {
+			if ( class_exists( '\WP_CLI' ) ) {
+				\WP_CLI::warning( 'Legacy body content missing.' );
+			}
+			return false;
+		}
+		
+		// Convert.
+		$blocked_content = apply_filters( 'cpr_block_converter_replace_media', $legacy_content );
+		$blocked_content = ( new Converter( $blocked_content ) )->convert_to_block();
+		$blocked_content = ( new Converter( '' ) )->remove_empty_blocks( $blocked_content );
+
+		// Update.
+		wp_update_post(
+			[
+				'ID'           => $post_id,
+				'post_content' => $blocked_content,
+			]
+		);
+
+		if ( class_exists( '\WP_CLI' ) ) {
+			\WP_CLI::success( 'Updated mapping.' );
+		}
+
+		update_post_meta( $post_id, 'cpr_block_conversion_mapping', $ideal_version );
 	}
 }
