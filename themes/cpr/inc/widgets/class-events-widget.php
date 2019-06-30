@@ -38,18 +38,11 @@ class Events_Widget extends \FM_Widget {
 	 */
 	public function create_component( $args, $instance ) : ?\CPR\Components\Widgets\Content_List {
 
-		$backfill_args = [
-			'post_type' => 'tribe_events',
-		];
+		// Get events based on startDate.
+		$backfill_args = \CPR\Components\Templates\Calendar::get_events_args_for_widgets();
 
 		if ( ! empty( $instance['backfill_source'] ) ) {
-			$backfill_args['tax_query'] = [
-				[
-					'taxonomy' => 'section',
-					'field'    => 'slug',
-					'terms'    => $instance['backfill_source'],
-				],
-			];
+			$backfill_args = \CPR\Components\Templates\Calendar::get_events_args_for_widgets( $instance['backfill_source'] );
 		}
 
 		return ( new \CPR\Components\Widgets\Content_List() )

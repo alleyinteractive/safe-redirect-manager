@@ -93,7 +93,7 @@ class Calendar extends \WP_Components\Component {
 	 *
 	 * @return string
 	 */
-	public function get_heading() {
+	public function get_heading() : string {
 
 		$heading = '';
 
@@ -120,7 +120,7 @@ class Calendar extends \WP_Components\Component {
 	 *
 	 * @return string
 	 */
-	public function get_subheading() {
+	public function get_subheading() : string {
 
 		$event_month = new \DateTime( $this->query->get( 'eventDate' ) );
 		$subheading  = date_i18n( 'F Y', $event_month->format( 'U' ) );
@@ -150,9 +150,9 @@ class Calendar extends \WP_Components\Component {
 		// Only modify events archives when on either the base calendar
 		// page or the monthly view.
 		if (
-			'tribe_events' !== $wp_query->get( 'post_type' ) ||
-			! $wp_query->is_archive() ||
-			empty( $wp_query->get( 'irving-path' ) )
+			'tribe_events' !== $wp_query->get( 'post_type' )
+			|| ! $wp_query->is_archive()
+			|| empty( $wp_query->get( 'irving-path' ) )
 		) {
 			return;
 		}
@@ -161,9 +161,16 @@ class Calendar extends \WP_Components\Component {
 		$wp_query->set( 'orderby', 'meta_value_num' );
 		$wp_query->set( 'meta_key', '_EventStartDate' );
 		$wp_query->set( 'order', 'ASC' );
+		$wp_query->set( 'meta_query', static::events_date_meta_args( $wp_query->get( 'eventDate' ) ) );
+	}
 
-		// Check the month that we're looking at.
-		$event_month = $wp_query->get( 'eventDate' );
+	/**
+	 * Get date meta query.
+	 *
+	 * @param string $event_month Event Month.
+	 * @return array
+	 */
+	public static function events_date_meta_args( $event_month = '' ) : array {
 
 		if ( empty( $event_month ) ) {
 			$event_month = ( new \DateTime() )->format( 'Y-m' );
@@ -176,24 +183,60 @@ class Calendar extends \WP_Components\Component {
 		$end_date = new \DateTime( $event_month );
 		$end_date->modify( 'last day of this month' );
 
-		// Find events that end any time after the start of the month,
-		// and start any time before the end of the month.
-		$wp_query->set(
-			'meta_query',
-			[
-				'ends-after'    => [
-					'key'     => '_EventEndDateUTC',
-					'compare' => '>',
-					'value'   => $start_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
-					'type'    => 'DATETIME',
+		return [
+			'ends-after'    => [
+				'key'     => '_EventEndDateUTC',
+				'compare' => '>',
+				'value'   => $start_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
+				'type'    => 'DATETIME',
+			],
+			'starts-before' => [
+				'key'     => '_EventStartDateUTC',
+				'compare' => '<',
+				'value'   => $end_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
+				'type'    => 'DATETIME',
+			],
+		];
+	}
+
+	/**
+	 * Get date meta query.
+	 *
+	 * @param string $section Section slug.
+	 * @return array
+	 */
+	public static function get_events_args_for_widgets( $section = '' ) : array {
+
+		$event_month = ( new \DateTime() )->format( 'Y-m' );
+		$start_date  = new \DateTime( $event_month );
+
+		$args = [
+			'post_type'  => [ 'tribe_events' ],
+			'orderby'    => 'meta_value_num',
+			'meta_key'   => '_EventStartDate', // phpcs:ignore
+			'order'      => 'ASC',
+			'meta_query' => [ // phpcs:ignore
+				[
+					'ends-after'    => [
+						'key'     => '_EventEndDateUTC',
+						'compare' => '>',
+						'value'   => $start_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
+						'type'    => 'DATETIME',
+					],
 				],
-				'starts-before' => [
-					'key'     => '_EventStartDateUTC',
-					'compare' => '<',
-					'value'   => $end_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
-					'type'    => 'DATETIME',
+			],
+		];
+
+		if ( ! empty( $section ) ) {
+			$args['tax_query'] = [
+				[
+					'taxonomy' => 'section',
+					'field'    => 'slug',
+					'terms'    => $section,
 				],
-			]
-		);
+			];
+		}
+
+		return $args;
 	}
 }

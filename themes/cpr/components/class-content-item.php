@@ -79,7 +79,7 @@ class Content_Item extends \WP_Components\Component {
 		$this->set_eyebrow();
 
 		// Set audio if applicable.
-		if ( in_array( ( $this->post->post_type ?? '' ), [ 'story', 'podcast-episode', 'show-episode', 'show-segment', 'external-link' ], true ) ) {
+		if ( in_array( ( $post_type ?? '' ), [ 'story', 'podcast-episode', 'show-episode', 'show-segment', 'external-link' ], true ) ) {
 			$audio_meta = $this->get_audio_metadata();
 
 			if ( ! empty( $audio_meta['src'] ) ) {
@@ -104,11 +104,6 @@ class Content_Item extends \WP_Components\Component {
 			}
 		}
 
-		// Set event details, if applicable.
-		if ( 'tribe_events' === $post_type ) {
-			$this->set_event_meta();
-		}
-
 		$this->wp_post_set_featured_image( $this->get_config( 'image_size' ) );
 		$this->merge_config(
 			[
@@ -116,9 +111,12 @@ class Content_Item extends \WP_Components\Component {
 			]
 		);
 
-		switch ( $this->post->post_type ) {
+		switch ( $post_type ) {
 			case 'press-release':
+				break;
 			case 'tribe_events':
+				// Set event details, if applicable.
+				$this->set_event_meta();
 				break;
 			default:
 				$this->set_byline();
