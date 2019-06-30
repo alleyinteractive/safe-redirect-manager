@@ -46,13 +46,13 @@ class Google_Tag_Manager extends \WP_Components\Integrations\Google_Tag_Manager 
 	 */
 	public function set_meta_from_query( $wp_query, $head ) : self {
 		$meta = [
-			'author'        => $this->get_author( $wp_query ),
+			'author'        => $this->get_authors( $wp_query ),
 			'category'      => $this->get_category( $wp_query ),
 			'has_audio'     => $this->has_audio( $wp_query ),
 			'programs'      => $this->get_programs( $wp_query ),
 			'datePublished' => $this->get_publish_date( $wp_query ),
 			'story_id'      => $this->get_story_id( $wp_query ),
-			'tags'          => $this->get_tags( $wp_query ),
+			'wordCount'     => $this->get_word_count( $wp_query ),
 		];
 
 		// Add meta tags.
@@ -79,10 +79,24 @@ class Google_Tag_Manager extends \WP_Components\Integrations\Google_Tag_Manager 
 					'programs'      => $meta['programs'],
 					'section'       => $this->get_section( $wp_query ),
 					'story_id'      => $meta['story_id'],
-					'tags'          => $meta['tags'],
+					'tags'          => $this->get_tags( $wp_query ),
 				],
 			]
 		);
+	}
+
+	/**
+	 * Get word count.
+	 *
+	 * @param \WP_Query $wp_query WP_Query object.
+	 * @return string
+	 */
+	public function get_word_count( $wp_query ) : ?string {
+		if ( $wp_query->is_single() ) {
+			return str_word_count( wp_strip_all_tags( $wp_query->post->post_content ) );
+		}
+
+		return null;
 	}
 
 	/**
@@ -91,7 +105,7 @@ class Google_Tag_Manager extends \WP_Components\Integrations\Google_Tag_Manager 
 	 * @param \WP_Query $wp_query WP_Query object.
 	 * @return array
 	 */
-	public function get_author( $wp_query ) : ?array {
+	public function get_authors( $wp_query ) : ?array {
 		// Set bylines.
 		if ( $wp_query->is_single() ) {
 			$bylines = \WP_Components\Byline::get_post_bylines( $wp_query->post->ID );
