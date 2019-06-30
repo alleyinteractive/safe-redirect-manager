@@ -61,7 +61,7 @@ class Cpr_Post_Type_Job extends Cpr_Post_Type {
 				'has_single' => true,
 				'show_in_rest' => true,
 				'menu_icon' => 'dashicons-portfolio',
-				'supports' => [ 'title', 'editor', 'revisions' ],
+				'supports' => [ 'title', 'editor', 'revisions', 'custom-fields' ],
 			]
 		);
 	}

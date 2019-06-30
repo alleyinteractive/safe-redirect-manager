@@ -41,17 +41,21 @@ class Newsletter extends \WP_Components\Component {
 	public function get_components() : array {
 		return [
 			/**
-			 * Newsletter Content Area.
+			 * Content Header.
 			 */
-			( new \CPR\Components\Column_Area() )
-				->set_theme( 'oneColumn' )
-				->set_config( 'heading', $this->wp_post_get_title() )
-				->append_children(
-					[
-						( new \CPR\Components\Content\Newsletter_Content() )
-							->set_post( $this->post ),
-					]
-				),
+			( new \CPR\Components\Content\Header() )
+				->set_post( $this->post ),
+
+			/**
+			 * Content Body.
+			 */
+			( new \CPR\Components\Content\Body() )
+				->set_post( $this->post ),
+
+			/**
+			 * Newsletter CTA.
+			 */
+			new \CPR\Components\Modules\Newsletter(),
 		];
 	}
 

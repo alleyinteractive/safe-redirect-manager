@@ -27,11 +27,11 @@ class Listen_Live extends \WP_Components\Component {
 	public function default_children() : array {
 		return [
 			( new \CPR\Components\Audio\Live_Stream() )
-				->set_source( 'indie' )
+				->set_source( 'news' )
 				->set_theme( 'listenLive' )
 				->merge_config(
 					[
-						'title'  => __( 'Indie', 'cpr' ),
+						'title'  => __( 'CPR News', 'cpr' ),
 						'count' => 1,
 					]
 				),
@@ -40,16 +40,16 @@ class Listen_Live extends \WP_Components\Component {
 				->set_theme( 'listenLive' )
 				->merge_config(
 					[
-						'title'  => __( 'Classical', 'cpr' ),
+						'title'  => __( 'CPR Classical', 'cpr' ),
 						'count' => 1,
 					]
 				),
 			( new \CPR\Components\Audio\Live_Stream() )
-				->set_source( 'news' )
+				->set_source( 'indie' )
 				->set_theme( 'listenLive' )
 				->merge_config(
 					[
-						'title'  => __( 'News', 'cpr' ),
+						'title'  => __( 'Indie 102.3', 'cpr' ),
 						'count' => 1,
 					]
 				),

@@ -59,6 +59,11 @@ class Article extends \WP_Components\Component {
 				->set_post( $this->post ),
 
 			/**
+			 * Newsletter CTA.
+			 */
+			new \CPR\Components\Modules\Newsletter(),
+
+			/**
 			 * Recirculation module.
 			 */
 			( new \CPR\Components\Column_Area() )

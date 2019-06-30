@@ -59,7 +59,7 @@ class Cpr_Post_Type_Press_Release extends Cpr_Post_Type {
 				'public' => true,
 				'has_archive' => 'press-releases',
 				'show_in_rest' => true,
-				'supports' => [ 'title', 'editor', 'revisions', 'thumbnail', 'excerpt' ],
+				'supports' => [ 'title', 'editor', 'revisions', 'thumbnail', 'excerpt', 'custom-fields' ],
 			]
 		);
 	}
