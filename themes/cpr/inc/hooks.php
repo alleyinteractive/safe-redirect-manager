@@ -70,7 +70,7 @@ add_action( 'added_post_meta', __NAMESPACE__ . '\update_show_episode_segments_co
 /**
  * Filter meta keywords from wp-components
  *
- * @param array $meta_keywords Existing keywords pulled from post meta.
+ * @param array    $meta_keywords Existing keywords pulled from post meta.
  * @param \WP_Post $current_post Current post object.
  * @return array
  */
