@@ -80,6 +80,36 @@ function vuhaus_embed( $result, $url, $args ) {
 add_filter( 'pre_oembed_result', __NAMESPACE__ . '\vuhaus_embed', 10, 3 );
 
 /**
+ * Insert an image's credit to the markup if present.
+ *
+ * @param string $block_content The block content.
+ * @param array  $block         The full block, including name and attributes.
+ * @return string
+ */
+function render_block( $block_content, $block ) {
+
+	// Bail if it isn't an image block.
+	if ( 'core/image' !== ( $block['blockName'] ?? '' ) ) {
+		return $block_content;
+	}
+
+	$credit = get_post_meta( $block['attrs']['id'] ?? 0, 'credit', true );
+
+	if ( empty( $credit ) ) {
+		return $block_content;
+	}
+
+	// Insert the credit in a span tag after the image.
+	return preg_replace(
+		'#(<img.*/>)#',
+		'$1<span class="image-credit">' . $credit . '</span>',
+		$block_content
+	);
+}
+add_filter( 'render_block', __NAMESPACE__ . '\render_block', 10, 3 );
+
+
+/**
  * Hide some taxonomies from displaying the default Gutenberg metabox.
  *
  * @param \WP_REST_Response $response Rest response object.
