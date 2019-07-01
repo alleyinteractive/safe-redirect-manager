@@ -92,7 +92,21 @@ class Body extends \WP_Components\Component {
 		switch ( $type ) {
 			case 'image':
 				if ( has_post_thumbnail( $this->get_post_id() ) ) {
-					$this->wp_post_set_featured_image( 'content_single', [ 'show_caption' => true ] );
+					$this->append_child(
+						( new \WP_Components\Image() )
+							->set_post_id( $this->get_post_id() )
+							->set_config_for_size( 'content_single' )
+							->merge_config(
+								[
+									'show_caption' => true,
+								]
+							)->callback(
+								function( $image ) {
+									$image->set_config( 'caption', strip_tags( $image->get_config( 'caption' ) ) );
+									return $image;
+								}
+							),
+					);
 				}
 				break;
 			case 'video':
