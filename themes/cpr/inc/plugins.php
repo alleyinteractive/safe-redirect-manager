@@ -133,7 +133,7 @@ function npr_nprml_audio_override( $audio, $post_id ) {
 				'children' => [
 					[
 						'tag'  => 'mp3',
-						'text' => $src . '?ft=nprml&f=',
+						'text' => $src,
 					],
 					[
 						'tag'  => 'mediastream',
