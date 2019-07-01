@@ -55,13 +55,12 @@ class Bylines extends \WP_Components\Component {
 			if ( 'guest-author' === ( $coauthor->type ?? '' ) ) {
 				$byline->set_guest_author( $coauthor );
 			}
-			$this->append_child( $byline );
-		}
 
-		if ( ! empty( $bylines ) ) {
-			$this->append_children( $bylines );
-		} else {
-			$this->set_invalid();
+			if ( ! empty( $byline ) ) {
+				$this->append_child( $byline );
+			} else {
+				$this->set_invalid();
+			}
 		}
 
 		return $this;

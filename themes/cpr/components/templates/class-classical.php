@@ -27,7 +27,7 @@ class Classical extends \WP_Components\Component {
 	 * @return self
 	 */
 	public function post_has_set() : self {
-		$body = ( new \WP_Components\Body() )
+		$body           = ( new \WP_Components\Body() )
 			->set_config( 'body_classes', 'classical' );
 		$body->children = array_filter( $this->get_components() );
 		$this->append_child( $body );
@@ -167,16 +167,7 @@ class Classical extends \WP_Components\Component {
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
 										2,
-										[
-											'post_type'  => 'tribe_events',
-											'tax_query'  => [
-												[
-													'taxonomy' => 'section',
-													'field'    => 'slug',
-													'terms'    => 'classical',
-												],
-											],
-										]
+										Calendar::get_events_args_for_widgets( 'classical' )
 									)
 							),
 					]
@@ -252,9 +243,9 @@ class Classical extends \WP_Components\Component {
 				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
-						'heading' => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
+						'heading'           => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
 						'heading_cta_label' => $data['videos']['heading_cta_label'] ?? __( 'More Videos', 'cpr' ),
-						'heading_cta_link'  => $data['videos']['heading_cta_link'] ?? 'https://www.youtube.com/user/ColoradoPublicRadio',
+						'heading_cta_link'  => $data['videos']['heading_cta_link'] ?? 'https: //www.youtube.com/user/ColoradoPublicRadio',
 					]
 				)
 				->append_child(
@@ -287,6 +278,7 @@ class Classical extends \WP_Components\Component {
 				->parse_from_fm_data( (array) $data['hosts'] ?? [] )
 				->children_callback(
 					function( $child ) {
+						// phpcs:ignore
 						return $child->set_config( 'show_name', $this->wp_post_get_title() );
 					}
 				),
