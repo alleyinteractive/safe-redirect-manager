@@ -339,45 +339,52 @@ function nprstory_post_to_nprml_story( $post ) {
 	 *
 	 * Should be able to do the same as image for audio, with post_mime_type = 'audio' or something.
 	 */
-	$args = array(
-		'order'=> 'DESC',
-		'post_mime_type' => 'audio',
-		'post_parent' => $post->ID,
-		'post_status' => null,
-		'post_type' => 'attachment'
-	);
-	$audios = get_children( $args );
+	// Allow for custom logic to populate audio.
+	$audio_override = apply_filters( 'npr_nprml_audio_override', [], $post->ID );
 
-	foreach ( $audios as $audio ) {
-		$audio_meta = wp_get_attachment_metadata( $audio->ID );
-		$caption = $audio->post_excerpt;
-		// If we don't have excerpt filled in, try content
-		if ( empty( $caption ) ) {
-			$caption = $audio->post_content;
-		}
+	if ( ! empty( $audio_override ) ) {
+		$story = array_merge( $story, $audio_override );
+	} else {
+		$args = array(
+			'order'=> 'DESC',
+			'post_mime_type' => 'audio',
+			'post_parent' => $post->ID,
+			'post_status' => null,
+			'post_type' => 'attachment'
+		);
+		$audios = get_children( $args );
 
-		$story[] = array(
-			'tag' => 'audio',
-			'children' => array(
-				array(
-					'tag' => 'format',
-					'children' => array (
-						array(
-							'tag' => 'mp3',
-							'text' => $audio->guid,
-						)
+		foreach ( $audios as $audio ) {
+			$audio_meta = wp_get_attachment_metadata( $audio->ID );
+			$caption = $audio->post_excerpt;
+			// If we don't have excerpt filled in, try content
+			if ( empty( $caption ) ) {
+				$caption = $audio->post_content;
+			}
+
+			$story[] = array(
+				'tag' => 'audio',
+				'children' => array(
+					array(
+						'tag' => 'format',
+						'children' => array (
+							array(
+								'tag' => 'mp3',
+								'text' => $audio->guid,
+							)
+						),
+					),
+					array(
+						'tag' => 'description',
+						'text' => $caption,
+					),
+					array(
+						'tag' => 'duration',
+						'text' => $audio_meta['length'],
 					),
 				),
-				array(
-					'tag' => 'description',
-					'text' => $caption,
-				),
-				array(
-					'tag' => 'duration',
-					'text' => $audio_meta['length'],
-				),
-			),
-		);
+			);
+		}
 	}
 
 	/*
