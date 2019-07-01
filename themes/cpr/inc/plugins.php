@@ -74,7 +74,7 @@ function npr_nprml_audio_override( $audio, $post_id ) {
 						],
 					],
 				],
-			],
+			]
 		);
 
 		$audio[] = [
@@ -145,7 +145,7 @@ function npr_nprml_audio_override( $audio, $post_id ) {
 				'tag'  => 'duration',
 				'text' => $audio_meta['length'] ?? '',
 			],
-		],
+		]
 	);
 
 	$audio[] = [

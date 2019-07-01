@@ -105,7 +105,7 @@ class Body extends \WP_Components\Component {
 									$image->set_config( 'caption', strip_tags( $image->get_config( 'caption' ) ) );
 									return $image;
 								}
-							),
+							)
 					);
 				}
 				break;
