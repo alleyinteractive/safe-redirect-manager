@@ -209,6 +209,7 @@ namespace CPR;
 			],
 			'aspect_ratio' => false,
 			'retina'       => true,
+			'fallback_image_url' => '', // prevents the sitewide default fallback image from displaying for underwriters.
 		],
 		'show-and-podcast-header' => [
 			'sources' => [

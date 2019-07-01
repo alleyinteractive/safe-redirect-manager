@@ -105,6 +105,7 @@ class Indie extends \WP_Components\Component {
 	 */
 	public function get_components() : array {
 		$data = (array) get_post_meta( $this->get_post_id(), 'indie', true );
+
 		return [
 			( new \CPR\Components\Column_Area() )
 				->set_theme( 'threeColumn' )
@@ -166,16 +167,7 @@ class Indie extends \WP_Components\Component {
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
 										2,
-										[
-											'post_type'  => 'tribe_events',
-											'tax_query'  => [
-												[
-													'taxonomy' => 'section',
-													'field'    => 'slug',
-													'terms'    => 'indie',
-												],
-											],
-										]
+										Calendar::get_events_args_for_widgets( 'indie' )
 									)
 							),
 					]
@@ -188,7 +180,10 @@ class Indie extends \WP_Components\Component {
 				->set_theme( 'oneColumn' )
 				->merge_config(
 					[
-						'heading' => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
+
+						'heading'           => $data['videos']['heading'] ?? __( 'Watch', 'cpr' ),
+						'heading_cta_label' => $data['videos']['heading_cta_label'] ?? __( 'More Videos', 'cpr' ),
+						'heading_cta_link'  => $data['videos']['heading_cta_link'] ?? 'https://www.youtube.com/user/OpenAirCPR/feed',
 					]
 				)
 				->append_child(
@@ -333,6 +328,18 @@ class Indie extends \WP_Components\Component {
 									[
 										'label'         => __( 'Heading', 'cpr' ),
 										'default_value' => __( 'Watch', 'cpr' ),
+									]
+								),
+								'heading_cta_label' => new \Fieldmanager_TextField(
+									[
+										'label'         => __( 'Call to Action', 'cpr' ),
+										'default_value' => __( 'More Videos', 'cpr' ),
+									]
+								),
+								'heading_cta_link' => new \Fieldmanager_Link(
+									[
+										'label'         => __( 'Call to Action Link', 'cpr' ),
+										'default_value' => 'https://www.youtube.com/user/OpenAirCPR/feed',
 									]
 								),
 								'content_item_ids' => new \Fieldmanager_Zone_Field(

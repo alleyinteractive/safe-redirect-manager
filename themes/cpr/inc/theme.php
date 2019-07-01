@@ -43,6 +43,11 @@ function theme_setup() {
 	 */
 	add_theme_support( 'post-thumbnails' );
 
+	/**
+	 * Enable responsive embeds.
+	 */
+	add_theme_support( 'responsive-embeds' );
+
 	// Set up theme's use of wp_nav_menu().
 	register_nav_menus( array(
 		'footer-1'           => __( 'Footer 1', 'cpr' ),

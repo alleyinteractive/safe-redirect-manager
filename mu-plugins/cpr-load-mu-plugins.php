@@ -14,9 +14,9 @@ if ( 1 !== get_current_blog_id() ) {
 $plugins = [
 	'/alleypack/alleypack.php',
 	'/amp/amp.php',
+	'/archiveless/archiveless.php',
 	'/co-authors-plus/co-authors-plus.php',
 	'/fm-zones/fm-zones.php',
-	'/msm-sitemap/msm-sitemap.php',
 	'/safe-redirect-manager/safe-redirect-manager.php',
 	'/the-events-calendar/the-events-calendar.php',
 	'/wordpress-fieldmanager/fieldmanager.php',

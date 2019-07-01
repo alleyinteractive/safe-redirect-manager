@@ -58,7 +58,7 @@ class Cpr_Post_Type_Show_Post extends Cpr_Post_Type {
 				],
 				'show_ui' => true,
 				'show_in_menu' => false,
-				'supports' => [ 'title', 'thumbnail' ],
+				'supports' => [ 'title', 'thumbnail', 'custom-fields' ],
 				'taxonomies' => [ 'section' ],
 			]
 		);

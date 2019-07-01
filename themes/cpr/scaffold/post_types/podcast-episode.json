@@ -9,7 +9,8 @@
 		"title",
 		"author",
 		"editor",
-		"revisions"
+		"revisions",
+		"custom-fields"
 	],
 	"taxonomies": [
 		"category",

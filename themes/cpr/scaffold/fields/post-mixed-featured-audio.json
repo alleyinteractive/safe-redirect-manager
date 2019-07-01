@@ -12,7 +12,7 @@
 	"tabbed": "vertical",
 	"children": {
 		"settings": {
-			"label": { "__": "Legacy Audio" },
+			"label": { "__": "Audio" },
 			"serialize_data": false,
 			"add_to_prefix": false,
 			"children": {
@@ -28,7 +28,14 @@
 				"audio_id": {
 					"label": { "__": "Primary Audio" },
 					"type": "media"
-				},
+				}
+			}
+		},
+		"legacy_audio": {
+			"label": { "__": "Legacy Audio (Drupal)" },
+			"serialize_data": false,
+			"add_to_prefix": false,
+			"children": {
 				"aac_id": {
 					"label": { "__": "Legacy AAC Audio" },
 					"type": "media"

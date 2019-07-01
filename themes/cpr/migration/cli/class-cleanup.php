@@ -189,6 +189,15 @@ class Cleanup extends \CLI_Command {
 	/**
 	 * Decode caption data from attachments.
 	 *
+	 * [--post_id=<id>]
+	 * : Attachment ID to decode caption from.
+	 * ---
+	 * default: 0
+	 * ---
+	 *
+	 * [--dry-run]
+	 * : Don't actually do anything.
+	 *
 	 * ## EXAMPLE
 	 *
 	 *   $ wp cpr-cleanup image_caption_decode
@@ -197,10 +206,12 @@ class Cleanup extends \CLI_Command {
 	 * @param array $assoc_args CLI associate args.
 	 */
 	public function image_caption_decode( $args, $assoc_args ) {
+		$dry_run = ! empty( $assoc_args['dry-run'] );
+
 		// Default values.
 		$query_args = [
-			'post_type' => [ 'attachment' ],
-			'fields'    => 'ids',
+			'post_type'   => [ 'attachment' ],
+			'post_status' => 'any',
 		];
 
 		// Unique post ID.
@@ -210,24 +221,23 @@ class Cleanup extends \CLI_Command {
 
 		$this->bulk_task(
 			$query_args,
-			function ( $post_id ) {
+			function( $post ) use ( $dry_run ) {
+				$post_id         = $post->ID;
 				$current_caption = wp_get_attachment_caption( $post_id );
 
 				if ( ! empty( $current_caption ) ) {
-					wp_update_post(
-						[
-							'ID'           => $post_id,
-							'post_excerpt' => html_entity_decode( $current_caption ),
-						]
-					);
+					if ( ! $dry_run ) {
+						wp_update_post(
+							[
+								'ID'           => $post_id,
+								'post_excerpt' => html_entity_decode( $current_caption ),
+							]
+						);
+					}
 
-					WP_CLI::log(
-						sprintf( 'Post ID %d caption updated.', $post_id )
-					);
+					WP_CLI::log( sprintf( 'Post ID %d caption updated.', $post_id ) );
 				} else {
-					WP_CLI::log(
-						sprintf( 'No caption for Post ID %d.', $post_id )
-					);
+					WP_CLI::log( sprintf( 'No caption for Post ID %d.', $post_id ) );
 				}
 			}
 		);

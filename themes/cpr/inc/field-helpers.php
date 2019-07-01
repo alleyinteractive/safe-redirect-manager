@@ -115,6 +115,7 @@ function get_taxonomy_fields() : array {
 			unset( $fields['show'] );
 			break;
 		case 'show-episode':
+			unset( $fields['section'] );
 			unset( $fields['podcast'] );
 			break;
 		case 'show-segment':
