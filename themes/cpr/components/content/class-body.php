@@ -102,6 +102,8 @@ class Body extends \WP_Components\Component {
 								]
 							)->callback(
 								function( $image ) {
+									$image_meta = get_post_meta( $image->config['attachment_id'] );
+									$image->set_config( 'credit', $image_meta['credit'][0] ?? '' );
 									$image->set_config( 'caption', strip_tags( $image->get_config( 'caption' ) ) );
 									return $image;
 								}
