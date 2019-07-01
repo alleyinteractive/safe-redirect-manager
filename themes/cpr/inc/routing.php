@@ -314,25 +314,6 @@ function build_components_endpoint(
 		 * Error page.
 		 */
 		case $wp_query->is_404():
-			// Attempt to redirec to a legacy piece of content.
-			$wp_query = new \WP_Query(
-				[
-					'fields'      => 'ids',
-					'meta_key'    => 'legacy_path',
-					'meta_value'  => substr( $path, 1 ), // Trim first slash to match meta values.
-					'post_status' => 'publish',
-					'post_type'   => 'any',
-				]
-			);
-
-			// Handle redirects.
-			if ( 0 !== absint( $wp_query->posts[0] ?? 0 ) && class_exists( '\WPCOM_Legacy_Redirector' ) ) {
-				$redirect_to = get_permalink( $wp_query->posts[0] );
-				\WPCOM_Legacy_Redirector::insert_legacy_redirect( site_url( $path ), $redirect_to );
-				wp_safe_redirect( $redirect_to, 301 );
-				exit();
-			}
-
 			// no break.
 		default:
 			$head->set_query( $wp_query );
@@ -364,3 +345,44 @@ function build_components_endpoint(
 	return $data;
 }
 add_filter( 'wp_irving_components_route', __NAMESPACE__ . '\build_components_endpoint', 10, 5 );
+
+/**
+ * Check 404's to see if there's a migrated item.
+ *
+ * @param \WP_REST_Request $request  WP_REST_Request object.
+ * @param WP_Query         $query    WP_Query object corresponding to this
+ *                                   request.
+ * @param string           $path     The path for this request.
+ */
+function redirect_legacy_content( $request, $query, $path ) {
+
+	// Attempt to redirec to a legacy piece of content.
+	$wp_query = new \WP_Query(
+		[
+			'fields'      => 'ids',
+			'meta_key'    => 'legacy_path',
+			'meta_value'  => substr( $path, 1 ), // Trim first slash to match meta values.
+			'post_status' => 'publish',
+			'post_type'   => 'any',
+		]
+	);
+
+	// Handle redirects.
+	if ( 0 !== absint( $wp_query->posts[0] ?? 0 ) && class_exists( '\WPCOM_Legacy_Redirector' ) ) {
+
+		$redirect_uri = get_permalink( $wp_query->posts[0] );
+
+		// The path may be either a full URL, or a relative path.
+		$redirect_path = wp_parse_url( $redirect_uri, PHP_URL_PATH );
+
+		// Replace request path with our redirect to path.
+		$params['path'] = $redirect_path;
+
+		// Build the full URL.
+		$rest_redirect_uri = add_query_arg( $params );
+
+		wp_safe_redirect( $rest_redirect_uri, 301 );
+		exit;
+	}
+}
+add_filter( 'wp_irving_handle_redirect', __NAMESPACE__ . '\redirect_legacy_content', 10, 3 );
