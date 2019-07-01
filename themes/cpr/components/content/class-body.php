@@ -91,7 +91,6 @@ class Body extends \WP_Components\Component {
 
 		switch ( $type ) {
 			case 'image':
-			default:
 				if ( has_post_thumbnail( $this->get_post_id() ) ) {
 					$this->wp_post_set_featured_image( 'content_single', [ 'show_caption' => true ] );
 				}
@@ -113,6 +112,7 @@ class Body extends \WP_Components\Component {
 						->set_name( 'featured-video' )
 				);
 				break;
+			default:
 			case 'none':
 				break;
 		}
