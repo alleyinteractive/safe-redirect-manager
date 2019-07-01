@@ -56,7 +56,7 @@ class Bylines extends \WP_Components\Component {
 				$byline->set_guest_author( $coauthor );
 			}
 
-			if ( ! empty( $byline ) ) {
+			if ( ! empty( $byline->config['name'] ) ) {
 				$this->append_child( $byline );
 			} else {
 				$this->set_invalid();
