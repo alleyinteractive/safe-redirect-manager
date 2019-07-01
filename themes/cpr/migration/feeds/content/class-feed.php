@@ -176,7 +176,10 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 	 * @return string
 	 */
 	public function apply_custom_block_logic( $content, \DOMNode $node ) : string {
-		$class = $node->getAttribute( 'class' );
+		$class = '';
+		if ( method_exists( $node, 'getAttribute' ) ) {
+			$class = $node->getAttribute( 'class' );
+		}
 		switch ( $node->nodeName ) {
 			case 'script':
 			case 'style':
@@ -356,11 +359,11 @@ class Feed extends \CPR\Migration\Post_Datasource_Feed {
 										if ( $this->has_class( $inner_class, 'cpr-gallery-migration' ) ) {
 											return $this->migrate_galleries( $content, $innerChild );
 										}
-	
+
 										if ( $this->has_class( $inner_class, 'cpr-audio-migration' ) ) {
 											return $this->migrate_audio( $content, $innerChild );
 										}
-	
+
 										if ( $this->has_class( $inner_class, 'cpr-image-block' ) ) {
 											return $this->custom_img( $innerChild );
 										}
