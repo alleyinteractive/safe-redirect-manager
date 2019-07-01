@@ -49,7 +49,7 @@ class Footer extends \WP_Components\Component {
 			],
 			[
 				home_url( '/about/' ),
-				home_url( '/contact/' ),
+				home_url( '/about/contact/' ),
 				home_url( '/ways-to-listen/' ),
 				home_url( '/support/' ),
 			]

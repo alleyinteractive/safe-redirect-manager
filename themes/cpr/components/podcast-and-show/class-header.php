@@ -46,8 +46,8 @@ class Header extends \WP_Components\Component {
 
 		$this->merge_config(
 			[
-				'times'     => $times,
-				'buttons' => $subscribe['buttons'],
+				'times'   => $times,
+				'buttons' => $subscribe['buttons'] ?? [],
 			]
 		);
 
