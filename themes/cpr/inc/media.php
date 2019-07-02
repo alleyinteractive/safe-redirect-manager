@@ -31,41 +31,41 @@ namespace CPR;
 			'sources' => [
 				[
 					'transforms' => [
-						'resize' => [ 434, 244 ],
+						'resize' => [ 434, 289 ],
 					],
 					'descriptor' => 434,
 					'media' => [ 'max' => 'sm' ],
 				],
 				[
 					'transforms' => [
-						'resize' => [ 722, 406 ],
+						'resize' => [ 722, 481 ],
 					],
 					'descriptor' => 722,
 					'media' => [ 'max' => 'md' ],
 				],
 				[
 					'transforms' => [
-						'resize' => [ 948, 533 ],
+						'resize' => [ 948, 632 ],
 					],
 					'descriptor' => 948,
 					'media' => [ 'max' => 'lg' ],
 				],
 				[
 					'transforms' => [
-						'resize' => [ 854, 480 ],
+						'resize' => [ 854, 569 ],
 					],
 					'descriptor' => 854,
 					'media' => [ 'max' => 'xl' ],
 				],
 				[
 					'transforms' => [
-						'resize' => [ 1032, 580 ],
+						'resize' => [ 1032, 688 ],
 					],
 					'descriptor' => 1032,
 					'default'    => true,
 				],
 			],
-			'aspect_ratio' => 9 / 16,
+			'aspect_ratio' => 2 / 3,
 			'retina'       => true,
 		],
 		'external-link-widget' => [
@@ -194,7 +194,7 @@ namespace CPR;
 					],
 				],
 			],
-			'retina' => true,
+			'retina'       => true,
 			'aspect_ratio' => 1,
 		],
 		'underwriter' => [
