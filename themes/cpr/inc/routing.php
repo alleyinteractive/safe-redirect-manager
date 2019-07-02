@@ -321,6 +321,15 @@ function build_components_endpoint(
 			break;
 	}
 
+	// Render embed scripts.
+	$embed_scripts = \WP_Components\Blocks\Core_Embed::get_scripts();
+
+	if ( ! empty( $embed_scripts ) ) {
+		foreach ( $embed_scripts as $script ) {
+			$head->add_tag( 'script', $script );
+		}
+	}
+
 	// Set up context providers.
 	$data['providers'] = [
 		( new Components\Google_Tag_Manager() )
