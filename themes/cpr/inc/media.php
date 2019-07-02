@@ -183,7 +183,6 @@ namespace CPR;
 			'aspect_ratio' => 1,
 			'fallback_image_url' => get_template_directory_uri() . '/images/default-avatar.png',
 		],
-		// @todo add proper sizing
 		'grid-group-item' => [
 			'sources' => [
 				[
@@ -225,7 +224,6 @@ namespace CPR;
 			'aspect_ratio' => 1,
 			'fallback_image_url' => get_template_directory_uri() . '/images/default-thumbnail.png',
 		],
-		// @todo add proper sizing
 		'grid-group-host' => [
 			'sources' => [
 				[
