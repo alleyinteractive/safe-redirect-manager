@@ -11,6 +11,27 @@ namespace CPR;
 add_filter( 'tribe_is_using_basic_gmaps_api', '__return_true' );
 
 /**
+ * Override the timeout for requests to the NPR API in the admin.
+ *
+ * @param int    $timeout HTTP Request timeout value.
+ * @param string $url     Request URL.
+ * @return int
+ */
+function npr_timeout( $timeout, $url ) {
+	if ( ! is_admin() ) {
+		return $timeout;
+	}
+
+	$domain = wp_parse_url( $url, PHP_URL_HOST );
+	if ( false !== strpos( $domain, '3y5glcuec6.execute-api.us-west-2.amazonaws.com' ) ) {
+		return 30; // phpcs:ignore
+	}
+
+	return $timeout;
+}
+add_filter( 'http_request_timeout', __NAMESPACE__ . '\npr_timeout', 10, 2 );
+
+/**
  * Add audio to NPR feed.
  *
  * @param array $audio   Audio meta to include in the feed.

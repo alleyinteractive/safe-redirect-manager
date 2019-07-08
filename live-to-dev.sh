@@ -34,5 +34,8 @@ fi
 # Update home.
 terminus wp cpr-mu.dev -- option update home 'https://cpr-dev.herokuapp.com' --url=content-dev.cpr.org
 
+# Protect against accidental pushes to production NPR endpoint.
+wp option delete ds_npr_api_push_url --url=content-dev.cpr.org
+
 # Flush the cache.
 terminus env:cc cpr-mu.dev
