@@ -155,7 +155,7 @@ function get_segment_fields() : array {
 			[
 				'description' => __( 'Select the segments for this show.', 'cpr' ),
 				'query_args'  => [
-					'post_type'  => [ 'show-segment' ],
+					'post_type'  => [ 'show-segment', 'post' ],
 					'meta_query' => [
 						[
 							'key'     => '_show_episode_id',

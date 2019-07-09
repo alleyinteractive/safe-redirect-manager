@@ -35,32 +35,6 @@ class Classical extends \WP_Components\Component {
 	}
 
 	/**
-	 * Get the backfill arguments for this landing page.
-	 *
-	 * @return array
-	 */
-	public static function get_backfill_args() : array {
-		return [
-			'post_type' => [ 'post', 'podcast-episode' ],
-			'tax_query' => [
-				'relation' => 'OR',
-				// Classical posts.
-				[
-					'taxonomy' => 'section',
-					'field'    => 'slug',
-					'terms'    => 'classical',
-				],
-				// Classical podcast episodes.
-				[
-					'taxonomy' => 'podcast',
-					'field'    => 'term_id',
-					'terms'    => \CPR\get_podcast_term_ids_by_section( 'classical' ),
-				],
-			],
-		];
-	}
-
-	/**
 	 * Get the backfill arguments for posts in the classical section.
 	 * Used in the Articles component of this page.
 	 *
@@ -309,7 +283,9 @@ class Classical extends \WP_Components\Component {
 									[
 										'label'      => __( 'Featured Story', 'cpr' ),
 										'post_limit' => 1,
-										'query_args' => self::get_backfill_args(),
+										'query_args' => [
+											'post_type' => [ 'post', 'podcast-episode', 'external-link' ],
+										],
 									]
 								),
 							],
@@ -358,7 +334,9 @@ class Classical extends \WP_Components\Component {
 									[
 										'label'      => __( 'Articles', 'cpr' ),
 										'post_limit' => 5,
-										'query_args' => self::get_classical_posts_backfill_args(),
+										'query_args' => [
+											'post_type' => [ 'post', 'podcast-episode', 'external-link' ],
+										],
 									]
 								),
 							],
@@ -378,7 +356,9 @@ class Classical extends \WP_Components\Component {
 									[
 										'label'      => __( 'Podcast Episodes', 'cpr' ),
 										'post_limit' => 4,
-										'query_args' => self::get_classical_episodes_backfill_args(),
+										'query_args' => [
+											'post_type' => [ 'post', 'podcast-episode', 'external-link' ],
+										],
 									]
 								),
 							],
