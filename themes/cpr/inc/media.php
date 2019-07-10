@@ -86,20 +86,20 @@ namespace CPR;
 			'sources' => [
 				[
 					'transforms' => [
-						'resize' => [ 480, 277 ],
+						'resize' => [ 480, 320 ],
 					],
 					'descriptor' => 480,
 					'media' => [ 'max' => 'sm' ],
 				],
 				[
 					'transforms' => [
-						'resize' => [ 683, 384 ],
+						'resize' => [ 683, 455 ],
 					],
 					'descriptor' => 683,
 					'default'    => true,
 				],
 			],
-			'aspect_ratio' => 9 / 16,
+			'aspect_ratio' => 2 / 3,
 			'retina'       => true,
 		],
 		'feature_item_small' => [
