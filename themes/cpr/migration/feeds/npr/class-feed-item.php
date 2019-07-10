@@ -154,7 +154,7 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			);
 		}
 
-		wp_set_post_categories( $this->get_object_id(), [ 10972 ], false );
+		wp_set_post_categories( $this->get_object_id(), [ 10972 ], true );
 
 		/**
 		 * Canonical url.
