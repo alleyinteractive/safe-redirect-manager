@@ -47,6 +47,7 @@ class Migration {
 		'job'                     => true,
 		'label'                   => false, // Migrated with albums.
 		'newsletter'              => true,
+		'npr'                     => true,
 		'page'                    => true,
 		'podcast'                 => true,
 		'podcast-episode'         => true,
