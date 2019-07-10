@@ -163,7 +163,7 @@ class Indie extends \WP_Components\Component {
 								 */
 								( new \CPR\Components\Widgets\Content_List() )
 									->set_config( 'header_text', $data['calendar']['header_text'] ?? __( 'Concert Calendar', 'cpr' ) )
-									->set_config( 'header_link', $data['calendar']['header_link'] ?? site_url( 'indie/calendar/' ) )
+									->set_config( 'header_link', $data['calendar']['header_link'] ?? home_url( 'indie/calendar/' ) )
 									->parse_from_post_ids(
 										$data['calendar']['event_ids'] ?? [],
 										2,
