@@ -138,23 +138,6 @@ class Feed_Item extends \Alleypack\Sync_Script\Post_Feed_Item {
 			if ( 0 !== $attachment_id ) {
 				update_post_meta( $this->get_object_id(), '_thumbnail_id', $attachment_id );
 				update_post_meta( $this->get_object_id(), 'featured_media_type', 'none' );
-
-				$image_src = wp_get_attachment_url( $attachment_id );
-				$alt       = $this->source['field_npr_image']['und'][0]['alt'] ?? '';
-
-				$image = '<!-- wp:image -->'
-					. PHP_EOL . '<div class="wp-block-image">'
-					. PHP_EOL . '<figure class="alignright is-resized">'
-					. PHP_EOL . '<img src="' . esc_url( $image_src ?? '' ) . '" alt="' . esc_attr( $alt ) . '" width="300"/>'
-					. PHP_EOL . '</figure></div>'
-					. PHP_EOL . '<!-- /wp:image -->';
-
-				wp_update_post(
-					[
-						'ID'           => $this->get_object_id(),
-						'post_content' => $image . $this->object['post_content'],
-					]
-				);
 			}
 		}
 
