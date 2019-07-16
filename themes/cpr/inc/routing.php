@@ -248,7 +248,7 @@ function build_components_endpoint(
 		 */
 		case ( strpos( $path, '/all/' ) === 0 ):
 			$head->set_query( $wp_query );
-			$head->set_title( __( 'All CPR\'s | Colorado Public Radi', 'cpr' ) );
+			$head->set_title( __( 'All CPR\'s | Colorado Public Radio', 'cpr' ) );
 			$header->set_query( $wp_query );
 			$template = ( new Components\Templates\All_Archive() )->set_query( $wp_query );
 			break;
