@@ -33,6 +33,12 @@ function rewrites() {
 	);
 
 	add_rewrite_rule(
+		'^(news|classical|indie)/calendar/([^/]+)/page/?([0-9]{1,})/?$',
+		'index.php?taxonomy=section&term=$matches[1]&post_type=tribe_events&eventDisplay=month&eventDate=$matches[2]&paged=$matches[3]',
+		'top'
+	);
+
+	add_rewrite_rule(
 		'^(news|classical|indie)/calendar/category/([^/]+)/?$',
 		'index.php?taxonomy=section&term=$matches[1]&post_type=tribe_events&eventDisplay=month&tribe_events_cat=$matches[2]',
 		'top'

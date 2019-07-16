@@ -47,7 +47,7 @@ class Calendar extends \WP_Components\Component {
 				->append_children(
 					[
 						/**
-						 * Pagination.
+						 * Monthly Pagination.
 						 */
 						( new \CPR\Components\Calendar_Pagination() )
 							->set_query( $this->query ),
@@ -63,6 +63,14 @@ class Calendar extends \WP_Components\Component {
 									'content-title' => 'grid',
 								]
 							),
+
+						/**
+						 * Pagination
+						 */
+						( new \WP_Components\Pagination() )
+							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
+							->set_config( 'base_url', "/{$this->query->get( 'term' )}/calendar/{$this->query->get( 'eventDate' )}/" )
+							->set_query( $this->query ),
 
 						/**
 						 * Sidebar.
@@ -143,10 +151,9 @@ class Calendar extends \WP_Components\Component {
 	/**
 	 * Modify results.
 	 *
-	 * @param object $wp_query wp_query object.
+	 * @param \WP_Query $wp_query WP_Query object.
 	 */
-	public static function pre_get_posts( $wp_query ) {
-
+	public static function pre_get_posts( \WP_Query $wp_query ) {
 		// Only modify events archives when on either the base calendar
 		// page or the monthly view.
 		if (
@@ -156,6 +163,9 @@ class Calendar extends \WP_Components\Component {
 		) {
 			return;
 		}
+
+		// Set 20 events per page.
+		$wp_query->set( 'posts_per_page', 20 );
 
 		// Sort by chronological order.
 		$wp_query->set( 'orderby', 'meta_value_num' );
@@ -170,7 +180,7 @@ class Calendar extends \WP_Components\Component {
 	 * @param string $event_month Event Month.
 	 * @return array
 	 */
-	public static function events_date_meta_args( $event_month = '' ) : array {
+	public static function events_date_meta_args( string $event_month = '' ) : array {
 
 		if ( empty( $event_month ) ) {
 			$event_month = ( new \DateTime() )->format( 'Y-m' );
@@ -205,8 +215,7 @@ class Calendar extends \WP_Components\Component {
 	 * @param string $section Section slug.
 	 * @return array
 	 */
-	public static function get_events_args_for_widgets( $section = '' ) : array {
-
+	public static function get_events_args_for_widgets( string $section = '' ) : array {
 		$event_month = ( new \DateTime() )->format( 'Y-m' );
 		$start_date  = new \DateTime( $event_month );
 
@@ -217,7 +226,7 @@ class Calendar extends \WP_Components\Component {
 			'order'      => 'ASC',
 			'meta_query' => [ // phpcs:ignore
 				[
-					'ends-after'    => [
+					'ends-after'    => [ // phpcs:ignore
 						'key'     => '_EventEndDateUTC',
 						'compare' => '>',
 						'value'   => $start_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
@@ -228,7 +237,7 @@ class Calendar extends \WP_Components\Component {
 		];
 
 		if ( ! empty( $section ) ) {
-			$args['tax_query'] = [
+			$args['tax_query'] = [ // phpcs:ignore
 				[
 					'taxonomy' => 'section',
 					'field'    => 'slug',
