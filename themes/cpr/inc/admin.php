@@ -159,7 +159,7 @@ add_action( 'admin_menu', __NAMESPACE__ . '\add_menu_pages' );
  * @return string
  */
 function set_current_menu( $parent_file ) {
-	// phpcs:disable WordPress.WP.GlobalVariablesOverride.OverrideProhibited
+	// phpcs:disable
 	global $submenu_file, $current_screen;
 
 	switch ( $current_screen->id ?? '' ) {
