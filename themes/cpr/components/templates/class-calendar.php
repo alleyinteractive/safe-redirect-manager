@@ -69,7 +69,7 @@ class Calendar extends \WP_Components\Component {
 						 */
 						( new \WP_Components\Pagination() )
 							->set_config( 'url_params_to_remove', [ 'path', 'context' ] )
-							->set_config( 'base_url', "/{$this->query->get( 'term' )}/calendar/{$this->query->get( 'eventDate' )}/" )
+							->set_config( 'base_url', $this->get_pagination_base_url() )
 							->set_query( $this->query ),
 
 						/**
@@ -94,6 +94,21 @@ class Calendar extends \WP_Components\Component {
 					]
 				),
 		];
+	}
+
+	/**
+	 * Get pagination base url.
+	 *
+	 * @return string
+	 */
+	public function get_pagination_base_url() : string {
+		$event_month = $this->query->get( 'eventDate' );
+
+		if ( empty( $event_month ) ) {
+			$event_month = ( new \DateTime() )->format( 'Y-m' );
+		}
+
+		return "/{$this->query->get( 'term' )}/calendar/{$event_month}/";
 	}
 
 	/**
