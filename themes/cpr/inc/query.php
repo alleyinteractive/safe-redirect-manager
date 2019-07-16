@@ -29,3 +29,13 @@ add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\All_Archive', 'pre
 
 // Modify Podcast and Shows results.
 add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Podcast_And_Show', 'pre_get_posts' ] );
+
+/**
+ * Unhook expensive Tribe events query in the admin.
+ */
+function remove_tribe_events_query() {
+	if ( is_admin() ) {
+		remove_action( 'pre_get_posts', [ 'Tribe__Events__Query', 'pre_get_posts' ], 50 );
+	}
+}
+add_action( 'init', __NAMESPACE__ . '\remove_tribe_events_query' );
