@@ -34,8 +34,13 @@ add_action( 'pre_get_posts', [ '\\CPR\\Components\\Templates\\Podcast_And_Show',
  * Unhook expensive Tribe events query in the admin.
  */
 function remove_tribe_events_query() {
-	if ( is_admin() ) {
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	$screen = get_current_screen();
+	if ( 'landing-page' === ( $screen->post_type ?? '' ) ) {
 		remove_action( 'pre_get_posts', [ 'Tribe__Events__Query', 'pre_get_posts' ], 50 );
 	}
 }
-add_action( 'init', __NAMESPACE__ . '\remove_tribe_events_query' );
+add_action( 'pre_get_posts', __NAMESPACE__ . '\remove_tribe_events_query' );
