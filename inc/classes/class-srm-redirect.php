@@ -51,11 +51,18 @@ class SRM_Redirect {
 	}
 
 	/**
-	 * Check current url against redirects
+	 * Find matching redirect for requested URL
 	 *
-	 * @since 1.8
+	 * @since 1.9.3
+	 * @return void
 	 */
-	public function maybe_redirect() {
+	public function get_redirect_match() {
+		$match = [
+			'redirect_to'    => '',
+			'requested_path' => '',
+			'redirect_from'  => '',
+			'status_code'    => 0,
+		];
 
 		// Don't redirect unless not on admin. If 404 filter enabled, require query is a 404.
 		if ( is_admin() || ( apply_filters( 'srm_redirect_only_on_404', false ) && ! is_404() ) ) {
@@ -91,6 +98,9 @@ class SRM_Redirect {
 			$requested_path = '/';
 		}
 
+		// Set requested path property.
+		$match['requested_path'] = $requested_path;
+
 		// Allow redirects to be filtered
 		$redirects = apply_filters( 'srm_registered_redirects', $redirects, $requested_path );
 
@@ -107,7 +117,6 @@ class SRM_Redirect {
 		}
 
 		foreach ( (array) $redirects as $redirect ) {
-
 			$redirect_from = untrailingslashit( $redirect['redirect_from'] );
 			if ( empty( $redirect_from ) ) {
 				$redirect_from = '/'; // this only happens in the case where there is a redirect on the root
@@ -165,25 +174,41 @@ class SRM_Redirect {
 				}
 
 				$sanitized_redirect_to = esc_url_raw( apply_filters( 'srm_redirect_to', $redirect_to ) );
-
-				do_action( 'srm_do_redirect', $requested_path, $sanitized_redirect_to, $status_code );
-
-				if ( defined( 'PHPUNIT_SRM_TESTSUITE' ) && PHPUNIT_SRM_TESTSUITE ) {
-					// Don't actually redirect if we are testing
-					return;
-				}
-
-				header( 'X-Safe-Redirect-Manager: true' );
-
-				// if we have a valid status code, then redirect with it
-				if ( in_array( $status_code, srm_get_valid_status_codes(), true ) ) {
-					wp_safe_redirect( $sanitized_redirect_to, $status_code );
-				} else {
-					wp_safe_redirect( $sanitized_redirect_to );
-				}
-
-				exit;
+				$match['redirect_to']   = $sanitized_redirect_to;
+				$match['redirect_from'] = $redirect_from;
+				$match['status_code']   = $status_code;
 			}
+		}
+
+		return $match;
+	}
+
+	/**
+	 * Check current url against redirects
+	 *
+	 * @since 1.8
+	 */
+	public function maybe_redirect() {
+		$redirect_match = $this->get_redirect_match();
+
+		if ( ! empty( $redirect_match['redirect_to'] ) ) {
+			do_action( 'srm_do_redirect', $redirect_match['requested_path'], $redirect_match['redirect_to'], $redirect_match['status_code'] );
+
+			if ( defined( 'PHPUNIT_SRM_TESTSUITE' ) && PHPUNIT_SRM_TESTSUITE ) {
+				// Don't actually redirect if we are testing
+				return;
+			}
+
+			header( 'X-Safe-Redirect-Manager: true' );
+
+			// if we have a valid status code, then redirect with it
+			if ( in_array( $redirect_match['status_code'], srm_get_valid_status_codes(), true ) ) {
+				wp_safe_redirect( $redirect_match['redirect_to'], $redirect_match['status_code'] );
+			} else {
+				wp_safe_redirect( $redirect_match['redirect_to'] );
+			}
+
+			exit;
 		}
 	}
 
