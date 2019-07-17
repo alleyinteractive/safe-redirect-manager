@@ -17,7 +17,7 @@ add_filter( 'tribe_is_using_basic_gmaps_api', '__return_true' );
  * @param string $url     Request URL.
  * @return int
  */
-function npr_timeout( $timeout, $url ) {
+function npr_timeout( $timeout, $url = '' ) {
 	if ( ! is_admin() ) {
 		return $timeout;
 	}
