@@ -106,20 +106,20 @@ namespace CPR;
 			'sources' => [
 				[
 					'transforms' => [
-						'resize' => [ 480, 360 ],
+						'resize' => [ 480, 320 ],
 					],
 					'descriptor' => 480,
 					'media' => [ 'max' => 'sm' ],
 				],
 				[
 					'transforms' => [
-						'resize' => [ 640, 480 ],
+						'resize' => [ 640, 426 ],
 					],
 					'descriptor' => 640,
 					'default'    => true,
 				],
 			],
-			'aspect_ratio' => 3 / 4,
+			'aspect_ratio' => 2 / 3,
 			'retina'       => true,
 		],
 		'grid_item' => [
@@ -127,12 +127,12 @@ namespace CPR;
 				[
 					'default'    => true,
 					'transforms' => [
-						'resize' => [ 330, 185 ],
+						'resize' => [ 330, 220 ],
 					],
 					'descriptor' => 330,
 				],
 			],
-			'aspect_ratio' => 9 / 16,
+			'aspect_ratio' => 2 / 3,
 			'retina'       => true,
 		],
 		'album_cover' => [
