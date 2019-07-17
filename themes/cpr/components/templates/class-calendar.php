@@ -223,7 +223,7 @@ class Calendar extends \WP_Components\Component {
 			'starts-before' => [
 				'key'     => '_EventStartDateUTC',
 				'compare' => '<',
-				'value'   => tribe_end_of_day( $end_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ) ),
+				'value'   => tribe_beginning_of_day( $end_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ) ),
 				'type'    => 'DATETIME',
 			],
 		];
