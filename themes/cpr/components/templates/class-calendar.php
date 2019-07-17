@@ -182,11 +182,14 @@ class Calendar extends \WP_Components\Component {
 		// Set 20 events per page.
 		$wp_query->set( 'posts_per_page', 20 );
 
-		// Sort by chronological order.
+		// This removes legacy events.
+		$wp_query->set( 'start_date', tribe_beginning_of_day( date_i18n( \Tribe__Date_Utils::DBDATETIMEFORMAT ) ) );
+
+		// Ordering the events based on its start date and event base.
 		$wp_query->set( 'orderby', 'meta_value_num' );
 		$wp_query->set( 'meta_key', '_EventStartDate' );
 		$wp_query->set( 'order', 'ASC' );
-		$wp_query->set( 'meta_query', static::events_date_meta_args( $wp_query->get( 'eventDate' ) ) );
+		$wp_query->set( 'meta_query', self::events_date_meta_args( $wp_query->get( 'eventDate' ) ) );
 	}
 
 	/**
