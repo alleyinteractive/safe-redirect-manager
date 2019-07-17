@@ -182,9 +182,9 @@ class Calendar extends \WP_Components\Component {
 		// Set 20 events per page.
 		$wp_query->set( 'posts_per_page', 20 );
 
-		// This overrides start date added by the Trive events plugin
-		// which adds some date inconsistencies.
-		// Fixing the dates by which the events are show.
+		// This overrides the start_date added by the Tribe plugin
+		// which adds some date inconsistencies, resulting in malformed results.
+		// This change makes sure that we fetch events taking into account the current date, not legacy events.
 		$wp_query->set( 'start_date', tribe_beginning_of_day( date_i18n( \Tribe__Date_Utils::DBDATETIMEFORMAT ) ) );
 
 		// Ordering the events based on its start date and event base.
