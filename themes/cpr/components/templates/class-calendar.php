@@ -182,7 +182,12 @@ class Calendar extends \WP_Components\Component {
 		// Set 20 events per page.
 		$wp_query->set( 'posts_per_page', 20 );
 
-		// Sort by chronological order.
+		// This overrides the start_date added by the Tribe plugin
+		// which adds some date inconsistencies, resulting in malformed results.
+		// This change makes sure that we fetch events taking into account the current date, not legacy events.
+		$wp_query->set( 'start_date', tribe_beginning_of_day( date_i18n( \Tribe__Date_Utils::DBDATETIMEFORMAT ) ) );
+
+		// Ordering the events based on its start date and event base.
 		$wp_query->set( 'orderby', 'meta_value_num' );
 		$wp_query->set( 'meta_key', '_EventStartDate' );
 		$wp_query->set( 'order', 'ASC' );
@@ -212,13 +217,13 @@ class Calendar extends \WP_Components\Component {
 			'ends-after'    => [
 				'key'     => '_EventEndDateUTC',
 				'compare' => '>',
-				'value'   => $start_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
+				'value'   => tribe_end_of_day( $start_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ) ),
 				'type'    => 'DATETIME',
 			],
 			'starts-before' => [
 				'key'     => '_EventStartDateUTC',
 				'compare' => '<',
-				'value'   => $end_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ),
+				'value'   => tribe_beginning_of_day( $end_date->format( \Tribe__Date_Utils::DBDATETIMEFORMAT ) ),
 				'type'    => 'DATETIME',
 			],
 		];
