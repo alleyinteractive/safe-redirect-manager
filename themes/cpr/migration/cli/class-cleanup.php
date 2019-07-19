@@ -145,7 +145,6 @@ class Cleanup extends \CLI_Command {
 		// Default values.
 		$query_args = [
 			'post_type' => [ $assoc_args['post_type'] ],
-			'fields'    => 'ids',
 		];
 
 		// Unique post ID.
@@ -155,7 +154,8 @@ class Cleanup extends \CLI_Command {
 
 		$this->bulk_task(
 			$query_args,
-			function ( $post_id ) {
+			function ( $post ) {
+				$post_id     = $post->ID;
 				$legacy_path = get_post_meta( $post_id, 'legacy_path', true );
 				$new_path    = str_replace(
 					home_url(),
