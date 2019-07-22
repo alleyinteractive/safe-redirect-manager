@@ -36,7 +36,7 @@ function setup_feed_routing() {
 					exit();
 				},
 				'rewrite'  => array(
-					'rule'       => 'rss\/(.*).podcast.rss?',
+					'rule'       => 'rss\/(.+).podcast.rss?',
 					'redirect'   => 'index.php?dispatch=podcast-feed&custom-feed-slug=$matches[1]',
 					'query_vars' => 'custom-feed-slug',
 				),
