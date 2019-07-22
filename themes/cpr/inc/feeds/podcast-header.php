@@ -5,20 +5,22 @@
  * @package CPR
  */
 
-$podcast_id    = ai_get_var( 'podcast_id' );
-$podcast_title = ai_get_var( 'podcast_title' );
-$image_url     = wp_get_attachment_url( absint( get_post_meta( $podcast_id, '_thumbnail_id', true ) ) );
+$podcast_id          = ai_get_var( 'podcast_id' );
+$podcast_title       = ai_get_var( 'podcast_title' );
+$podcast_url         = ai_get_var( 'podcast_url' );
+$image_url           = wp_get_attachment_url( absint( get_post_meta( $podcast_id, '_thumbnail_id', true ) ) );
+$podcast_description = ai_get_var( 'podcast_description' );
 
 if ( ! empty( $image_url ) ) : ?>
 	<image>
 		<url><?php echo esc_url( $image_url ); ?></url>
 		<title><?php echo esc_html( $podcast_title ); ?></title>
-		<link><?php echo esc_url( bloginfo_rss( 'url' ) ); ?></link>
+		<link><?php echo esc_url( $podcast_url ); ?></link>
 	</image>
 <?php endif; ?>
 
 <itunes:subtitle>From <?php echo esc_html( bloginfo_rss( 'name' ) ); ?></itunes:subtitle>
-<itunes:summary><?php bloginfo_rss( 'description' ); ?></itunes:summary>
+<itunes:summary><?php echo esc_html( $podcast_description ); ?></itunes:summary>
 <itunes:category text="Music" />
 <itunes:keywords>Colorado Public Radio, CPR Classical, Colorado, Classical Music, Great Composers, Mozart, Amadeus Mozart, Rachmaninoff</itunes:keywords>
 

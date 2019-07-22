@@ -101,16 +101,31 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 >
 	<channel>
 		<?php
-		get_template_part( 'inc/feeds/header' );
-		
-		$podcast      = get_term_by( 'slug', $term_slug, 'podcast' );
+		$podcast      = get_term_by( 'slug', $term_slug, $term_taxonomy );
+		$term_link    = get_term_link( $podcast );
 		$show_post_id = \Alleypack\Term_Post_Link::get_post_from_term( $podcast->term_id );
+
+		$podcast_description = $podcast->description;
+		if ( empty( $podcast_description ) ) {
+			$podcast_description = get_bloginfo_rss( 'description' );
+		}
+
+		ai_get_template_part(
+			'inc/feeds/header',
+			[
+				'podcast_title'       => $podcast->name,
+				'podcast_url'         => $term_link,
+				'podcast_description' => $podcast_description,
+			] 
+		);
 
 		ai_get_template_part(
 			'inc/feeds/podcast-header',
 			[
-				'podcast_id'    => $show_post_id,
-				'podcast_title' => $podcast->name,
+				'podcast_id'          => $show_post_id,
+				'podcast_title'       => $podcast->name,
+				'podcast_url'         => $term_link,
+				'podcast_description' => $podcast_description,
 			] 
 		);
 		
