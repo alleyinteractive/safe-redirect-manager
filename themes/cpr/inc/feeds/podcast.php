@@ -10,7 +10,7 @@ namespace CPR;
 // We need to get _all_ the episodes for itunes and other feed use. Disregard
 // that we're not supposed to do this.
 $cpr_args = [
-	'posts_per_page' => 10,
+	'posts_per_page' => -1,
 ];
 
 $term_slug     = get_query_var( 'custom-feed-slug' );
