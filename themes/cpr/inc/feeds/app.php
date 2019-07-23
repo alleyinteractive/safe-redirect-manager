@@ -187,7 +187,14 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 >
 	<channel>
 		<?php
-		get_template_part( 'inc/feeds/header' );
+		ai_get_template_part(
+			'inc/feeds/header',
+			[
+				'podcast_title'       => get_bloginfo_rss( 'name' ),
+				'podcast_url'         => get_bloginfo_rss( 'url' ),
+				'podcast_description' => get_bloginfo_rss( 'description' ),
+			]
+		);
 
 		if ( $feed_items->have_posts() ) :
 			while ( $feed_items->have_posts() ) :
