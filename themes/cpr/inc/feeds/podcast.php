@@ -105,7 +105,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
 		$term_link    = get_term_link( $podcast );
 		$show_post_id = \Alleypack\Term_Post_Link::get_post_from_term( $podcast->term_id );
 
-		$podcast_description = $podcast->description;
+		$podcast_description = get_post_meta( $show_post_id, 'description', true );
 		if ( empty( $podcast_description ) ) {
 			$podcast_description = get_bloginfo_rss( 'description' );
 		}
