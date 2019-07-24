@@ -43,3 +43,6 @@
 [submodule "mu-plugins/archiveless"]
 	path = mu-plugins/archiveless
 	url = git@github.com:alleyinteractive/archiveless.git
+[submodule "plugins/es-wp-query"]
+	path = plugins/es-wp-query
+	url = https://github.com/alleyinteractive/es-wp-query

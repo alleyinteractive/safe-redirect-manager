@@ -19,6 +19,7 @@ bower_components
 plugins/*
 !plugins/compressed-emoji
 !plugins/documentcloud
+!plugins/es-wp-query
 !plugins/fakerpress
 !plugins/gutenberg
 !plugins/image-shortcake
