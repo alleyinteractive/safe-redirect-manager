@@ -45,3 +45,15 @@ if ( is_array( $plugins ) ) {
 		}
 	}
 }
+
+/**
+ * Use Jetpack as ES WP Query adapter.
+ */
+add_action(
+	'after_setup_theme',
+	function () {
+		if ( function_exists( 'es_wp_query_load_adapter' ) ) {
+			es_wp_query_load_adapter( 'jetpack-search' );
+		}
+	}
+);
