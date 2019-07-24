@@ -115,6 +115,10 @@ class Search extends \WP_Components\Component {
 		) {
 			$wp_query->set( 'posts_per_page', 16 );
 			$wp_query->set( 'post_type', self::get_searchable_post_type() );
+
+			if ( function_exists( 'es_wp_query_load_adapter' ) ) {
+				$wp_query->set( 'es', true );
+			}
 		}
 	}
 
