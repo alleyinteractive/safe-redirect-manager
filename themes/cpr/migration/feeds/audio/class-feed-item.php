@@ -41,6 +41,16 @@ class Feed_Item extends \Alleypack\Sync_Script\Feed_Item {
 	}
 
 	/**
+	 * Easy way to display the object publicly.
+	 * By default, it is protected.
+	 *
+	 * @return array
+	 */
+	public function public_source_object() {
+		return $this->object;
+	}
+
+	/**
 	 * Return the default state of the feed item.
 	 *
 	 * @param string $unique_id Unique ID.

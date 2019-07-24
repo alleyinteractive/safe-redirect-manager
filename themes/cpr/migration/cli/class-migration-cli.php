@@ -204,6 +204,90 @@ class Migration_CLI extends \CLI_Command {
 	}
 
 	/**
+	 * Migrate remaining audio.
+	 *
+	 * ## Options
+	 *
+	 * [--post_type]
+	 * : Post type to execute on
+	 * ---
+	 * default: post
+	 * ---
+	 *
+	 * [--post_id=<id>]
+	 * : Post ID to migrate.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *   $ wp cpr-migration migrate_audio --post_type=podcast-episode
+	 *   $ wp cpr-migration migrate_audio --post_type=podcast-episode --post_id=45374
+	 *
+	 * @param array $args       CLI args.
+	 * @param array $assoc_args CLI associate args.
+	 */
+	public function migrate_audio( $args, $assoc_args ) {
+		$args = [
+			'post_status' => 'any',
+			'post_type'   => $assoc_args['post_type'],
+		];
+
+		if ( ! empty( $assoc_args['post_id'] ) ) {
+			$args['p'] = absint( $assoc_args['post_id'] );
+		}
+
+		$this->bulk_task(
+			$args,
+			function ( $post ) {
+				$post_id  = $post->ID;
+				$mp3_id   = get_post_meta( $post_id, 'mp3_id', true );
+				$audio_id = get_post_meta( $post_id, 'audio_id', true );
+
+				if ( ! empty( $mp3_id ) && ! empty( $audio_id ) ) {
+					\WP_CLI::log( "Post $post_id already with audio." );
+					return;
+				}
+
+				$legacy_type = get_post_meta( $post_id, 'legacy_type', true );
+				$legacy_id   = get_post_meta( $post_id, 'legacy_id', true );
+
+				if ( empty( $legacy_id ) ) {
+					\WP_CLI::log( "Legacy ID not available for post $post_id." );
+					return;
+				}
+
+				// Get source object.
+				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( $legacy_type ?? 'story', absint( $legacy_id ) );
+
+				// Get the audio nid.
+				$audio_nid = absint( $source['field_audio']['und'][0]['target_id'] ?? 0 );
+				if ( 0 === $audio_nid ) {
+					\WP_CLI::log( 'Audio ID not found.' );
+					return;
+				}
+
+				\WP_CLI::log( 'Starting to migrate missing audio files.' );
+
+				// Get the audio source object.
+				$audio_source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $audio_nid );
+
+				// Migrate audio.
+				$audio_item = new \CPR\Migration\Audio\Feed_Item();
+				$audio_item->load_source( $audio_source );
+				$audio_item->sync();
+
+				// Store each ID.
+				foreach ( (array) $audio_item->public_source_object() as $key => $value ) {
+					update_post_meta( $post_id, $key, $value );
+				}
+
+				\WP_CLI::log( "Finished audio upload from post $post_id." );
+			}
+		);
+
+		\WP_CLI::log( 'All done!' );
+	}
+
+	/**
 	 * Clear all of the caches for memory management.
 	 */
 	private function stop_the_insanity() {
