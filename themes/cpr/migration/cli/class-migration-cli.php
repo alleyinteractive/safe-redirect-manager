@@ -238,19 +238,27 @@ class Migration_CLI extends \CLI_Command {
 		$this->bulk_task(
 			$args,
 			function ( $post ) {
-				$post_id     = $post->ID;
+				$post_id  = $post->ID;
+				$mp3_id   = get_post_meta( $post_id, 'mp3_id', true );
+				$audio_id = get_post_meta( $post_id, 'audio_id', true );
+
+				if ( ! empty( $mp3_id ) && ! empty( $audio_id ) ) {
+					\WP_CLI::log( "Post $post_id already with audio." );
+					return;
+				}
+
 				$legacy_type = get_post_meta( $post_id, 'legacy_type', true );
 				$legacy_id   = get_post_meta( $post_id, 'legacy_id', true );
 
 				if ( empty( $legacy_id ) ) {
-					\WP_CLI::log( 'Legacy ID not available for the post.' );
+					\WP_CLI::log( "Legacy ID not available for post $post_id." );
 					return;
 				}
 
-				// Story source.
+				// Get source object.
 				$source = \CPR\Migration\Migration::instance()->get_source_data_by_id( $legacy_type ?? 'story', absint( $legacy_id ) );
 
-				// Get the audio nid and validate.
+				// Get the audio nid.
 				$audio_nid = absint( $source['field_audio']['und'][0]['target_id'] ?? 0 );
 				if ( 0 === $audio_nid ) {
 					\WP_CLI::log( 'Audio ID not found.' );
@@ -259,15 +267,16 @@ class Migration_CLI extends \CLI_Command {
 
 				\WP_CLI::log( 'Starting to migrate missing audio files.' );
 
-				// Get the attachments.
+				// Get the audio source object.
 				$audio_source = \CPR\Migration\Migration::instance()->get_source_data_by_id( 'audio', $audio_nid );
 
+				// Migrate audio.
 				$audio_item = new \CPR\Migration\Audio\Feed_Item();
 				$audio_item->load_source( $audio_source );
 				$audio_item->sync();
 
 				// Store each ID.
-				foreach ( (array) $audio_item->object as $key => $value ) {
+				foreach ( (array) $audio_item->public_source_object() as $key => $value ) {
 					update_post_meta( $post_id, $key, $value );
 				}
 
